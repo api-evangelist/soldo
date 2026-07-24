@@ -1,0 +1,497 @@
+openapi: 3.1.0
+info:
+  title: Soldo Business API v2.0 Accounting Classification Groups API
+  description: Soldo Business API v2.0 OpenAPI specification
+  version: 5.56.0
+servers:
+- url: https://api.soldo.com
+  description: Production server (using live data)
+- url: https://api-demo.soldocloud.net
+  description: Sandbox server (using test data)
+tags:
+- name: Groups
+paths:
+  /business/v2/groups:
+    get:
+      tags:
+      - Groups
+      summary: Search Groups
+      description: Endpoint to search `Groups`
+      operationId: group-search
+      parameters:
+      - name: customReferenceId
+        in: query
+        description: The `Group` reference in an external system.
+        schema:
+          type: string
+          description: The `Group` reference in an external system.
+          example: hr-division-0001
+        example: hr-division-0001
+      - name: type
+        in: query
+        description: The `Group`'s type.
+        schema:
+          $ref: '#/components/schemas/GroupType'
+        example: DIVISION
+      - name: name
+        in: query
+        description: The name of the `Group`.
+        schema:
+          type: string
+          description: The name of the `Group`.
+          example: HR
+        example: HR
+      - name: note
+        in: query
+        description: The note of the `Group`.
+        schema:
+          type: string
+          description: The note of the `Group`.
+          example: division
+        example: division
+      - name: text
+        in: query
+        description: A text contained in the name or note of the `Group`.
+        schema:
+          type: string
+          description: A text contained in the name or note of the `Group`.
+          example: HR
+        example: HR
+      - name: p
+        in: query
+        description: It indicates the specific page to display (the counter starts from zero).
+        schema:
+          type: integer
+          format: int32
+          default: 0
+          description: It indicates the specific page to display (the counter starts from zero).
+          example: 3
+        example: 3
+      - name: s
+        in: query
+        description: It indicates the number of items per page.
+        schema:
+          type: integer
+          format: int32
+          default: 0
+          description: It indicates the number of items per page.
+          example: 25
+          maximum: 50
+        example: 25
+      - name: d
+        in: query
+        description: It indicates how the pages are ordered.
+        schema:
+          $ref: '#/components/schemas/Direction'
+        example: DESC
+      - name: props
+        in: query
+        description: It indicates the sorting direction applied to the above parameters. To apply a sorting on multiple parameters, set as many times the `props` parameter in the request.
+        schema:
+          type: array
+          description: It indicates the sorting direction applied to the above parameters. To apply a sorting on multiple parameters, set as many times the `props` parameter in the request.
+          example: creationTime
+          items:
+            type: string
+            description: It indicates the sorting direction applied to the above parameters. To apply a sorting on multiple parameters, set as many times the `props` parameter in the request.
+            example: creationTime
+        example: creationTime
+      responses:
+        '200':
+          description: The result is an array containing `Group`.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Groups'
+        '400':
+          description: Your request has missing arguments or is malformed.
+      security:
+      - standardAuth:
+        - group_read
+    post:
+      tags:
+      - Groups
+      summary: Add Group
+      description: Endpoint to add a new `Group`.
+      operationId: group-add
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateGroup'
+      responses:
+        '200':
+          description: The returned resource is a single `Group`.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Group'
+        '400':
+          description: Your request has missing arguments or is malformed.
+      security:
+      - standardAuth:
+        - group_write
+  /business/v2/groups/{groupId}/resource:
+    post:
+      tags:
+      - Groups
+      summary: Add Resource To Group
+      description: Endpoint to add a new resource to a Group.
+      operationId: group-resource-add
+      parameters:
+      - name: groupId
+        in: path
+        required: true
+        schema:
+          type: string
+          description: The `Group` ID.
+          example: 1bf79328-a7ae-4222-aa54-091ff7f429a7
+      - name: X-Soldo-Fingerprint
+        in: header
+        required: true
+        schema:
+          type: string
+          default: '{{fingerprint}}'
+          description: '[Advanced authentication](ref:advanced-authentication): `SHA512SUM` of the fingerprint values listed in the fingerprint order for this endpoint.'
+          example: '{{fingerprint}}'
+      - name: X-Soldo-Fingerprint-Signature
+        in: header
+        required: true
+        schema:
+          type: string
+          default: '{{fingerprint_signature}}'
+          description: '[Advanced authentication](ref:advanced-authentication): Signature of the `X-Soldo-Fingerprint`.'
+          example: '{{fingerprint_signature}}'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GroupResource'
+      responses:
+        '204':
+          description: No content as result.
+        '400':
+          description: Your request has missing arguments or is malformed.
+      security:
+      - standardAuth:
+        - group_write
+      x-soldo:
+        fingerprint-order: groupId, type, token
+    delete:
+      tags:
+      - Groups
+      summary: Remove resource from Group
+      description: Endpoint to remove a resource from a `Group`.
+      operationId: group-resource-remove
+      parameters:
+      - name: groupId
+        in: path
+        required: true
+        schema:
+          type: string
+          description: The `Group` ID.
+          example: 1bf79328-a7ae-4222-aa54-091ff7f429a7
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GroupResource'
+      responses:
+        '204':
+          description: No content as result.
+        '400':
+          description: Your request has missing arguments or is malformed.
+      security:
+      - standardAuth:
+        - group_write
+  /business/v2/groups/{groupId}:
+    get:
+      tags:
+      - Groups
+      summary: Get Group
+      description: Endpoint to get an `Group` by ID.
+      operationId: group-get
+      parameters:
+      - name: groupId
+        in: path
+        required: true
+        schema:
+          type: string
+          description: The `Group` ID.
+          example: 1bf79328-a7ae-4222-aa54-091ff7f429a7
+      responses:
+        '200':
+          description: The returned resource is a single `Group`.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Group'
+        '404':
+          description: One or more resource requested does not exist.
+      security:
+      - standardAuth:
+        - group_read
+    put:
+      tags:
+      - Groups
+      summary: Update Group
+      description: Endpoint to update an `Group` by ID.
+      operationId: group-update
+      parameters:
+      - name: groupId
+        in: path
+        required: true
+        schema:
+          type: string
+          description: The `Group` ID.
+          example: 1bf79328-a7ae-4222-aa54-091ff7f429a7
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateGroup'
+      responses:
+        '200':
+          description: The returned resource is a single `Group`.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Group'
+        '400':
+          description: Your request has missing arguments or is malformed.
+      security:
+      - standardAuth:
+        - group_write
+    delete:
+      tags:
+      - Groups
+      summary: Delete Group
+      description: Endpoint to remove an `Group`.
+      operationId: group-delete
+      parameters:
+      - name: groupId
+        in: path
+        required: true
+        schema:
+          type: string
+          description: The `Group` ID.
+          example: 1bf79328-a7ae-4222-aa54-091ff7f429a7
+      responses:
+        '204':
+          description: No content as result.
+        '400':
+          description: Your request has missing arguments or is malformed.
+      security:
+      - standardAuth:
+        - group_write
+components:
+  schemas:
+    CreateGroup:
+      description: Create `Group` JSON parameters.
+      properties:
+        name:
+          type: string
+          description: The name of the `Group`.
+          example: HR
+        custom_reference_id:
+          type: string
+          description: The `Group` reference in an external system.
+          example: hr-division-0001
+        note:
+          type: string
+          description: Any notes about the `Group`.
+          example: division
+        type:
+          $ref: '#/components/schemas/GroupType'
+          description: The `Group`'s type.
+          example: DIVISION
+    GroupType:
+      type: string
+      enum:
+      - TEAM
+      - PROJECT
+      - DEPARTMENT
+      - DIVISION
+      - SQUAD
+      - UNIT
+      - PRODUCTION
+    Group:
+      properties:
+        id:
+          type: string
+          description: 'The `Group` ID (sortable: yes).'
+          example: 1bf79328-a7ae-4222-aa54-091ff7f429a7
+        name:
+          type: string
+          description: 'The name of the `Group` (sortable: yes).'
+          example: HR
+        custom_reference_id:
+          type: string
+          description: The `Group` reference in an external system.
+          example: hr-division-0001
+        type:
+          $ref: '#/components/schemas/GroupType'
+          description: 'The `Group` type (sortable: no).'
+          example: DIVISION
+        note:
+          type: string
+          description: 'Any notes about the `Group` (sortable: no).'
+          example: division
+        members:
+          type: array
+          description: 'A list of `User` IDs belonging to the `Group` (sortable: no).'
+          example:
+          - 5bf79328-a7ae-4222-aa54-091ff7f429a7
+          items:
+            type: string
+        wallets:
+          type: array
+          description: 'A list of `Wallet` IDs related to the `Group` (sortable: no).'
+          example:
+          - 4bf79328-a7ae-4222-aa54-091ff7f429a7
+          items:
+            type: string
+        cards:
+          type: array
+          description: 'A list of `Card` IDs related to the `Group` (sortable: no).'
+          example:
+          - 3bf79328-a7ae-4222-aa54-091ff7f429a7
+          items:
+            type: string
+        creation_time:
+          type: string
+          description: 'The date and time when the `Group` was created (sortable: yes).'
+          example: '2017-06-01T12:48:40Z'
+        last_update:
+          type: string
+          description: 'The date and time when the `Group` was last updated (sortable: yes).'
+          example: '2017-06-30T12:48:40Z'
+    GroupResourceType:
+      type: string
+      enum:
+      - USER
+      - WALLET
+      - CARD
+    Direction:
+      type: string
+      description: It indicates how the pages are ordered.
+      enum:
+      - ASC
+      - DESC
+      example: DESC
+    Groups:
+      properties:
+        total:
+          type: integer
+          format: int32
+          description: It represents the total number of available items in the list.
+          example: 168
+        pages:
+          type: integer
+          format: int32
+          description: It represents the total number of available pages.
+          example: 7
+        page_size:
+          type: integer
+          format: int32
+          description: It represents the number of items per page.
+          example: 25
+        current_page:
+          type: integer
+          format: int32
+          description: It indicates the current page (the counter starts from zero).
+          example: 0
+        results_size:
+          type: integer
+          format: int32
+          description: It indicates the size of the array results.
+          example: 25
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Group'
+    GroupResource:
+      description: Delete Resource `Group` JSON parameters.
+      properties:
+        id:
+          type: string
+          description: The ID of either `User`, `Wallet` or `Card` `Group`resource.
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+        type:
+          $ref: '#/components/schemas/GroupResourceType'
+          description: The type of `Group`resource.
+          example: USER
+    UpdateGroup:
+      description: Update `Group` JSON parameters.
+      properties:
+        name:
+          type: string
+          description: The name of the `Group`.
+          example: HR
+        custom_reference_id:
+          type: string
+          description: The `Group` reference in an external system.
+          example: hr-division-0001
+        note:
+          type: string
+          description: Any notes about the `Group`.
+          example: division
+        type:
+          $ref: '#/components/schemas/GroupType'
+          description: The `Group`'s type.
+          example: DIVISION
+  securitySchemes:
+    standardAuth:
+      type: oauth2
+      description: This API uses OAuth 2 with the "Client Credentials" grant flow.
+      flows:
+        clientCredentials:
+          tokenUrl: https://api.soldo.com/oauth/authorize
+          refreshUrl: https://api.soldo.com/oauth/refresh
+          scopes:
+            address_read: Can read address details.
+            address_write: Can update address details.
+            card_read: Can read card details.
+            card_write: Can change card details.
+            company_read: Can read company details.
+            company_write: Can change company details.
+            contact_read: Can read contact details.
+            contact_write: Can change contact details.
+            employee_read: Can read employee details.
+            employee_write: Can change employee details.
+            expense_category_read: Can read expense category details.
+            expense_category_write: Can change expense category details.
+            expense_report_read: Can read expense report details.
+            expense_report_write: Can change expense report details.
+            expense_review_read: Can read expense review status.
+            expense_review_write: Can change expense review status.
+            group_read: Can read group details.
+            group_write: Can change groups details.
+            online_ads_read: Can read online ads details.
+            online_ads_write: Can change online ads details.
+            payment_read: Can read payment details.
+            payment_write: Can change payment details.
+            purchase_read: Can read purchase details.
+            purchase_write: Can change purchase details.
+            refueling_read: Can read refueling details.
+            refueling_write: Can change refueling details.
+            resource_set_read: Can read resource set details.
+            resource_set_write: Can change resource set details.
+            role_read: Can read role details.
+            statement_read: Can read statement details.
+            subscription_read: Can read subscription details.
+            subscription_write: Can change subscription details.
+            tag_read: Can read tags.
+            tag_write: can change tags.
+            tax_rate_read: Can read vat rate details.
+            tax_rate_write: Can change vat rate details.
+            transaction_read: Can read transaction details.
+            transaction_write: Can change transaction details.
+            vehicle_read: Can read vehicle details.
+            vehicle_write: Can change vehicle details.
+            wallet_read: Can read wallet details.
+            wallet_write: Can change wallet details.
+            webhook_subscription_read: Can read webhook subscription details.
+            webhook_subscription_write: Can change webhook subscription details.
+x-readme:
+  hidden: false

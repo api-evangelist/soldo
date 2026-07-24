@@ -1,0 +1,223 @@
+openapi: 3.1.0
+info:
+  title: Soldo Business API v2.0 Accounting Classification User Roles API
+  description: Soldo Business API v2.0 OpenAPI specification
+  version: 5.56.0
+servers:
+- url: https://api.soldo.com
+  description: Production server (using live data)
+- url: https://api-demo.soldocloud.net
+  description: Sandbox server (using test data)
+tags:
+- name: User Roles
+paths:
+  /business/v2/employees/{userId}/assignRole:
+    post:
+      tags:
+      - User Roles
+      summary: Add roles to User
+      description: Endpoint to assign a `Role` to an `User`.
+      operationId: user-role-set
+      parameters:
+      - name: userId
+        in: path
+        required: true
+        schema:
+          type: string
+          description: The `User` ID to assign `Role` to.
+          example: XMPL1234-000001
+      - name: X-Soldo-Fingerprint
+        in: header
+        required: true
+        schema:
+          type: string
+          default: '{{fingerprint}}'
+          description: '[Advanced authentication](ref:advanced-authentication): `SHA512SUM` of the fingerprint values listed in the fingerprint order for this endpoint.'
+          example: '{{fingerprint}}'
+      - name: X-Soldo-Fingerprint-Signature
+        in: header
+        required: true
+        schema:
+          type: string
+          default: '{{fingerprint_signature}}'
+          description: '[Advanced authentication](ref:advanced-authentication): Signature of the `X-Soldo-Fingerprint`.'
+          example: '{{fingerprint_signature}}'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateUserRoleAssignment'
+      responses:
+        '200':
+          description: The returned resource is a single `User`.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AssignedUserRoles'
+        '400':
+          description: Your request has missing arguments or is malformed.
+      security:
+      - standardAuth:
+        - employee_write
+      x-soldo:
+        fingerprint-order: userId, name, description, scope, token
+  /business/v2/employees/{userId}/roles:
+    get:
+      tags:
+      - User Roles
+      summary: Get User Roles
+      description: Endpoint to retrieve roles by `User` ID.
+      operationId: user-role-get
+      parameters:
+      - name: userId
+        in: path
+        required: true
+        schema:
+          type: string
+          description: The `User` ID.
+          example: XMPL1234-000001
+      responses:
+        '200':
+          description: The result is the `User` with their `Roles`.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AssignedUserRoles'
+        '404':
+          description: One or more resource requested does not exist.
+      security:
+      - standardAuth:
+        - employee_read
+  /business/v2/employees/{userId}/unassignRole:
+    post:
+      tags:
+      - User Roles
+      summary: Remove roles from User
+      description: Endpoint to remove a `Role` from an `User`.
+      operationId: user-role-unset
+      parameters:
+      - name: userId
+        in: path
+        required: true
+        schema:
+          type: string
+          description: The `User` ID to remove `Role` from.
+          example: XMPL1234-000001
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateUserRoleAssignment'
+      responses:
+        '200':
+          description: The returned resource is a single `User`.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AssignedUserRoles'
+        '400':
+          description: Your request has missing arguments or is malformed.
+      security:
+      - standardAuth:
+        - employee_write
+components:
+  schemas:
+    UpdateUserRoleAssignment:
+      description: Remove `Role` from `User` JSON parameters.
+      properties:
+        name:
+          type: string
+          description: The name of the `Role`.
+          example: superAdmin
+        description:
+          type: string
+          description: The description of the `Role`.
+          example: The SuperAdmin role
+        scope:
+          type: string
+          description: The name of the scope.
+          example: ALL
+    AssignedUserRoles:
+      properties:
+        id:
+          type: string
+          description: The `User` ID.
+          example: XMPL1234-000001
+        roles:
+          type: array
+          description: The list of `UserRole` of the `User`.
+          items:
+            $ref: '#/components/schemas/UserRole'
+    UserRole:
+      properties:
+        id:
+          type: string
+          description: The ID of the `UserRole`.
+          example: superAdmin
+        name:
+          type: string
+          description: The name of the `UserRole`.
+          example: superAdmin
+        description:
+          type: string
+          description: The description of the `UserRole`.
+          example: The SuperAdmin role
+        scope:
+          type: string
+          description: The scope of the `UserRole`.
+          example: ALL
+  securitySchemes:
+    standardAuth:
+      type: oauth2
+      description: This API uses OAuth 2 with the "Client Credentials" grant flow.
+      flows:
+        clientCredentials:
+          tokenUrl: https://api.soldo.com/oauth/authorize
+          refreshUrl: https://api.soldo.com/oauth/refresh
+          scopes:
+            address_read: Can read address details.
+            address_write: Can update address details.
+            card_read: Can read card details.
+            card_write: Can change card details.
+            company_read: Can read company details.
+            company_write: Can change company details.
+            contact_read: Can read contact details.
+            contact_write: Can change contact details.
+            employee_read: Can read employee details.
+            employee_write: Can change employee details.
+            expense_category_read: Can read expense category details.
+            expense_category_write: Can change expense category details.
+            expense_report_read: Can read expense report details.
+            expense_report_write: Can change expense report details.
+            expense_review_read: Can read expense review status.
+            expense_review_write: Can change expense review status.
+            group_read: Can read group details.
+            group_write: Can change groups details.
+            online_ads_read: Can read online ads details.
+            online_ads_write: Can change online ads details.
+            payment_read: Can read payment details.
+            payment_write: Can change payment details.
+            purchase_read: Can read purchase details.
+            purchase_write: Can change purchase details.
+            refueling_read: Can read refueling details.
+            refueling_write: Can change refueling details.
+            resource_set_read: Can read resource set details.
+            resource_set_write: Can change resource set details.
+            role_read: Can read role details.
+            statement_read: Can read statement details.
+            subscription_read: Can read subscription details.
+            subscription_write: Can change subscription details.
+            tag_read: Can read tags.
+            tag_write: can change tags.
+            tax_rate_read: Can read vat rate details.
+            tax_rate_write: Can change vat rate details.
+            transaction_read: Can read transaction details.
+            transaction_write: Can change transaction details.
+            vehicle_read: Can read vehicle details.
+            vehicle_write: Can change vehicle details.
+            wallet_read: Can read wallet details.
+            wallet_write: Can change wallet details.
+            webhook_subscription_read: Can read webhook subscription details.
+            webhook_subscription_write: Can change webhook subscription details.
+x-readme:
+  hidden: false

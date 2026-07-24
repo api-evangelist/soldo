@@ -1,0 +1,290 @@
+openapi: 3.1.0
+info:
+  title: Soldo Business API v2.0 Accounting Classification API
+  description: Soldo Business API v2.0 OpenAPI specification
+  version: 5.56.0
+servers:
+- url: https://api.soldo.com
+  description: Production server (using live data)
+- url: https://api-demo.soldocloud.net
+  description: Sandbox server (using test data)
+tags:
+- name: Accounting Classification
+paths:
+  /business/v2/entities/expense-category:
+    get:
+      tags:
+      - Accounting Classification
+      summary: Search Expense Categories
+      description: Endpoint to find `ExpenseCategories` using filtering parameters.
+      operationId: expense-category-search
+      parameters:
+      - name: text
+        in: query
+        description: A simple text to search in the `ExpenseCategory` (`name` or `code`).
+        schema:
+          type: string
+          description: A simple text to search in the `ExpenseCategory` (`name` or `code`).
+          example: expense category
+        example: expense category
+      - name: enabled
+        in: query
+        description: It determines if `ExpenseCategory` is enabled.
+        schema:
+          type: boolean
+          description: It determines if `ExpenseCategory` is enabled.
+          example: true
+        example: true
+      - name: p
+        in: query
+        description: It indicates the specific page to display (the counter starts from zero).
+        schema:
+          type: integer
+          format: int32
+          default: 0
+          description: It indicates the specific page to display (the counter starts from zero).
+          example: 3
+        example: 3
+      - name: s
+        in: query
+        description: It indicates the number of items per page.
+        schema:
+          type: integer
+          format: int32
+          default: 0
+          description: It indicates the number of items per page.
+          example: 25
+          maximum: 50
+        example: 25
+      - name: d
+        in: query
+        description: It indicates how the pages are ordered.
+        schema:
+          $ref: '#/components/schemas/Direction'
+        example: DESC
+      - name: props
+        in: query
+        description: It indicates the sorting direction applied to the above parameters. To apply a sorting on multiple parameters, set as many times the `props` parameter in the request.
+        schema:
+          type: array
+          description: It indicates the sorting direction applied to the above parameters. To apply a sorting on multiple parameters, set as many times the `props` parameter in the request.
+          example: creationTime
+          items:
+            type: string
+            description: It indicates the sorting direction applied to the above parameters. To apply a sorting on multiple parameters, set as many times the `props` parameter in the request.
+            example: creationTime
+        example: creationTime
+      responses:
+        '200':
+          description: The result is an array containing `ExpenseCategories`.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExpenseCategories'
+        '400':
+          description: Your request has missing arguments or is malformed.
+      security:
+      - standardAuth:
+        - expense_category_read
+components:
+  schemas:
+    ExpenseCategories:
+      properties:
+        total:
+          type: integer
+          format: int32
+          description: It represents the total number of available items in the list.
+          example: 168
+        pages:
+          type: integer
+          format: int32
+          description: It represents the total number of available pages.
+          example: 7
+        page_size:
+          type: integer
+          format: int32
+          description: It represents the number of items per page.
+          example: 25
+        current_page:
+          type: integer
+          format: int32
+          description: It indicates the current page (the counter starts from zero).
+          example: 0
+        results_size:
+          type: integer
+          format: int32
+          description: It indicates the size of the array results.
+          example: 25
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/ExpenseCategory'
+    ExpenseCategory:
+      properties:
+        id:
+          type: string
+          description: The `ExpenseCategory` ID.
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+        code:
+          type: string
+          description: The code of the `ExpenseCategory`.
+          example: 123
+        name:
+          type: string
+          description: The name of the `ExpenseCategory`.
+          example: category-one
+        description:
+          type: string
+          description: A custom description of the `ExpenseCategory`.
+          example: An expense category
+        tax_rate_id:
+          type: string
+          description: The ID of the VAT rate linked to the `ExpenseCategory`.
+          example: c861cc24-6663-410f-8c78-73f886fff4ef
+        enabled:
+          type: boolean
+          description: The `ExpenseCategory` is visible in the transaction detail.
+          example: false
+        merchant_categories:
+          type: array
+          description: A list of merchant categories this `ExpenseCategory`.
+          items:
+            $ref: '#/components/schemas/MerchantCategory'
+          uniqueItems: true
+        expense_type:
+          type: string
+          description: The type of expense assigned to category.
+          example: TRAVEL_AND_ENTERTAINMENT
+        integration:
+          type: string
+          description: The `ExpenseCategory`'s correlated integration.
+          example: Netsuite
+        creation_time:
+          type: string
+          description: 'The date and time when the `ExpenseCategory` was created (sortable: no).'
+          example: '2017-06-01T12:48:40Z'
+        last_update_time:
+          type: string
+          description: 'The date and time when the `ExpenseCategory` was last updated (sortable: no).'
+          example: '2017-06-01T12:48:40Z'
+    Direction:
+      type: string
+      description: It indicates how the pages are ordered.
+      enum:
+      - ASC
+      - DESC
+      example: DESC
+    MerchantCategory:
+      type: string
+      enum:
+      - Advertising
+      - Entertainment
+      - Utilities
+      - Food_Cocktail_Bar
+      - Food_Restaurant
+      - Food_Store
+      - Food_Wine
+      - Services_Business
+      - Services_Cleaning
+      - Services_Contracted
+      - Services_Delivery
+      - Services_Educational
+      - Services_Financial
+      - Services_Gambling
+      - Services_Government
+      - Services_Health
+      - Services_Insurance
+      - Services_Legal
+      - Services_Museum
+      - Services_Organisation
+      - Services_Personal
+      - Services_Repair
+      - Services_Social
+      - Services_Stationery
+      - Services_Telecommunication
+      - Services_Veterinary
+      - Services_Warehouse
+      - Services_Wholesale
+      - Shopping_Accessories
+      - Shopping_Airline
+      - Shopping_Art
+      - Shopping_Automotive
+      - Shopping_Beauty
+      - Shopping_Books
+      - Shopping_Clothes
+      - Shopping_Digital_Goods
+      - Shopping_Direct_Marketing
+      - Shopping_Furnitures
+      - Shopping_Sport
+      - Shopping_Store
+      - Shopping_Technology
+      - Transport_Airports
+      - Transport_Charging_Station
+      - Transport_Parking
+      - Transport_Public_Transportation
+      - Transport_Road
+      - Transport_Service_Station
+      - Transport_Ships
+      - Transport_Taxi
+      - Transport_Toll_Roads
+      - Transport_Trains
+      - Travel_Airlines
+      - Travel_Agency
+      - Travel_Car_Rental
+      - Travel_Hotels
+      - Travel_Time_Shares
+  securitySchemes:
+    standardAuth:
+      type: oauth2
+      description: This API uses OAuth 2 with the "Client Credentials" grant flow.
+      flows:
+        clientCredentials:
+          tokenUrl: https://api.soldo.com/oauth/authorize
+          refreshUrl: https://api.soldo.com/oauth/refresh
+          scopes:
+            address_read: Can read address details.
+            address_write: Can update address details.
+            card_read: Can read card details.
+            card_write: Can change card details.
+            company_read: Can read company details.
+            company_write: Can change company details.
+            contact_read: Can read contact details.
+            contact_write: Can change contact details.
+            employee_read: Can read employee details.
+            employee_write: Can change employee details.
+            expense_category_read: Can read expense category details.
+            expense_category_write: Can change expense category details.
+            expense_report_read: Can read expense report details.
+            expense_report_write: Can change expense report details.
+            expense_review_read: Can read expense review status.
+            expense_review_write: Can change expense review status.
+            group_read: Can read group details.
+            group_write: Can change groups details.
+            online_ads_read: Can read online ads details.
+            online_ads_write: Can change online ads details.
+            payment_read: Can read payment details.
+            payment_write: Can change payment details.
+            purchase_read: Can read purchase details.
+            purchase_write: Can change purchase details.
+            refueling_read: Can read refueling details.
+            refueling_write: Can change refueling details.
+            resource_set_read: Can read resource set details.
+            resource_set_write: Can change resource set details.
+            role_read: Can read role details.
+            statement_read: Can read statement details.
+            subscription_read: Can read subscription details.
+            subscription_write: Can change subscription details.
+            tag_read: Can read tags.
+            tag_write: can change tags.
+            tax_rate_read: Can read vat rate details.
+            tax_rate_write: Can change vat rate details.
+            transaction_read: Can read transaction details.
+            transaction_write: Can change transaction details.
+            vehicle_read: Can read vehicle details.
+            vehicle_write: Can change vehicle details.
+            wallet_read: Can read wallet details.
+            wallet_write: Can change wallet details.
+            webhook_subscription_read: Can read webhook subscription details.
+            webhook_subscription_write: Can change webhook subscription details.
+x-readme:
+  hidden: false

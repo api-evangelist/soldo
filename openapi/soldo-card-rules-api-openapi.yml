@@ -1,0 +1,1148 @@
+openapi: 3.1.0
+info:
+  title: Soldo Business API v2.0 Accounting Classification Card Rules API
+  description: Soldo Business API v2.0 OpenAPI specification
+  version: 5.56.0
+servers:
+- url: https://api.soldo.com
+  description: Production server (using live data)
+- url: https://api-demo.soldocloud.net
+  description: Sandbox server (using test data)
+tags:
+- name: Card Rules
+paths:
+  /business/v2/cards/{cardId}/rules/cashpoint:
+    get:
+      tags:
+      - Card Rules
+      summary: Get CashPoint Rules
+      description: Endpoint to get the `CardRuleCashPointRules` of the `Card`.
+      operationId: card-rule-cashpoint-get
+      parameters:
+      - name: cardId
+        in: path
+        required: true
+        schema:
+          type: string
+          description: The `Card` ID.
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+      responses:
+        '200':
+          description: The result is a `CardRuleCashPointRules`.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CardRuleCashPointRules'
+        '404':
+          description: One or more resource requested does not exist.
+      security:
+      - standardAuth:
+        - card_read
+  /business/v2/cards/{cardId}/rules/countries:
+    get:
+      tags:
+      - Card Rules
+      summary: Get Countries Rules
+      description: Endpoint to get the `CardRuleCountries` of the `Card`.
+      operationId: card-rule-countries-get
+      parameters:
+      - name: cardId
+        in: path
+        required: true
+        schema:
+          type: string
+          description: The `Card` ID.
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+      responses:
+        '200':
+          description: The results is `CardRuleCountries`.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CardRuleCountries'
+        '404':
+          description: One or more resource requested does not exist.
+      security:
+      - standardAuth:
+        - card_read
+    post:
+      tags:
+      - Card Rules
+      summary: Set Countries Rules
+      description: Endpoint to set the `CardRuleCountries` of the `Card`.
+      operationId: card-rule-countries-set
+      parameters:
+      - name: cardId
+        in: path
+        required: true
+        schema:
+          type: string
+          description: The `Card` ID.
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+      - name: X-Soldo-Fingerprint
+        in: header
+        required: true
+        schema:
+          type: string
+          default: '{{fingerprint}}'
+          description: '[Advanced authentication](ref:advanced-authentication): `SHA512SUM` of the fingerprint values listed in the fingerprint order for this endpoint.'
+          example: '{{fingerprint}}'
+      - name: X-Soldo-Fingerprint-Signature
+        in: header
+        required: true
+        schema:
+          type: string
+          default: '{{fingerprint_signature}}'
+          description: '[Advanced authentication](ref:advanced-authentication): Signature of the `X-Soldo-Fingerprint`.'
+          example: '{{fingerprint_signature}}'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateCardRuleCountries'
+      responses:
+        '200':
+          description: The results is `CardRuleCountries`.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CardRuleCountries'
+        '404':
+          description: One or more resource requested does not exist.
+      security:
+      - standardAuth:
+        - card_write
+      x-soldo:
+        fingerprint-order: cardId, request_timestamp, token
+  /business/v2/cards/{cardId}/rules/merchantCategories:
+    get:
+      tags:
+      - Card Rules
+      summary: Get Merchant Categories Rules
+      description: Endpoint to get the `CardRuleMerchantCategories` of the `Card`.
+      operationId: card-rule-merchant-categories-get
+      parameters:
+      - name: cardId
+        in: path
+        required: true
+        schema:
+          type: string
+          description: The `Card` ID.
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+      responses:
+        '200':
+          description: The result is a `CardRuleMerchantCategories`.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CardRuleMerchantCategories'
+        '404':
+          description: One or more resource requested does not exist.
+      security:
+      - standardAuth:
+        - card_read
+    post:
+      tags:
+      - Card Rules
+      summary: Set Merchant Categories Rules
+      description: Endpoint to set the `CardRuleMerchantCategories` of the `Card`.
+      operationId: card-rule-merchant-categories-set
+      parameters:
+      - name: cardId
+        in: path
+        required: true
+        schema:
+          type: string
+          description: The `Card` ID.
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+      - name: X-Soldo-Fingerprint
+        in: header
+        required: true
+        schema:
+          type: string
+          default: '{{fingerprint}}'
+          description: '[Advanced authentication](ref:advanced-authentication): `SHA512SUM` of the fingerprint values listed in the fingerprint order for this endpoint.'
+          example: '{{fingerprint}}'
+      - name: X-Soldo-Fingerprint-Signature
+        in: header
+        required: true
+        schema:
+          type: string
+          default: '{{fingerprint_signature}}'
+          description: '[Advanced authentication](ref:advanced-authentication): Signature of the `X-Soldo-Fingerprint`.'
+          example: '{{fingerprint_signature}}'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateCardRuleMerchantCategories'
+      responses:
+        '200':
+          description: The result is a `CardRuleMerchantCategories`.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CardRuleMerchantCategories'
+        '400':
+          description: Your request has missing arguments or is malformed.
+        '404':
+          description: One or more resource requested does not exist.
+      security:
+      - standardAuth:
+        - card_write
+      x-soldo:
+        fingerprint-order: cardId, request_timestamp, token
+  /business/v2/cards/{cardId}/rules/spendingLimits:
+    get:
+      tags:
+      - Card Rules
+      summary: Get Spending Limits Rules
+      description: Endpoint to get the `CardRuleSpendingLimitsRules` of the `Card`.
+      operationId: card-rule-spending-limits-get
+      parameters:
+      - name: cardId
+        in: path
+        required: true
+        schema:
+          type: string
+          description: The `Card` ID.
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+      responses:
+        '200':
+          description: The result is a `CardRuleSpendingLimitsRules`.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CardRuleSpendingLimitsRules'
+        '404':
+          description: One or more resource requested does not exist.
+      security:
+      - standardAuth:
+        - card_read
+  /business/v2/cards/{cardId}/rules/cashpoint/{limitName}:
+    post:
+      tags:
+      - Card Rules
+      summary: Set CashPoint Rules
+      description: Endpoint to set a `CardRuleCashPointRule` of the `Card`.
+      operationId: card-rule-cashpoint-set
+      parameters:
+      - name: cardId
+        in: path
+        required: true
+        schema:
+          type: string
+          description: The `Card` ID.
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+      - name: limitName
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/CardRuleCashPointLimitName'
+      - name: X-Soldo-Fingerprint
+        in: header
+        required: true
+        schema:
+          type: string
+          default: '{{fingerprint}}'
+          description: '[Advanced authentication](ref:advanced-authentication): `SHA512SUM` of the fingerprint values listed in the fingerprint order for this endpoint.'
+          example: '{{fingerprint}}'
+      - name: X-Soldo-Fingerprint-Signature
+        in: header
+        required: true
+        schema:
+          type: string
+          default: '{{fingerprint_signature}}'
+          description: '[Advanced authentication](ref:advanced-authentication): Signature of the `X-Soldo-Fingerprint`.'
+          example: '{{fingerprint_signature}}'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateCardRuleCashPoint'
+      responses:
+        '200':
+          description: The result is a `CardRuleCashPointRules`.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CardRuleCashPointRule'
+        '400':
+          description: Your request has missing arguments or is malformed.
+        '404':
+          description: One or more resource requested does not exist.
+      security:
+      - standardAuth:
+        - card_write
+      x-soldo:
+        fingerprint-order: max, enabled, token
+    delete:
+      tags:
+      - Card Rules
+      summary: Unset CashPoint Rules
+      description: Endpoint to unset a `CardRuleCashPointRule` of the `Card`.
+      operationId: card-rule-cashpoint-unset
+      parameters:
+      - name: cardId
+        in: path
+        required: true
+        schema:
+          type: string
+          description: The `Card` ID.
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+      - name: limitName
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/CardRuleCashPointLimitName'
+      - name: X-Soldo-Fingerprint
+        in: header
+        required: true
+        schema:
+          type: string
+          default: '{{fingerprint}}'
+          description: '[Advanced authentication](ref:advanced-authentication): `SHA512SUM` of the fingerprint values listed in the fingerprint order for this endpoint.'
+          example: '{{fingerprint}}'
+      - name: X-Soldo-Fingerprint-Signature
+        in: header
+        required: true
+        schema:
+          type: string
+          default: '{{fingerprint_signature}}'
+          description: '[Advanced authentication](ref:advanced-authentication): Signature of the `X-Soldo-Fingerprint`.'
+          example: '{{fingerprint_signature}}'
+      responses:
+        '200':
+          description: The result is a single `CardRuleCashPointRule`.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CardRuleCashPointRule'
+        '400':
+          description: Your request has missing arguments or is malformed.
+        '404':
+          description: One or more resource requested does not exist.
+      security:
+      - standardAuth:
+        - card_write
+      x-soldo:
+        fingerprint-order: cardId, limitName, token
+  /business/v2/cards/{cardId}/rules/spendingLimits/{limitName}:
+    post:
+      tags:
+      - Card Rules
+      summary: Set Spending Limits Rules
+      description: Endpoint to set the `CardRuleSpendingLimitsRules` of the `Card`.
+      operationId: card-rule-spending-limits-set
+      parameters:
+      - name: cardId
+        in: path
+        required: true
+        schema:
+          type: string
+          description: The `Card` ID.
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+      - name: limitName
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/CardRuleSpendingLimitsLimitName'
+      - name: X-Soldo-Fingerprint
+        in: header
+        required: true
+        schema:
+          type: string
+          default: '{{fingerprint}}'
+          description: '[Advanced authentication](ref:advanced-authentication): `SHA512SUM` of the fingerprint values listed in the fingerprint order for this endpoint.'
+          example: '{{fingerprint}}'
+      - name: X-Soldo-Fingerprint-Signature
+        in: header
+        required: true
+        schema:
+          type: string
+          default: '{{fingerprint_signature}}'
+          description: '[Advanced authentication](ref:advanced-authentication): Signature of the `X-Soldo-Fingerprint`.'
+          example: '{{fingerprint_signature}}'
+      requestBody:
+        content:
+          '*/*':
+            schema:
+              $ref: '#/components/schemas/UpdateCardRuleSpendingLimit'
+      responses:
+        '200':
+          description: The result is a single `CardRuleSpendingLimitsRule`.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CardRuleSpendingLimitsRule'
+        '400':
+          description: Your request has missing arguments or is malformed.
+        '404':
+          description: One or more resource requested does not exist.
+      security:
+      - standardAuth:
+        - card_write
+      x-soldo:
+        fingerprint-order: max, enabled, token
+    delete:
+      tags:
+      - Card Rules
+      summary: Unset Spending Limits Rules
+      description: Endpoint to unset the `CardRuleSpendingLimitsRule`  of the `Card`.
+      operationId: card-rule-spending-limits-unset
+      parameters:
+      - name: cardId
+        in: path
+        required: true
+        schema:
+          type: string
+          description: The `Card` ID.
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+      - name: limitName
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/CardRuleSpendingLimitsLimitName'
+      - name: X-Soldo-Fingerprint
+        in: header
+        required: true
+        schema:
+          type: string
+          default: '{{fingerprint}}'
+          description: '[Advanced authentication](ref:advanced-authentication): `SHA512SUM` of the fingerprint values listed in the fingerprint order for this endpoint.'
+          example: '{{fingerprint}}'
+      - name: X-Soldo-Fingerprint-Signature
+        in: header
+        required: true
+        schema:
+          type: string
+          default: '{{fingerprint_signature}}'
+          description: '[Advanced authentication](ref:advanced-authentication): Signature of the `X-Soldo-Fingerprint`.'
+          example: '{{fingerprint_signature}}'
+      responses:
+        '200':
+          description: The result is a single `CardRuleSpendingLimitsRule`.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CardRuleSpendingLimitsRule'
+        '400':
+          description: Your request has missing arguments or is malformed.
+        '404':
+          description: One or more resource requested does not exist.
+      security:
+      - standardAuth:
+        - card_read
+      x-soldo:
+        fingerprint-order: cardId, limitName, token
+  /business/v2/cards/{cardId}/rules:
+    get:
+      tags:
+      - Card Rules
+      summary: Get Card Rules
+      description: Endpoint to get the `CardRules` of the `Card`.
+      operationId: card-rules-get
+      parameters:
+      - name: cardId
+        in: path
+        required: true
+        schema:
+          type: string
+          description: The `Card` ID.
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+      responses:
+        '200':
+          description: The returned resource is a list of `CardRule`.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CardRuleList'
+        '404':
+          description: One or more resource requested does not exist.
+      security:
+      - standardAuth:
+        - card_read
+    put:
+      tags:
+      - Card Rules
+      summary: Set Card Rules
+      description: Endpoint to set the `CardRules`.
+      operationId: card-rules-set
+      parameters:
+      - name: cardId
+        in: path
+        required: true
+        schema:
+          type: string
+          description: The `Card` ID.
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+      - name: X-Soldo-Fingerprint
+        in: header
+        required: true
+        schema:
+          type: string
+          default: '{{fingerprint}}'
+          description: '[Advanced authentication](ref:advanced-authentication): `SHA512SUM` of the fingerprint values listed in the fingerprint order for this endpoint.'
+          example: '{{fingerprint}}'
+      - name: X-Soldo-Fingerprint-Signature
+        in: header
+        required: true
+        schema:
+          type: string
+          default: '{{fingerprint_signature}}'
+          description: '[Advanced authentication](ref:advanced-authentication): Signature of the `X-Soldo-Fingerprint`.'
+          example: '{{fingerprint_signature}}'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateCardRules'
+      responses:
+        '200':
+          description: The result is a list of `CardRule`.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CardRuleList'
+        '400':
+          description: Your request has missing arguments or is malformed.
+        '404':
+          description: One or more resource requested does not exist.
+      security:
+      - standardAuth:
+        - card_write
+      x-soldo:
+        fingerprint-order: name, enabled, token
+components:
+  schemas:
+    UpdateCardRuleCashPoint:
+      description: '`CardRuleCashPointRule` parameters.'
+      properties:
+        enabled:
+          type: boolean
+          description: It determines whether the card rule is enabled.
+          example: true
+        max:
+          type: number
+          format: double
+          description: Maximum spendable amount related to the limit.
+          example: 10.25
+      required:
+      - enabled
+      - max
+    CardRuleMagstripe:
+      properties:
+        enabled:
+          type: boolean
+          description: It determines whether the card rule is enabled.
+          example: true
+    CardRuleSpendingLimitsRule:
+      properties:
+        enabled:
+          type: boolean
+          description: It determines whether the card rule is enabled.
+          example: true
+        amount:
+          type: number
+          description: Amount of the limit.
+          example: 10.25
+    CardRuleCashPointRule:
+      properties:
+        enabled:
+          type: boolean
+          description: It determines whether the card rule is enabled.
+          example: true
+        amount:
+          type: number
+          description: Amount of the limit.
+          example: 10.25
+    CardRuleCountry:
+      properties:
+        code:
+          $ref: '#/components/schemas/ISO3166CardRuleCountryCode'
+          description: The code of the country [ISO 3166-1 alpha-3](https://www.iso.org/obp/ui/#search/code/) to be updated.
+          example: GBR
+        enabled:
+          type: boolean
+          description: It determines whether the card should be allowed to spend money in that country.
+          example: true
+      required:
+      - code
+      - enabled
+    CardRuleCountries:
+      properties:
+        total:
+          type: integer
+          format: int32
+          description: It represents the total number of available items in the list.
+          example: 168
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/CardRuleCountry'
+    UpdateCardRules:
+      description: A `CardRule` representation.
+      properties:
+        name:
+          $ref: '#/components/schemas/CardRuleName'
+          description: 'The name of the `CardRule` to update. To follow the implications of each rule when enabled (`enabled=true`) on a card:
+
+            - `OpenCloseMasterLock`, card is locked and only admins can unlock it
+
+            - `OpenClose`, card is locked and any user who have access to the card can unlock it
+
+            - `OpenCloseAfterOneTx`, card is automatically locked after each transaction
+
+            - `Online`, card can spend online
+
+            - `Contactless`, card can spend contactless'
+          example: CashPoint
+        enabled:
+          type: boolean
+          description: It determines whether the rule is enabled.
+          example: true
+      required:
+      - enabled
+      - name
+    UpdateCardRuleSpendingLimit:
+      description: SpendingLimit rule parameters.
+      properties:
+        enabled:
+          type: boolean
+          description: It determines whether the card rule is enabled.
+          example: true
+        max:
+          type: number
+          format: double
+          description: Maximum spendable amount related to the limit.
+          example: 10.25
+      required:
+      - enabled
+      - max
+    CardRuleItem:
+      properties:
+        name:
+          $ref: '#/components/schemas/CardRuleName'
+          description: 'The name of the `CardRule` to update. To follow the implications of each rule when enabled (`enabled=true`) on a card:
+
+            - `OpenCloseMasterLock`, card is locked and only admins can unlock it
+
+            - `OpenClose`, card is locked and any user who have access to the card can unlock it
+
+            - `OpenCloseAfterOneTx`, card is automatically locked after each transaction
+
+            - `Online`, card can spend online
+
+            - `Contactless`, card can spend contactless'
+          example: CashPoint
+        enabled:
+          type: boolean
+          description: It determines whether the `CardRule` is enabled.
+          example: true
+      required:
+      - enabled
+      - name
+    CardRuleSpendingLimitsRules:
+      properties:
+        daily:
+          $ref: '#/components/schemas/CardRuleLimitPeriod'
+          description: It determines the possibility to spend up to a certain amount on a daily basis.
+        weekly:
+          $ref: '#/components/schemas/CardRuleLimitPeriod'
+          description: It determines the possibility to spend up to a certain amount per transaction.
+        monthly:
+          $ref: '#/components/schemas/CardRuleLimitPeriod'
+          description: It determines the possibility to spend up to a certain amount on a monthly basis.
+        per_transaction:
+          $ref: '#/components/schemas/CardRuleMaxPerTransaction'
+          description: It determines the possibility to spend up to a certain amount on a weekly basis.
+    CardRuleChipAndPin:
+      properties:
+        enabled:
+          type: boolean
+          description: It determines whether the card rule is enabled.
+          example: true
+    CardRuleMerchantCategories:
+      properties:
+        total:
+          type: integer
+          format: int32
+          description: It represents the total number of available items in the list.
+          example: 168
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/CardRuleMerchantCategory'
+    CardRuleSpendingLimitsLimitName:
+      type: string
+      description: A SpendingLimit rule name.
+      enum:
+      - daily
+      - weekly
+      - monthly
+      - perTransaction
+    MerchantCategory:
+      type: string
+      enum:
+      - Advertising
+      - Entertainment
+      - Utilities
+      - Food_Cocktail_Bar
+      - Food_Restaurant
+      - Food_Store
+      - Food_Wine
+      - Services_Business
+      - Services_Cleaning
+      - Services_Contracted
+      - Services_Delivery
+      - Services_Educational
+      - Services_Financial
+      - Services_Gambling
+      - Services_Government
+      - Services_Health
+      - Services_Insurance
+      - Services_Legal
+      - Services_Museum
+      - Services_Organisation
+      - Services_Personal
+      - Services_Repair
+      - Services_Social
+      - Services_Stationery
+      - Services_Telecommunication
+      - Services_Veterinary
+      - Services_Warehouse
+      - Services_Wholesale
+      - Shopping_Accessories
+      - Shopping_Airline
+      - Shopping_Art
+      - Shopping_Automotive
+      - Shopping_Beauty
+      - Shopping_Books
+      - Shopping_Clothes
+      - Shopping_Digital_Goods
+      - Shopping_Direct_Marketing
+      - Shopping_Furnitures
+      - Shopping_Sport
+      - Shopping_Store
+      - Shopping_Technology
+      - Transport_Airports
+      - Transport_Charging_Station
+      - Transport_Parking
+      - Transport_Public_Transportation
+      - Transport_Road
+      - Transport_Service_Station
+      - Transport_Ships
+      - Transport_Taxi
+      - Transport_Toll_Roads
+      - Transport_Trains
+      - Travel_Airlines
+      - Travel_Agency
+      - Travel_Car_Rental
+      - Travel_Hotels
+      - Travel_Time_Shares
+    CardRuleCashPointLimitName:
+      type: string
+      description: A `CardRuleCashPointRule` limit name.
+      enum:
+      - daily
+      - weekly
+      - monthly
+      - chipAndPin
+      - magstripe
+    CardRuleMaxPerTransaction:
+      properties:
+        enabled:
+          type: boolean
+          description: It determines whether the card rule is enabled.
+          example: true
+        max:
+          type: number
+          description: Maximum spendable amount related to the limit.
+          example: 10.25
+        spent:
+          type: number
+        left:
+          type: number
+    CardRuleCashPointRules:
+      properties:
+        daily:
+          $ref: '#/components/schemas/CardRuleLimitPeriod'
+          description: It determines the possibility to withdraw at ATM up to a certain amount on a daily basis.
+        weekly:
+          $ref: '#/components/schemas/CardRuleLimitPeriod'
+          description: It determines the possibility to withdraw at ATM up to a certain amount on a weekly basis.
+        monthly:
+          $ref: '#/components/schemas/CardRuleLimitPeriod'
+          description: It determines the possibility to withdraw at ATM up to a certain amount on a monthly basis.
+        chip_and_pin:
+          $ref: '#/components/schemas/CardRuleChipAndPin'
+          description: It determines whether the `chipAndPin` is enabled.
+        magstripe:
+          $ref: '#/components/schemas/CardRuleMagstripe'
+          description: It determines whether the `magstripe` is enabled.
+    UpdateCardRuleMerchantCategories:
+      description: '`CardRuleMerchantCategories` parameters.'
+      properties:
+        request_timestamp:
+          type: integer
+          format: int64
+          description: The epoch timestamp in millis. This is checked in Soldo. Requests with timestamp older than 5 seconds will be rejected.
+          example: 1576850500000
+        merchant_categories:
+          type: array
+          description: A list of `MerchantCategory` and `enabled` pairs.
+          items:
+            $ref: '#/components/schemas/CardRuleMerchantCategory'
+      required:
+      - merchant_categories
+      - request_timestamp
+    CardRuleLimitPeriod:
+      properties:
+        enabled:
+          type: boolean
+          description: It determines whether the card rule is enabled.
+          example: true
+        max:
+          type: number
+          description: Maximum spendable amount related to the limit.
+          example: 10.25
+        spent:
+          type: number
+        left:
+          type: number
+    UpdateCardRuleCountries:
+      description: '`CardRuleCountries` parameters.'
+      properties:
+        request_timestamp:
+          type: integer
+          format: int64
+          description: The epoch timestamp in millis. This is checked in Soldo. Requests with timestamp older than 5 seconds will be rejected.
+          example: 1576850500000
+        countries:
+          type: array
+          description: A list of [ISO 3166-1 alpha-3](https://www.iso.org/obp/ui/#search/code/) country code and `enabled` pairs.
+          items:
+            $ref: '#/components/schemas/CardRuleCountry'
+      required:
+      - countries
+      - request_timestamp
+    CardRuleName:
+      type: string
+      enum:
+      - OpenCloseMasterLock
+      - OpenClose
+      - OpenCloseAfterOneTx
+      - Online
+      - Contactless
+    CardRuleList:
+      properties:
+        rules:
+          type: array
+          items:
+            $ref: '#/components/schemas/CardRuleItem'
+    CardRuleMerchantCategory:
+      properties:
+        name:
+          $ref: '#/components/schemas/MerchantCategory'
+          description: The `MerchantCategory`.
+          example: Services_Business
+        enabled:
+          type: boolean
+          description: It determines whether the rule is enabled.
+          example: true
+      required:
+      - enabled
+      - name
+    ISO3166CardRuleCountryCode:
+      type: string
+      enum:
+      - ABW
+      - AFG
+      - AGO
+      - AIA
+      - ALB
+      - AND
+      - ARE
+      - ARG
+      - ARM
+      - ASM
+      - ATG
+      - AUS
+      - AUT
+      - AZE
+      - BDI
+      - BEL
+      - BEN
+      - BES
+      - BFA
+      - BGD
+      - BGR
+      - BHR
+      - BHS
+      - BIH
+      - BLM
+      - BLR
+      - BLZ
+      - BMU
+      - BOL
+      - BRA
+      - BRB
+      - BRN
+      - BTN
+      - BWA
+      - CAF
+      - CAN
+      - CCK
+      - CHE
+      - CHL
+      - CHN
+      - CIV
+      - CMR
+      - COD
+      - COG
+      - COK
+      - COL
+      - COM
+      - CPV
+      - CRI
+      - CUB
+      - CUW
+      - CXR
+      - CYM
+      - CYP
+      - CZE
+      - DEU
+      - DJI
+      - DMA
+      - DNK
+      - DOM
+      - DZA
+      - ECU
+      - EGY
+      - ERI
+      - ESP
+      - EST
+      - ETH
+      - FIN
+      - FJI
+      - FLK
+      - FRA
+      - FRO
+      - FSM
+      - GAB
+      - GBR
+      - GEO
+      - GGY
+      - GHA
+      - GIB
+      - GIN
+      - GMB
+      - GNB
+      - GNQ
+      - GRC
+      - GRD
+      - GRL
+      - GTM
+      - GUM
+      - GUY
+      - HKG
+      - HND
+      - HRV
+      - HTI
+      - HUN
+      - IDN
+      - IMN
+      - IND
+      - IRL
+      - IRN
+      - IRQ
+      - ISL
+      - ISR
+      - ITA
+      - JAM
+      - JEY
+      - JOR
+      - JPN
+      - KAZ
+      - KEN
+      - KGZ
+      - KHM
+      - KIR
+      - KNA
+      - KOR
+      - KWT
+      - LAO
+      - LBN
+      - LBR
+      - LBY
+      - LCA
+      - LIE
+      - LKA
+      - LSO
+      - LTU
+      - LUX
+      - LVA
+      - MAC
+      - MAF
+      - MAR
+      - MCO
+      - MDA
+      - MDG
+      - MDV
+      - MEX
+      - MHL
+      - MKD
+      - MLI
+      - MLT
+      - MMR
+      - MNE
+      - MNG
+      - MNP
+      - MOZ
+      - MRT
+      - MSR
+      - MUS
+      - MWI
+      - MYS
+      - NAM
+      - NCL
+      - NER
+      - NFK
+      - NGA
+      - NIC
+      - NIU
+      - NLD
+      - NOR
+      - NPL
+      - NRU
+      - NZL
+      - OMN
+      - PAK
+      - PAN
+      - PCN
+      - PER
+      - PHL
+      - PLW
+      - PNG
+      - POL
+      - PRI
+      - PRK
+      - PRT
+      - PRY
+      - PSE
+      - PYF
+      - QAT
+      - ROU
+      - RUS
+      - RWA
+      - SAU
+      - SDN
+      - SEN
+      - SGP
+      - SHN
+      - SLB
+      - SLE
+      - SLV
+      - SMR
+      - SOM
+      - SPM
+      - SRB
+      - SSD
+      - STP
+      - SUR
+      - SVK
+      - SVN
+      - SWE
+      - SWZ
+      - SXM
+      - SYC
+      - SYR
+      - TCA
+      - TCD
+      - TGO
+      - THA
+      - TJK
+      - TKL
+      - TKM
+      - TLS
+      - TON
+      - TTO
+      - TUN
+      - TUR
+      - TUV
+      - TWN
+      - TZA
+      - UGA
+      - UKR
+      - URY
+      - USA
+      - UZB
+      - VAT
+      - VCT
+      - VEN
+      - VGB
+      - VIR
+      - VNM
+      - VUT
+      - WLF
+      - WSM
+      - XXK
+      - YEM
+      - ZAF
+      - ZMB
+      - ZWE
+  securitySchemes:
+    standardAuth:
+      type: oauth2
+      description: This API uses OAuth 2 with the "Client Credentials" grant flow.
+      flows:
+        clientCredentials:
+          tokenUrl: https://api.soldo.com/oauth/authorize
+          refreshUrl: https://api.soldo.com/oauth/refresh
+          scopes:
+            address_read: Can read address details.
+            address_write: Can update address details.
+            card_read: Can read card details.
+            card_write: Can change card details.
+            company_read: Can read company details.
+            company_write: Can change company details.
+            contact_read: Can read contact details.
+            contact_write: Can change contact details.
+            employee_read: Can read employee details.
+            employee_write: Can change employee details.
+            expense_category_read: Can read expense category details.
+            expense_category_write: Can change expense category details.
+            expense_report_read: Can read expense report details.
+            expense_report_write: Can change expense report details.
+            expense_review_read: Can read expense review status.
+            expense_review_write: Can change expense review status.
+            group_read: Can read group details.
+            group_write: Can change groups details.
+            online_ads_read: Can read online ads details.
+            online_ads_write: Can change online ads details.
+            payment_read: Can read payment details.
+            payment_write: Can change payment details.
+            purchase_read: Can read purchase details.
+            purchase_write: Can change purchase details.
+            refueling_read: Can read refueling details.
+            refueling_write: Can change refueling details.
+            resource_set_read: Can read resource set details.
+            resource_set_write: Can change resource set details.
+            role_read: Can read role details.
+            statement_read: Can read statement details.
+            subscription_read: Can read subscription details.
+            subscription_write: Can change subscription details.
+            tag_read: Can read tags.
+            tag_write: can change tags.
+            tax_rate_read: Can read vat rate details.
+            tax_rate_write: Can change vat rate details.
+            transaction_read: Can read transaction details.
+            transaction_write: Can change transaction details.
+            vehicle_read: Can read vehicle details.
+            vehicle_write: Can change vehicle details.
+            wallet_read: Can read wallet details.
+            wallet_write: Can change wallet details.
+            webhook_subscription_read: Can read webhook subscription details.
+            webhook_subscription_write: Can change webhook subscription details.
+x-readme:
+  hidden: false

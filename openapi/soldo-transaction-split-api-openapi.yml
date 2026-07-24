@@ -1,0 +1,206 @@
+openapi: 3.1.0
+info:
+  title: Soldo Business API v2.0 Accounting Classification Transaction Split API
+  description: Soldo Business API v2.0 OpenAPI specification
+  version: 5.56.0
+servers:
+- url: https://api.soldo.com
+  description: Production server (using live data)
+- url: https://api-demo.soldocloud.net
+  description: Sandbox server (using test data)
+tags:
+- name: Transaction Split
+paths:
+  /business/v2/transactions/{transactionId}/split:
+    put:
+      tags:
+      - Transaction Split
+      summary: Update Transaction Split
+      description: Endpoint to update the split of a `Transaction`.
+      operationId: transaction-split-update
+      parameters:
+      - name: transactionId
+        in: path
+        required: true
+        schema:
+          type: string
+          description: The `Transaction` ID.
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateTransactionSplit'
+      responses:
+        '204':
+          description: No content as result.
+      security:
+      - standardAuth:
+        - transaction_write
+    post:
+      tags:
+      - Transaction Split
+      summary: Create Transaction Split
+      description: Endpoint to split a `Transaction`.
+      operationId: transaction-split-create
+      parameters:
+      - name: transactionId
+        in: path
+        required: true
+        schema:
+          type: string
+          description: The `Transaction` ID.
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateTransactionSplit'
+      responses:
+        '204':
+          description: No content as result.
+      security:
+      - standardAuth:
+        - transaction_write
+    delete:
+      tags:
+      - Transaction Split
+      summary: Delete Transaction Split
+      description: Endpoint to delete the split of a `Transaction`.
+      operationId: transaction-split-delete
+      parameters:
+      - name: transactionId
+        in: path
+        required: true
+        schema:
+          type: string
+          description: The `Transaction` ID.
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+      responses:
+        '204':
+          description: No content as result.
+      security:
+      - standardAuth:
+        - transaction_write
+components:
+  schemas:
+    SplitTag:
+      properties:
+        tag_id:
+          type: string
+          description: The `Tags` of the `SplitTransaction`.
+          example: 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
+        dictionary_id:
+          type: string
+          description: The `dictionaryId` of the `Tag` of the `SplitTransaction`.
+          example: 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
+    ExpenseType:
+      type: string
+      enum:
+      - COMPANY
+      - PERSONAL
+      - TRAVEL_AND_ENTERTAINMENT
+    CreateTransactionSplit:
+      description: Create `Transaction` split JSON parameters.
+      properties:
+        split_transactions:
+          type: array
+          items:
+            $ref: '#/components/schemas/SplitTransaction'
+          minItems: 2
+      required:
+      - split_transactions
+    UpdateTransactionSplit:
+      description: Update `Transaction` split JSON parameters.
+      properties:
+        split_transactions:
+          type: array
+          items:
+            $ref: '#/components/schemas/SplitTransaction'
+          minItems: 2
+      required:
+      - split_transactions
+    SplitTransaction:
+      properties:
+        amount:
+          type: number
+          description: The amount of the `SplitTransaction` line.
+          example: 10.25
+        expense_type:
+          $ref: '#/components/schemas/ExpenseType'
+          description: The type of the expense of the `SplitTransaction` line.
+          example: TRAVEL_AND_ENTERTAINMENT
+        user_id:
+          type: string
+          description: The ID of the `User` assigned to the `SplitTransaction` line.
+          example: XMPL1234-000003
+        expense_category_id:
+          type: string
+          description: The expense category of the `SplitTransaction` line.
+          example: e0d9b9c2-4a13-4ad5-85a4-88882fa065bd
+        tax_rate_id:
+          type: string
+          description: The ID of VAT Rate of the `SplitTransaction` line.
+          example: c861cc24-6663-410f-8c78-73f886fff4ef
+        tags:
+          type: array
+          description: The IDs of the `Tag` and related `Dictionary` to be assigned to a `SplitTransaction` line.
+          items:
+            $ref: '#/components/schemas/SplitTag'
+      required:
+      - amount
+  securitySchemes:
+    standardAuth:
+      type: oauth2
+      description: This API uses OAuth 2 with the "Client Credentials" grant flow.
+      flows:
+        clientCredentials:
+          tokenUrl: https://api.soldo.com/oauth/authorize
+          refreshUrl: https://api.soldo.com/oauth/refresh
+          scopes:
+            address_read: Can read address details.
+            address_write: Can update address details.
+            card_read: Can read card details.
+            card_write: Can change card details.
+            company_read: Can read company details.
+            company_write: Can change company details.
+            contact_read: Can read contact details.
+            contact_write: Can change contact details.
+            employee_read: Can read employee details.
+            employee_write: Can change employee details.
+            expense_category_read: Can read expense category details.
+            expense_category_write: Can change expense category details.
+            expense_report_read: Can read expense report details.
+            expense_report_write: Can change expense report details.
+            expense_review_read: Can read expense review status.
+            expense_review_write: Can change expense review status.
+            group_read: Can read group details.
+            group_write: Can change groups details.
+            online_ads_read: Can read online ads details.
+            online_ads_write: Can change online ads details.
+            payment_read: Can read payment details.
+            payment_write: Can change payment details.
+            purchase_read: Can read purchase details.
+            purchase_write: Can change purchase details.
+            refueling_read: Can read refueling details.
+            refueling_write: Can change refueling details.
+            resource_set_read: Can read resource set details.
+            resource_set_write: Can change resource set details.
+            role_read: Can read role details.
+            statement_read: Can read statement details.
+            subscription_read: Can read subscription details.
+            subscription_write: Can change subscription details.
+            tag_read: Can read tags.
+            tag_write: can change tags.
+            tax_rate_read: Can read vat rate details.
+            tax_rate_write: Can change vat rate details.
+            transaction_read: Can read transaction details.
+            transaction_write: Can change transaction details.
+            vehicle_read: Can read vehicle details.
+            vehicle_write: Can change vehicle details.
+            wallet_read: Can read wallet details.
+            wallet_write: Can change wallet details.
+            webhook_subscription_read: Can read webhook subscription details.
+            webhook_subscription_write: Can change webhook subscription details.
+x-readme:
+  hidden: false

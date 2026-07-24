@@ -1,0 +1,989 @@
+openapi: 3.1.0
+info:
+  title: Soldo Business API v2.0 Accounting Classification Refueling Transactions API
+  description: Soldo Business API v2.0 OpenAPI specification
+  version: 5.56.0
+servers:
+- url: https://api.soldo.com
+  description: Production server (using live data)
+- url: https://api-demo.soldocloud.net
+  description: Sandbox server (using test data)
+tags:
+- name: Refueling Transactions
+paths:
+  /business/v2/refueling/{refuelingId}:
+    get:
+      tags:
+      - Refueling Transactions
+      summary: Get Refueling Transaction
+      description: Endpoint to get a specific `Refueling` by ID.
+      operationId: refueling-get
+      parameters:
+      - name: refuelingId
+        in: path
+        required: true
+        schema:
+          type: string
+          description: The `Refueling` ID.
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+      - name: X-Soldo-Fingerprint
+        in: header
+        required: true
+        schema:
+          type: string
+          default: '{{fingerprint}}'
+          description: '[Advanced authentication](ref:advanced-authentication): `SHA512SUM` of the fingerprint values listed in the fingerprint order for this endpoint.'
+          example: '{{fingerprint}}'
+      - name: X-Soldo-Fingerprint-Signature
+        in: header
+        required: true
+        schema:
+          type: string
+          default: '{{fingerprint_signature}}'
+          description: '[Advanced authentication](ref:advanced-authentication): Signature of the `X-Soldo-Fingerprint`.'
+          example: '{{fingerprint_signature}}'
+      responses:
+        '200':
+          description: The returned resource is a single `Refueling`.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Refueling'
+        '404':
+          description: One or more resource requested does not exist.
+      security:
+      - standardAuth:
+        - transaction_read
+      x-soldo:
+        fingerprint-order: refuelingId, token
+    put:
+      tags:
+      - Refueling Transactions
+      summary: Update Refueling Transaction
+      description: Endpoint to update a specific `Refueling` by ID.
+      operationId: refueling-update
+      parameters:
+      - name: refuelingId
+        in: path
+        required: true
+        schema:
+          type: string
+          description: The `Refueling` ID.
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+      - name: X-Soldo-Fingerprint
+        in: header
+        required: true
+        schema:
+          type: string
+          default: '{{fingerprint}}'
+          description: '[Advanced authentication](ref:advanced-authentication): `SHA512SUM` of the fingerprint values listed in the fingerprint order for this endpoint.'
+          example: '{{fingerprint}}'
+      - name: X-Soldo-Fingerprint-Signature
+        in: header
+        required: true
+        schema:
+          type: string
+          default: '{{fingerprint_signature}}'
+          description: '[Advanced authentication](ref:advanced-authentication): Signature of the `X-Soldo-Fingerprint`.'
+          example: '{{fingerprint_signature}}'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateRefueling'
+      responses:
+        '200':
+          description: The returned resource is a single `Refueling`.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Refueling'
+        '400':
+          description: Your request has missing arguments or is malformed.
+        '404':
+          description: One or more resource requested does not exist.
+      security:
+      - standardAuth:
+        - transaction_write
+      x-soldo:
+        fingerprint-order: refuelingId, mileage, quantity, txFuelType, unitPrice, token
+  /business/v2/refueling:
+    get:
+      tags:
+      - Refueling Transactions
+      summary: Search Refueling Transactions
+      description: Endpoint to search `Refuelings` using filtering parameters.
+      operationId: refueling-search
+      parameters:
+      - name: type
+        in: query
+        description: The resource `type` to be used together with id.
+        schema:
+          $ref: '#/components/schemas/RefuelingType'
+        example: card
+      - name: publicId
+        in: query
+        description: The ID of the `type` resource.
+        schema:
+          type: string
+          description: The ID of the `type` resource.
+          example: 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
+        example: 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
+      - name: fromDate
+        in: query
+        description: 'The beginning of the period of the search `fromDate` included (i.e. greater than or equal to) (Formats: `yyyy-MM-dd`, `yyyy-MM-ddThh:mm:ss`, `yyyy-MM-ddThh:mm:ssZ`).'
+        schema:
+          $ref: '#/components/schemas/DateParam'
+        example: '2020-04-06T12:48:40Z'
+      - name: toDate
+        in: query
+        description: 'The end of the period of the search `toDate` included (i.e. less than) (Formats: `yyyy-MM-dd`, `yyyy-MM-ddThh:mm:ss`, `yyyy-MM-ddThh:mm:ssZ`).'
+        schema:
+          $ref: '#/components/schemas/DateParam'
+        example: '2020-05-07T12:48:40Z'
+      - name: dateType
+        in: query
+        description: It determines the date to be considered for `fromDate` and `toDate` parameters.
+        schema:
+          $ref: '#/components/schemas/TransactionDateType'
+        example: TRANSACTION
+      - name: txCountry
+        in: query
+        description: The [ISO 3166-1 alpha-3](https://www.iso.org/obp/ui/#search/code/) code of the country where the `Transaction` was made.
+        schema:
+          $ref: '#/components/schemas/ISO3166Country'
+        example: GBR
+      - name: txStatus
+        in: query
+        description: A list of statuses the searched `Transactions` should be in.
+        schema:
+          type: array
+          description: A list of statuses the searched `Transactions` should be in.
+          items:
+            $ref: '#/components/schemas/TransactionStatus'
+        example: Authorised
+      - name: txFuelType
+        in: query
+        description: The fuel type specified on the `Transaction`.
+        schema:
+          $ref: '#/components/schemas/FuelType'
+        example: PETROL
+      - name: showFuelDetails
+        in: query
+        description: It determines whether to show further Fuel Details of the `Transaction`.
+        schema:
+          type: boolean
+          description: It determines whether to show further Fuel Details of the `Transaction`.
+          example: true
+        example: true
+      - name: p
+        in: query
+        description: It indicates the specific page to display (the counter starts from zero).
+        schema:
+          type: integer
+          format: int32
+          default: 0
+          description: It indicates the specific page to display (the counter starts from zero).
+          example: 3
+        example: 3
+      - name: s
+        in: query
+        description: It indicates the number of items per page.
+        schema:
+          type: integer
+          format: int32
+          default: 0
+          description: It indicates the number of items per page.
+          example: 25
+          maximum: 50
+        example: 25
+      - name: d
+        in: query
+        description: It indicates how the pages are ordered.
+        schema:
+          $ref: '#/components/schemas/Direction'
+        example: DESC
+      - name: props
+        in: query
+        description: It indicates the sorting direction applied to the above parameters. To apply a sorting on multiple parameters, set as many times the `props` parameter in the request.
+        schema:
+          type: array
+          description: It indicates the sorting direction applied to the above parameters. To apply a sorting on multiple parameters, set as many times the `props` parameter in the request.
+          example: creationTime
+          items:
+            type: string
+            description: It indicates the sorting direction applied to the above parameters. To apply a sorting on multiple parameters, set as many times the `props` parameter in the request.
+            example: creationTime
+        example: creationTime
+      - name: X-Soldo-Fingerprint
+        in: header
+        required: true
+        schema:
+          type: string
+          default: '{{fingerprint}}'
+          description: '[Advanced authentication](ref:advanced-authentication): `SHA512SUM` of the fingerprint values listed in the fingerprint order for this endpoint.'
+          example: '{{fingerprint}}'
+      - name: X-Soldo-Fingerprint-Signature
+        in: header
+        required: true
+        schema:
+          type: string
+          default: '{{fingerprint_signature}}'
+          description: '[Advanced authentication](ref:advanced-authentication): Signature of the `X-Soldo-Fingerprint`.'
+          example: '{{fingerprint_signature}}'
+      responses:
+        '200':
+          description: The result is an array containing `Refuelings`.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Refuelings'
+        '400':
+          description: Your request has missing arguments or is malformed.
+      security:
+      - standardAuth:
+        - transaction_read
+      x-soldo:
+        fingerprint-order: type, publicId, fromDate, toDate, dateType, txCountry, txStatus, txFuelType, token
+components:
+  schemas:
+    FuelType:
+      type: string
+      enum:
+      - PETROL
+      - DIESEL
+      - METHANE
+      - LPG
+      - LNG
+      - ELECTRIC
+      - UNKNOWN
+    TransactionSign:
+      type: string
+      enum:
+      - Negative
+      - Positive
+      - None
+    DateParam:
+      description: 'The end of the period of the search `toDate` included (i.e. less than) (Formats: `yyyy-MM-dd`, `yyyy-MM-ddThh:mm:ss`, `yyyy-MM-ddThh:mm:ssZ`).'
+      example: '1970-01-30'
+    TransactionStatus:
+      type: string
+      enum:
+      - Authorised
+      - Settled
+      - Cancelled
+      - Declined
+      - DisputeFailed
+      - DisputeOpened
+      - DisputeWon
+      - Moved
+      - Unknown
+    Direction:
+      type: string
+      description: It indicates how the pages are ordered.
+      enum:
+      - ASC
+      - DESC
+      example: DESC
+    TransactionDateType:
+      type: string
+      default: TRANSACTION
+      description: It determines the date to be considered for `fromDate` and `toDate` parameters.
+      enum:
+      - TRANSACTION
+      - SETTLEMENT
+      - UPDATE
+      example: TRANSACTION
+    ISO4217Currency:
+      type: string
+      enum:
+      - AED
+      - AFN
+      - ALL
+      - AMD
+      - ANG
+      - AOA
+      - ARS
+      - AUD
+      - AWG
+      - AZN
+      - BAM
+      - BBD
+      - BDT
+      - BGN
+      - BHD
+      - BIF
+      - BMD
+      - BND
+      - BOB
+      - BOV
+      - BRL
+      - BSD
+      - BTN
+      - BWP
+      - BYN
+      - BZD
+      - CAD
+      - CDF
+      - CHE
+      - CHF
+      - CHW
+      - CLF
+      - CLP
+      - CNY
+      - COP
+      - COU
+      - CRC
+      - CUC
+      - CUP
+      - CVE
+      - CZK
+      - DJF
+      - DKK
+      - DOP
+      - DZD
+      - EGP
+      - ERN
+      - ETB
+      - EUR
+      - FJD
+      - FKP
+      - GBP
+      - GEL
+      - GHS
+      - GIP
+      - GMD
+      - GNF
+      - GTQ
+      - GYD
+      - HKD
+      - HNL
+      - HRK
+      - HTG
+      - HUF
+      - IDR
+      - ILS
+      - INR
+      - IQD
+      - IRR
+      - ISK
+      - JMD
+      - JOD
+      - JPY
+      - KES
+      - KGS
+      - KHR
+      - KMF
+      - KPW
+      - KRW
+      - KWD
+      - KYD
+      - KZT
+      - LAK
+      - LBP
+      - LKR
+      - LRD
+      - LSL
+      - LYD
+      - MAD
+      - MDL
+      - MGA
+      - MKD
+      - MMK
+      - MNT
+      - MOP
+      - MRO
+      - MRU
+      - MUR
+      - MVR
+      - MWK
+      - MXN
+      - MXV
+      - MYR
+      - MZN
+      - NAD
+      - NGN
+      - NIO
+      - NOK
+      - NPR
+      - NZD
+      - OMR
+      - PAB
+      - PEN
+      - PGK
+      - PHP
+      - PKR
+      - PLN
+      - PYG
+      - QAR
+      - RON
+      - RSD
+      - RUB
+      - RWF
+      - SAR
+      - SBD
+      - SCR
+      - SDG
+      - SEK
+      - SGD
+      - SHP
+      - SLE
+      - SLL
+      - SOS
+      - SRD
+      - SSP
+      - STD
+      - STN
+      - SVC
+      - SYP
+      - SZL
+      - THB
+      - TJS
+      - TMT
+      - TND
+      - TOP
+      - TRY
+      - TTD
+      - TWD
+      - TZS
+      - UAH
+      - UGX
+      - USD
+      - USN
+      - UYI
+      - UYU
+      - UYW
+      - UZS
+      - VED
+      - VEF
+      - VES
+      - VND
+      - VUV
+      - WST
+      - XAF
+      - XAG
+      - XAU
+      - XBA
+      - XBB
+      - XBC
+      - XBD
+      - XCD
+      - XDR
+      - XOF
+      - XPD
+      - XPF
+      - XPT
+      - XSU
+      - XTS
+      - XUA
+      - XXX
+      - YER
+      - ZAR
+      - ZMW
+      - ZWL
+    UpdateRefueling:
+      description: Update `Refueling` JSON parameters.
+      properties:
+        mileage:
+          type: integer
+          format: int32
+          description: The mileage of the `Vehicle`.
+          example: 125000
+        unit_price:
+          type: number
+          description: The fuel unit price as specified on the `Transaction`.
+          example: 1.41
+        tx_fuel_type:
+          $ref: '#/components/schemas/FuelType'
+          description: The fuel type specified on the `Transaction`.
+          example: PETROL
+        quantity:
+          type: number
+          description: The fuel quantity as specified on the `Transaction`.
+          example: 80
+    Refueling:
+      properties:
+        public_id:
+          type: string
+          description: The refueling ID.
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+        transaction_id:
+          type: string
+          description: 'The `Transaction` ID (sortable: yes).'
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+        card_id:
+          type: string
+          description: 'The ID of the `Card` used for the `Transaction` (sortable: no).'
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+        tx_status:
+          $ref: '#/components/schemas/TransactionStatus'
+          description: 'The status of the refueling `Transaction` (sortable: yes).'
+        transaction_sign:
+          $ref: '#/components/schemas/TransactionSign'
+          description: 'The sign of the refueling `Transaction` amount (sortable: no).'
+          example: Negative
+        tx_amount:
+          type: number
+          description: 'The amount of the refueling `Transaction` in the currency of the merchant (sortable: no).'
+          example: 10.25
+        tx_amount_currency:
+          $ref: '#/components/schemas/ISO4217Currency'
+          description: 'The currency [ISO 4217](https://www.six-group.com/en/products-services/financial-information/data-standards.html#scrollTo=maintenance-agency) code of the `tx_amount` (sortable: no).'
+          example: EUR
+        tx_date:
+          type: string
+          description: 'The date and time of the transaction at the `Authorised` status (sortable: yes).'
+          example: '2017-06-01T12:48:40Z'
+        tx_settlement_date:
+          type: string
+          description: 'The date and time of the transaction at the `Settled` status (sortable: yes).'
+          example: '2017-06-01T12:48:40Z'
+        update_time:
+          type: string
+          description: 'The date and time of the last update to the refueling `Transaction` (sortable: yes).'
+          example: '2017-06-01T12:48:40Z'
+        tx_vat_amount:
+          type: number
+          description: 'The amount of the VAT in the currency of the `Wallet` (sortable: no).'
+          example: 10.25
+        tx_vat_currency:
+          $ref: '#/components/schemas/ISO4217Currency'
+          description: 'The currency [ISO 4217](https://www.six-group.com/en/products-services/financial-information/data-standards.html#scrollTo=maintenance-agency) code of the `vat_amount` (sortable: no).'
+          example: EUR
+        tx_country:
+          $ref: '#/components/schemas/ISO3166Country'
+          description: 'The [ISO 3166-1 alpha-3](https://www.iso.org/obp/ui/#search/code/) code of the country where the refueling `Transaction` was made  (sortable: no).'
+          example: GBR
+        plate:
+          type: string
+          description: Vehicle's plate number.
+          example: AA000BB
+        vehicle_fuel_type:
+          $ref: '#/components/schemas/FuelType'
+          description: Fuel type specified in the Vehicle's configuration page.
+          example: PETROL
+        vat_deductibility_percentage:
+          type: string
+          description: The deductible VAT percentage configured for the vehicle.
+          example: 40%
+        mileage:
+          type: integer
+          format: int32
+          description: The vehicle mileage.
+          example: 125000
+        quantity:
+          type: number
+          description: The fuel quantity as specified in the invoice.
+          example: 80
+        unit_price:
+          type: number
+          description: The fuel unit price as specified on the transaction.
+          example: 1.41
+        tx_fuel_type:
+          $ref: '#/components/schemas/FuelType'
+          description: The fuel type as specified on the transaction.
+          example: PETROL
+        to_be_ignored:
+          type: boolean
+          description: If the transaction link status is set to ignored.
+          example: true
+        invoice_id:
+          type: integer
+          format: int64
+          description: Invoice ID.
+          example: 4421109
+        invoice_number:
+          type: string
+          description: Invoice number.
+          example: NVC112200987
+        invoice_date:
+          type: string
+          description: Invoice date.
+          example: '2017-06-01T12:48:40Z'
+        invoice_total_amount:
+          type: number
+          description: Total amount of the linked invoice.
+          example: 10.25
+        invoice_row:
+          type: integer
+          format: int32
+          description: Row of the linked invoice.
+          example: 4
+        invoice_row_amount:
+          type: number
+          description: Amount of the transaction's row in the linked invoice.
+          example: 10.25
+        supplier_vat_id:
+          type: string
+          description: Supplier VAT ID.
+          example: VT09138461
+        dri:
+          type: string
+          description: DRI (Documento Riepilogativo) code.
+          example: DRI00099881
+        vehicle_id:
+          type: string
+          description: Vehicle ID.
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+    RefuelingType:
+      type: string
+      description: The resource `type` to be used together with id.
+      enum:
+      - transaction
+      - vehicle
+      - card
+      example: card
+    Refuelings:
+      properties:
+        total:
+          type: integer
+          format: int32
+          description: It represents the total number of available items in the list.
+          example: 168
+        pages:
+          type: integer
+          format: int32
+          description: It represents the total number of available pages.
+          example: 7
+        page_size:
+          type: integer
+          format: int32
+          description: It represents the number of items per page.
+          example: 25
+        current_page:
+          type: integer
+          format: int32
+          description: It indicates the current page (the counter starts from zero).
+          example: 0
+        results_size:
+          type: integer
+          format: int32
+          description: It indicates the size of the array results.
+          example: 25
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Refueling'
+    ISO3166Country:
+      type: string
+      enum:
+      - ASC
+      - AND
+      - ARE
+      - AFG
+      - ATG
+      - AIA
+      - ALB
+      - ARM
+      - ANT
+      - AGO
+      - ATA
+      - ARG
+      - ASM
+      - AUT
+      - AUS
+      - ABW
+      - ALA
+      - AZE
+      - BIH
+      - BRB
+      - BGD
+      - BEL
+      - BFA
+      - BGR
+      - BHR
+      - BDI
+      - BEN
+      - BLM
+      - BMU
+      - BRN
+      - BOL
+      - BES
+      - BRA
+      - BHS
+      - BTN
+      - BUR
+      - BVT
+      - BWA
+      - BLR
+      - BLZ
+      - CAN
+      - CCK
+      - COD
+      - CAF
+      - COG
+      - CHE
+      - CIV
+      - COK
+      - CHL
+      - CMR
+      - CHN
+      - COL
+      - CPT
+      - CRI
+      - CSXX
+      - CUB
+      - CPV
+      - CUW
+      - CXR
+      - CYP
+      - CZE
+      - DEU
+      - DGA
+      - DJI
+      - DNK
+      - DMA
+      - DOM
+      - DZA
+      - ECU
+      - EST
+      - EGY
+      - ESH
+      - ERI
+      - ESP
+      - ETH
+      - FIN
+      - FJI
+      - FLK
+      - FSM
+      - FRO
+      - FRA
+      - FXX
+      - GAB
+      - GBR
+      - GRD
+      - GEO
+      - GUF
+      - GGY
+      - GHA
+      - GIB
+      - GRL
+      - GMB
+      - GIN
+      - GLP
+      - GNQ
+      - GRC
+      - SGS
+      - GTM
+      - GUM
+      - GNB
+      - GUY
+      - HKG
+      - HMD
+      - HND
+      - HRV
+      - HTI
+      - HUN
+      - IDN
+      - IRL
+      - ISR
+      - IMN
+      - IND
+      - IOT
+      - IRQ
+      - IRN
+      - ISL
+      - ITA
+      - JEY
+      - JAM
+      - JOR
+      - JPN
+      - KEN
+      - KGZ
+      - KHM
+      - KIR
+      - COM
+      - KNA
+      - PRK
+      - KOR
+      - KWT
+      - CYM
+      - KAZ
+      - LAO
+      - LBN
+      - LCA
+      - LIE
+      - LKA
+      - LBR
+      - LSO
+      - LTU
+      - LUX
+      - LVA
+      - LBY
+      - MAR
+      - MCO
+      - MDA
+      - MNE
+      - MAF
+      - MDG
+      - MHL
+      - MKD
+      - MLI
+      - MMR
+      - MNG
+      - MAC
+      - MNP
+      - MTQ
+      - MRT
+      - MSR
+      - MLT
+      - MUS
+      - MDV
+      - MWI
+      - MEX
+      - MYS
+      - MOZ
+      - NAM
+      - NCL
+      - NER
+      - NFK
+      - NGA
+      - NIC
+      - NLD
+      - NOR
+      - NPL
+      - NRU
+      - NTZ
+      - NIU
+      - NZL
+      - OMN
+      - PAN
+      - PER
+      - PYF
+      - PNG
+      - PHL
+      - PAK
+      - POL
+      - SPM
+      - PCN
+      - PRI
+      - PSE
+      - PRT
+      - PLW
+      - PRY
+      - QAT
+      - REU
+      - ROU
+      - ROM
+      - SRB
+      - RUS
+      - RWA
+      - SAU
+      - SLB
+      - SYC
+      - SDN
+      - SWE
+      - SGP
+      - SHN
+      - SVN
+      - SJM
+      - SVK
+      - SLE
+      - SMR
+      - SEN
+      - SOM
+      - SUR
+      - SSD
+      - STP
+      - SUN
+      - SLV
+      - SXM
+      - SYR
+      - SWZ
+      - TAA
+      - TCA
+      - TCD
+      - ATF
+      - TGO
+      - THA
+      - TJK
+      - TKL
+      - TLS
+      - TKM
+      - TUN
+      - TON
+      - TUR
+      - TTO
+      - TUV
+      - TWN
+      - TZA
+      - UKR
+      - UGA
+      - UMI
+      - USA
+      - URY
+      - UZB
+      - VAT
+      - VCT
+      - VEN
+      - VGB
+      - VIR
+      - VNM
+      - VUT
+      - WLF
+      - WSM
+      - XKX
+      - XXK
+      - QZZ
+      - YEM
+      - MYT
+      - YUCS
+      - ZAF
+      - ZMB
+      - ZRCD
+      - ZWE
+  securitySchemes:
+    standardAuth:
+      type: oauth2
+      description: This API uses OAuth 2 with the "Client Credentials" grant flow.
+      flows:
+        clientCredentials:
+          tokenUrl: https://api.soldo.com/oauth/authorize
+          refreshUrl: https://api.soldo.com/oauth/refresh
+          scopes:
+            address_read: Can read address details.
+            address_write: Can update address details.
+            card_read: Can read card details.
+            card_write: Can change card details.
+            company_read: Can read company details.
+            company_write: Can change company details.
+            contact_read: Can read contact details.
+            contact_write: Can change contact details.
+            employee_read: Can read employee details.
+            employee_write: Can change employee details.
+            expense_category_read: Can read expense category details.
+            expense_category_write: Can change expense category details.
+            expense_report_read: Can read expense report details.
+            expense_report_write: Can change expense report details.
+            expense_review_read: Can read expense review status.
+            expense_review_write: Can change expense review status.
+            group_read: Can read group details.
+            group_write: Can change groups details.
+            online_ads_read: Can read online ads details.
+            online_ads_write: Can change online ads details.
+            payment_read: Can read payment details.
+            payment_write: Can change payment details.
+            purchase_read: Can read purchase details.
+            purchase_write: Can change purchase details.
+            refueling_read: Can read refueling details.
+            refueling_write: Can change refueling details.
+            resource_set_read: Can read resource set details.
+            resource_set_write: Can change resource set details.
+            role_read: Can read role details.
+            statement_read: Can read statement details.
+            subscription_read: Can read subscription details.
+            subscription_write: Can change subscription details.
+            tag_read: Can read tags.
+            tag_write: can change tags.
+            tax_rate_read: Can read vat rate details.
+            tax_rate_write: Can change vat rate details.
+            transaction_read: Can read transaction details.
+            transaction_write: Can change transaction details.
+            vehicle_read: Can read vehicle details.
+            vehicle_write: Can change vehicle details.
+            wallet_read: Can read wallet details.
+            wallet_write: Can change wallet details.
+            webhook_subscription_read: Can read webhook subscription details.
+            webhook_subscription_write: Can change webhook subscription details.
+x-readme:
+  hidden: false

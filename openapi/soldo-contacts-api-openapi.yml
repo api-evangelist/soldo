@@ -1,0 +1,927 @@
+openapi: 3.1.0
+info:
+  title: Soldo Business API v2.0 Accounting Classification Contacts API
+  description: Soldo Business API v2.0 OpenAPI specification
+  version: 5.56.0
+servers:
+- url: https://api.soldo.com
+  description: Production server (using live data)
+- url: https://api-demo.soldocloud.net
+  description: Sandbox server (using test data)
+tags:
+- name: Contacts
+paths:
+  /business/v2/contacts:
+    get:
+      tags:
+      - Contacts
+      summary: Search Contacts
+      description: Endpoint to search `Contacts` using filtering parameters.
+      operationId: contact-search
+      parameters:
+      - name: statuses
+        in: query
+        description: The status of the `Contact`.
+        schema:
+          type: array
+          description: The status of the `Contact`.
+          example: SUGGESTED
+          items:
+            $ref: '#/components/schemas/ContactStatus'
+          uniqueItems: true
+        example: SUGGESTED
+      - name: name
+        in: query
+        description: The name of the `Contact`.
+        schema:
+          type: array
+          description: The name of the `Contact`.
+          example: John Doe
+          items:
+            type: string
+            description: The name of the `Contact`.
+            example: John Doe
+          uniqueItems: true
+        example: John Doe
+      - name: type
+        in: query
+        description: The type of the `Contact`.
+        schema:
+          type: array
+          description: The type of the `Contact`.
+          example: SUPPLIER
+          items:
+            $ref: '#/components/schemas/ContactType'
+          uniqueItems: true
+        example: SUPPLIER
+      - name: countries
+        in: query
+        description: The [ISO 3166-1 alpha-3](https://www.iso.org/obp/ui/#search/code/) countries of the `Contact`.
+        schema:
+          type: array
+          description: The [ISO 3166-1 alpha-3](https://www.iso.org/obp/ui/#search/code/) countries of the `Contact`.
+          example: GBR
+          items:
+            $ref: '#/components/schemas/ISO3166Country'
+          uniqueItems: true
+        example: GBR
+      - name: user
+        in: query
+        description: The ID of the `User` the bank details are assigned.
+        schema:
+          type: array
+          description: The ID of the `User` the bank details are assigned.
+          example: XMPL1234-000001
+          items:
+            type: string
+            description: The ID of the `User` the bank details are assigned.
+            example: XMPL1234-000001
+          uniqueItems: true
+        example: XMPL1234-000001
+      - name: p
+        in: query
+        description: It indicates the specific page to display (the counter starts from zero).
+        schema:
+          type: integer
+          format: int32
+          default: 0
+          description: It indicates the specific page to display (the counter starts from zero).
+          example: 3
+        example: 3
+      - name: s
+        in: query
+        description: It indicates the number of items per page.
+        schema:
+          type: integer
+          format: int32
+          default: 0
+          description: It indicates the number of items per page.
+          example: 25
+          maximum: 50
+        example: 25
+      - name: d
+        in: query
+        description: It indicates how the pages are ordered.
+        schema:
+          $ref: '#/components/schemas/Direction'
+        example: DESC
+      - name: props
+        in: query
+        description: It indicates the sorting direction applied to the above parameters. To apply a sorting on multiple parameters, set as many times the `props` parameter in the request.
+        schema:
+          type: array
+          description: It indicates the sorting direction applied to the above parameters. To apply a sorting on multiple parameters, set as many times the `props` parameter in the request.
+          example: creationTime
+          items:
+            type: string
+            description: It indicates the sorting direction applied to the above parameters. To apply a sorting on multiple parameters, set as many times the `props` parameter in the request.
+            example: creationTime
+        example: creationTime
+      responses:
+        '200':
+          description: The returned result is a list of `Contacts`.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Contacts'
+        '400':
+          description: Your request has missing arguments or is malformed.
+      security:
+      - standardAuth:
+        - contact_read
+    post:
+      tags:
+      - Contacts
+      summary: Add Contact
+      description: Endpoint to add a new `Contact`.
+      operationId: contact-add
+      parameters:
+      - name: X-Soldo-Fingerprint
+        in: header
+        required: true
+        schema:
+          type: string
+          default: '{{fingerprint}}'
+          description: '[Advanced authentication](ref:advanced-authentication): `SHA512SUM` of the fingerprint values listed in the fingerprint order for this endpoint.'
+          example: '{{fingerprint}}'
+      - name: X-Soldo-Fingerprint-Signature
+        in: header
+        required: true
+        schema:
+          type: string
+          default: '{{fingerprint_signature}}'
+          description: '[Advanced authentication](ref:advanced-authentication): Signature of the `X-Soldo-Fingerprint`.'
+          example: '{{fingerprint_signature}}'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateContact'
+      responses:
+        '200':
+          description: The returned resource is a single `Contact`.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateContactResponse'
+        '400':
+          description: Your request has missing arguments or is malformed.
+      security:
+      - standardAuth:
+        - contact_write
+      x-soldo:
+        fingerprint-order: name, type, country, join(concat(account_info.type, account_info.identification)),userId, token
+  /business/v2/contacts/{contactId}:
+    get:
+      tags:
+      - Contacts
+      summary: Get Contact
+      description: Endpoint to get specific `Contact` by ID.
+      operationId: contact-get
+      parameters:
+      - name: contactId
+        in: path
+        required: true
+        schema:
+          type: string
+          description: The `Contact` ID.
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+      responses:
+        '200':
+          description: The returned resource is a single `Contact`.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Contact'
+        '400':
+          description: Your request has missing arguments or is malformed.
+      security:
+      - standardAuth:
+        - contact_write
+    put:
+      tags:
+      - Contacts
+      summary: Update Contact
+      description: Endpoint to update `Contact`.
+      operationId: contact-update
+      parameters:
+      - name: contactId
+        in: path
+        required: true
+        schema:
+          type: string
+          description: The `Contact` ID.
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+      - name: X-Soldo-Fingerprint
+        in: header
+        required: true
+        schema:
+          type: string
+          default: '{{fingerprint}}'
+          description: '[Advanced authentication](ref:advanced-authentication): `SHA512SUM` of the fingerprint values listed in the fingerprint order for this endpoint.'
+          example: '{{fingerprint}}'
+      - name: X-Soldo-Fingerprint-Signature
+        in: header
+        required: true
+        schema:
+          type: string
+          default: '{{fingerprint_signature}}'
+          description: '[Advanced authentication](ref:advanced-authentication): Signature of the `X-Soldo-Fingerprint`.'
+          example: '{{fingerprint_signature}}'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateContact'
+      responses:
+        '200':
+          description: The returned resource is a single `Contact`.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateContactResponse'
+        '400':
+          description: Your request has missing arguments or is malformed.
+        '404':
+          description: One or more resource requested does not exist.
+      security:
+      - standardAuth:
+        - contact_write
+      x-soldo:
+        fingerprint-order: contactId, type, join(concat(account_info.type, account_info.identification)),userId, token
+    delete:
+      tags:
+      - Contacts
+      summary: Delete Contact
+      description: Endpoint to delete a specific `Contact`.
+      operationId: contact-delete
+      parameters:
+      - name: contactId
+        in: path
+        required: true
+        schema:
+          type: string
+          description: The `Contact` ID.
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+      responses:
+        '204':
+          description: No content as result.
+        '400':
+          description: Your request has missing arguments or is malformed.
+      security:
+      - standardAuth:
+        - contact_write
+components:
+  schemas:
+    CreateContactResponse:
+      properties:
+        id:
+          type: string
+          description: The `Contact` ID.
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+        name:
+          type: string
+          description: The name of the `Contact`.
+          example: John Doe
+        user_id:
+          type: string
+          description: The ID of the `User` the bank details are assigned to (only available for `Contacts` of type `EMPLOYEE`).
+          example: XMPL1234-000001
+        type:
+          $ref: '#/components/schemas/ContactType'
+          description: The type of `Contact`.
+          example: SUPPLIER
+        payment_scheme:
+          type: array
+          description: The type of payment accepted by the `Contact`.
+          items:
+            $ref: '#/components/schemas/PaymentSchema'
+          uniqueItems: true
+        account_info:
+          type: array
+          description: The bank account information of the `Contact`.
+          items:
+            $ref: '#/components/schemas/AccountInfoContact'
+        bic:
+          type: string
+          description: The bic of the `User` the bank details .
+          example: XMPL1234-000001
+        country:
+          $ref: '#/components/schemas/ISO3166Country'
+          description: The [ISO 3166-1 alpha-3](https://www.iso.org/obp/ui/#search/code/) code of the country of the `Contact`.
+          example: GBR
+        status:
+          $ref: '#/components/schemas/ContactStatus'
+          description: The status of the `Contact`.
+          example: SUGGESTED
+        creation_time:
+          type: string
+          description: The date and time when the `Contact` was created.
+          example: '2017-06-01T12:48:40Z'
+        last_update_time:
+          type: string
+          description: The date and time when the `Contact` was last updated.
+          example: '2017-06-01T12:48:40Z'
+        validation:
+          $ref: '#/components/schemas/ContactSuggestion'
+          description: The validation for contact correction.
+    PaymentSchema:
+      type: string
+      enum:
+      - FPS
+      - SEPA
+      - SEPA_INSTANT
+    ContactSuggestion:
+      properties:
+        field:
+          type: string
+          description: The field of the `Contact` that has a suggested correction.
+          example: name
+        current_value:
+          type: string
+          description: The name provided for the `Contact`.
+          example: JAMES ADAN
+        suggested_value:
+          type: string
+          description: The suggested name for the `Contact`
+          example: JAMES ADAM
+        match_status:
+          $ref: '#/components/schemas/ContactMatchStatus'
+          description: Whether the provided `Contact` bank account data matches.
+          example: PARTIAL_MATCH
+    UpdateContactResponse:
+      properties:
+        id:
+          type: string
+          description: The `Contact` ID.
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+        name:
+          type: string
+          description: The name of the `Contact`.
+          example: John Doe
+        user_id:
+          type: string
+          description: The ID of the `User` the bank details are assigned to (only available for `Contacts` of type `EMPLOYEE`).
+          example: XMPL1234-000001
+        type:
+          $ref: '#/components/schemas/ContactType'
+          description: The type of `Contact`.
+          example: SUPPLIER
+        payment_scheme:
+          type: array
+          description: The type of payment accepted by the `Contact`.
+          items:
+            $ref: '#/components/schemas/PaymentSchema'
+          uniqueItems: true
+        account_info:
+          type: array
+          description: The bank account information of the `Contact`.
+          items:
+            $ref: '#/components/schemas/AccountInfoContact'
+        bic:
+          type: string
+          description: The bic of the `User` the bank details .
+          example: XMPL1234-000001
+        country:
+          $ref: '#/components/schemas/ISO3166Country'
+          description: The [ISO 3166-1 alpha-3](https://www.iso.org/obp/ui/#search/code/) code of the country of the `Contact`.
+          example: GBR
+        status:
+          $ref: '#/components/schemas/ContactStatus'
+          description: The status of the `Contact`.
+          example: SUGGESTED
+        creation_time:
+          type: string
+          description: The date and time when the `Contact` was created.
+          example: '2017-06-01T12:48:40Z'
+        last_update_time:
+          type: string
+          description: The date and time when the `Contact` was last updated.
+          example: '2017-06-01T12:48:40Z'
+        validation:
+          $ref: '#/components/schemas/ContactSuggestion'
+          description: The validation for contact correction.
+    Contacts:
+      properties:
+        total:
+          type: integer
+          format: int32
+          description: It represents the total number of available items in the list.
+          example: 168
+        pages:
+          type: integer
+          format: int32
+          description: It represents the total number of available pages.
+          example: 7
+        page_size:
+          type: integer
+          format: int32
+          description: It represents the number of items per page.
+          example: 25
+        current_page:
+          type: integer
+          format: int32
+          description: It indicates the current page (the counter starts from zero).
+          example: 0
+        results_size:
+          type: integer
+          format: int32
+          description: It indicates the size of the array results.
+          example: 25
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Contact'
+    Direction:
+      type: string
+      description: It indicates how the pages are ordered.
+      enum:
+      - ASC
+      - DESC
+      example: DESC
+    ContactType:
+      type: string
+      enum:
+      - SUPPLIER
+      - CLIENT
+      - EMPLOYEE
+      - ACCOUNT
+    Contact:
+      properties:
+        id:
+          type: string
+          description: The `Contact` ID.
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+        name:
+          type: string
+          description: The name of the `Contact`.
+          example: John Doe
+        user_id:
+          type: string
+          description: The ID of the `User` the bank details are assigned to (only available for `Contacts` of type `EMPLOYEE`).
+          example: XMPL1234-000001
+        type:
+          $ref: '#/components/schemas/ContactType'
+          description: The type of `Contact`.
+          example: SUPPLIER
+        payment_scheme:
+          type: array
+          description: The type of payment accepted by the `Contact`.
+          items:
+            $ref: '#/components/schemas/PaymentSchema'
+          uniqueItems: true
+        account_info:
+          type: array
+          description: The bank account information of the `Contact`.
+          items:
+            $ref: '#/components/schemas/AccountInfoContact'
+        bic:
+          type: string
+          description: The bic of the `User` the bank details .
+          example: XMPL1234-000001
+        country:
+          $ref: '#/components/schemas/ISO3166Country'
+          description: The [ISO 3166-1 alpha-3](https://www.iso.org/obp/ui/#search/code/) code of the country of the `Contact`.
+          example: GBR
+        status:
+          $ref: '#/components/schemas/ContactStatus'
+          description: The status of the `Contact`.
+          example: SUGGESTED
+        creation_time:
+          type: string
+          description: The date and time when the `Contact` was created.
+          example: '2017-06-01T12:48:40Z'
+        last_update_time:
+          type: string
+          description: The date and time when the `Contact` was last updated.
+          example: '2017-06-01T12:48:40Z'
+        bank_account_verification_status:
+          $ref: '#/components/schemas/ContactBankAccountVerificationStatus'
+          description: Whether the provided `Contact` bank account details matches the actual ones.
+          example: '2017-06-01T12:48:40Z'
+    ContactBankAccountVerificationStatus:
+      type: string
+      enum:
+      - UNABLE_TO_MATCH
+      - FULL_MATCH
+      - PARTIAL_MATCH
+      - NO_MATCH
+      - UNABLE_TO_VERIFY
+    AccountTypeRequest:
+      type: string
+      enum:
+      - PERSONAL
+      - BUSINESS
+    UpdateContact:
+      description: Update `Contact` JSON parameters.
+      properties:
+        type:
+          $ref: '#/components/schemas/ContactType'
+          description: The type of the `Contact`. If type is ACCOUNT, cannot be updated
+          example: SUPPLIER
+        user_id:
+          type: string
+          description: The ID of the `User` the bank details are assigned to (only available for `Contacts` of type `EMPLOYEE`).
+          example: XMPL1234-000001
+        account_info:
+          type: array
+          description: The bank account information of the `Contact`.
+          items:
+            $ref: '#/components/schemas/AccountInfoContact'
+        status:
+          $ref: '#/components/schemas/ContactStatus'
+          description: The status of the `Contact`.
+          example: CREATED
+        name:
+          type: string
+          description: The name of the `Contact`.
+          example: John Doe
+    CreateContact:
+      description: Create `Contact` JSON parameters.
+      properties:
+        name:
+          type: string
+          description: The name of the `Contact`.
+          example: John Doe
+        user_id:
+          type: string
+          description: The ID of the `User` the bank details are assigned to (only available for `Contacts` of type `EMPLOYEE`).
+          example: XMPL1234-000001
+        type:
+          $ref: '#/components/schemas/ContactType'
+          description: The type of the `Contact`.
+          example: SUPPLIER
+        account_info:
+          type: array
+          description: The account info.
+          items:
+            $ref: '#/components/schemas/AccountInfoContact'
+        country:
+          $ref: '#/components/schemas/ISO3166Country'
+          description: The [ISO 3166-1 alpha-3](https://www.iso.org/obp/ui/#search/code/) code of the country of the `Contact`
+          example: GBR
+        bic:
+          type: string
+          description: The bic code that identifies a bank internationally for money transfers.
+          example: UNCRITMMXXX
+        account_type:
+          $ref: '#/components/schemas/AccountTypeRequest'
+          description: The account type of the payee is required when the `Request` paymentMethod is BANK_TRANSFER.
+          example: Example description
+      required:
+      - account_type
+      - country
+      - name
+      - type
+    ContactStatus:
+      type: string
+      enum:
+      - CREATED
+      - SUGGESTED
+    AccountInfoContact:
+      properties:
+        type:
+          $ref: '#/components/schemas/AccountIdentificationType'
+          description: The type of the bank account identification.
+          example: IBAN
+        identification:
+          type: string
+          description: The bank account identification for the specified type.
+          example: GB00ABCD00000123456789
+    ContactMatchStatus:
+      type: string
+      enum:
+      - UNABLE_TO_MATCH
+      - FULL_MATCH
+      - PARTIAL_MATCH
+      - NO_MATCH
+      - UNABLE_TO_VERIFY
+    AccountIdentificationType:
+      type: string
+      enum:
+      - SORT_CODE
+      - ACCOUNT_NUMBER
+      - IBAN
+    ISO3166Country:
+      type: string
+      enum:
+      - ASC
+      - AND
+      - ARE
+      - AFG
+      - ATG
+      - AIA
+      - ALB
+      - ARM
+      - ANT
+      - AGO
+      - ATA
+      - ARG
+      - ASM
+      - AUT
+      - AUS
+      - ABW
+      - ALA
+      - AZE
+      - BIH
+      - BRB
+      - BGD
+      - BEL
+      - BFA
+      - BGR
+      - BHR
+      - BDI
+      - BEN
+      - BLM
+      - BMU
+      - BRN
+      - BOL
+      - BES
+      - BRA
+      - BHS
+      - BTN
+      - BUR
+      - BVT
+      - BWA
+      - BLR
+      - BLZ
+      - CAN
+      - CCK
+      - COD
+      - CAF
+      - COG
+      - CHE
+      - CIV
+      - COK
+      - CHL
+      - CMR
+      - CHN
+      - COL
+      - CPT
+      - CRI
+      - CSXX
+      - CUB
+      - CPV
+      - CUW
+      - CXR
+      - CYP
+      - CZE
+      - DEU
+      - DGA
+      - DJI
+      - DNK
+      - DMA
+      - DOM
+      - DZA
+      - ECU
+      - EST
+      - EGY
+      - ESH
+      - ERI
+      - ESP
+      - ETH
+      - FIN
+      - FJI
+      - FLK
+      - FSM
+      - FRO
+      - FRA
+      - FXX
+      - GAB
+      - GBR
+      - GRD
+      - GEO
+      - GUF
+      - GGY
+      - GHA
+      - GIB
+      - GRL
+      - GMB
+      - GIN
+      - GLP
+      - GNQ
+      - GRC
+      - SGS
+      - GTM
+      - GUM
+      - GNB
+      - GUY
+      - HKG
+      - HMD
+      - HND
+      - HRV
+      - HTI
+      - HUN
+      - IDN
+      - IRL
+      - ISR
+      - IMN
+      - IND
+      - IOT
+      - IRQ
+      - IRN
+      - ISL
+      - ITA
+      - JEY
+      - JAM
+      - JOR
+      - JPN
+      - KEN
+      - KGZ
+      - KHM
+      - KIR
+      - COM
+      - KNA
+      - PRK
+      - KOR
+      - KWT
+      - CYM
+      - KAZ
+      - LAO
+      - LBN
+      - LCA
+      - LIE
+      - LKA
+      - LBR
+      - LSO
+      - LTU
+      - LUX
+      - LVA
+      - LBY
+      - MAR
+      - MCO
+      - MDA
+      - MNE
+      - MAF
+      - MDG
+      - MHL
+      - MKD
+      - MLI
+      - MMR
+      - MNG
+      - MAC
+      - MNP
+      - MTQ
+      - MRT
+      - MSR
+      - MLT
+      - MUS
+      - MDV
+      - MWI
+      - MEX
+      - MYS
+      - MOZ
+      - NAM
+      - NCL
+      - NER
+      - NFK
+      - NGA
+      - NIC
+      - NLD
+      - NOR
+      - NPL
+      - NRU
+      - NTZ
+      - NIU
+      - NZL
+      - OMN
+      - PAN
+      - PER
+      - PYF
+      - PNG
+      - PHL
+      - PAK
+      - POL
+      - SPM
+      - PCN
+      - PRI
+      - PSE
+      - PRT
+      - PLW
+      - PRY
+      - QAT
+      - REU
+      - ROU
+      - ROM
+      - SRB
+      - RUS
+      - RWA
+      - SAU
+      - SLB
+      - SYC
+      - SDN
+      - SWE
+      - SGP
+      - SHN
+      - SVN
+      - SJM
+      - SVK
+      - SLE
+      - SMR
+      - SEN
+      - SOM
+      - SUR
+      - SSD
+      - STP
+      - SUN
+      - SLV
+      - SXM
+      - SYR
+      - SWZ
+      - TAA
+      - TCA
+      - TCD
+      - ATF
+      - TGO
+      - THA
+      - TJK
+      - TKL
+      - TLS
+      - TKM
+      - TUN
+      - TON
+      - TUR
+      - TTO
+      - TUV
+      - TWN
+      - TZA
+      - UKR
+      - UGA
+      - UMI
+      - USA
+      - URY
+      - UZB
+      - VAT
+      - VCT
+      - VEN
+      - VGB
+      - VIR
+      - VNM
+      - VUT
+      - WLF
+      - WSM
+      - XKX
+      - XXK
+      - QZZ
+      - YEM
+      - MYT
+      - YUCS
+      - ZAF
+      - ZMB
+      - ZRCD
+      - ZWE
+  securitySchemes:
+    standardAuth:
+      type: oauth2
+      description: This API uses OAuth 2 with the "Client Credentials" grant flow.
+      flows:
+        clientCredentials:
+          tokenUrl: https://api.soldo.com/oauth/authorize
+          refreshUrl: https://api.soldo.com/oauth/refresh
+          scopes:
+            address_read: Can read address details.
+            address_write: Can update address details.
+            card_read: Can read card details.
+            card_write: Can change card details.
+            company_read: Can read company details.
+            company_write: Can change company details.
+            contact_read: Can read contact details.
+            contact_write: Can change contact details.
+            employee_read: Can read employee details.
+            employee_write: Can change employee details.
+            expense_category_read: Can read expense category details.
+            expense_category_write: Can change expense category details.
+            expense_report_read: Can read expense report details.
+            expense_report_write: Can change expense report details.
+            expense_review_read: Can read expense review status.
+            expense_review_write: Can change expense review status.
+            group_read: Can read group details.
+            group_write: Can change groups details.
+            online_ads_read: Can read online ads details.
+            online_ads_write: Can change online ads details.
+            payment_read: Can read payment details.
+            payment_write: Can change payment details.
+            purchase_read: Can read purchase details.
+            purchase_write: Can change purchase details.
+            refueling_read: Can read refueling details.
+            refueling_write: Can change refueling details.
+            resource_set_read: Can read resource set details.
+            resource_set_write: Can change resource set details.
+            role_read: Can read role details.
+            statement_read: Can read statement details.
+            subscription_read: Can read subscription details.
+            subscription_write: Can change subscription details.
+            tag_read: Can read tags.
+            tag_write: can change tags.
+            tax_rate_read: Can read vat rate details.
+            tax_rate_write: Can change vat rate details.
+            transaction_read: Can read transaction details.
+            transaction_write: Can change transaction details.
+            vehicle_read: Can read vehicle details.
+            vehicle_write: Can change vehicle details.
+            wallet_read: Can read wallet details.
+            wallet_write: Can change wallet details.
+            webhook_subscription_read: Can read webhook subscription details.
+            webhook_subscription_write: Can change webhook subscription details.
+x-readme:
+  hidden: false

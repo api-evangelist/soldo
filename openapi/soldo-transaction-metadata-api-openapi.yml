@@ -1,0 +1,331 @@
+openapi: 3.1.0
+info:
+  title: Soldo Business API v2.0 Accounting Classification Transaction Metadata API
+  description: Soldo Business API v2.0 OpenAPI specification
+  version: 5.56.0
+servers:
+- url: https://api.soldo.com
+  description: Production server (using live data)
+- url: https://api-demo.soldocloud.net
+  description: Sandbox server (using test data)
+tags:
+- name: Transaction Metadata
+paths:
+  /business/v2/transactions/{transactionId}/metadata/{metadataId}:
+    get:
+      tags:
+      - Transaction Metadata
+      summary: Get Transaction Metadata
+      description: Endpoint to get the metadata of a `Transaction` by ID.
+      operationId: transaction-metadata-get
+      parameters:
+      - name: transactionId
+        in: path
+        required: true
+        schema:
+          type: string
+          description: The `Transaction` ID.
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+      - name: metadataId
+        in: path
+        required: true
+        schema:
+          type: string
+          description: The ID related to the custom generated metadata of the `Transaction`.
+          example: metadata_id
+      responses:
+        '200':
+          description: The returned resource is a generic JSON representing the metadata.
+          content:
+            application/json:
+              schema: {}
+        '404':
+          description: One or more resource requested does not exist.
+      security:
+      - standardAuth:
+        - transaction_read
+    put:
+      tags:
+      - Transaction Metadata
+      summary: Update Transaction Metadata
+      description: Endpoint to update metadata of a `Transaction`.
+      operationId: transaction-metadata-update
+      parameters:
+      - name: transactionId
+        in: path
+        required: true
+        schema:
+          type: string
+          description: The `Transaction` ID.
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+      - name: metadataId
+        in: path
+        required: true
+        schema:
+          type: string
+          description: The ID related to the new custom generated metadata of the `Transaction`.
+          example: metadata_id
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties:
+                description: A generic JSON.
+              description: A generic JSON.
+      responses:
+        '204':
+          description: No content as result.
+        '400':
+          description: Your request has missing arguments or is malformed.
+        '404':
+          description: One or more resource requested does not exist.
+      security:
+      - standardAuth:
+        - transaction_write
+    post:
+      tags:
+      - Transaction Metadata
+      summary: Add Transaction Metadata
+      description: Endpoint to add metadata to a `Transaction`.
+      operationId: transaction-metadata-add
+      parameters:
+      - name: transactionId
+        in: path
+        required: true
+        schema:
+          type: string
+          description: The `transaction` ID.
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+      - name: metadataId
+        in: path
+        required: true
+        schema:
+          type: string
+          description: The ID related to the new custom generated Metadata of the `Transaction`.
+          example: metadata_id
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties:
+                description: A generic JSON.
+              description: A generic JSON.
+      responses:
+        '204':
+          description: No content as result.
+        '400':
+          description: Your request has missing arguments or is malformed.
+        '404':
+          description: One or more resource requested does not exist.
+      security:
+      - standardAuth:
+        - transaction_write
+    delete:
+      tags:
+      - Transaction Metadata
+      summary: Delete Transaction Metadata
+      description: Endpoint to delete metadata of a `Transaction`.
+      operationId: transaction-metadata-delete
+      parameters:
+      - name: transactionId
+        in: path
+        required: true
+        schema:
+          type: string
+          description: The `Transaction` ID.
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+      - name: metadataId
+        in: path
+        required: true
+        schema:
+          type: string
+          description: The ID related to the new custom generated metadata of the `Transaction`.
+          example: metadata_id
+      responses:
+        '204':
+          description: No content as result.
+        '404':
+          description: One or more resource requested does not exist.
+      security:
+      - standardAuth:
+        - transaction_write
+  /business/v2/transactions/{transactionId}/metadata:
+    get:
+      tags:
+      - Transaction Metadata
+      summary: Search Transaction Metadata
+      description: Endpoint to get the list of metadata of a `Transaction`.
+      operationId: transaction-metadata-search
+      parameters:
+      - name: transactionId
+        in: path
+        required: true
+        schema:
+          type: string
+          description: The `Transaction` ID.
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+      - name: p
+        in: query
+        description: It indicates the specific page to display (the counter starts from zero).
+        schema:
+          type: integer
+          format: int32
+          default: 0
+          description: It indicates the specific page to display (the counter starts from zero).
+          example: 3
+        example: 3
+      - name: s
+        in: query
+        description: It indicates the number of items per page.
+        schema:
+          type: integer
+          format: int32
+          default: 0
+          description: It indicates the number of items per page.
+          example: 25
+          maximum: 50
+        example: 25
+      - name: d
+        in: query
+        description: It indicates how the pages are ordered.
+        schema:
+          $ref: '#/components/schemas/Direction'
+        example: DESC
+      - name: props
+        in: query
+        description: It indicates the sorting direction applied to the above parameters. To apply a sorting on multiple parameters, set as many times the `props` parameter in the request.
+        schema:
+          type: array
+          description: It indicates the sorting direction applied to the above parameters. To apply a sorting on multiple parameters, set as many times the `props` parameter in the request.
+          example: creationTime
+          items:
+            type: string
+            description: It indicates the sorting direction applied to the above parameters. To apply a sorting on multiple parameters, set as many times the `props` parameter in the request.
+            example: creationTime
+        example: creationTime
+      responses:
+        '200':
+          description: The results array contains metadata.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransactionMetadataList'
+        '404':
+          description: One or more resource requested does not exist.
+      security:
+      - standardAuth:
+        - transaction_read
+components:
+  schemas:
+    TransactionMetadataList:
+      properties:
+        total:
+          type: integer
+          format: int32
+          description: It represents the total number of available items in the list.
+          example: 168
+        pages:
+          type: integer
+          format: int32
+          description: It represents the total number of available pages.
+          example: 7
+        page_size:
+          type: integer
+          format: int32
+          description: It represents the number of items per page.
+          example: 25
+        current_page:
+          type: integer
+          format: int32
+          description: It indicates the current page (the counter starts from zero).
+          example: 0
+        results_size:
+          type: integer
+          format: int32
+          description: It indicates the size of the array results.
+          example: 25
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/TransactionMetadata'
+    TransactionMetadata:
+      properties:
+        id:
+          type: string
+          description: The ID related to the custom generated Metadata of the `Transaction`.
+        metadata:
+          type: object
+          additionalProperties: {}
+          description: A generic JSON.
+        creation_time:
+          type: string
+          description: 'The date and time when the metadata was created (sortable: yes).'
+          example: '2017-06-01T12:48:40Z'
+        last_update:
+          type: string
+          description: 'The date and time when the metadata was last updated (sortable: yes).'
+          example: '2017-06-01T12:48:40Z'
+    Direction:
+      type: string
+      description: It indicates how the pages are ordered.
+      enum:
+      - ASC
+      - DESC
+      example: DESC
+  securitySchemes:
+    standardAuth:
+      type: oauth2
+      description: This API uses OAuth 2 with the "Client Credentials" grant flow.
+      flows:
+        clientCredentials:
+          tokenUrl: https://api.soldo.com/oauth/authorize
+          refreshUrl: https://api.soldo.com/oauth/refresh
+          scopes:
+            address_read: Can read address details.
+            address_write: Can update address details.
+            card_read: Can read card details.
+            card_write: Can change card details.
+            company_read: Can read company details.
+            company_write: Can change company details.
+            contact_read: Can read contact details.
+            contact_write: Can change contact details.
+            employee_read: Can read employee details.
+            employee_write: Can change employee details.
+            expense_category_read: Can read expense category details.
+            expense_category_write: Can change expense category details.
+            expense_report_read: Can read expense report details.
+            expense_report_write: Can change expense report details.
+            expense_review_read: Can read expense review status.
+            expense_review_write: Can change expense review status.
+            group_read: Can read group details.
+            group_write: Can change groups details.
+            online_ads_read: Can read online ads details.
+            online_ads_write: Can change online ads details.
+            payment_read: Can read payment details.
+            payment_write: Can change payment details.
+            purchase_read: Can read purchase details.
+            purchase_write: Can change purchase details.
+            refueling_read: Can read refueling details.
+            refueling_write: Can change refueling details.
+            resource_set_read: Can read resource set details.
+            resource_set_write: Can change resource set details.
+            role_read: Can read role details.
+            statement_read: Can read statement details.
+            subscription_read: Can read subscription details.
+            subscription_write: Can change subscription details.
+            tag_read: Can read tags.
+            tag_write: can change tags.
+            tax_rate_read: Can read vat rate details.
+            tax_rate_write: Can change vat rate details.
+            transaction_read: Can read transaction details.
+            transaction_write: Can change transaction details.
+            vehicle_read: Can read vehicle details.
+            vehicle_write: Can change vehicle details.
+            wallet_read: Can read wallet details.
+            wallet_write: Can change wallet details.
+            webhook_subscription_read: Can read webhook subscription details.
+            webhook_subscription_write: Can change webhook subscription details.
+x-readme:
+  hidden: false

@@ -1,0 +1,3116 @@
+openapi: 3.1.0
+info:
+  title: Soldo Business API v2.0 Accounting Classification Transactions API
+  description: Soldo Business API v2.0 OpenAPI specification
+  version: 5.56.0
+servers:
+- url: https://api.soldo.com
+  description: Production server (using live data)
+- url: https://api-demo.soldocloud.net
+  description: Sandbox server (using test data)
+tags:
+- name: Transactions
+paths:
+  /business/v2/transactions/mileage-reimbursements:
+    post:
+      tags:
+      - Transactions
+      summary: Create Mileage Reimbursement Transaction
+      description: Endpoint to create a `MileageReimbursement` `Transaction`.
+      operationId: mileage-reimbursement-transaction-create
+      parameters:
+      - name: X-Soldo-Fingerprint
+        in: header
+        required: true
+        schema:
+          type: string
+          default: '{{fingerprint}}'
+          description: '[Advanced authentication](ref:advanced-authentication): `SHA512SUM` of the fingerprint values listed in the fingerprint order for this endpoint.'
+          example: '{{fingerprint}}'
+      - name: X-Soldo-Fingerprint-Signature
+        in: header
+        required: true
+        schema:
+          type: string
+          default: '{{fingerprint_signature}}'
+          description: '[Advanced authentication](ref:advanced-authentication): Signature of the `X-Soldo-Fingerprint`.'
+          example: '{{fingerprint_signature}}'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateMileageReimbursementTransaction'
+      responses:
+        '200':
+          description: The returned resource is a single `MileageReimbursement`.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MileageReimbursementTransaction'
+        '400':
+          description: Your request has missing arguments or is malformed.
+        '404':
+          description: One or more resource requested does not exist.
+      security:
+      - standardAuth:
+        - transaction_write
+      x-soldo:
+        fingerprint-order: request_timestamp, date, owner_id, mileage.vehicle_id, mileage.reimbursement_rate, mileage.distance, mileage.round_trip, token
+  /business/v2/transactions/out-of-platform-transactions:
+    post:
+      tags:
+      - Transactions
+      summary: Create Out-Of-Platform Transaction
+      description: Endpoint to create an Out-Of-Platform `Transaction` (not automatically tracked by Soldo).
+      operationId: out-of-platform-transaction-create
+      parameters:
+      - name: X-Soldo-Fingerprint
+        in: header
+        required: true
+        schema:
+          type: string
+          default: '{{fingerprint}}'
+          description: '[Advanced authentication](ref:advanced-authentication): `SHA512SUM` of the fingerprint values listed in the fingerprint order for this endpoint.'
+          example: '{{fingerprint}}'
+      - name: X-Soldo-Fingerprint-Signature
+        in: header
+        required: true
+        schema:
+          type: string
+          default: '{{fingerprint_signature}}'
+          description: '[Advanced authentication](ref:advanced-authentication): Signature of the `X-Soldo-Fingerprint`.'
+          example: '{{fingerprint_signature}}'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateOutOfPlatformTransaction'
+      responses:
+        '200':
+          description: The returned resource is a single Out-Of-Platform `Transaction`.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OutOfPlatformTransaction'
+        '400':
+          description: Your request has missing arguments or is malformed.
+        '404':
+          description: One or more resource requested does not exist.
+      security:
+      - standardAuth:
+        - transaction_write
+      x-soldo:
+        fingerprint-order: request_timestamp, date, owner_id, merchant_name, tx_amount, tx_amount_currency, exchange_rate, payment_method, token
+  /business/v2/transactions/mileage-reimbursements/{transactionId}:
+    get:
+      tags:
+      - Transactions
+      summary: Get Mileage Reimbursement Transaction
+      description: Endpoint to get a specific `MileageReimbursement` `Transaction`.
+      operationId: mileage-reimbursement-transaction-get
+      parameters:
+      - name: transactionId
+        in: path
+        required: true
+        schema:
+          type: string
+          description: The `Transaction` ID.
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+      - name: X-Soldo-Fingerprint
+        in: header
+        required: true
+        schema:
+          type: string
+          default: '{{fingerprint}}'
+          description: '[Advanced authentication](ref:advanced-authentication): `SHA512SUM` of the fingerprint values listed in the fingerprint order for this endpoint.'
+          example: '{{fingerprint}}'
+      - name: X-Soldo-Fingerprint-Signature
+        in: header
+        required: true
+        schema:
+          type: string
+          default: '{{fingerprint_signature}}'
+          description: '[Advanced authentication](ref:advanced-authentication): Signature of the `X-Soldo-Fingerprint`.'
+          example: '{{fingerprint_signature}}'
+      responses:
+        '200':
+          description: The returned resource is a single `MileageReimbursement`.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MileageReimbursementTransaction'
+        '404':
+          description: One or more resource requested does not exist.
+      security:
+      - standardAuth:
+        - transaction_read
+      x-soldo:
+        fingerprint-order: transactionId, token
+    put:
+      tags:
+      - Transactions
+      summary: Update Mileage Reimbursement Transaction
+      description: Endpoint to update a `MileageReimbursement` `Transaction`. The entire resource representation must be included in the request body.
+      operationId: mileage-reimbursement-transaction-update
+      parameters:
+      - name: transactionId
+        in: path
+        required: true
+        schema:
+          type: string
+          description: The `Transaction` ID.
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+      - name: X-Soldo-Fingerprint
+        in: header
+        required: true
+        schema:
+          type: string
+          default: '{{fingerprint}}'
+          description: '[Advanced authentication](ref:advanced-authentication): `SHA512SUM` of the fingerprint values listed in the fingerprint order for this endpoint.'
+          example: '{{fingerprint}}'
+      - name: X-Soldo-Fingerprint-Signature
+        in: header
+        required: true
+        schema:
+          type: string
+          default: '{{fingerprint_signature}}'
+          description: '[Advanced authentication](ref:advanced-authentication): Signature of the `X-Soldo-Fingerprint`.'
+          example: '{{fingerprint_signature}}'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateMileageReimbursementTransaction'
+      responses:
+        '200':
+          description: The returned resource is a single `MileageReimbursement`.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MileageReimbursementTransaction'
+        '400':
+          description: Your request has missing arguments or is malformed.
+        '404':
+          description: One or more resource requested does not exist.
+      security:
+      - standardAuth:
+        - transaction_write
+      x-soldo:
+        fingerprint-order: transactionId, request_timestamp, date, mileage.vehicle_id, mileage.reimbursement_rate, mileage.distance, mileage.round_trip, token
+    delete:
+      tags:
+      - Transactions
+      summary: Delete Mileage Reimbursement Transaction
+      description: Endpoint to delete a specific `MileageReimbursement` `Transaction`.
+      operationId: mileage-reimbursement-transaction-delete
+      parameters:
+      - name: transactionId
+        in: path
+        required: true
+        schema:
+          type: string
+          description: The `Transaction` ID.
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+      - name: X-Soldo-Fingerprint
+        in: header
+        required: true
+        schema:
+          type: string
+          default: '{{fingerprint}}'
+          description: '[Advanced authentication](ref:advanced-authentication): `SHA512SUM` of the fingerprint values listed in the fingerprint order for this endpoint.'
+          example: '{{fingerprint}}'
+      - name: X-Soldo-Fingerprint-Signature
+        in: header
+        required: true
+        schema:
+          type: string
+          default: '{{fingerprint_signature}}'
+          description: '[Advanced authentication](ref:advanced-authentication): Signature of the `X-Soldo-Fingerprint`.'
+          example: '{{fingerprint_signature}}'
+      responses:
+        '204':
+          description: No content as result.
+      security:
+      - standardAuth:
+        - transaction_write
+      x-soldo:
+        fingerprint-order: transactionId, token
+  /business/v2/transactions/out-of-platform-transactions/{transactionId}:
+    get:
+      tags:
+      - Transactions
+      summary: Get Out-Of-Platform Transaction
+      description: Endpoint to get a specific Out-Of-Platform `Transaction`.
+      operationId: out-of-platform-transaction-get
+      parameters:
+      - name: transactionId
+        in: path
+        required: true
+        schema:
+          type: string
+          description: The `Transaction` ID.
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+      - name: X-Soldo-Fingerprint
+        in: header
+        required: true
+        schema:
+          type: string
+          default: '{{fingerprint}}'
+          description: '[Advanced authentication](ref:advanced-authentication): `SHA512SUM` of the fingerprint values listed in the fingerprint order for this endpoint.'
+          example: '{{fingerprint}}'
+      - name: X-Soldo-Fingerprint-Signature
+        in: header
+        required: true
+        schema:
+          type: string
+          default: '{{fingerprint_signature}}'
+          description: '[Advanced authentication](ref:advanced-authentication): Signature of the `X-Soldo-Fingerprint`.'
+          example: '{{fingerprint_signature}}'
+      responses:
+        '200':
+          description: The returned resource is a single Out-Of-Platform `Transaction`.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OutOfPlatformTransaction'
+        '404':
+          description: One or more resource requested does not exist.
+      security:
+      - standardAuth:
+        - transaction_read
+      x-soldo:
+        fingerprint-order: transactionId, token
+    put:
+      tags:
+      - Transactions
+      summary: Update Out-Of-Platform Transaction
+      description: Endpoint to update an Out-Of-Platform `Transaction`. The entire resource representation must be included in the request body.
+      operationId: out-of-platform-transaction-update
+      parameters:
+      - name: transactionId
+        in: path
+        required: true
+        schema:
+          type: string
+          description: The `Transaction` ID.
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+      - name: X-Soldo-Fingerprint
+        in: header
+        required: true
+        schema:
+          type: string
+          default: '{{fingerprint}}'
+          description: '[Advanced authentication](ref:advanced-authentication): `SHA512SUM` of the fingerprint values listed in the fingerprint order for this endpoint.'
+          example: '{{fingerprint}}'
+      - name: X-Soldo-Fingerprint-Signature
+        in: header
+        required: true
+        schema:
+          type: string
+          default: '{{fingerprint_signature}}'
+          description: '[Advanced authentication](ref:advanced-authentication): Signature of the `X-Soldo-Fingerprint`.'
+          example: '{{fingerprint_signature}}'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateOutOfPlatformTransaction'
+      responses:
+        '200':
+          description: The returned resource is a single Out-Of-Platform `Transaction`.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OutOfPlatformTransaction'
+        '400':
+          description: Your request has missing arguments or is malformed.
+        '404':
+          description: One or more resource requested does not exist.
+      security:
+      - standardAuth:
+        - transaction_write
+      x-soldo:
+        fingerprint-order: transactionId, request_timestamp, date, merchant_name, tx_amount, tx_amount_currency, exchange_rate, payment_method, token
+    delete:
+      tags:
+      - Transactions
+      summary: Delete Out-Of-Platform Transaction
+      description: Endpoint to delete a specific Out-Of-Platform `Transaction`.
+      operationId: out-of-platform-transaction-delete
+      parameters:
+      - name: transactionId
+        in: path
+        required: true
+        schema:
+          type: string
+          description: The `Transaction` ID.
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+      - name: X-Soldo-Fingerprint
+        in: header
+        required: true
+        schema:
+          type: string
+          default: '{{fingerprint}}'
+          description: '[Advanced authentication](ref:advanced-authentication): `SHA512SUM` of the fingerprint values listed in the fingerprint order for this endpoint.'
+          example: '{{fingerprint}}'
+      - name: X-Soldo-Fingerprint-Signature
+        in: header
+        required: true
+        schema:
+          type: string
+          default: '{{fingerprint_signature}}'
+          description: '[Advanced authentication](ref:advanced-authentication): Signature of the `X-Soldo-Fingerprint`.'
+          example: '{{fingerprint_signature}}'
+      responses:
+        '204':
+          description: No content as result.
+      security:
+      - standardAuth:
+        - transaction_write
+      x-soldo:
+        fingerprint-order: transactionId, token
+  /business/v2/transactions/{transactionId}/tax-rate/{taxRateId}:
+    post:
+      tags:
+      - Transactions
+      summary: 'Add VAT Rate to Transaction '
+      description: Endpoint to assign a `VatRate` to a `Transaction`.
+      operationId: transaction-tax-rate-set
+      parameters:
+      - name: transactionId
+        in: path
+        required: true
+        schema:
+          type: string
+          description: The `Transaction` ID.
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+      - name: taxRateId
+        in: path
+        required: true
+        schema:
+          type: string
+          description: The `VatRate` ID.
+          example: 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
+      responses:
+        '204':
+          description: No content as result.
+        '404':
+          description: One or more resource requested does not exist.
+      security:
+      - standardAuth:
+        - transaction_write
+  /business/v2/transactions/{transactionId}:
+    get:
+      tags:
+      - Transactions
+      summary: Get Transaction
+      description: Endpoint to get a specific `Transaction` by ID.
+      operationId: transaction-get
+      parameters:
+      - name: transactionId
+        in: path
+        description: The `Transaction` ID.
+        required: true
+        schema:
+          type: string
+          description: The `Transaction` ID.
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+        example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+      - name: showDetails
+        in: query
+        description: It determines whether to show further Details of the `Transaction`.
+        schema:
+          type: boolean
+          description: It determines whether to show further Details of the `Transaction`.
+          example: false
+        example: false
+      - name: showFuelDetails
+        in: query
+        description: It determines whether to show further Fuel Details of the `Transaction`.
+        schema:
+          type: boolean
+          description: It determines whether to show further Fuel Details of the `Transaction`.
+          example: false
+        example: false
+      - name: X-Soldo-Fingerprint
+        in: header
+        required: true
+        schema:
+          type: string
+          default: '{{fingerprint}}'
+          description: '[Advanced authentication](ref:advanced-authentication): `SHA512SUM` of the fingerprint values listed in the fingerprint order for this endpoint.'
+          example: '{{fingerprint}}'
+      - name: X-Soldo-Fingerprint-Signature
+        in: header
+        required: true
+        schema:
+          type: string
+          default: '{{fingerprint_signature}}'
+          description: '[Advanced authentication](ref:advanced-authentication): Signature of the `X-Soldo-Fingerprint`.'
+          example: '{{fingerprint_signature}}'
+      responses:
+        '200':
+          description: The returned resource is a single `Transaction`.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Transaction'
+        '404':
+          description: One or more resource requested does not exist.
+      security:
+      - standardAuth:
+        - transaction_read
+      x-soldo:
+        fingerprint-order: transactionId, token
+    put:
+      tags:
+      - Transactions
+      summary: Update Transaction
+      description: Endpoint to update the assignee of a specific `Transaction` by ID. This method is only available for `Company` `Card` transactions and the `trx_owner_id` must be one of the `Card` assignees.
+      operationId: transaction-update
+      parameters:
+      - name: transactionId
+        in: path
+        required: true
+        schema:
+          type: string
+          description: The `Transaction` ID.
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+      - name: X-Soldo-Fingerprint
+        in: header
+        required: true
+        schema:
+          type: string
+          default: '{{fingerprint}}'
+          description: '[Advanced authentication](ref:advanced-authentication): `SHA512SUM` of the fingerprint values listed in the fingerprint order for this endpoint.'
+          example: '{{fingerprint}}'
+      - name: X-Soldo-Fingerprint-Signature
+        in: header
+        required: true
+        schema:
+          type: string
+          default: '{{fingerprint_signature}}'
+          description: '[Advanced authentication](ref:advanced-authentication): Signature of the `X-Soldo-Fingerprint`.'
+          example: '{{fingerprint_signature}}'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateTransaction'
+      responses:
+        '200':
+          description: The returned resource is a single `Transaction`.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Transaction'
+        '400':
+          description: Your request has missing arguments or is malformed.
+        '404':
+          description: One or more resource requested does not exist.
+      security:
+      - standardAuth:
+        - transaction_write
+      x-soldo:
+        fingerprint-order: transactionId, userNotes, trxOwnerId, token
+  /business/v2/transactions:
+    get:
+      tags:
+      - Transactions
+      summary: Search Transactions
+      description: Endpoint to find `Transactions` using filtering parameters.
+      operationId: transaction-search
+      parameters:
+      - name: type
+        in: query
+        description: The resource `type` to be used together with id.
+        schema:
+          $ref: '#/components/schemas/SearchTransactionResourceType'
+        example: card
+      - name: hasAttachment
+        in: query
+        description: Looks whether or not a `TransactionAttachment` is present.
+        schema:
+          type: boolean
+          description: Looks whether or not a `TransactionAttachment` is present.
+          example: true
+        example: true
+      - name: publicId
+        in: query
+        description: The ID of the `type` resource.
+        schema:
+          type: string
+          description: The ID of the `type` resource.
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+        example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+      - name: customreferenceId
+        in: query
+        description: The custom reference ID of the cardholder.
+        schema:
+          type: string
+          description: The custom reference ID of the cardholder.
+          example: 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
+        example: 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
+      - name: fromDate
+        in: query
+        description: 'The beginning of the period of the search `fromDate` included (i.e. greater than or equal to) (Formats: `yyyy-MM-dd`, `yyyy-MM-ddThh:mm:ss`, `yyyy-MM-ddThh:mm:ssZ`).'
+        schema:
+          $ref: '#/components/schemas/DateParam'
+        example: '1970-01-30'
+      - name: toDate
+        in: query
+        description: 'The end of the period of the search `toDate` included (i.e. less than) (Formats: `yyyy-MM-dd`, `yyyy-MM-ddThh:mm:ss`, `yyyy-MM-ddThh:mm:ssZ`).'
+        schema:
+          $ref: '#/components/schemas/DateParam'
+        example: '1970-01-30'
+      - name: dateType
+        in: query
+        description: It determines the date to be considered for `fromDate` and `toDate` parameters.
+        schema:
+          $ref: '#/components/schemas/SearchTransactionDateType'
+        example: TRANSACTION
+      - name: groupId
+        in: query
+        description: The ID of the `Group` of the transactions.
+        schema:
+          type: string
+          description: The ID of the `Group` of the transactions.
+          example: c861cc24-6663-410f-8c78-73f886fff4ef
+        example: c861cc24-6663-410f-8c78-73f886fff4ef
+      - name: category
+        in: query
+        description: It determines the filter by category of the transaction, multiple categories can be included.
+        schema:
+          type: array
+          description: It determines the filter by category of the transaction, multiple categories can be included.
+          items:
+            $ref: '#/components/schemas/SearchTransactionCategory'
+        example: Payment
+      - name: status
+        in: query
+        description: It determines the filter by status of the transaction, multiple statuses can be included.
+        schema:
+          type: array
+          description: It determines the filter by status of the transaction, multiple statuses can be included.
+          items:
+            $ref: '#/components/schemas/TransactionStatus'
+        example: Authorised
+      - name: paymentMethod
+        in: query
+        description: It determines the filter by payment method of the transaction, multiple payment methods can be included. `OUT_OF_PLATFORM_COMPANY` and `OUT_OF_PLATFORM_PERSONAL` are not included by default.
+        schema:
+          type: array
+          description: It determines the filter by payment method of the transaction, multiple payment methods can be included. `OUT_OF_PLATFORM_COMPANY` and `OUT_OF_PLATFORM_PERSONAL` are not included by default.
+          items:
+            $ref: '#/components/schemas/SearchTransactionPaymentMethod'
+          uniqueItems: true
+        example: SUBSCRIPTION
+      - name: tagId
+        in: query
+        description: The ID of the `Tag` of the transaction.
+        schema:
+          type: string
+          description: The ID of the `Tag` of the transaction.
+          example: 6853e657-c797-4985-8d6b-5425d4e51df8
+        example: 6853e657-c797-4985-8d6b-5425d4e51df8
+      - name: metadataId
+        in: query
+        description: The ID of the custom generated `Metadata` of the `Transaction`.
+        deprecated: true
+        schema:
+          type: string
+          deprecated: true
+          description: The ID of the custom generated `Metadata` of the `Transaction`.
+          example: express
+        example: express
+      - name: text
+        in: query
+        description: A simple text to search in the transaction data (merchant, merchant category, user notes, tag, list, masked pan, card name, tx amount, vehicle plate, vehicle description).
+        schema:
+          type: string
+          description: A simple text to search in the transaction data (merchant, merchant category, user notes, tag, list, masked pan, card name, tx amount, vehicle plate, vehicle description).
+          example: Amazon
+        example: Amazon
+      - name: expenseType
+        in: query
+        description: The type of the expense.
+        schema:
+          type: array
+          description: The type of the expense.
+          example: TRAVEL_AND_ENTERTAINMENT
+          items:
+            $ref: '#/components/schemas/ExpenseType'
+        example: TRAVEL_AND_ENTERTAINMENT
+      - name: expenseStatus
+        in: query
+        schema:
+          type: array
+          description: The status of the expense.
+          example: APPROVED
+          items:
+            $ref: '#/components/schemas/ExpenseStatus'
+      - name: expenseCategoryId
+        in: query
+        schema:
+          type: array
+          description: The ID of the Expense category of the transactions, multiple expense categories can be included.
+          example: 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
+          items:
+            type: string
+            description: The ID of the Expense category of the transactions, multiple expense categories can be included.
+            example: 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
+          uniqueItems: true
+      - name: expenseReportId
+        in: query
+        schema:
+          type: array
+          description: The ID of the `ExpenseReport` of the transactions, multiple expense reports can be included.
+          example: c861cc24-6663-410f-8c78-73f886fff4ef
+          items:
+            type: string
+            description: The ID of the `ExpenseReport` of the transactions, multiple expense reports can be included.
+            example: c861cc24-6663-410f-8c78-73f886fff4ef
+      - name: exportStatus
+        in: query
+        description: The export status of the expense.
+        schema:
+          $ref: '#/components/schemas/ExportStatus'
+        example: EXPORTED
+      - name: taxRateId
+        in: query
+        schema:
+          type: array
+          description: The ID of the VAT rate of the transactions, multiple VAT rates can be included.
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+          items:
+            type: string
+            description: The ID of the VAT rate of the transactions, multiple VAT rates can be included.
+            example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+      - name: requiredInformation
+        in: query
+        description: To search transactions with (or without) required information. A transaction is `COMPLETE` when all details marked as mandatory in the `Reminders` section have been filled in for the transaction.
+        schema:
+          $ref: '#/components/schemas/SearchTransactionRequiredInformation'
+        example: COMPLETE
+      - name: isSplit
+        in: query
+        description: Looks whether or not a transaction is split.
+        schema:
+          type: boolean
+          description: Looks whether or not a transaction is split.
+          example: true
+        example: true
+      - name: customExportedProduct
+        in: query
+        description: A product that exported list of `Transaction`
+        schema:
+          type: string
+          description: A product that exported list of `Transaction`
+          example: SAP
+        example: SAP
+      - name: customExported
+        in: query
+        description: Looks whether or not a `TransactionCustomExport` is present.
+        schema:
+          type: boolean
+          description: Looks whether or not a `TransactionCustomExport` is present.
+          example: true
+        example: true
+      - name: p
+        in: query
+        description: It indicates the specific page to display (the counter starts from zero).
+        schema:
+          type: integer
+          format: int32
+          default: 0
+          description: It indicates the specific page to display (the counter starts from zero).
+          example: 3
+        example: 3
+      - name: s
+        in: query
+        description: It indicates the number of items per page.
+        schema:
+          type: integer
+          format: int32
+          default: 0
+          description: It indicates the number of items per page.
+          example: 25
+          maximum: 50
+        example: 25
+      - name: d
+        in: query
+        description: It indicates how the pages are ordered.
+        schema:
+          $ref: '#/components/schemas/Direction'
+        example: DESC
+      - name: props
+        in: query
+        description: It indicates the sorting direction applied to the above parameters. To apply a sorting on multiple parameters, set as many times the `props` parameter in the request.
+        schema:
+          type: array
+          description: It indicates the sorting direction applied to the above parameters. To apply a sorting on multiple parameters, set as many times the `props` parameter in the request.
+          example: creationTime
+          items:
+            type: string
+            description: It indicates the sorting direction applied to the above parameters. To apply a sorting on multiple parameters, set as many times the `props` parameter in the request.
+            example: creationTime
+        example: creationTime
+      - name: X-Soldo-Fingerprint
+        in: header
+        required: true
+        schema:
+          type: string
+          default: '{{fingerprint}}'
+          description: '[Advanced authentication](ref:advanced-authentication): `SHA512SUM` of the fingerprint values listed in the fingerprint order for this endpoint.'
+          example: '{{fingerprint}}'
+      - name: X-Soldo-Fingerprint-Signature
+        in: header
+        required: true
+        schema:
+          type: string
+          default: '{{fingerprint_signature}}'
+          description: '[Advanced authentication](ref:advanced-authentication): Signature of the `X-Soldo-Fingerprint`.'
+          example: '{{fingerprint_signature}}'
+      responses:
+        '200':
+          description: The result array contains `Transactions`.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Transactions'
+        '400':
+          description: Your request has missing arguments or is malformed.
+      security:
+      - standardAuth:
+        - transaction_read
+      x-soldo:
+        fingerprint-order: type, publicId, customReferenceId, groupId, fromDate, toDate, dateType, category, status, tagId, metadataId, text, expenseType, expenseStatus, requiredInformation, token
+components:
+  schemas:
+    TransactionDetails:
+      properties:
+        de022:
+          type: string
+          description: Mastercard `DE022` field.
+        de061:
+          type: string
+          description: Mastercard `DE061` field.
+        tx_country:
+          $ref: '#/components/schemas/ISO3166Country'
+          description: The [ISO 3166-1 alpha-3](https://www.iso.org/obp/ui/#search/code/) code of the country where the `Transaction` has been authorised.
+          example: GBR
+        denied_info_type:
+          type: string
+          description: The type of the denied reason of the transaction (only if the `Transaction` is `Declined`).
+        denied_info_description:
+          type: string
+          description: The description of the denied reason (only if the `Transaction` is `Declined`).
+        is_card_present:
+          type: boolean
+          description: It determines whether the card was there at the moment of the `Transaction`.
+          example: false
+        is_atm_transaction:
+          type: boolean
+          description: It determines whether the transaction is an ATM withdrawal.
+          example: false
+    TransactionSplitInfo:
+      properties:
+        amount:
+          $ref: '#/components/schemas/TransactionAmount'
+          description: The `Transaction`'s line amount.
+        vat_amount:
+          $ref: '#/components/schemas/TransactionAmount'
+          description: The `Transaction`'s line VAT amount.
+        expense_type:
+          $ref: '#/components/schemas/ExpenseType'
+          description: The type of the expense.
+          example: TRAVEL_AND_ENTERTAINMENT
+        line_number:
+          type: integer
+          format: int32
+          description: The `Transaction`'s line number.
+          example: 1
+        tags:
+          type: array
+          description: The list of the Tags of the Transaction (only returned from [Get Transaction](https://developer.soldo.com/reference/transaction-get)).
+          items:
+            $ref: '#/components/schemas/TransactionSplitInfoTag'
+        employee:
+          $ref: '#/components/schemas/User'
+          description: The `User` which the transaction line is assigned to.
+        expense_category:
+          $ref: '#/components/schemas/ExpenseCategory'
+          description: The `ExpenseCategory` object.
+        tax_rate:
+          $ref: '#/components/schemas/VatRate'
+          description: The `VATRate` object.
+        approved_amount:
+          $ref: '#/components/schemas/TransactionAmount'
+          description: The `TransactionList`'s line amount approved in policy.
+        rejected_amount:
+          $ref: '#/components/schemas/TransactionAmount'
+          description: The `TransactionList`'s line amount rejected in policy.
+    ExpenseType:
+      type: string
+      enum:
+      - COMPANY
+      - PERSONAL
+      - TRAVEL_AND_ENTERTAINMENT
+    CreateOutOfPlatformTransaction:
+      description: Create Out-Of-Platform `Transaction` JSON parameters.
+      properties:
+        request_timestamp:
+          type: integer
+          format: int64
+          description: The epoch timestamp in millis. This is checked in Soldo. Requests with timestamp older than 5 seconds will be rejected.
+          example: 1576850500000
+        date:
+          type: string
+          description: The date and time of the `Transaction`.
+          example: '2017-06-01T12:48:40Z'
+        owner_id:
+          type: string
+          description: 'The ID of the `User` who made the `Transaction` (updatable: no).'
+          example: XMPL1234-000002
+        merchant_name:
+          type: string
+          description: The name of the `Merchant` for the `Transaction`.
+          example: SHH HOTEL LONDON
+        tx_amount:
+          type: number
+          description: The amount of the `Transaction`, in the currency of the `Merchant`.
+          example: 10.25
+        tx_amount_currency:
+          $ref: '#/components/schemas/ISO4217Currency'
+          description: The currency [ISO 4217](https://www.six-group.com/en/products-services/financial-information/data-standards.html#scrollTo=maintenance-agency) code of the `tx_amount`.
+          example: EUR
+        exchange_rate:
+          type: number
+          description: The exchange rate used to convert the `tx_amount` from the currency of the `Merchant` to the currency of the main `Wallet`. If needed and not provided, a default rate is derived from `date`.
+          example: 1
+        payment_method:
+          $ref: '#/components/schemas/OutOfPlatformTransactionPaymentMethod'
+          description: The payment method of the `Transaction`.
+          example: OUT_OF_PLATFORM_PERSONAL
+      required:
+      - date
+      - merchant_name
+      - owner_id
+      - payment_method
+      - request_timestamp
+      - tx_amount
+      - tx_amount_currency
+    EntityIdDTO:
+      properties:
+        id:
+          type: string
+          description: The resource ID.
+          example: 6853e657-c797-4985-8d6b-5425d4e51df8
+    TransactionStatus:
+      type: string
+      enum:
+      - Authorised
+      - Settled
+      - Cancelled
+      - Declined
+      - DisputeFailed
+      - DisputeOpened
+      - DisputeWon
+      - Moved
+      - Unknown
+    ExpenseCategory:
+      properties:
+        id:
+          type: string
+          description: The `ExpenseCategory` ID.
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+        code:
+          type: string
+          description: The code of the `ExpenseCategory`.
+          example: 123
+        name:
+          type: string
+          description: The name of the `ExpenseCategory`.
+          example: category-one
+        description:
+          type: string
+          description: A custom description of the `ExpenseCategory`.
+          example: An expense category
+        tax_rate_id:
+          type: string
+          description: The ID of the VAT rate linked to the `ExpenseCategory`.
+          example: c861cc24-6663-410f-8c78-73f886fff4ef
+        enabled:
+          type: boolean
+          description: The `ExpenseCategory` is visible in the transaction detail.
+          example: false
+        merchant_categories:
+          type: array
+          description: A list of merchant categories this `ExpenseCategory`.
+          items:
+            $ref: '#/components/schemas/MerchantCategory'
+          uniqueItems: true
+        expense_type:
+          type: string
+          description: The type of expense assigned to category.
+          example: TRAVEL_AND_ENTERTAINMENT
+        integration:
+          type: string
+          description: The `ExpenseCategory`'s correlated integration.
+          example: Netsuite
+        creation_time:
+          type: string
+          description: 'The date and time when the `ExpenseCategory` was created (sortable: no).'
+          example: '2017-06-01T12:48:40Z'
+        last_update_time:
+          type: string
+          description: 'The date and time when the `ExpenseCategory` was last updated (sortable: no).'
+          example: '2017-06-01T12:48:40Z'
+    ExportStatus:
+      type: string
+      description: The export status of the expense.
+      enum:
+      - EXPORTED
+      - NOT_EXPORTED
+      example: EXPORTED
+    TransactionMerchantCategory:
+      properties:
+        description:
+          type: string
+          description: The merchant category description as defined in the Soldo platform.
+          example: Travel
+        mcc:
+          type: string
+          description: The official Mastercard Merchant Category Code (MCC).
+          example: 7011
+        mcc_description:
+          type: string
+          description: The official Mastercard Merchant category description.
+          example: Lodging - Hotels, Motels, Resorts - not elsewhere classified
+        code:
+          type: string
+          deprecated: true
+          description: 'The merchant category code as defined in the Soldo platform. *Deprecated*: use `description` instead.'
+          example: Lodging - Hotels, Motels, Resorts - not elsewhere classified
+        sub_category:
+          type: string
+          description: The merchant sub-category as defined in the Soldo platform.
+          example: Hotels
+    UpdateTransaction:
+      description: Update `Transaction` JSON parameters.
+      properties:
+        trx_owner_id:
+          type: string
+          description: The `Transaction` assignee, one of the `User` ID assigned to the `Company` `Card`.
+          example: XMPL1234-000001
+        user_notes:
+          type: string
+          description: The `Transaction` user notes.
+          example: something
+        invoice:
+          $ref: '#/components/schemas/Invoice'
+          description: The `Invoice` related to the `Transaction`.
+    ISO4217Currency:
+      type: string
+      enum:
+      - AED
+      - AFN
+      - ALL
+      - AMD
+      - ANG
+      - AOA
+      - ARS
+      - AUD
+      - AWG
+      - AZN
+      - BAM
+      - BBD
+      - BDT
+      - BGN
+      - BHD
+      - BIF
+      - BMD
+      - BND
+      - BOB
+      - BOV
+      - BRL
+      - BSD
+      - BTN
+      - BWP
+      - BYN
+      - BZD
+      - CAD
+      - CDF
+      - CHE
+      - CHF
+      - CHW
+      - CLF
+      - CLP
+      - CNY
+      - COP
+      - COU
+      - CRC
+      - CUC
+      - CUP
+      - CVE
+      - CZK
+      - DJF
+      - DKK
+      - DOP
+      - DZD
+      - EGP
+      - ERN
+      - ETB
+      - EUR
+      - FJD
+      - FKP
+      - GBP
+      - GEL
+      - GHS
+      - GIP
+      - GMD
+      - GNF
+      - GTQ
+      - GYD
+      - HKD
+      - HNL
+      - HRK
+      - HTG
+      - HUF
+      - IDR
+      - ILS
+      - INR
+      - IQD
+      - IRR
+      - ISK
+      - JMD
+      - JOD
+      - JPY
+      - KES
+      - KGS
+      - KHR
+      - KMF
+      - KPW
+      - KRW
+      - KWD
+      - KYD
+      - KZT
+      - LAK
+      - LBP
+      - LKR
+      - LRD
+      - LSL
+      - LYD
+      - MAD
+      - MDL
+      - MGA
+      - MKD
+      - MMK
+      - MNT
+      - MOP
+      - MRO
+      - MRU
+      - MUR
+      - MVR
+      - MWK
+      - MXN
+      - MXV
+      - MYR
+      - MZN
+      - NAD
+      - NGN
+      - NIO
+      - NOK
+      - NPR
+      - NZD
+      - OMR
+      - PAB
+      - PEN
+      - PGK
+      - PHP
+      - PKR
+      - PLN
+      - PYG
+      - QAR
+      - RON
+      - RSD
+      - RUB
+      - RWF
+      - SAR
+      - SBD
+      - SCR
+      - SDG
+      - SEK
+      - SGD
+      - SHP
+      - SLE
+      - SLL
+      - SOS
+      - SRD
+      - SSP
+      - STD
+      - STN
+      - SVC
+      - SYP
+      - SZL
+      - THB
+      - TJS
+      - TMT
+      - TND
+      - TOP
+      - TRY
+      - TTD
+      - TWD
+      - TZS
+      - UAH
+      - UGX
+      - USD
+      - USN
+      - UYI
+      - UYU
+      - UYW
+      - UZS
+      - VED
+      - VEF
+      - VES
+      - VND
+      - VUV
+      - WST
+      - XAF
+      - XAG
+      - XAU
+      - XBA
+      - XBB
+      - XBC
+      - XBD
+      - XCD
+      - XDR
+      - XOF
+      - XPD
+      - XPF
+      - XPT
+      - XSU
+      - XTS
+      - XUA
+      - XXX
+      - YER
+      - ZAR
+      - ZMW
+      - ZWL
+    TransactionAmount:
+      properties:
+        amount:
+          type: number
+          description: The amount of the `Transaction` line.
+          example: 10.25
+        currency:
+          $ref: '#/components/schemas/ISO4217Currency'
+          description: The currency [ISO 4217](https://www.six-group.com/en/products-services/financial-information/data-standards.html#scrollTo=maintenance-agency) code of the amount.
+          example: EUR
+    SearchTransactionRequiredInformation:
+      type: string
+      enum:
+      - COMPLETE
+      - NOT_COMPLETE
+    TransactionCarbonEmissionInfo:
+      properties:
+        value:
+          type: number
+          description: The amount of greenhouses gas emissions generated.
+        unit:
+          type: string
+          description: The unit of measure related to the `value` of greenhouses gas emissions generated.
+    LoadSource:
+      type: string
+      enum:
+      - UNSPECIFIED
+      - BANK_TRANSFER
+      - CARD
+      - SISAL_PAY
+      - FASTER_PAYMENT
+    TransactionTimelineItem:
+      properties:
+        created_at:
+          type: string
+          description: The instant the change happened to the `Transaction` and related `Wallet`.
+          example: '2017-06-01T12:48:40Z'
+        status:
+          $ref: '#/components/schemas/TransactionTimelineStatus'
+          description: What happened in that moment to the `Transaction` and to the related `Wallet`.
+          example: Settled
+        amount:
+          type: number
+          description: The amount related to the change in the currency of the `Wallet`.
+          example: 10.25
+        balance_after:
+          $ref: '#/components/schemas/TransactionTimelineBalance'
+          description: The `Wallet` balance after the change took place.
+          example: 10.25
+        balance_before:
+          $ref: '#/components/schemas/TransactionTimelineBalance'
+          description: The `Wallet` balance before the change took place.
+          example: 10.25
+        is_fee:
+          type: boolean
+          description: Indicate whether the change is a fee.
+          example: true
+    SearchTransactionResourceType:
+      type: string
+      description: The resource `type` to be used together with id.
+      enum:
+      - company
+      - employee
+      - wallet
+      - card
+      - subscription
+      - onlineAd
+      - purchase
+      example: card
+    OutOfPlatformTransaction:
+      properties:
+        transaction_id:
+          type: string
+          description: The ID of the Out-Of-Platform `Transaction`.
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+        date:
+          type: string
+          description: The date and time of the `Transaction`.
+          example: '2017-06-01T12:48:40Z'
+        owner_id:
+          type: string
+          description: 'The ID of the `User` who made the `Transaction` (updatable: no).'
+          example: XMPL1234-000002
+        merchant_name:
+          type: string
+          description: The name of the `Merchant` for the `Transaction`.
+          example: SHH HOTEL LONDON
+        tx_amount:
+          type: number
+          description: The amount of the `Transaction`, in the currency of the `Merchant`.
+          example: 10.25
+        tx_amount_currency:
+          $ref: '#/components/schemas/ISO4217Currency'
+          description: The currency [ISO 4217](https://www.six-group.com/en/products-services/financial-information/data-standards.html#scrollTo=maintenance-agency) code of the `tx_amount`.
+          example: EUR
+        amount:
+          type: number
+          description: The amount of the `Transaction`, in the currency of the main `Wallet`.
+          example: 10.25
+        amount_currency:
+          $ref: '#/components/schemas/ISO4217Currency'
+          description: The currency [ISO 4217](https://www.six-group.com/en/products-services/financial-information/data-standards.html#scrollTo=maintenance-agency) code of the `amount`.
+          example: EUR
+        exchange_rate:
+          type: number
+          description: The exchange rate used to convert the `tx_amount` from the currency of the `Merchant` to the currency of the main `Wallet`.
+          example: 1
+        payment_method:
+          $ref: '#/components/schemas/OutOfPlatformTransactionPaymentMethod'
+          description: The payment method of the `Transaction`.
+          example: OUT_OF_PLATFORM_PERSONAL
+    UserRole:
+      properties:
+        id:
+          type: string
+          description: The ID of the `UserRole`.
+          example: superAdmin
+        name:
+          type: string
+          description: The name of the `UserRole`.
+          example: superAdmin
+        description:
+          type: string
+          description: The description of the `UserRole`.
+          example: The SuperAdmin role
+        scope:
+          type: string
+          description: The scope of the `UserRole`.
+          example: ALL
+    TransactionItemSplitInfo:
+      properties:
+        line_number:
+          type: integer
+          format: int32
+          description: The `Transaction`'s line number.
+          example: 1
+        amount:
+          $ref: '#/components/schemas/TransactionAmount'
+          description: The `TransactionList`'s line amount.
+        vat_amount:
+          $ref: '#/components/schemas/TransactionAmount'
+          description: The `TransactionList`'s line VAT amount.
+        expense_type:
+          $ref: '#/components/schemas/ExpenseType'
+          description: The type of the expense.
+          example: TRAVEL_AND_ENTERTAINMENT
+        employee:
+          $ref: '#/components/schemas/EntityIdDTO'
+          description: The `User` which the transaction line is assigned to.
+        expense_category:
+          $ref: '#/components/schemas/EntityIdDTO'
+          description: The `ExpenseCategory`.
+        tax_rate:
+          $ref: '#/components/schemas/EntityIdDTO'
+          description: The `VATRate`.
+        tags:
+          type: array
+          description: The `Tags`.
+          items:
+            $ref: '#/components/schemas/TransactionTag'
+        approved_amount:
+          $ref: '#/components/schemas/TransactionAmount'
+          description: The `TransactionList`'s line amount approved in policy.
+        rejected_amount:
+          $ref: '#/components/schemas/TransactionAmount'
+          description: The `TransactionList`'s line amount rejected in policy.
+    TransactionSign:
+      type: string
+      enum:
+      - Negative
+      - Positive
+      - None
+    Invoice:
+      properties:
+        number:
+          type: string
+          description: A unique identifier assigned to an invoice by the supplier.
+          example: INV-2023-001
+          maxLength: 50
+          pattern: ^(?![=+\-@])[^,;'"]{0,50}$
+        date:
+          type: string
+          description: 'The date the invoice was issued by the supplier. Accepted format: yyyy-MM-dd.'
+          example: '2023-01-23'
+        po_number:
+          type: string
+          description: A reference number provided by the customer's purchasing system (Purchase Order Number)
+          example: PO-2023-001
+          maxLength: 50
+          pattern: ^(?![=+\-@])[^,;'"]{0,50}$
+        supplier_vat_number:
+          type: string
+          description: The Value-Added Tax (VAT) registration number of the supplier.
+          example: 123456789
+          maxLength: 15
+          pattern: ^[a-zA-Z0-9]{0,15}$
+    TransactionTimelineBalance:
+      properties:
+        available_amount:
+          type: number
+          description: The `Wallet` available amount in the currency of the `Wallet`.
+          example: 10.25
+        pending_amount:
+          type: number
+          description: The `Wallet` pending amount in the currency of the `Wallet`. This is also known as `blocked` amount.
+          example: 10.25
+        ledger_amount:
+          type: number
+          description: The `Wallet` ledger amount in the currency of the `Wallet`. This is a shorthand for the sum of available and pending amounts.
+          example: 10.25
+    TransactionMerchant:
+      properties:
+        id:
+          type: string
+          description: The ID of the `Merchant`.
+          example: 2100846839
+        name:
+          type: string
+          description: The name of the `Merchant` (normalised).
+          example: SHH HOTEL LONDON
+        raw_name:
+          type: string
+          description: The raw name of the `Merchant`.
+          example: SHERLOCK HOLMES HOTEL  LONDON        GBR
+        code:
+          type: string
+          description: The Mastercard `Merchant` code.
+        address:
+          type: string
+          description: The `Merchant` address.
+    SearchTransactionCategory:
+      type: string
+      description: It determines the filter by category of the transaction, multiple categories can be included.
+      enum:
+      - Billing
+      - Chargeback
+      - Conversion
+      - Fee
+      - FeeReversal
+      - InboundFasterPayment
+      - InboundFasterPaymentReversal
+      - Load
+      - LoadReversal
+      - MileageReimbursement
+      - NotRecognized
+      - Payment
+      - Rebalance
+      - RecurringBilling
+      - Refund
+      - SoldoActivity
+      - SoldoCreditOperation
+      - SoldoDebitOperation
+      - Transfer
+      - Wiretransfer
+      - Withdrawal
+      - InterAccountTransferWithdrawalRecurringBilling
+      - InterAccountTransferWithdrawal
+      - InterAccountTransferDeposit
+      - InterAccountTransferDepositRecurringBilling
+    Transaction:
+      properties:
+        id:
+          type: string
+          description: 'The `Transaction` ID (sortable: yes).'
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+        wallet_id:
+          type: string
+          description: 'The ID of the `Wallet` from where the `Transaction` has been authorised (sortable: no).'
+          example: 6853e657-c797-4985-8d6b-5425d4e51df8
+        wallet_name:
+          type: string
+          description: 'The name of the `Wallet` from where the `Transaction` has been authorised (sortable: no).'
+          example: John Doe
+        status:
+          $ref: '#/components/schemas/TransactionStatus'
+          description: 'The status of the `Transaction` (sortable: yes).'
+          example: Settled
+        category:
+          $ref: '#/components/schemas/TransactionCategory'
+          description: 'The category of the `Transaction` (sortable: yes).'
+          example: Payment
+        transaction_sign:
+          $ref: '#/components/schemas/TransactionSign'
+          description: 'The sign of the transaction amount (Negative, Positive, None) (sortable: no).'
+          example: Negative
+        purchase_id:
+          type: string
+          description: 'The `Purchase` ID (sortable: no).'
+          example: 6853e657-c797-4985-8d6b-5425d4e51df8
+        amount:
+          type: number
+          description: 'The amount of the `Transaction` in the currency of the `Wallet` (sortable: no).'
+          example: 10.25
+        amount_currency:
+          $ref: '#/components/schemas/ISO4217Currency'
+          description: 'The currency [ISO 4217](https://www.six-group.com/en/products-services/financial-information/data-standards.html#scrollTo=maintenance-agency) code of the amount (sortable: no).'
+          example: EUR
+        tx_amount:
+          type: number
+          description: 'The amount of the `Transaction` in the currency of the `Merchant` (sortable: no).'
+          example: 10.25
+        tx_amount_currency:
+          $ref: '#/components/schemas/ISO4217Currency'
+          description: 'The currency [ISO 4217](https://www.six-group.com/en/products-services/financial-information/data-standards.html#scrollTo=maintenance-agency) code of the `tx_amount` (sortable: no).'
+          example: EUR
+        fee_amount:
+          type: number
+          description: 'The amount of the `Transaction` fee in the currency of the `Wallet` (sortable: no).'
+          example: 10.25
+        fee_currency:
+          $ref: '#/components/schemas/ISO4217Currency'
+          description: 'The currency [ISO 4217](https://www.six-group.com/en/products-services/financial-information/data-standards.html#scrollTo=maintenance-agency) code of the fee_amount (sortable: no).'
+          example: EUR
+        exchange_rate:
+          type: number
+          description: 'The exchange rate applied at the `Settled` status (sortable: no).'
+          example: 1
+        auth_exchange_rate:
+          type: number
+          description: 'The exchange rate applied at the `Authorised` status (sortable: no).'
+          example: 1
+        expense_status:
+          $ref: '#/components/schemas/ExpenseStatus'
+          description: 'The status of approval of the expense (sortable: no).'
+          example: APPROVED
+        expense_type:
+          $ref: '#/components/schemas/ExpenseType'
+          description: 'The type of the expense (sortable: no).'
+          example: TRAVEL_AND_ENTERTAINMENT
+        expense_date:
+          type: string
+          description: 'The date and time of the last review of the expense (sortable: no).'
+          example: '2017-06-01T12:48:40Z'
+        expense_reviewer:
+          type: string
+          description: 'The ID of the `User` who reviewed the expense (sortable: no).'
+          example: XMPL1234-000001
+        expense_approved_amount:
+          type: number
+          description: 'The expense amount that a reviewer has approved (sortable: no).'
+          example: 10.25
+        expense_report_id:
+          type: string
+          description: 'The ID of the `ExpenseReport` the `Transaction` is included into (sortable: no).'
+          example: c861cc24-6663-410f-8c78-73f886fff4ef
+        date:
+          type: string
+          description: 'The date and time of the `Transaction` at the `Authorised` status (sortable: yes).'
+          example: '2017-06-01T12:48:40Z'
+        settlement_date:
+          type: string
+          description: 'The date and time of the `Transaction` at the `Settled` status (sortable: yes).'
+          example: '2017-06-01T12:48:40Z'
+        update_time:
+          type: string
+          description: 'The date and time of the last update to the `Transaction` (sortable: yes).'
+          example: '2017-06-01T12:48:40Z'
+        merchant:
+          $ref: '#/components/schemas/TransactionMerchant'
+          description: 'The name of the Merchant of the transaction (only valid for `Payment`, `Withdrawal`, `Refund` transaction categories) (sortable: no).'
+        merchant_category:
+          $ref: '#/components/schemas/TransactionMerchantCategory'
+          description: 'The category of the `Merchant` of the `Transaction` (only valid for `Payment`, `Withdrawal`, `Refund` transaction categories) (sortable: no).'
+        tags:
+          type: array
+          description: The list of the `Tags` of the `Transaction`.
+          items:
+            $ref: '#/components/schemas/TransactionTag'
+        card_id:
+          type: string
+          description: 'The ID of the `Card` used for the `Transaction` (sortable: no).'
+          example: 6853e657-c797-4985-8d6b-5425d4e51df8
+        masked_pan:
+          type: string
+          description: 'The masked PAN of the `Card` used for the `Transaction` (sortable: yes).'
+          example: 123456******1234
+        owner_name:
+          type: string
+          description: 'The name of the cardholder who made the transaction (only available when `owner_type` is `employee`) (sortable: no).'
+          example: John
+        owner_surname:
+          type: string
+          description: 'The surname of the cardholder who made the transaction (only available when `owner_type` is `employee`) (sortable: no).'
+          example: Smith
+        owner_type:
+          $ref: '#/components/schemas/TransactionOwnerType'
+          description: 'The owner type (`company`, `employee`) (sortable: no).'
+          example: company
+        owner_id:
+          type: string
+          description: 'The ID of the Cardholder who made the `Transaction` (only available when `owner_type` is `employee`) (sortable: no).'
+          example: XMPL1234-000003
+        custom_reference_id:
+          type: string
+          description: 'The custom reference ID of the Cardholder who made the `Transaction` (only available when `owner_type` is `employee`) (sortable: no).'
+          example: 123456-user-1
+        group_id:
+          type: string
+          description: 'The ID of the `Group` the `Transaction` belongs to (sortable: no). '
+          example: 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
+        has_attachments:
+          type: boolean
+          description: 'It determines whether the transaction has one or more `TransactionAttachments` (sortable: no).'
+          example: false
+        trx_owner_id:
+          type: string
+          description: 'For User `Card` transactions, when `owner_type` is `employee`, is the cardholder ID, for Company `Card`, when `owner_type` is `company`, is empty or one of the `Card` assignees (sortable: no).'
+          example: XMPL1234-000003
+        metadata_ids:
+          type: array
+          description: 'A list of IDs related to custom generated `Metadata` of the `Transaction` (sortable: no).'
+          example:
+          - express
+          items:
+            type: string
+        fuel_details:
+          $ref: '#/components/schemas/TransactionFuelDetails'
+          description: 'The fuel details of the `Transaction`  (sortable: no).'
+        vat_percentage:
+          type: number
+          description: 'The VAT percentage applied (sortable: no).'
+          example: 15
+        vat_amount:
+          type: number
+          description: 'The amount of the VAT in the currency of the `Wallet` (sortable: no).'
+          example: 10.25
+        vat_currency:
+          $ref: '#/components/schemas/ISO4217Currency'
+          description: 'The currency [ISO 4217](https://www.six-group.com/en/products-services/financial-information/data-standards.html#scrollTo=maintenance-agency) code of the vat_amount (sortable: no).'
+          example: EUR
+        user_notes:
+          type: string
+          description: 'The notes defined by the `User` (sortable: no).'
+        notes:
+          type: string
+          description: 'The notes defined by Soldo (sortable: no).'
+        direct_url:
+          type: string
+          description: 'The direct URL to the transaction details page (sortable: no).'
+        flags:
+          type: array
+          description: 'List of strings: `forUser`, `forAdmin` or empty. It determines for which kinds of `Users` the transaction is flagged to (sortable: no).'
+          example:
+          - forUser
+          items:
+            type: string
+        payment_method:
+          $ref: '#/components/schemas/TransactionPaymentMethod'
+          description: The payment method of the `Transaction`.
+          example: ONLINE_ADS
+        payment_method_id:
+          type: string
+          description: 'The ID of the payment method, could be the ID of a `Subscription`, `OnlineAds` or `Purchase` resource (sortable: no).'
+          example: 6853e657-c797-4985-8d6b-5425d4e51df8
+        expense_category:
+          $ref: '#/components/schemas/ExpenseCategory'
+          description: The `ExpenseCategory` assigned to the `Transaction`.
+        tax_rate:
+          $ref: '#/components/schemas/VatRate'
+          description: The `Transaction`'s `VatRate`.
+        split:
+          type: boolean
+          description: 'It determines whether the transaction has been split (sortable: no).'
+          example: false
+        tx_id:
+          type: string
+          description: The transaction's internal id (the same ID that can be found on reports and the advanced details section of a `Transaction`).
+          example: 5-857211147-150603333585014265
+        payment_trn_code:
+          type: string
+          description: The Transaction Reference Number (TRN) of the outbound payment generated by Soldo. Available for `SEPA`, `SEPA_INSTANT`.
+          example: 1234567890123456789012345678IT
+        carbon_emissions:
+          $ref: '#/components/schemas/TransactionCarbonEmissionInfo'
+          description: The amount of CO2e emissions generated as a result of the `Transaction`.
+        required_information:
+          $ref: '#/components/schemas/SearchTransactionRequiredInformation'
+          description: It indicates whether a transaction has (or doesn’t have) all details marked as mandatory in the ‘Reminders’ section filled in.
+          example: COMPLETE
+        reimbursement_expense_report_id:
+          type: string
+          description: 'The ID of the ExpenseReport that was reimbursed by this payment. Note to developer: if this ID is not null this payment can be considered a reimbursement. (sortable: no).'
+        invoice:
+          $ref: '#/components/schemas/Invoice'
+          description: The invoice to which this transaction relates
+        source:
+          $ref: '#/components/schemas/Source'
+          description: Info about the origin of the `Transaction` (this applies for `InboundFasterPayment`, `InboundFasterPaymentReversal`, `Load`, `LoadReversal` and `Wiretransfer`).
+        custom_export:
+          type: array
+          description: The info generated as a result of the custom export `Transaction`.
+          items:
+            $ref: '#/components/schemas/CustomExport'
+        out_spending_policy:
+          $ref: '#/components/schemas/TransactionSpendingPolicyMetadata'
+          description: The outSpendingPolicy of the `Transaction`.
+        business_trip_id:
+          type: string
+          description: 'The ID of the `BusinessTrip` the `Transaction` is linked to (sortable: no).'
+        card_name:
+          type: string
+          description: 'The name of the `Card` used for the `Transaction` (sortable: no).'
+          example: CardName
+        details:
+          $ref: '#/components/schemas/TransactionDetails'
+          description: 'The details of the `Transaction`  (sortable: no).'
+        split_transactions:
+          type: array
+          description: The list of `SplitTransactionInfo`.
+          items:
+            $ref: '#/components/schemas/TransactionSplitInfo'
+        timeline:
+          type: array
+          description: The timeline of changes affecting the `Transaction` and the related `Wallet`. For each occurrence, the `Wallet` balance is reported before and after the change.
+          items:
+            $ref: '#/components/schemas/TransactionTimelineItem'
+    SearchTransactionPaymentMethod:
+      type: string
+      description: It determines the filter by payment method of the transaction, multiple payment methods can be included. `OUT_OF_PLATFORM_COMPANY` and `OUT_OF_PLATFORM_PERSONAL` are not included by default.
+      enum:
+      - USER
+      - COMPANY
+      - PURCHASE
+      - SUBSCRIPTION
+      - ONLINE_ADS
+      - OUT_OF_PLATFORM_COMPANY
+      - OUT_OF_PLATFORM_PERSONAL
+      - WIRETRANSFER
+      - IATS
+    MileageReimbursementDetailsCreateRequest:
+      properties:
+        vehicle_id:
+          type: string
+          description: The ID of the `Vehicle` used, if registered.
+          example: 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
+        reimbursement_rate:
+          type: number
+          description: The rate to apply to the covered distance (measured in km) for the reimbursement, assuming the main `Wallet` currency. Required if `vehicle_id` is missing or if no reimbursement rate is set for the related `Vehicle`. Overridden if `vehicle_id` is set and a reimbursement rate is set for the related `Vehicle`.
+          example: 0.45
+        description:
+          type: string
+          description: The description for the trip.
+          example: 'Business trip: Rome - Florence - Turin - Milan'
+        starting_point:
+          type: string
+          description: The place where the travel started.
+          example: Rome, Metropolitan City of Rome Capital, Italy
+        arrival_point:
+          type: string
+          description: The point where the travel ended.
+          example: Milan, Metropolitan City of Milan, Italy
+        multi_stops:
+          type: array
+          description: The intermediate stops during the travel.
+          example:
+          - Florence, Metropolitan City of Florence, Italy
+          - Turin, Metropolitan City of Turin, Italy
+          items:
+            type: string
+        distance:
+          type: number
+          description: The travelled distance from the starting point to the arrival point (measured in km).
+          example: 875.4
+        round_trip:
+          type: boolean
+          description: Whether the distance has been travelled twice due to a round trip.
+          example: true
+      required:
+      - description
+      - distance
+      - round_trip
+    TransactionPaymentMethod:
+      type: string
+      enum:
+      - USER
+      - COMPANY
+      - PURCHASE
+      - SUBSCRIPTION
+      - ONLINE_ADS
+      - OUT_OF_PLATFORM_COMPANY
+      - OUT_OF_PLATFORM_PERSONAL
+      - IATS
+      - WIRETRANSFER
+    Transactions:
+      properties:
+        total:
+          type: integer
+          format: int32
+          description: It represents the total number of available items in the list.
+          example: 168
+        pages:
+          type: integer
+          format: int32
+          description: It represents the total number of available pages.
+          example: 7
+        page_size:
+          type: integer
+          format: int32
+          description: It represents the number of items per page.
+          example: 25
+        current_page:
+          type: integer
+          format: int32
+          description: It indicates the current page (the counter starts from zero).
+          example: 0
+        results_size:
+          type: integer
+          format: int32
+          description: It indicates the size of the array results.
+          example: 25
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/TransactionItem'
+    MileageReimbursementDetails:
+      properties:
+        vehicle_id:
+          type: string
+          description: The ID of the `Vehicle` used, if registered.
+          example: 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
+        reimbursement_rate:
+          type: number
+          description: The rate to apply to the covered distance (measured in km) for the reimbursement, assuming the main `Wallet` currency.
+          example: 0.45
+        description:
+          type: string
+          description: The description for the trip.
+          example: 'Business trip: Rome - Florence - Turin - Milan'
+        starting_point:
+          type: string
+          description: The place where the travel started.
+          example: Rome, Metropolitan City of Rome Capital, Italy
+        arrival_point:
+          type: string
+          description: The point where the travel ended.
+          example: Milan, Metropolitan City of Milan, Italy
+        multi_stops:
+          type: array
+          description: The intermediate stops during the travel.
+          example:
+          - Florence, Metropolitan City of Florence, Italy
+          - Turin, Metropolitan City of Turin, Italy
+          items:
+            type: string
+        distance:
+          type: number
+          description: The travelled distance from the starting point to the arrival point (measured in km).
+          example: 875.4
+        round_trip:
+          type: boolean
+          description: Whether the distance has been travelled twice due to a round trip.
+          example: true
+    TransactionFuelDetails:
+      description: The transaction fuel details `Refueling` resource
+      properties:
+        plate:
+          type: string
+          description: '`Vehicle`''s plate number.'
+          example: AA000BB
+        vehicle_fuel_type:
+          $ref: '#/components/schemas/FuelType'
+          description: Fuel type specified in the `Vehicle`'s configuration page.
+          example: PETROL
+        vat_deductibility_percentage:
+          type: string
+          description: The deductible VAT percentage configured for the `Vehicle`.
+          example: 40%
+        mileage:
+          type: integer
+          format: int32
+          description: The `Vehicle` mileage.
+          example: 125000
+        quantity:
+          type: number
+          description: The fuel quantity as specified in the invoice.
+          example: 80
+        unit_price:
+          type: number
+          description: The fuel unit price as specified on the transaction.
+          example: 1.41
+        tx_fuel_type:
+          $ref: '#/components/schemas/FuelType'
+          description: The fuel type as specified on the transaction.
+          example: PETROL
+        to_be_ignored:
+          type: boolean
+          description: If the transaction link status is set to ignored.
+          example: false
+        invoice_id:
+          type: integer
+          format: int64
+          description: Invoice ID.
+          example: 4421109
+        invoice_number:
+          type: string
+          description: Invoice number.
+          example: NVC112200987
+        invoice_date:
+          type: string
+          description: Invoice date.
+          example: '2017-06-01T12:48:40Z'
+        invoice_total_amount:
+          type: number
+          description: Total amount of the linked invoice.
+          example: 10.25
+        invoice_row:
+          type: integer
+          format: int32
+          description: Row of the linked invoice.
+          example: 4
+        invoice_row_amount:
+          type: number
+          description: Amount of the transaction's row in the linked invoice.
+          example: 10.25
+        supplier_vat_id:
+          type: string
+          description: Supplier VAT ID.
+          example: 98746784967
+        dri:
+          type: string
+          description: The DRI (Documento Riepilogativo) code.
+          example: DRI00099881
+        vehicle_id:
+          type: string
+          description: The `Vehicle` ID.
+          example: 6853e657-c797-4985-8d6b-5425d4e51df8
+    TransactionItem:
+      properties:
+        id:
+          type: string
+          description: 'The `Transaction` ID (sortable: yes).'
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+        wallet_id:
+          type: string
+          description: 'The ID of the `Wallet` from where the `Transaction` has been authorised (sortable: no).'
+          example: 6853e657-c797-4985-8d6b-5425d4e51df8
+        wallet_name:
+          type: string
+          description: 'The name of the `Wallet` from where the `Transaction` has been authorised (sortable: no).'
+          example: John Doe
+        status:
+          $ref: '#/components/schemas/TransactionStatus'
+          description: 'The status of the `Transaction` (sortable: yes).'
+          example: Settled
+        category:
+          $ref: '#/components/schemas/TransactionCategory'
+          description: 'The category of the `Transaction` (sortable: yes).'
+          example: Payment
+        transaction_sign:
+          $ref: '#/components/schemas/TransactionSign'
+          description: 'The sign of the transaction amount (Negative, Positive, None) (sortable: no).'
+          example: Negative
+        purchase_id:
+          type: string
+          description: 'The `Purchase` ID (sortable: no).'
+          example: 6853e657-c797-4985-8d6b-5425d4e51df8
+        amount:
+          type: number
+          description: 'The amount of the `Transaction` in the currency of the `Wallet` (sortable: no).'
+          example: 10.25
+        amount_currency:
+          $ref: '#/components/schemas/ISO4217Currency'
+          description: 'The currency [ISO 4217](https://www.six-group.com/en/products-services/financial-information/data-standards.html#scrollTo=maintenance-agency) code of the amount (sortable: no).'
+          example: EUR
+        tx_amount:
+          type: number
+          description: 'The amount of the `Transaction` in the currency of the `Merchant` (sortable: no).'
+          example: 10.25
+        tx_amount_currency:
+          $ref: '#/components/schemas/ISO4217Currency'
+          description: 'The currency [ISO 4217](https://www.six-group.com/en/products-services/financial-information/data-standards.html#scrollTo=maintenance-agency) code of the `tx_amount` (sortable: no).'
+          example: EUR
+        fee_amount:
+          type: number
+          description: 'The amount of the `Transaction` fee in the currency of the `Wallet` (sortable: no).'
+          example: 10.25
+        fee_currency:
+          $ref: '#/components/schemas/ISO4217Currency'
+          description: 'The currency [ISO 4217](https://www.six-group.com/en/products-services/financial-information/data-standards.html#scrollTo=maintenance-agency) code of the fee_amount (sortable: no).'
+          example: EUR
+        exchange_rate:
+          type: number
+          description: 'The exchange rate applied at the `Settled` status (sortable: no).'
+          example: 1
+        auth_exchange_rate:
+          type: number
+          description: 'The exchange rate applied at the `Authorised` status (sortable: no).'
+          example: 1
+        expense_status:
+          $ref: '#/components/schemas/ExpenseStatus'
+          description: 'The status of approval of the expense (sortable: no).'
+          example: APPROVED
+        expense_type:
+          $ref: '#/components/schemas/ExpenseType'
+          description: 'The type of the expense (sortable: no).'
+          example: TRAVEL_AND_ENTERTAINMENT
+        expense_date:
+          type: string
+          description: 'The date and time of the last review of the expense (sortable: no).'
+          example: '2017-06-01T12:48:40Z'
+        expense_reviewer:
+          type: string
+          description: 'The ID of the `User` who reviewed the expense (sortable: no).'
+          example: XMPL1234-000001
+        expense_approved_amount:
+          type: number
+          description: 'The expense amount that a reviewer has approved (sortable: no).'
+          example: 10.25
+        expense_report_id:
+          type: string
+          description: 'The ID of the `ExpenseReport` the `Transaction` is included into (sortable: no).'
+          example: c861cc24-6663-410f-8c78-73f886fff4ef
+        date:
+          type: string
+          description: 'The date and time of the `Transaction` at the `Authorised` status (sortable: yes).'
+          example: '2017-06-01T12:48:40Z'
+        settlement_date:
+          type: string
+          description: 'The date and time of the `Transaction` at the `Settled` status (sortable: yes).'
+          example: '2017-06-01T12:48:40Z'
+        update_time:
+          type: string
+          description: 'The date and time of the last update to the `Transaction` (sortable: yes).'
+          example: '2017-06-01T12:48:40Z'
+        merchant:
+          $ref: '#/components/schemas/TransactionMerchant'
+          description: 'The name of the Merchant of the transaction (only valid for `Payment`, `Withdrawal`, `Refund` transaction categories) (sortable: no).'
+        merchant_category:
+          $ref: '#/components/schemas/TransactionMerchantCategory'
+          description: 'The category of the `Merchant` of the `Transaction` (only valid for `Payment`, `Withdrawal`, `Refund` transaction categories) (sortable: no).'
+        tags:
+          type: array
+          description: The list of the `Tags` of the `Transaction`.
+          items:
+            $ref: '#/components/schemas/TransactionTag'
+        card_id:
+          type: string
+          description: 'The ID of the `Card` used for the `Transaction` (sortable: no).'
+          example: 6853e657-c797-4985-8d6b-5425d4e51df8
+        masked_pan:
+          type: string
+          description: 'The masked PAN of the `Card` used for the `Transaction` (sortable: yes).'
+          example: 123456******1234
+        owner_name:
+          type: string
+          description: 'The name of the cardholder who made the transaction (only available when `owner_type` is `employee`) (sortable: no).'
+          example: John
+        owner_surname:
+          type: string
+          description: 'The surname of the cardholder who made the transaction (only available when `owner_type` is `employee`) (sortable: no).'
+          example: Smith
+        owner_type:
+          $ref: '#/components/schemas/TransactionOwnerType'
+          description: 'The owner type (`company`, `employee`) (sortable: no).'
+          example: company
+        owner_id:
+          type: string
+          description: 'The ID of the Cardholder who made the `Transaction` (only available when `owner_type` is `employee`) (sortable: no).'
+          example: XMPL1234-000003
+        custom_reference_id:
+          type: string
+          description: 'The custom reference ID of the Cardholder who made the `Transaction` (only available when `owner_type` is `employee`) (sortable: no).'
+          example: 123456-user-1
+        group_id:
+          type: string
+          description: 'The ID of the `Group` the `Transaction` belongs to (sortable: no). '
+          example: 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
+        has_attachments:
+          type: boolean
+          description: 'It determines whether the transaction has one or more `TransactionAttachments` (sortable: no).'
+          example: false
+        trx_owner_id:
+          type: string
+          description: 'For User `Card` transactions, when `owner_type` is `employee`, is the cardholder ID, for Company `Card`, when `owner_type` is `company`, is empty or one of the `Card` assignees (sortable: no).'
+          example: XMPL1234-000003
+        metadata_ids:
+          type: array
+          description: 'A list of IDs related to custom generated `Metadata` of the `Transaction` (sortable: no).'
+          example:
+          - express
+          items:
+            type: string
+        fuel_details:
+          $ref: '#/components/schemas/TransactionFuelDetails'
+          description: 'The fuel details of the `Transaction`  (sortable: no).'
+        vat_percentage:
+          type: number
+          description: 'The VAT percentage applied (sortable: no).'
+          example: 15
+        vat_amount:
+          type: number
+          description: 'The amount of the VAT in the currency of the `Wallet` (sortable: no).'
+          example: 10.25
+        vat_currency:
+          $ref: '#/components/schemas/ISO4217Currency'
+          description: 'The currency [ISO 4217](https://www.six-group.com/en/products-services/financial-information/data-standards.html#scrollTo=maintenance-agency) code of the vat_amount (sortable: no).'
+          example: EUR
+        user_notes:
+          type: string
+          description: 'The notes defined by the `User` (sortable: no).'
+        notes:
+          type: string
+          description: 'The notes defined by Soldo (sortable: no).'
+        direct_url:
+          type: string
+          description: 'The direct URL to the transaction details page (sortable: no).'
+        flags:
+          type: array
+          description: 'List of strings: `forUser`, `forAdmin` or empty. It determines for which kinds of `Users` the transaction is flagged to (sortable: no).'
+          example:
+          - forUser
+          items:
+            type: string
+        payment_method:
+          $ref: '#/components/schemas/TransactionPaymentMethod'
+          description: The payment method of the `Transaction`.
+          example: ONLINE_ADS
+        payment_method_id:
+          type: string
+          description: 'The ID of the payment method, could be the ID of a `Subscription`, `OnlineAds` or `Purchase` resource (sortable: no).'
+          example: 6853e657-c797-4985-8d6b-5425d4e51df8
+        expense_category:
+          $ref: '#/components/schemas/ExpenseCategory'
+          description: The `ExpenseCategory` assigned to the `Transaction`.
+        tax_rate:
+          $ref: '#/components/schemas/VatRate'
+          description: The `Transaction`'s `VatRate`.
+        split:
+          type: boolean
+          description: 'It determines whether the transaction has been split (sortable: no).'
+          example: false
+        tx_id:
+          type: string
+          description: The transaction's internal id (the same ID that can be found on reports and the advanced details section of a `Transaction`).
+          example: 5-857211147-150603333585014265
+        payment_trn_code:
+          type: string
+          description: The Transaction Reference Number (TRN) of the outbound payment generated by Soldo. Available for `SEPA`, `SEPA_INSTANT`.
+          example: 1234567890123456789012345678IT
+        carbon_emissions:
+          $ref: '#/components/schemas/TransactionCarbonEmissionInfo'
+          description: The amount of CO2e emissions generated as a result of the `Transaction`.
+        required_information:
+          $ref: '#/components/schemas/SearchTransactionRequiredInformation'
+          description: It indicates whether a transaction has (or doesn’t have) all details marked as mandatory in the ‘Reminders’ section filled in.
+          example: COMPLETE
+        reimbursement_expense_report_id:
+          type: string
+          description: 'The ID of the ExpenseReport that was reimbursed by this payment. Note to developer: if this ID is not null this payment can be considered a reimbursement. (sortable: no).'
+        invoice:
+          $ref: '#/components/schemas/Invoice'
+          description: The invoice to which this transaction relates
+        source:
+          $ref: '#/components/schemas/Source'
+          description: Info about the origin of the `Transaction` (this applies for `InboundFasterPayment`, `InboundFasterPaymentReversal`, `Load`, `LoadReversal` and `Wiretransfer`).
+        custom_export:
+          type: array
+          description: The info generated as a result of the custom export `Transaction`.
+          items:
+            $ref: '#/components/schemas/CustomExport'
+        out_spending_policy:
+          $ref: '#/components/schemas/TransactionSpendingPolicyMetadata'
+          description: The outSpendingPolicy of the `Transaction`.
+        business_trip_id:
+          type: string
+          description: 'The ID of the `BusinessTrip` the `Transaction` is linked to (sortable: no).'
+        details:
+          $ref: '#/components/schemas/TransactionItemDetails'
+          description: The details of the `Transaction`.
+        split_transactions:
+          type: array
+          description: The list of `SplitTransactionInfo`.
+          items:
+            $ref: '#/components/schemas/TransactionItemSplitInfo'
+    ISO3166Country:
+      type: string
+      enum:
+      - ASC
+      - AND
+      - ARE
+      - AFG
+      - ATG
+      - AIA
+      - ALB
+      - ARM
+      - ANT
+      - AGO
+      - ATA
+      - ARG
+      - ASM
+      - AUT
+      - AUS
+      - ABW
+      - ALA
+      - AZE
+      - BIH
+      - BRB
+      - BGD
+      - BEL
+      - BFA
+      - BGR
+      - BHR
+      - BDI
+      - BEN
+      - BLM
+      - BMU
+      - BRN
+      - BOL
+      - BES
+      - BRA
+      - BHS
+      - BTN
+      - BUR
+      - BVT
+      - BWA
+      - BLR
+      - BLZ
+      - CAN
+      - CCK
+      - COD
+      - CAF
+      - COG
+      - CHE
+      - CIV
+      - COK
+      - CHL
+      - CMR
+      - CHN
+      - COL
+      - CPT
+      - CRI
+      - CSXX
+      - CUB
+      - CPV
+      - CUW
+      - CXR
+      - CYP
+      - CZE
+      - DEU
+      - DGA
+      - DJI
+      - DNK
+      - DMA
+      - DOM
+      - DZA
+      - ECU
+      - EST
+      - EGY
+      - ESH
+      - ERI
+      - ESP
+      - ETH
+      - FIN
+      - FJI
+      - FLK
+      - FSM
+      - FRO
+      - FRA
+      - FXX
+      - GAB
+      - GBR
+      - GRD
+      - GEO
+      - GUF
+      - GGY
+      - GHA
+      - GIB
+      - GRL
+      - GMB
+      - GIN
+      - GLP
+      - GNQ
+      - GRC
+      - SGS
+      - GTM
+      - GUM
+      - GNB
+      - GUY
+      - HKG
+      - HMD
+      - HND
+      - HRV
+      - HTI
+      - HUN
+      - IDN
+      - IRL
+      - ISR
+      - IMN
+      - IND
+      - IOT
+      - IRQ
+      - IRN
+      - ISL
+      - ITA
+      - JEY
+      - JAM
+      - JOR
+      - JPN
+      - KEN
+      - KGZ
+      - KHM
+      - KIR
+      - COM
+      - KNA
+      - PRK
+      - KOR
+      - KWT
+      - CYM
+      - KAZ
+      - LAO
+      - LBN
+      - LCA
+      - LIE
+      - LKA
+      - LBR
+      - LSO
+      - LTU
+      - LUX
+      - LVA
+      - LBY
+      - MAR
+      - MCO
+      - MDA
+      - MNE
+      - MAF
+      - MDG
+      - MHL
+      - MKD
+      - MLI
+      - MMR
+      - MNG
+      - MAC
+      - MNP
+      - MTQ
+      - MRT
+      - MSR
+      - MLT
+      - MUS
+      - MDV
+      - MWI
+      - MEX
+      - MYS
+      - MOZ
+      - NAM
+      - NCL
+      - NER
+      - NFK
+      - NGA
+      - NIC
+      - NLD
+      - NOR
+      - NPL
+      - NRU
+      - NTZ
+      - NIU
+      - NZL
+      - OMN
+      - PAN
+      - PER
+      - PYF
+      - PNG
+      - PHL
+      - PAK
+      - POL
+      - SPM
+      - PCN
+      - PRI
+      - PSE
+      - PRT
+      - PLW
+      - PRY
+      - QAT
+      - REU
+      - ROU
+      - ROM
+      - SRB
+      - RUS
+      - RWA
+      - SAU
+      - SLB
+      - SYC
+      - SDN
+      - SWE
+      - SGP
+      - SHN
+      - SVN
+      - SJM
+      - SVK
+      - SLE
+      - SMR
+      - SEN
+      - SOM
+      - SUR
+      - SSD
+      - STP
+      - SUN
+      - SLV
+      - SXM
+      - SYR
+      - SWZ
+      - TAA
+      - TCA
+      - TCD
+      - ATF
+      - TGO
+      - THA
+      - TJK
+      - TKL
+      - TLS
+      - TKM
+      - TUN
+      - TON
+      - TUR
+      - TTO
+      - TUV
+      - TWN
+      - TZA
+      - UKR
+      - UGA
+      - UMI
+      - USA
+      - URY
+      - UZB
+      - VAT
+      - VCT
+      - VEN
+      - VGB
+      - VIR
+      - VNM
+      - VUT
+      - WLF
+      - WSM
+      - XKX
+      - XXK
+      - QZZ
+      - YEM
+      - MYT
+      - YUCS
+      - ZAF
+      - ZMB
+      - ZRCD
+      - ZWE
+    MileageReimbursementDetailsUpdateRequest:
+      properties:
+        vehicle_id:
+          type: string
+          description: The ID of the `Vehicle` used, if registered.
+          example: 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
+        reimbursement_rate:
+          type: number
+          description: The rate to apply to the covered distance (measured in km) for the reimbursement, assuming the main `Wallet` currency. Required if `vehicle_id` is missing or if no reimbursement rate is set for the related `Vehicle`. Overridden if `vehicle_id` is set and a reimbursement rate is set for the related `Vehicle`.
+          example: 0.45
+        description:
+          type: string
+          description: The description for the trip.
+          example: 'Business trip: Rome - Florence - Turin - Milan'
+        starting_point:
+          type: string
+          description: The place where the travel started.
+          example: Rome, Metropolitan City of Rome Capital, Italy
+        arrival_point:
+          type: string
+          description: The point where the travel ended.
+          example: Milan, Metropolitan City of Milan, Italy
+        multi_stops:
+          type: array
+          description: The intermediate stops during the travel.
+          example:
+          - Florence, Metropolitan City of Florence, Italy
+          - Turin, Metropolitan City of Turin, Italy
+          items:
+            type: string
+        distance:
+          type: number
+          description: The travelled distance from the starting point to the arrival point (measured in km).
+          example: 875.4
+        round_trip:
+          type: boolean
+          description: Whether the distance has been travelled twice due to a round trip.
+          example: true
+      required:
+      - description
+      - distance
+      - round_trip
+    DateParam:
+      description: 'The end of the period of the search `toDate` included (i.e. less than) (Formats: `yyyy-MM-dd`, `yyyy-MM-ddThh:mm:ss`, `yyyy-MM-ddThh:mm:ssZ`).'
+      example: '1970-01-30'
+    TransactionCategory:
+      type: string
+      enum:
+      - Billing
+      - Chargeback
+      - Conversion
+      - Fee
+      - FeeReversal
+      - InboundFasterPayment
+      - InboundFasterPaymentReversal
+      - Load
+      - LoadReversal
+      - MileageReimbursement
+      - NotRecognized
+      - P2P
+      - Payment
+      - Rebalance
+      - RecurringBilling
+      - Refund
+      - SoldoActivity
+      - SoldoCreditOperation
+      - SoldoDebitOperation
+      - Transfer
+      - Wiretransfer
+      - Withdrawal
+      - InterAccountTransferWithdrawalRecurringBilling
+      - InterAccountTransferWithdrawal
+      - InterAccountTransferDeposit
+      - InterAccountTransferDepositRecurringBilling
+    FuelType:
+      type: string
+      enum:
+      - PETROL
+      - DIESEL
+      - METHANE
+      - LPG
+      - LNG
+      - ELECTRIC
+      - UNKNOWN
+    Address:
+      properties:
+        id:
+          type: string
+          description: The `Address` ID.
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+        recipient:
+          type: string
+          description: The recipient of the `Address`
+          example: JohnSmith
+        name:
+          type: string
+          description: The actual name of the `Address`.
+          example: Foo Street 75
+        line1:
+          type: string
+          description: The `Address` street.
+          example: Bar Street 64
+        line2:
+          type: string
+          description: An optional other street.
+          example: Other street 31
+        country:
+          type: string
+          description: The country of the `Address`.
+          example: GB
+        county:
+          type: string
+          description: The county of the `Address`.
+          example: LD
+        city:
+          type: string
+          description: The city of the `Address`.
+          example: London
+        post_code:
+          type: string
+          description: The postal code of the `Address`.
+          example: '00000'
+        delivery_phone_number:
+          type: string
+          description: Delivery phone number
+          example: '+441234567890'
+        default_shipping:
+          type: boolean
+          description: True if the `Address` is the default shipping address.
+          example: false
+        type:
+          type: string
+          description: The type of the `Address`.
+          example: SHIPPING
+        category:
+          $ref: '#/components/schemas/AddressCategory'
+          description: The category of the `Address`.
+          example: COMPANY
+        user_id:
+          type: string
+          description: The `User` ID, only if category of the `Address` is `USER`.
+        creation_time:
+          type: string
+          description: The date and time when the `Address` was created.
+          example: '2017-06-01T12:48:40Z'
+        last_update:
+          type: string
+          description: The date and time when the `Address` was last updated.
+          example: '2017-06-01T12:48:40Z'
+    UpdateMileageReimbursementTransaction:
+      description: Update `MileageReimbursement` `Transaction` JSON parameters.
+      properties:
+        request_timestamp:
+          type: integer
+          format: int64
+          description: The epoch timestamp in millis. This is checked in Soldo. Requests with timestamp older than 5 seconds will be rejected.
+          example: 1576850500000
+        date:
+          type: string
+          description: The date and time of the `Transaction`.
+          example: '2017-06-01T12:48:40Z'
+        mileage:
+          $ref: '#/components/schemas/MileageReimbursementDetailsUpdateRequest'
+          description: The details of the `MileageReimbursement`.
+      required:
+      - date
+      - mileage
+      - request_timestamp
+    CustomExport:
+      properties:
+        product:
+          type: string
+          description: A product that exported list of `Transaction`
+          example: SAP
+        export_date:
+          type: string
+          description: A date of exported `Transactions`
+          example: '2017-06-01T12:48:40Z'
+    Direction:
+      type: string
+      description: It indicates how the pages are ordered.
+      enum:
+      - ASC
+      - DESC
+      example: DESC
+    TransactionItemDetails:
+      properties:
+        tx_country:
+          $ref: '#/components/schemas/ISO3166Country'
+          description: The [ISO 3166-1 alpha-3](https://www.iso.org/obp/ui/#search/code/) code of the country where the `Transaction` has been authorised.
+          example: GBR
+    TransactionSpendingPolicyMetadata:
+      properties:
+        approved_amount:
+          $ref: '#/components/schemas/TransactionAmount'
+          description: The `Transaction` amount approved in policy.
+        rejected_amount:
+          $ref: '#/components/schemas/TransactionAmount'
+          description: The `Transaction` amount rejected in policy.
+    MileageReimbursementTransaction:
+      properties:
+        transaction_id:
+          type: string
+          description: The ID of the `Transaction` describing the `MileageReimbursement`.
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+        date:
+          type: string
+          description: The date and time of the `Transaction`.
+          example: '2017-06-01T12:48:40Z'
+        owner_id:
+          type: string
+          description: 'The ID of the `User` who made the `Transaction` (updatable: no).'
+          example: XMPL1234-000002
+        amount:
+          type: number
+          description: The amount of the `Transaction`, in the currency of the main `Wallet`.
+          example: 10.25
+        amount_currency:
+          $ref: '#/components/schemas/ISO4217Currency'
+          description: The currency [ISO 4217](https://www.six-group.com/en/products-services/financial-information/data-standards.html#scrollTo=maintenance-agency) code of the `amount`.
+          example: EUR
+        mileage:
+          $ref: '#/components/schemas/MileageReimbursementDetails'
+          description: The details of the `MileageReimbursement`.
+    MerchantCategory:
+      type: string
+      enum:
+      - Advertising
+      - Entertainment
+      - Utilities
+      - Food_Cocktail_Bar
+      - Food_Restaurant
+      - Food_Store
+      - Food_Wine
+      - Services_Business
+      - Services_Cleaning
+      - Services_Contracted
+      - Services_Delivery
+      - Services_Educational
+      - Services_Financial
+      - Services_Gambling
+      - Services_Government
+      - Services_Health
+      - Services_Insurance
+      - Services_Legal
+      - Services_Museum
+      - Services_Organisation
+      - Services_Personal
+      - Services_Repair
+      - Services_Social
+      - Services_Stationery
+      - Services_Telecommunication
+      - Services_Veterinary
+      - Services_Warehouse
+      - Services_Wholesale
+      - Shopping_Accessories
+      - Shopping_Airline
+      - Shopping_Art
+      - Shopping_Automotive
+      - Shopping_Beauty
+      - Shopping_Books
+      - Shopping_Clothes
+      - Shopping_Digital_Goods
+      - Shopping_Direct_Marketing
+      - Shopping_Furnitures
+      - Shopping_Sport
+      - Shopping_Store
+      - Shopping_Technology
+      - Transport_Airports
+      - Transport_Charging_Station
+      - Transport_Parking
+      - Transport_Public_Transportation
+      - Transport_Road
+      - Transport_Service_Station
+      - Transport_Ships
+      - Transport_Taxi
+      - Transport_Toll_Roads
+      - Transport_Trains
+      - Travel_Airlines
+      - Travel_Agency
+      - Travel_Car_Rental
+      - Travel_Hotels
+      - Travel_Time_Shares
+    WorkStatus:
+      type: string
+      enum:
+      - AVAILABLE
+      - OUT_OF_OFFICE
+    TransactionTag:
+      properties:
+        id:
+          type: string
+          description: The `Tag` ID.
+          example: 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
+        dictionary_id:
+          type: string
+          description: The `List` ID.
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+        dictionary:
+          type: string
+          description: The name of the `List` where the `Tag` is listed.
+          example: ExampleTagDictionary
+        tag:
+          type: string
+          description: The name of the `Tag`.
+          example: tx-label
+        code:
+          type: string
+          description: The code of the `Tag`.
+          example: CODE tag
+        visible:
+          type: boolean
+          description: It determines whether the `Tag` is visible in the `Transaction` detail.
+          example: true
+        description:
+          type: string
+          description: The description of the `Tag`.
+          example: Label to mark transactions
+    TransactionTimelineStatus:
+      type: string
+      enum:
+      - Unspecified
+      - Authorized
+      - Reversed
+      - Refunded
+      - Settled
+      - Withdraw
+      - Deposit
+      - Chargeback
+    User:
+      properties:
+        id:
+          type: string
+          description: The `User` ID.
+          example: XMPL1234-000001
+        name:
+          type: string
+          description: 'The name of the `User` (sortable: yes).'
+          example: John
+        surname:
+          type: string
+          description: 'The surname of the `User` (sortable: yes).'
+          example: Smith
+        middlename:
+          type: string
+          description: 'The middlename of the `User` (sortable: no).'
+          example: John
+        dob:
+          type: string
+          description: The Date of birth of the `User`.
+          example: '1970-10-21'
+        job_title:
+          type: string
+          description: 'The job title of the `User` (sortable: yes).'
+          example: Business Strategist
+        department:
+          type: string
+          description: 'The department of the `User` (sortable: no).'
+          example: Research & Development
+        email:
+          type: string
+          description: 'The email address of the `User` (sortable: no).'
+          example: jdoe@fake.soldo.com
+        mobile:
+          type: string
+          description: 'The mobile number of the `User` including the country code (sortable: no).'
+          example: '+44123323232'
+        mobile_prefix:
+          type: string
+          description: 'The mobile number country code (sortable: no).'
+          example: '+44'
+        custom_reference_id:
+          type: string
+          description: 'The reference of the employee in an external system (sortable: yes).'
+          example: 123456-user-1
+        status:
+          $ref: '#/components/schemas/UserStatus'
+          description: 'The status of the `User` (sortable: yes).'
+          example: ACTIVE
+        visible:
+          type: boolean
+          description: 'It determines whether the `User` is visible in the web console (sortable: yes).'
+          example: true
+        mobile_access:
+          type: boolean
+          description: 'It determines whether the `User` has mobile access (sortable: no).'
+          example: true
+        web_access:
+          type: boolean
+          description: 'It determines whether the `User` has web access (sortable: no).'
+          example: true
+        groups:
+          type: array
+          description: 'The list of `Groups` ID the `User` is member of (sortable: no).'
+          example:
+          - 7bf79328-a7ae-4222-aa54-091ff7f429a7
+          - 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
+          items:
+            type: string
+        shipping_address:
+          $ref: '#/components/schemas/Address'
+          description: The default shipping `Address` of the `User`.
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+        reports_to:
+          type: string
+          description: The ID of the `User` it reports to.
+          example: XMPL1234-000001
+        roles:
+          type: array
+          description: The list of `UserRole` of the `User`.
+          items:
+            $ref: '#/components/schemas/UserRole'
+        contact_id:
+          type: string
+          description: The ID of the `Contact` assigned to the `User`. This information can be updated from the [Add Contact](ref:contact-add) and [Update Contact](ref:contact-update) endpoints.
+          example: 135fdb6c-2e77-4fc0-a79f-2453fde75ef7
+        creation_time:
+          type: string
+          description: 'The date and time when the `User` was created (sortable: yes).'
+          example: '2017-06-01T12:48:40Z'
+        last_update:
+          type: string
+          description: 'The date and time when the `User` was last updated (sortable: yes).'
+          example: '2017-06-01T12:48:40Z'
+        work_status:
+          $ref: '#/components/schemas/WorkStatus'
+          description: The work status of the `User`.
+          example: OUT_OF_OFFICE
+    OutOfPlatformTransactionPaymentMethod:
+      type: string
+      enum:
+      - OUT_OF_PLATFORM_COMPANY
+      - OUT_OF_PLATFORM_PERSONAL
+    ExpenseStatus:
+      type: string
+      enum:
+      - APPROVED
+      - PARTIALLY_APPROVED
+      - DENIED
+      - TO_REVIEW
+    SearchTransactionDateType:
+      type: string
+      default: TRANSACTION
+      description: It determines the date to be considered for `fromDate` and `toDate` parameters.
+      enum:
+      - TRANSACTION
+      - SETTLEMENT
+      - UPDATE
+      - REVIEW_TIME
+      - CUSTOM_EXPORT_TIME
+      example: TRANSACTION
+    UpdateOutOfPlatformTransaction:
+      description: Update Out-Of-Platform `Transaction` JSON parameters.
+      properties:
+        request_timestamp:
+          type: integer
+          format: int64
+          description: The epoch timestamp in millis. This is checked in Soldo. Requests with timestamp older than 5 seconds will be rejected.
+          example: 1576850500000
+        date:
+          type: string
+          description: The date and time of the `Transaction`.
+          example: '2017-06-01T12:48:40Z'
+        merchant_name:
+          type: string
+          description: The name of the `Merchant` for the `Transaction`.
+          example: SHH HOTEL LONDON
+        tx_amount:
+          type: number
+          description: The amount of the `Transaction`, in the currency of the `Merchant`.
+          example: 10.25
+        tx_amount_currency:
+          $ref: '#/components/schemas/ISO4217Currency'
+          description: The currency [ISO 4217](https://www.six-group.com/en/products-services/financial-information/data-standards.html#scrollTo=maintenance-agency) code of the `tx_amount`.
+          example: EUR
+        exchange_rate:
+          type: number
+          description: The exchange rate used to convert the `tx_amount` from the currency of the `Merchant` to the currency of the main `Wallet`. If needed and not provided, a default rate is derived from `date`.
+          example: 1
+        payment_method:
+          $ref: '#/components/schemas/OutOfPlatformTransactionPaymentMethod'
+          description: The payment method of the `Transaction`.
+          example: OUT_OF_PLATFORM_PERSONAL
+      required:
+      - date
+      - merchant_name
+      - payment_method
+      - request_timestamp
+      - tx_amount
+      - tx_amount_currency
+    AddressCategory:
+      type: string
+      enum:
+      - USER
+      - COMPANY
+    CreateMileageReimbursementTransaction:
+      description: Create `MileageReimbursement` `Transaction` JSON parameters.
+      properties:
+        request_timestamp:
+          type: integer
+          format: int64
+          description: The epoch timestamp in millis. This is checked in Soldo. Requests with timestamp older than 5 seconds will be rejected.
+          example: 1576850500000
+        date:
+          type: string
+          description: The date and time of the `Transaction`.
+          example: '2017-06-01T12:48:40Z'
+        owner_id:
+          type: string
+          description: 'The ID of the `User` who made the `Transaction` (updatable: no).'
+          example: XMPL1234-000002
+        mileage:
+          $ref: '#/components/schemas/MileageReimbursementDetailsCreateRequest'
+          description: The details of the `MileageReimbursement`.
+      required:
+      - date
+      - mileage
+      - owner_id
+      - request_timestamp
+    Source:
+      properties:
+        name:
+          type: string
+          description: The source name.
+          example: J. Doe
+        type:
+          $ref: '#/components/schemas/LoadSource'
+          description: The source type.
+          example: BANK_TRANSFER
+        destination_wallet_id:
+          type: string
+          description: ' The receiving wallet in the transaction, to which funds are being transferred.'
+          example: de29bffb-7da2-40f1-934a-241170762d3e
+        destination_wallet_name:
+          type: string
+          description: ' The receiving wallet name in the transaction, to which funds are being transferred.'
+          example: EURO VIBAN
+    TransactionSplitInfoTag:
+      properties:
+        id:
+          type: string
+          description: The `Tag` ID.
+          example: 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
+        dictionary_id:
+          type: string
+          description: The `List` ID.
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+        dictionary:
+          type: string
+          description: The name of the `List` where the `Tag` is listed.
+          example: ExampleTagDictionary
+        tag:
+          type: string
+          description: The name of the `Tag`.
+          example: tx-label
+        code:
+          type: string
+          description: The code of the `Tag`.
+          example: CODE tag
+        visible:
+          type: boolean
+          description: It determines whether the `Tag` is visible in the `Transaction` detail.
+          example: true
+        description:
+          type: string
+          description: The description of the `Tag`.
+          example: Label to mark transactions
+    TransactionOwnerType:
+      type: string
+      enum:
+      - employee
+      - company
+    UserStatus:
+      type: string
+      enum:
+      - ACTIVE
+      - INACTIVE
+      - BLOCKED
+      - SUSPENDED
+      - PENDING
+      - ARCHIVED
+    VatRate:
+      properties:
+        id:
+          type: string
+          description: The `VATRate` ID.
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+        code:
+          type: string
+          description: The code of the `VATRate`.
+          example: code-vat-11
+        name:
+          type: string
+          description: The name of the `VATRate`
+          example: Tax 11
+        description:
+          type: string
+          description: A custom description of the `VATRate`.
+          example: Number 11 of Tax code
+        percentage:
+          type: number
+          format: double
+          description: The percentage value of the `VATRate`
+          example: 15
+        enabled:
+          type: boolean
+          description: The `VATRate` is visible in the transaction detail.
+          example: true
+        integration:
+          type: string
+          description: The `VATRate`'s corresponding integration.
+          example: something
+        creation_time:
+          type: string
+          description: 'The date and time when the `VATRate` was created (sortable: yes).'
+          example: '2017-06-01T12:48:40Z'
+        last_update_time:
+          type: string
+          description: 'The date and time when the `VATRate` was last updated (sortable: yes).'
+          example: '2017-06-01T12:48:40Z'
+  securitySchemes:
+    standardAuth:
+      type: oauth2
+      description: This API uses OAuth 2 with the "Client Credentials" grant flow.
+      flows:
+        clientCredentials:
+          tokenUrl: https://api.soldo.com/oauth/authorize
+          refreshUrl: https://api.soldo.com/oauth/refresh
+          scopes:
+            address_read: Can read address details.
+            address_write: Can update address details.
+            card_read: Can read card details.
+            card_write: Can change card details.
+            company_read: Can read company details.
+            company_write: Can change company details.
+            contact_read: Can read contact details.
+            contact_write: Can change contact details.
+            employee_read: Can read employee details.
+            employee_write: Can change employee details.
+            expense_category_read: Can read expense category details.
+            expense_category_write: Can change expense category details.
+            expense_report_read: Can read expense report details.
+            expense_report_write: Can change expense report details.
+            expense_review_read: Can read expense review status.
+            expense_review_write: Can change expense review status.
+            group_read: Can read group details.
+            group_write: Can change groups details.
+            online_ads_read: Can read online ads details.
+            online_ads_write: Can change online ads details.
+            payment_read: Can read payment details.
+            payment_write: Can change payment details.
+            purchase_read: Can read purchase details.
+            purchase_write: Can change purchase details.
+            refueling_read: Can read refueling details.
+            refueling_write: Can change refueling details.
+            resource_set_read: Can read resource set details.
+            resource_set_write: Can change resource set details.
+            role_read: Can read role details.
+            statement_read: Can read statement details.
+            subscription_read: Can read subscription details.
+            subscription_write: Can change subscription details.
+            tag_read: Can read tags.
+            tag_write: can change tags.
+            tax_rate_read: Can read vat rate details.
+            tax_rate_write: Can change vat rate details.
+            transaction_read: Can read transaction details.
+            transaction_write: Can change transaction details.
+            vehicle_read: Can read vehicle details.
+            vehicle_write: Can change vehicle details.
+            wallet_read: Can read wallet details.
+            wallet_write: Can change wallet details.
+            webhook_subscription_read: Can read webhook subscription details.
+            webhook_subscription_write: Can change webhook subscription details.
+x-readme:
+  hidden: false

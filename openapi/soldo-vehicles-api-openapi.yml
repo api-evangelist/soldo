@@ -1,0 +1,419 @@
+openapi: 3.1.0
+info:
+  title: Soldo Business API v2.0 Accounting Classification Vehicles API
+  description: Soldo Business API v2.0 OpenAPI specification
+  version: 5.56.0
+servers:
+- url: https://api.soldo.com
+  description: Production server (using live data)
+- url: https://api-demo.soldocloud.net
+  description: Sandbox server (using test data)
+tags:
+- name: Vehicles
+paths:
+  /business/v2/vehicles:
+    get:
+      tags:
+      - Vehicles
+      summary: Search Vehicle
+      description: Endpoint to find Vehicles using filtering parameters.
+      operationId: vehicle-search
+      parameters:
+      - name: text
+        in: query
+        description: A text to be searched on the number plate and description field.
+        schema:
+          type: string
+          description: A text to be searched on the number plate and description field.
+          example: something
+        example: something
+      - name: ids
+        in: query
+        description: The IDs of the vehicles to search.
+        schema:
+          type: array
+          description: The IDs of the vehicles to search.
+          example: 776f5018-07e5-426b-a426-8b23fa1e985d
+          items:
+            type: string
+            description: The IDs of the vehicles to search.
+            example: 776f5018-07e5-426b-a426-8b23fa1e985d
+        example: 776f5018-07e5-426b-a426-8b23fa1e985d
+      - name: p
+        in: query
+        description: It indicates the specific page to display (the counter starts from zero).
+        schema:
+          type: integer
+          format: int32
+          default: 0
+          description: It indicates the specific page to display (the counter starts from zero).
+          example: 3
+        example: 3
+      - name: s
+        in: query
+        description: It indicates the number of items per page.
+        schema:
+          type: integer
+          format: int32
+          default: 0
+          description: It indicates the number of items per page.
+          example: 25
+          maximum: 50
+        example: 25
+      - name: d
+        in: query
+        description: It indicates how the pages are ordered.
+        schema:
+          $ref: '#/components/schemas/Direction'
+        example: DESC
+      - name: props
+        in: query
+        description: It indicates the sorting direction applied to the above parameters. To apply a sorting on multiple parameters, set as many times the `props` parameter in the request.
+        schema:
+          type: array
+          description: It indicates the sorting direction applied to the above parameters. To apply a sorting on multiple parameters, set as many times the `props` parameter in the request.
+          example: creationTime
+          items:
+            type: string
+            description: It indicates the sorting direction applied to the above parameters. To apply a sorting on multiple parameters, set as many times the `props` parameter in the request.
+            example: creationTime
+        example: creationTime
+      responses:
+        '200':
+          description: The returned array contains `Vehicle` resources.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Vehicles'
+        '400':
+          description: Your request has missing arguments or is malformed.
+      security:
+      - standardAuth:
+        - vehicle_read
+    post:
+      tags:
+      - Vehicles
+      summary: Add Vehicle
+      description: Endpoint to add a new `Vehicle`.
+      operationId: vehicle-add
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateVehicle'
+      responses:
+        '200':
+          description: The returned resource is a new `Vehicle`.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Vehicle'
+        '400':
+          description: Your request has missing arguments or is malformed.
+      security:
+      - standardAuth:
+        - vehicle_write
+  /business/v2/vehicles/{vehicleId}:
+    get:
+      tags:
+      - Vehicles
+      summary: Get Vehicle
+      description: Endpoint to get a specific `Vehicle` by ID.
+      operationId: vehicle-get
+      parameters:
+      - name: vehicleId
+        in: path
+        required: true
+        schema:
+          type: string
+          description: The Vehicle id.
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+      responses:
+        '200':
+          description: The returned resource is a `Vehicle`.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Vehicle'
+        '400':
+          description: Your request has missing arguments or is malformed.
+      security:
+      - standardAuth:
+        - vehicle_read
+    put:
+      tags:
+      - Vehicles
+      summary: Update Vehicle
+      description: Endpoint to update a specific Vehicle
+      operationId: vehicle-update
+      parameters:
+      - name: vehicleId
+        in: path
+        required: true
+        schema:
+          type: string
+          description: The Vehicle id.
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateVehicle'
+      responses:
+        '400':
+          description: Your request has missing arguments or is malformed.
+        default:
+          description: The returned resource is a `Vehicle`
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Vehicle'
+      security:
+      - standardAuth:
+        - vehicle_write
+    delete:
+      tags:
+      - Vehicles
+      summary: Delete Vehicle
+      description: Endpoint to delete a specific `Vehicle`.
+      operationId: vehicle-delete
+      parameters:
+      - name: vehicleId
+        in: path
+        required: true
+        schema:
+          type: string
+          description: The Vehicle id.
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+      responses:
+        '204':
+          description: No content as result.
+        '400':
+          description: Your request has missing arguments or is malformed.
+      security:
+      - standardAuth:
+        - vehicle_write
+components:
+  schemas:
+    UpdateVehicle:
+      description: Update vehicle JSON parameters.
+      properties:
+        number_plate:
+          type: string
+          description: The plate number of the `Vehicle`.
+          example: AA000BB
+          maxLength: 9
+        description:
+          type: string
+          description: The description of the `Vehicle`.
+          example: Employee electric vehicle
+          maxLength: 30
+          pattern: ^[^<>=]{0,30}$
+        vat_deductible:
+          $ref: '#/components/schemas/VatDeductibilityPercentage'
+          description: The VAT deductibility rate.
+          example: 40
+        fuel_type:
+          $ref: '#/components/schemas/FuelType'
+          description: The fuel type of the `Vehicle`.
+          example: PETROL
+        status:
+          $ref: '#/components/schemas/VehicleStatus'
+          description: The status of the `Vehicle`.
+          example: ACTIVE
+        reimbursement_rate:
+          type: number
+          description: The rate to apply for a `MileageReimbursement`, measured in main `Wallet` currency per km.
+          example: 0.45
+    Vehicle:
+      properties:
+        id:
+          type: string
+          description: 'The `Vehicle` ID (sortable: no).'
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+        number_plate:
+          type: string
+          description: 'The plate number of the `Vehicle` (sortable: yes).'
+          example: AA000BB
+        description:
+          type: string
+          description: 'The description of the `Vehicle` (sortable: no).'
+          example: Employee electric vehicle
+        vat_deductible:
+          $ref: '#/components/schemas/VatDeductibilityPercentage'
+          description: 'The VAT deductibility rate (sortable: no).'
+          example: 40
+        fuel_type:
+          $ref: '#/components/schemas/FuelType'
+          description: 'The fuel type (sortable: no).'
+          example: PETROL
+        status:
+          $ref: '#/components/schemas/VehicleStatus'
+          description: 'The vehicle status (sortable: no).'
+          example: ACTIVE
+        creation_time:
+          type: string
+          description: 'The date and time when the `Vehicle` was created (sortable: yes).'
+          example: '2017-06-01T12:48:40Z'
+        last_update_time:
+          type: string
+          description: 'The last date and time when the `Vehicle` was updated (sortable: yes).'
+          example: '2017-06-01T12:48:40Z'
+        card_ids:
+          type: array
+          description: 'The list of `Card` ID associated with the vehicle (sortable: no).'
+          example:
+          - 7bf79328-a7ae-4222-aa54-091ff7f429a7
+          - 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
+          items:
+            type: string
+        reimbursement_rate:
+          type: number
+          description: 'The rate to apply for a `MileageReimbursement`, measured in main `Wallet` currency per km (sortable: no).'
+          example: 0.45
+    VehicleStatus:
+      type: string
+      enum:
+      - ACTIVE
+      - ARCHIVED
+    FuelType:
+      type: string
+      enum:
+      - PETROL
+      - DIESEL
+      - METHANE
+      - LPG
+      - LNG
+      - ELECTRIC
+      - UNKNOWN
+    CreateVehicle:
+      description: Create vehicle JSON parameters.
+      properties:
+        number_plate:
+          type: string
+          description: The plate number of the `Vehicle`.
+          example: AA000BB
+          maxLength: 9
+        description:
+          type: string
+          description: The description of the `Vehicle`.
+          example: Employee electric vehicle
+          maxLength: 30
+          pattern: ^[^<>=]{0,30}$
+        vat_deductible:
+          $ref: '#/components/schemas/VatDeductibilityPercentage'
+          description: The VAT deductibility rate.
+          example: 40
+        fuel_type:
+          $ref: '#/components/schemas/FuelType'
+          description: The fuel type of the `Vehicle`.
+          example: PETROL
+        reimbursement_rate:
+          type: number
+          description: The rate to apply for a `MileageReimbursement`, measured in main `Wallet` currency per km.
+          example: 0.45
+      required:
+      - description
+      - fuel_type
+      - number_plate
+      - vat_deductible
+    Vehicles:
+      properties:
+        total:
+          type: integer
+          format: int32
+          description: It represents the total number of available items in the list.
+          example: 168
+        pages:
+          type: integer
+          format: int32
+          description: It represents the total number of available pages.
+          example: 7
+        page_size:
+          type: integer
+          format: int32
+          description: It represents the number of items per page.
+          example: 25
+        current_page:
+          type: integer
+          format: int32
+          description: It indicates the current page (the counter starts from zero).
+          example: 0
+        results_size:
+          type: integer
+          format: int32
+          description: It indicates the size of the array results.
+          example: 25
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Vehicle'
+    Direction:
+      type: string
+      description: It indicates how the pages are ordered.
+      enum:
+      - ASC
+      - DESC
+      example: DESC
+    VatDeductibilityPercentage:
+      type: string
+      enum:
+      - NONE
+      - '40'
+      - '80'
+      - '100'
+  securitySchemes:
+    standardAuth:
+      type: oauth2
+      description: This API uses OAuth 2 with the "Client Credentials" grant flow.
+      flows:
+        clientCredentials:
+          tokenUrl: https://api.soldo.com/oauth/authorize
+          refreshUrl: https://api.soldo.com/oauth/refresh
+          scopes:
+            address_read: Can read address details.
+            address_write: Can update address details.
+            card_read: Can read card details.
+            card_write: Can change card details.
+            company_read: Can read company details.
+            company_write: Can change company details.
+            contact_read: Can read contact details.
+            contact_write: Can change contact details.
+            employee_read: Can read employee details.
+            employee_write: Can change employee details.
+            expense_category_read: Can read expense category details.
+            expense_category_write: Can change expense category details.
+            expense_report_read: Can read expense report details.
+            expense_report_write: Can change expense report details.
+            expense_review_read: Can read expense review status.
+            expense_review_write: Can change expense review status.
+            group_read: Can read group details.
+            group_write: Can change groups details.
+            online_ads_read: Can read online ads details.
+            online_ads_write: Can change online ads details.
+            payment_read: Can read payment details.
+            payment_write: Can change payment details.
+            purchase_read: Can read purchase details.
+            purchase_write: Can change purchase details.
+            refueling_read: Can read refueling details.
+            refueling_write: Can change refueling details.
+            resource_set_read: Can read resource set details.
+            resource_set_write: Can change resource set details.
+            role_read: Can read role details.
+            statement_read: Can read statement details.
+            subscription_read: Can read subscription details.
+            subscription_write: Can change subscription details.
+            tag_read: Can read tags.
+            tag_write: can change tags.
+            tax_rate_read: Can read vat rate details.
+            tax_rate_write: Can change vat rate details.
+            transaction_read: Can read transaction details.
+            transaction_write: Can change transaction details.
+            vehicle_read: Can read vehicle details.
+            vehicle_write: Can change vehicle details.
+            wallet_read: Can read wallet details.
+            wallet_write: Can change wallet details.
+            webhook_subscription_read: Can read webhook subscription details.
+            webhook_subscription_write: Can change webhook subscription details.
+x-readme:
+  hidden: false

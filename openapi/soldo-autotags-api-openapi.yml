@@ -1,0 +1,454 @@
+openapi: 3.1.0
+info:
+  title: Soldo Business API v2.0 Accounting Classification Autotags API
+  description: Soldo Business API v2.0 OpenAPI specification
+  version: 5.56.0
+servers:
+- url: https://api.soldo.com
+  description: Production server (using live data)
+- url: https://api-demo.soldocloud.net
+  description: Sandbox server (using test data)
+tags:
+- name: Autotags
+paths:
+  /business/v2/autotags:
+    get:
+      tags:
+      - Autotags
+      summary: Search Autotags
+      description: Endpoint to find `Autotags` using filtering parameters.
+      operationId: autotag-search
+      parameters:
+      - name: name
+        in: query
+        description: The name of the `Autotag`.
+        schema:
+          type: string
+          description: The name of the `Autotag`.
+          example: AutotagRule
+        example: AutotagRule
+      - name: enabled
+        in: query
+        description: It determines whether the `Autotag` rule is enabled (if a rule is not enabled, it won't be executed).
+        schema:
+          type: boolean
+          description: It determines whether the `Autotag` rule is enabled (if a rule is not enabled, it won't be executed).
+          example: true
+        example: true
+      - name: ownerId
+        in: query
+        description: The ID of the `User` who created the `Autotag`.
+        schema:
+          type: string
+          description: The ID of the `User` who created the `Autotag`.
+          example: XMPL1234-000001
+        example: XMPL1234-000001
+      - name: p
+        in: query
+        description: It indicates the specific page to display (the counter starts from zero).
+        schema:
+          type: integer
+          format: int32
+          default: 0
+          description: It indicates the specific page to display (the counter starts from zero).
+          example: 3
+        example: 3
+      - name: s
+        in: query
+        description: It indicates the number of items per page.
+        schema:
+          type: integer
+          format: int32
+          default: 0
+          description: It indicates the number of items per page.
+          example: 25
+          maximum: 50
+        example: 25
+      - name: d
+        in: query
+        description: It indicates how the pages are ordered.
+        schema:
+          $ref: '#/components/schemas/Direction'
+        example: DESC
+      - name: props
+        in: query
+        description: It indicates the sorting direction applied to the above parameters. To apply a sorting on multiple parameters, set as many times the `props` parameter in the request.
+        schema:
+          type: array
+          description: It indicates the sorting direction applied to the above parameters. To apply a sorting on multiple parameters, set as many times the `props` parameter in the request.
+          example: creationTime
+          items:
+            type: string
+            description: It indicates the sorting direction applied to the above parameters. To apply a sorting on multiple parameters, set as many times the `props` parameter in the request.
+            example: creationTime
+        example: creationTime
+      responses:
+        '200':
+          description: The returned resource is an array of `Autotags`.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Autotags'
+      security:
+      - standardAuth:
+        - autotag_read
+    post:
+      tags:
+      - Autotags
+      summary: Add Autotag
+      description: Endpoint to add a new `Autotag`.
+      operationId: autotag-add
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateAutotag'
+      responses:
+        '200':
+          description: The returned resource is a single `Autotag`.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Autotag'
+        '400':
+          description: Your request has missing arguments or is malformed.
+        '404':
+          description: One or more resource requested does not exist.
+      security:
+      - standardAuth:
+        - autotag_write
+  /business/v2/autotags/{autotagId}:
+    get:
+      tags:
+      - Autotags
+      summary: Get Autotag
+      description: Endpoint to get a specific `Autotag` by ID.
+      operationId: autotag-get
+      parameters:
+      - name: autotagId
+        in: path
+        required: true
+        schema:
+          type: string
+          description: The `Autotag` ID.
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+      responses:
+        '200':
+          description: The returned resource is a single `Autotag`.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Autotag'
+        '404':
+          description: One or more resource requested does not exist.
+      security:
+      - standardAuth:
+        - autotag_read
+    put:
+      tags:
+      - Autotags
+      summary: Update Autotag
+      description: Endpoint to update the settings of a specific `Autotag`.
+      operationId: autotag-update
+      parameters:
+      - name: autotagId
+        in: path
+        required: true
+        schema:
+          type: string
+          description: The `Autotag` ID.
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateAutotag'
+      responses:
+        '200':
+          description: The returned resource is a single `Autotag`.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Autotag'
+        '400':
+          description: Your request has missing arguments or is malformed.
+        '404':
+          description: One or more resource requested does not exist.
+      security:
+      - standardAuth:
+        - autotag_write
+    delete:
+      tags:
+      - Autotags
+      summary: Delete Autotag
+      description: Endpoint to delete a specific `Autotag`.
+      operationId: autotag-delete
+      parameters:
+      - name: autotagId
+        in: path
+        required: true
+        schema:
+          type: string
+          description: The `Autotag` ID.
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+      responses:
+        '204':
+          description: No content as result.
+        '400':
+          description: Your request has missing arguments or is malformed.
+      security:
+      - standardAuth:
+        - autotag_write
+components:
+  schemas:
+    AutotagCriteria:
+      properties:
+        name:
+          $ref: '#/components/schemas/AutotagCriteriaName'
+          description: The name of the criteria to be satisfied in order for the `Autotag` to be executed.
+          example: MERCHANT_CATEGORY
+        value:
+          type: array
+          description: The values of the criteria to be satisfied in order for the `Autotag` to be executed, in case of `USER`, `CARD`, `COMPANY_CARD` it's a list of IDs; in case of `MERCHANT_CATEGORY` it's one or more `MerchantCategories`; in case of `MERCHANT` it's a text string which should be included in the merchant name
+          example:
+          - Entertainment
+          items:
+            type: string
+    AutotagTag:
+      properties:
+        tag_id:
+          type: string
+          description: The `Tag` ID.
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+        dictionary_id:
+          type: string
+          description: The `List` ID.
+          example: 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
+    AutotagOperation:
+      type: string
+      enum:
+      - AND
+      - OR
+    Autotags:
+      properties:
+        total:
+          type: integer
+          format: int32
+          description: It represents the total number of available items in the list.
+          example: 168
+        pages:
+          type: integer
+          format: int32
+          description: It represents the total number of available pages.
+          example: 7
+        page_size:
+          type: integer
+          format: int32
+          description: It represents the number of items per page.
+          example: 25
+        current_page:
+          type: integer
+          format: int32
+          description: It indicates the current page (the counter starts from zero).
+          example: 0
+        results_size:
+          type: integer
+          format: int32
+          description: It indicates the size of the array results.
+          example: 25
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Autotag'
+    CreateAutotag:
+      description: Add `Autotag` JSON parameters.
+      properties:
+        name:
+          type: string
+          description: The name of the `Autotag`.
+          example: Autotag
+        operation:
+          $ref: '#/components/schemas/AutotagOperation'
+          description: The logical operator applied to the `Criteria`.
+          example: AND
+        criteria:
+          type: array
+          description: The list of `Criteria` that need to be satisfied in order for the `Autotag` to be executed.
+          items:
+            $ref: '#/components/schemas/AutotagCriteria'
+        expense_category_id:
+          type: string
+          description: The ID of the `ExpenseCategory` of to be assigned to a `Transaction` satisfying the `Criteria`.
+          example: c861cc24-6663-410f-8c78-73f886fff4ef
+        tax_rate_id:
+          type: string
+          description: The ID of the `VATRate` to be assigned to a `Transaction` satisfying the `Criteria`.
+          example: c861cc24-6663-410f-8c78-73f886fff4ef
+        tag_ids:
+          type: array
+          description: The IDs of the `Tag` and related `List` to be assigned to a `Transaction` satisfying the `Criteria`.
+          items:
+            $ref: '#/components/schemas/AutotagTag'
+      required:
+      - criteria
+      - name
+      - operation
+    AutotagStatus:
+      type: string
+      enum:
+      - VALID
+      - NOT_VALID
+      - PARTIAL_VALID
+    Direction:
+      type: string
+      description: It indicates how the pages are ordered.
+      enum:
+      - ASC
+      - DESC
+      example: DESC
+    UpdateAutotag:
+      description: Update `Autotag` JSON parameters.
+      properties:
+        name:
+          type: string
+          description: The name of the `Autotag`.
+          example: Autotag
+        operation:
+          $ref: '#/components/schemas/AutotagOperation'
+          description: The logical operator applied to the `Criteria`.
+        criteria:
+          type: array
+          description: The list of `Criteria` that need to be satisfied in order for the `Autotag` to be executed.
+          items:
+            $ref: '#/components/schemas/AutotagCriteria'
+        expense_category_id:
+          type: string
+          description: The ID of the `ExpenseCategory` of to be assigned to a `Transaction` satisfying the `Criteria`.
+          example: 6853e657-c797-4985-8d6b-5425d4e51df8
+        tax_rate_id:
+          type: string
+          description: The ID of the `VATRate` to be assigned to a `Transaction` satisfying the `Criteria`.
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+        tag_ids:
+          type: array
+          description: The IDs of the `Tag` and related `List` to be assigned to a `Transaction` satisfying the `Criteria`.
+          items:
+            $ref: '#/components/schemas/AutotagTag'
+        enabled:
+          type: boolean
+          description: It determines whether the `Autotag` rule is enabled (if a rule is not enabled, it won't be executed).
+    AutotagCriteriaName:
+      type: string
+      enum:
+      - USER
+      - CARD
+      - COMPANY_CARD
+      - MERCHANT_CATEGORY
+      - MERCHANT
+    Autotag:
+      properties:
+        id:
+          type: string
+          description: 'The `Autotag` ID (sortable: no).'
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+        name:
+          type: string
+          description: 'The name of the `Autotag` (sortable: no).'
+          example: AutotagRule
+        operation:
+          $ref: '#/components/schemas/AutotagOperation'
+          description: 'The logical operator applied to the `Criteria` (AND, OR) (sortable: no).'
+          example: AND
+        criteria:
+          type: array
+          description: 'The list of `Criteria` that need to be satisfied in order for the `Autotag` to be executed (sortable: no)'
+          items:
+            $ref: '#/components/schemas/AutotagCriteria'
+        expense_category_id:
+          type: string
+          description: 'The ID of the `ExpenseCategory` of to be assigned to a `Transaction` satisfying the `Criteria` (sortable: no).'
+          example: c861cc24-6663-410f-8c78-73f886fff4ef
+        tax_rate_id:
+          type: string
+          description: 'The ID of the `VATRate` to be assigned to a `Transaction` satisfying the `Criteria` (sortable: no).'
+          example: 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
+        tag_ids:
+          type: array
+          description: 'The IDs of the `Tag` and related `List` to be assigned to a `Transaction` satisfying the `Criteria` (sortable: no)'
+          items:
+            $ref: '#/components/schemas/AutotagTag'
+        enabled:
+          type: boolean
+          description: 'It determines whether the `Autotag` rule is enabled (if a rule is not enabled, it won''t be executed) (sortable: no).'
+          example: true
+        owner_id:
+          type: string
+          description: 'The `User` ID who created the `Autotag` (sortable: no).'
+          example: XMPL1234-000001
+        status:
+          $ref: '#/components/schemas/AutotagStatus'
+          description: 'The status of the `Autotag` (sortable: no).'
+          example: VALID
+        creation_time:
+          type: string
+          description: 'The date and time when the `Autotag` was created (sortable: no).'
+          example: '2017-06-01T12:48:40Z'
+        last_update_time:
+          type: string
+          description: 'The date and time when the `Autotag` was last updated (sortable: no).'
+          example: '2017-06-01T12:48:40Z'
+  securitySchemes:
+    standardAuth:
+      type: oauth2
+      description: This API uses OAuth 2 with the "Client Credentials" grant flow.
+      flows:
+        clientCredentials:
+          tokenUrl: https://api.soldo.com/oauth/authorize
+          refreshUrl: https://api.soldo.com/oauth/refresh
+          scopes:
+            address_read: Can read address details.
+            address_write: Can update address details.
+            card_read: Can read card details.
+            card_write: Can change card details.
+            company_read: Can read company details.
+            company_write: Can change company details.
+            contact_read: Can read contact details.
+            contact_write: Can change contact details.
+            employee_read: Can read employee details.
+            employee_write: Can change employee details.
+            expense_category_read: Can read expense category details.
+            expense_category_write: Can change expense category details.
+            expense_report_read: Can read expense report details.
+            expense_report_write: Can change expense report details.
+            expense_review_read: Can read expense review status.
+            expense_review_write: Can change expense review status.
+            group_read: Can read group details.
+            group_write: Can change groups details.
+            online_ads_read: Can read online ads details.
+            online_ads_write: Can change online ads details.
+            payment_read: Can read payment details.
+            payment_write: Can change payment details.
+            purchase_read: Can read purchase details.
+            purchase_write: Can change purchase details.
+            refueling_read: Can read refueling details.
+            refueling_write: Can change refueling details.
+            resource_set_read: Can read resource set details.
+            resource_set_write: Can change resource set details.
+            role_read: Can read role details.
+            statement_read: Can read statement details.
+            subscription_read: Can read subscription details.
+            subscription_write: Can change subscription details.
+            tag_read: Can read tags.
+            tag_write: can change tags.
+            tax_rate_read: Can read vat rate details.
+            tax_rate_write: Can change vat rate details.
+            transaction_read: Can read transaction details.
+            transaction_write: Can change transaction details.
+            vehicle_read: Can read vehicle details.
+            vehicle_write: Can change vehicle details.
+            wallet_read: Can read wallet details.
+            wallet_write: Can change wallet details.
+            webhook_subscription_read: Can read webhook subscription details.
+            webhook_subscription_write: Can change webhook subscription details.
+x-readme:
+  hidden: false

@@ -1,0 +1,1115 @@
+openapi: 3.1.0
+info:
+  title: Soldo Business API v2.0 Accounting Classification Requests API
+  description: Soldo Business API v2.0 OpenAPI specification
+  version: 5.56.0
+servers:
+- url: https://api.soldo.com
+  description: Production server (using live data)
+- url: https://api-demo.soldocloud.net
+  description: Sandbox server (using test data)
+tags:
+- name: Requests
+paths:
+  /business/v2/requests:
+    get:
+      tags:
+      - Requests
+      summary: Search Requests
+      description: Endpoint to search `Requests`.
+      operationId: request-search
+      parameters:
+      - name: status
+        in: query
+        description: The status of the `request`
+        schema:
+          type: array
+          items:
+            $ref: '#/components/schemas/RequestStatus'
+        example: APPROVED
+      - name: paymentMethod
+        in: query
+        description: The payment method of the `request`
+        schema:
+          $ref: '#/components/schemas/PaymentMethod'
+        example: TEMPORARY_CARD
+      - name: text
+        in: query
+        description: A simple text to search in the `Request` (`name` or `description`).
+        schema:
+          type: string
+          description: A simple text to search in the `Request` (`name` or `description`).
+          example: something
+        example: something
+      - name: p
+        in: query
+        description: It indicates the specific page to display (the counter starts from zero).
+        schema:
+          type: integer
+          format: int32
+          default: 0
+          description: It indicates the specific page to display (the counter starts from zero).
+          example: 3
+        example: 3
+      - name: s
+        in: query
+        description: It indicates the number of items per page.
+        schema:
+          type: integer
+          format: int32
+          default: 0
+          description: It indicates the number of items per page.
+          example: 25
+          maximum: 50
+        example: 25
+      - name: d
+        in: query
+        description: It indicates how the pages are ordered.
+        schema:
+          $ref: '#/components/schemas/Direction'
+        example: DESC
+      - name: props
+        in: query
+        description: It indicates the sorting direction applied to the above parameters. To apply a sorting on multiple parameters, set as many times the `props` parameter in the request.
+        schema:
+          type: array
+          description: It indicates the sorting direction applied to the above parameters. To apply a sorting on multiple parameters, set as many times the `props` parameter in the request.
+          example: creationTime
+          items:
+            type: string
+            description: It indicates the sorting direction applied to the above parameters. To apply a sorting on multiple parameters, set as many times the `props` parameter in the request.
+            example: creationTime
+        example: creationTime
+      responses:
+        '200':
+          description: The result is an array containing `Requests`.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Requests'
+        '400':
+          description: Your request has missing arguments or is malformed.
+      security:
+      - standardAuth:
+        - request_read
+    post:
+      tags:
+      - Requests
+      summary: Add request
+      description: Endpoint to create an `Request`. There are 3 types of request:GOODS_OR_SERVICES, FUNDS,TRIP.
+      operationId: request-add
+      parameters:
+      - name: X-Soldo-Fingerprint
+        in: header
+        required: true
+        schema:
+          type: string
+          default: '{{fingerprint}}'
+          description: '[Advanced authentication](ref:advanced-authentication): `SHA512SUM` of the fingerprint values listed in the fingerprint order for this endpoint.'
+          example: '{{fingerprint}}'
+      - name: X-Soldo-Fingerprint-Signature
+        in: header
+        required: true
+        schema:
+          type: string
+          default: '{{fingerprint_signature}}'
+          description: '[Advanced authentication](ref:advanced-authentication): Signature of the `X-Soldo-Fingerprint`.'
+          example: '{{fingerprint_signature}}'
+      requestBody:
+        description: Create `Request` JSON parameters.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateRequestPayload'
+      responses:
+        '200':
+          description: The returned resource is the single `Request` created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RequestPayload'
+              examples:
+                GoodOrServicesResponseExample:
+                  summary: type GOODS_OR_SERVICES
+                  description: GoodOrServicesResponseExample
+                  value:
+                    id: 776f5018-07e5-426b-a426-8b23fa1e985d
+                    type: GOODS_OR_SERVICES
+                    name: Goods or Services
+                    amount: 150
+                    currency: EUR
+                    status: PENDING
+                    request_process_id: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+                    number_transactions: '1'
+                    payment_method: card
+                    description: TYPE GOOD_SERVICES
+                    requester: LVRS6404-000089
+                    approveDate: '2025-12-03T14:19:36Z'
+                    hasAttachments: 'false'
+                    note: note
+                    creation_time: '2025-12-03T14:15:14Z'
+                    last_update: '2025-12-03T14:19:36Z'
+                TripResponseExample:
+                  summary: type TRIP
+                  description: TripResponseExample
+                  value:
+                    id: 776f5018-07e5-426b-a426-8b23fa1e985d
+                    type: TRIP
+                    name: Trip
+                    amount: '150.00'
+                    currency: EUR
+                    status: PENDING
+                    request_process_id: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+                    card_id: 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
+                    description: TYPE TRIP
+                    requester: LVRS6404-000089
+                    approveDate: '2025-12-03T14:19:36Z'
+                    hasAttachments: 'false'
+                    note: note
+                    destination: Rome
+                    date_from: '2025-12-24T23:00:00Z'
+                    date_to: '2025-12-26T22:59:59.999Z'
+                    traveller: LVRS6404-000005
+                    expense_allocation:
+                    - expense_category_id: 0145e140-fc56-4ffd-9a57-a3c776bb2b51
+                      spend_period: BEFORE_TRIP
+                      amount: 1
+                      amount_currency: EUR
+                    tags: []
+                    creation_time: '2025-12-03T14:15:14Z'
+                    last_update: '2025-12-03T14:19:36Z'
+                FundResponseExample:
+                  summary: type FUNDS
+                  description: FundResponseExample
+                  value:
+                    id: 776f5018-07e5-426b-a426-8b23fa1e985d
+                    type: FUNDS
+                    name: Fund
+                    amount: 150
+                    currency: EUR
+                    status: PENDING
+                    request_process_id: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+                    card_id: 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
+                    description: TYPE FUNDS
+                    requester: LVRS6404-000089
+                    approveDate: '2025-12-03T14:19:36Z'
+                    hasAttachments: 'false'
+                    note: note
+                    creation_time: '2025-12-03T14:15:14Z'
+                    last_update: '2025-12-03T14:19:36Z'
+        '400':
+          description: Your request has missing arguments or is malformed.
+      security:
+      - standardAuth:
+        - request_write
+      x-soldo:
+        fingerprint-order: request_timestamp, name, request_process_id, type, token
+  /business/v2/requests/{requestId}/approve:
+    put:
+      tags:
+      - Requests
+      summary: Approve Request
+      description: Endpoint to approve an `Request` by ID. Payload depends on the request type (GOODS_OR_SERVICES, FUNDS, TRIP).
+      operationId: request-approve
+      parameters:
+      - name: requestId
+        in: path
+        required: true
+        schema:
+          type: string
+          description: The `Request` ID.
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+      requestBody:
+        description: Approved `request` JSON parameters.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ApprovedRequestPayload'
+      responses:
+        '204':
+          description: No content as result.
+        '400':
+          description: Your request has missing arguments or is malformed.
+        '404':
+          description: One or more resource requested does not exist.
+      security:
+      - standardAuth:
+        - request_write
+  /business/v2/requests/{requestId}/decline:
+    put:
+      tags:
+      - Requests
+      summary: Decline Request
+      description: Endpoint to decline an `Request` by ID.
+      operationId: request-decline
+      parameters:
+      - name: requestId
+        in: path
+        required: true
+        schema:
+          type: string
+          description: The `Request` ID.
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+      requestBody:
+        description: Decline `request` JSON parameters.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DeclineRequest'
+      responses:
+        '204':
+          description: No content as result.
+        '400':
+          description: Your request has missing arguments or is malformed.
+        '404':
+          description: One or more resource requested does not exist.
+      security:
+      - standardAuth:
+        - request_write
+  /business/v2/requests/{requestId}:
+    get:
+      tags:
+      - Requests
+      summary: Get Request
+      description: 'Endpoint to get an `Request` by ID.
+
+        There are 3 types of request:GOODS_OR_SERVICES, FUNDS,TRIP.'
+      operationId: request-get
+      parameters:
+      - name: requestId
+        in: path
+        required: true
+        schema:
+          type: string
+          description: The `Request` ID.
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+      responses:
+        '200':
+          description: The returned resource is a single `Request`.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RequestPayload'
+              examples:
+                GoodOrServicesResponseExample:
+                  summary: type GOODS_OR_SERVICES
+                  description: GoodOrServicesResponseExample
+                  value:
+                    id: 776f5018-07e5-426b-a426-8b23fa1e985d
+                    type: GOODS_OR_SERVICES
+                    name: Goods or Services
+                    amount: 150
+                    currency: EUR
+                    status: PENDING
+                    request_process_id: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+                    number_transactions: '1'
+                    payment_method: card
+                    description: TYPE GOOD_SERVICES
+                    requester: LVRS6404-000089
+                    approveDate: '2025-12-03T14:19:36Z'
+                    hasAttachments: 'false'
+                    note: note
+                    creation_time: '2025-12-03T14:15:14Z'
+                    last_update: '2025-12-03T14:19:36Z'
+                TripResponseExample:
+                  summary: type TRIP
+                  description: TripResponseExample
+                  value:
+                    id: 776f5018-07e5-426b-a426-8b23fa1e985d
+                    type: TRIP
+                    name: Trip
+                    amount: '150.00'
+                    currency: EUR
+                    status: PENDING
+                    request_process_id: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+                    card_id: 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
+                    description: TYPE TRIP
+                    requester: LVRS6404-000089
+                    approveDate: '2025-12-03T14:19:36Z'
+                    hasAttachments: 'false'
+                    note: note
+                    destination: Rome
+                    date_from: '2025-12-24T23:00:00Z'
+                    date_to: '2025-12-26T22:59:59.999Z'
+                    traveller: LVRS6404-000005
+                    expense_allocation:
+                    - expense_category_id: 0145e140-fc56-4ffd-9a57-a3c776bb2b51
+                      spend_period: BEFORE_TRIP
+                      amount: 1
+                      amount_currency: EUR
+                    tags: []
+                    creation_time: '2025-12-03T14:15:14Z'
+                    last_update: '2025-12-03T14:19:36Z'
+                FundResponseExample:
+                  summary: type FUNDS
+                  description: FundResponseExample
+                  value:
+                    id: 776f5018-07e5-426b-a426-8b23fa1e985d
+                    type: FUNDS
+                    name: Fund
+                    amount: 150
+                    currency: EUR
+                    status: PENDING
+                    request_process_id: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+                    card_id: 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
+                    description: TYPE FUNDS
+                    requester: LVRS6404-000089
+                    approveDate: '2025-12-03T14:19:36Z'
+                    hasAttachments: 'false'
+                    note: note
+                    creation_time: '2025-12-03T14:15:14Z'
+                    last_update: '2025-12-03T14:19:36Z'
+        '400':
+          description: Your request has missing arguments or is malformed.
+        '404':
+          description: One or more resource requested does not exist.
+      security:
+      - standardAuth:
+        - request_read
+    put:
+      tags:
+      - Requests
+      summary: Update Request
+      description: Endpoint to update an `Request`. There are 3 types of request:GOODS_OR_SERVICES, FUNDS, TRIP.
+      operationId: request-update
+      parameters:
+      - name: requestId
+        in: path
+        required: true
+        schema:
+          type: string
+          description: The `Request` ID.
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+      - name: X-Soldo-Fingerprint
+        in: header
+        required: true
+        schema:
+          type: string
+          default: '{{fingerprint}}'
+          description: '[Advanced authentication](ref:advanced-authentication): `SHA512SUM` of the fingerprint values listed in the fingerprint order for this endpoint.'
+          example: '{{fingerprint}}'
+      - name: X-Soldo-Fingerprint-Signature
+        in: header
+        required: true
+        schema:
+          type: string
+          default: '{{fingerprint_signature}}'
+          description: '[Advanced authentication](ref:advanced-authentication): Signature of the `X-Soldo-Fingerprint`.'
+          example: '{{fingerprint_signature}}'
+      requestBody:
+        description: Update `request` JSON parameters.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateRequestPayload'
+      responses:
+        '200':
+          description: The returned resource is the single `Request` created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RequestPayload'
+              examples:
+                GoodOrServicesResponseExample:
+                  summary: type GOODS_OR_SERVICES
+                  description: GoodOrServicesResponseExample
+                  value:
+                    id: 776f5018-07e5-426b-a426-8b23fa1e985d
+                    type: GOODS_OR_SERVICES
+                    name: Goods or Services
+                    amount: 150
+                    currency: EUR
+                    status: PENDING
+                    request_process_id: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+                    number_transactions: '1'
+                    payment_method: card
+                    description: TYPE GOOD_SERVICES
+                    requester: LVRS6404-000089
+                    approveDate: '2025-12-03T14:19:36Z'
+                    hasAttachments: 'false'
+                    note: note
+                    creation_time: '2025-12-03T14:15:14Z'
+                    last_update: '2025-12-03T14:19:36Z'
+                TripResponseExample:
+                  summary: type TRIP
+                  description: TripResponseExample
+                  value:
+                    id: 776f5018-07e5-426b-a426-8b23fa1e985d
+                    type: TRIP
+                    name: Trip
+                    amount: '150.00'
+                    currency: EUR
+                    status: PENDING
+                    request_process_id: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+                    card_id: 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
+                    description: TYPE TRIP
+                    requester: LVRS6404-000089
+                    approveDate: '2025-12-03T14:19:36Z'
+                    hasAttachments: 'false'
+                    note: note
+                    destination: Rome
+                    date_from: '2025-12-24T23:00:00Z'
+                    date_to: '2025-12-26T22:59:59.999Z'
+                    traveller: LVRS6404-000005
+                    expense_allocation:
+                    - expense_category_id: 0145e140-fc56-4ffd-9a57-a3c776bb2b51
+                      spend_period: BEFORE_TRIP
+                      amount: 1
+                      amount_currency: EUR
+                    tags: []
+                    creation_time: '2025-12-03T14:15:14Z'
+                    last_update: '2025-12-03T14:19:36Z'
+                FundResponseExample:
+                  summary: type FUNDS
+                  description: FundResponseExample
+                  value:
+                    id: 776f5018-07e5-426b-a426-8b23fa1e985d
+                    type: FUNDS
+                    name: Fund
+                    amount: 150
+                    currency: EUR
+                    status: PENDING
+                    request_process_id: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+                    card_id: 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
+                    description: TYPE FUNDS
+                    requester: LVRS6404-000089
+                    approveDate: '2025-12-03T14:19:36Z'
+                    hasAttachments: 'false'
+                    note: note
+                    creation_time: '2025-12-03T14:15:14Z'
+                    last_update: '2025-12-03T14:19:36Z'
+        '400':
+          description: Your request has missing arguments or is malformed.
+        '404':
+          description: One or more resource requested does not exist.
+      security:
+      - standardAuth:
+        - request_write
+      x-soldo:
+        fingerprint-order: id, request_timestamp, name, token
+    delete:
+      tags:
+      - Requests
+      summary: Delete Request
+      description: Endpoint to remove an `Request`.
+      operationId: request-delete
+      parameters:
+      - name: requestId
+        in: path
+        required: true
+        schema:
+          type: string
+          description: The `Request` ID.
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+      responses:
+        '204':
+          description: No content as result.
+        '400':
+          description: Your request has missing arguments or is malformed.
+      security:
+      - standardAuth:
+        - request_write
+components:
+  schemas:
+    Requests:
+      properties:
+        total:
+          type: integer
+          format: int32
+          description: It represents the total number of available items in the list.
+          example: 168
+        pages:
+          type: integer
+          format: int32
+          description: It represents the total number of available pages.
+          example: 7
+        page_size:
+          type: integer
+          format: int32
+          description: It represents the number of items per page.
+          example: 25
+        current_page:
+          type: integer
+          format: int32
+          description: It indicates the current page (the counter starts from zero).
+          example: 0
+        results_size:
+          type: integer
+          format: int32
+          description: It indicates the size of the array results.
+          example: 25
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/RequestItem'
+    RequestStepInfo:
+      properties:
+        step_number:
+          type: integer
+          format: int32
+          description: The number of the step that approves/rejects the expense.
+          example: 2
+        reviewer_type:
+          $ref: '#/components/schemas/ReviewProcessReviewerType'
+          description: The type of review of the step that approves/rejects the expense.
+          example: ROLE
+        status:
+          $ref: '#/components/schemas/ReviewProcessStepStatus'
+          description: The status of the step that approves/rejects the expense.
+          example: APPROVED
+        date:
+          type: string
+          description: The timestamp of the step that approves/rejects the expense.
+          example: '2025-12-24T23:00:00Z'
+        reviewer_info:
+          type: array
+          description: The name of the step that approves/rejects the expense.
+          items:
+            $ref: '#/components/schemas/RequestApproverInfo'
+        automatic_review:
+          type: boolean
+          description: The name of the step that approves/rejects the expense.
+          example: false
+    DeclineRequest:
+      properties:
+        supervisor_note:
+          type: string
+          description: 'The supervisor''s note of the `Request` (sortable: no).'
+          example: Requester note
+        reviewer:
+          type: string
+          description: 'The reviewer''s note of the `Request` (sortable: no).'
+          example: XMPL1234-000001
+      required:
+      - reviewer
+      - supervisor_note
+    PaymentMethod:
+      type: string
+      enum:
+      - TEMPORARY_CARD
+      - BANK_TRANSFER
+    RequestType:
+      type: string
+      enum:
+      - GOODS_OR_SERVICES
+      - FUNDS
+      - TRIP
+    UpdateRequestPayload:
+      description: Base schema for update request. The actual fields depend on the `type`.
+      discriminator:
+        propertyName: type
+        mapping:
+          FUNDS: '#/components/schemas/UpdateRequestFunds'
+          GOODS_OR_SERVICES: '#/components/schemas/UpdateRequestGoodsOrServices'
+          TRIP: '#/components/schemas/UpdateRequestTrip'
+      properties:
+        name:
+          type: string
+          description: The name of the `Request`.
+          example: Supplier name
+        description:
+          type: string
+          description: The description of the `Request`.
+          example: Example description
+        note:
+          type: string
+          description: The requester's note of the `Request`.
+          example: Requester note
+        type:
+          $ref: '#/components/schemas/RequestType'
+          description: The type of the `Request`.
+          example: GOODS_OR_SERVICES
+        request_timestamp:
+          type: integer
+          format: int64
+          description: The epoch timestamp in millis. This is checked in Soldo. Requests with timestamp older than 5 seconds will be rejected.
+          example: 1576850500000
+      required:
+      - request_timestamp
+      - type
+    ReviewProcessReviewerType:
+      type: string
+      enum:
+      - LINE_MANAGER
+      - ROLE
+      - AUTOMATIC
+      - USER
+    RequestItem:
+      properties:
+        id:
+          type: string
+          description: 'The `Request` ID (sortable: no).'
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+        name:
+          type: string
+          description: 'The name of the `Request` (sortable: no).'
+          example: Supplier name
+        description:
+          type: string
+          description: 'The description of the `Request` (sortable: no).'
+          example: Example description
+        requester:
+          type: string
+          description: 'The ID of the `User` that makes the `Request` (sortable: no).'
+          example: XMPL1234-000001
+        status:
+          $ref: '#/components/schemas/RequestStatus'
+          description: 'The status of the `Request` (sortable: no).'
+          example: APPROVED
+        payment_method:
+          $ref: '#/components/schemas/PaymentMethod'
+          description: 'The method of payment of the `Request` (sortable: no).'
+          example: TEMPORARY_CARD
+        type:
+          $ref: '#/components/schemas/RequestType'
+          description: 'The type of the `Request` (sortable: no).'
+          example: GOODS_OR_SERVICES
+        amount:
+          type: number
+          description: 'The total amount of the `Request` (sortable: no).'
+          example: 10.25
+        currency:
+          $ref: '#/components/schemas/ISO4217Currency'
+          description: 'The currency of the total amount of the `Request` (sortable: no).'
+          example: EUR
+        creation_time:
+          type: string
+          description: 'The date and time when the `Request` was created (sortable: yes).'
+          example: '2017-06-01T12:48:40Z'
+        last_update_time:
+          type: string
+          description: 'The date and time when the `Request` was last updated (sortable: yes).'
+          example: '2017-06-01T12:48:40Z'
+    ReviewProcessStepStatus:
+      type: string
+      enum:
+      - APPROVED
+      - PARTIALLY_APPROVED
+      - DECLINED
+    Direction:
+      type: string
+      description: It indicates how the pages are ordered.
+      enum:
+      - ASC
+      - DESC
+      example: DESC
+    RequestPayload:
+      discriminator:
+        propertyName: type
+      properties:
+        type:
+          $ref: '#/components/schemas/RequestType'
+          description: The type of the `Request`.
+          example: GOODS_OR_SERVICES
+        id:
+          type: string
+          description: 'The `Request` ID (sortable: no).'
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+        name:
+          type: string
+          description: 'The name of the `Request` (sortable: no).'
+          example: Supplier name
+        description:
+          type: string
+          description: 'The description of the `Request` (sortable: no).'
+          example: Example description
+        requester:
+          type: string
+          description: 'The ID of the `User` that makes the `Request` (sortable: no).'
+          example: XMPL1234-000001
+        request_process_id:
+          type: string
+          description: 'The `ExpenseReviewProcess` ID of the `Request` (sortable: no).'
+          example: 135fdb6c-2e77-4fc0-a79f-2453fde75ef7
+        status:
+          $ref: '#/components/schemas/RequestStatus'
+          description: 'The status of the `Request` (sortable: no).'
+          example: APPROVED
+        amount:
+          type: number
+          description: 'The amount of the `Request` (sortable: no).'
+          example: 10.25
+        currency:
+          $ref: '#/components/schemas/ISO4217Currency'
+          description: The [ISO 4217](https://www.six-group.com/en/products-services/financial-information/data-standards.html#scrollTo=maintenance-agency) code of the currency of `Request`.
+          example: EUR
+        has_attachments:
+          type: boolean
+          description: 'It determines whether the `Request` has one or more attachments (sortable: no).'
+          example: false
+        creation_time:
+          type: string
+          description: 'The date and time when the `Request` was created (sortable: yes).'
+          example: '2017-06-01T12:48:40Z'
+        last_update_time:
+          type: string
+          description: 'The date and time when the `Request` was last updated (sortable: yes).'
+          example: '2017-06-01T12:48:40Z'
+        note:
+          type: string
+          description: 'The comments of the `Request` (sortable: no).'
+          example: Requester note
+        review_timeline:
+          type: array
+          description: 'The timeline review step of the `Request` (sortable: no).'
+          items:
+            $ref: '#/components/schemas/RequestStepInfo'
+        attachment_document_ids:
+          type: array
+          items:
+            format: int64
+          uniqueItems: true
+    ISO4217Currency:
+      type: string
+      enum:
+      - AED
+      - AFN
+      - ALL
+      - AMD
+      - ANG
+      - AOA
+      - ARS
+      - AUD
+      - AWG
+      - AZN
+      - BAM
+      - BBD
+      - BDT
+      - BGN
+      - BHD
+      - BIF
+      - BMD
+      - BND
+      - BOB
+      - BOV
+      - BRL
+      - BSD
+      - BTN
+      - BWP
+      - BYN
+      - BZD
+      - CAD
+      - CDF
+      - CHE
+      - CHF
+      - CHW
+      - CLF
+      - CLP
+      - CNY
+      - COP
+      - COU
+      - CRC
+      - CUC
+      - CUP
+      - CVE
+      - CZK
+      - DJF
+      - DKK
+      - DOP
+      - DZD
+      - EGP
+      - ERN
+      - ETB
+      - EUR
+      - FJD
+      - FKP
+      - GBP
+      - GEL
+      - GHS
+      - GIP
+      - GMD
+      - GNF
+      - GTQ
+      - GYD
+      - HKD
+      - HNL
+      - HRK
+      - HTG
+      - HUF
+      - IDR
+      - ILS
+      - INR
+      - IQD
+      - IRR
+      - ISK
+      - JMD
+      - JOD
+      - JPY
+      - KES
+      - KGS
+      - KHR
+      - KMF
+      - KPW
+      - KRW
+      - KWD
+      - KYD
+      - KZT
+      - LAK
+      - LBP
+      - LKR
+      - LRD
+      - LSL
+      - LYD
+      - MAD
+      - MDL
+      - MGA
+      - MKD
+      - MMK
+      - MNT
+      - MOP
+      - MRO
+      - MRU
+      - MUR
+      - MVR
+      - MWK
+      - MXN
+      - MXV
+      - MYR
+      - MZN
+      - NAD
+      - NGN
+      - NIO
+      - NOK
+      - NPR
+      - NZD
+      - OMR
+      - PAB
+      - PEN
+      - PGK
+      - PHP
+      - PKR
+      - PLN
+      - PYG
+      - QAR
+      - RON
+      - RSD
+      - RUB
+      - RWF
+      - SAR
+      - SBD
+      - SCR
+      - SDG
+      - SEK
+      - SGD
+      - SHP
+      - SLE
+      - SLL
+      - SOS
+      - SRD
+      - SSP
+      - STD
+      - STN
+      - SVC
+      - SYP
+      - SZL
+      - THB
+      - TJS
+      - TMT
+      - TND
+      - TOP
+      - TRY
+      - TTD
+      - TWD
+      - TZS
+      - UAH
+      - UGX
+      - USD
+      - USN
+      - UYI
+      - UYU
+      - UYW
+      - UZS
+      - VED
+      - VEF
+      - VES
+      - VND
+      - VUV
+      - WST
+      - XAF
+      - XAG
+      - XAU
+      - XBA
+      - XBB
+      - XBC
+      - XBD
+      - XCD
+      - XDR
+      - XOF
+      - XPD
+      - XPF
+      - XPT
+      - XSU
+      - XTS
+      - XUA
+      - XXX
+      - YER
+      - ZAR
+      - ZMW
+      - ZWL
+    ApprovedRequestPayload:
+      description: Base schema for approved request. The actual fields depend on the `type`.
+      discriminator:
+        propertyName: type
+        mapping:
+          FUNDS: '#/components/schemas/ApprovedRequestFunds'
+          GOODS_OR_SERVICES: '#/components/schemas/ApprovedRequestGoodsOrServices'
+          TRIP: '#/components/schemas/ApprovedRequestTrip'
+      properties:
+        note:
+          type: string
+          description: The supervisor's note of the `Request`.
+          example: Requester note
+        approver:
+          type: string
+          description: The requester's note of the `Request` .
+          example: XMPL1234-000001
+        type:
+          $ref: '#/components/schemas/RequestType'
+          description: The type of the `Request`.
+          enum:
+          - FUNDS
+          - GOODS_AND_SERVICES
+          - TRIP
+          example: GOODS_OR_SERVICES
+        wallet_id:
+          type: string
+          description: The ID of the `Wallet` of `Request`, the request type is `Funds` or `BusinessTrip`.
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+      required:
+      - approver
+      - type
+      - wallet_id
+    RequestStatus:
+      type: string
+      enum:
+      - APPROVED
+      - DECLINED
+      - PENDING
+      - IDLE
+      - DELETED
+    RequestApproverInfo:
+      properties:
+        id:
+          type: string
+          description: The ID of the `User` who approves/rejects the expense.
+          example: XMPL1234-000003
+        name:
+          type: string
+          description: The name of the `User` who approves/rejects the expense.
+          example: JOHNDOE
+    CreateRequestPayload:
+      description: Base schema for create request. The actual fields depend on the `type`.
+      discriminator:
+        propertyName: type
+        mapping:
+          FUNDS: '#/components/schemas/CreateRequestFunds'
+          GOODS_OR_SERVICES: '#/components/schemas/CreateRequestGoodsOrServices'
+          TRIP: '#/components/schemas/CreateRequestTrip'
+      properties:
+        name:
+          type: string
+          description: The name of the `Request`.
+          example: Supplier name
+        requester:
+          type: string
+          description: The ID of the `User` that makes the `Request`.
+          example: XMPL1234-000001
+        amount:
+          type: number
+          description: The total amount of the `Request`.
+          example: 10.25
+        currency:
+          $ref: '#/components/schemas/ISO4217Currency'
+          description: The currency of the total amount of the `Request`.
+          example: EUR
+        note:
+          type: string
+          description: The requester's note of the `Request`.
+          example: Requester note
+        type:
+          $ref: '#/components/schemas/RequestType'
+          description: The type of the `Request`.
+          enum:
+          - FUNDS
+          - GOODS_AND_SERVICES
+          - TRIP
+          example: GOODS_OR_SERVICES
+        request_process_id:
+          type: string
+          description: The process id of the `Request`.
+          example: 135fdb6c-2e77-4fc0-a79f-2453fde75ef7
+        request_timestamp:
+          type: integer
+          format: int64
+          description: The epoch timestamp in millis. This is checked in Soldo. Requests with timestamp older than 5 seconds will be rejected.
+          example: 1576850500000
+        attachment_document_ids:
+          type: array
+          description: The requester's attachment of the `Request`.
+          example: 135fdb6c-2e77-4fc0-a79f-2453fde75ef7
+          items:
+            type: string
+          uniqueItems: true
+      required:
+      - amount
+      - currency
+      - name
+      - request_process_id
+      - request_timestamp
+      - requester
+      - type
+  securitySchemes:
+    standardAuth:
+      type: oauth2
+      description: This API uses OAuth 2 with the "Client Credentials" grant flow.
+      flows:
+        clientCredentials:
+          tokenUrl: https://api.soldo.com/oauth/authorize
+          refreshUrl: https://api.soldo.com/oauth/refresh
+          scopes:
+            address_read: Can read address details.
+            address_write: Can update address details.
+            card_read: Can read card details.
+            card_write: Can change card details.
+            company_read: Can read company details.
+            company_write: Can change company details.
+            contact_read: Can read contact details.
+            contact_write: Can change contact details.
+            employee_read: Can read employee details.
+            employee_write: Can change employee details.
+            expense_category_read: Can read expense category details.
+            expense_category_write: Can change expense category details.
+            expense_report_read: Can read expense report details.
+            expense_report_write: Can change expense report details.
+            expense_review_read: Can read expense review status.
+            expense_review_write: Can change expense review status.
+            group_read: Can read group details.
+            group_write: Can change groups details.
+            online_ads_read: Can read online ads details.
+            online_ads_write: Can change online ads details.
+            payment_read: Can read payment details.
+            payment_write: Can change payment details.
+            purchase_read: Can read purchase details.
+            purchase_write: Can change purchase details.
+            refueling_read: Can read refueling details.
+            refueling_write: Can change refueling details.
+            resource_set_read: Can read resource set details.
+            resource_set_write: Can change resource set details.
+            role_read: Can read role details.
+            statement_read: Can read statement details.
+            subscription_read: Can read subscription details.
+            subscription_write: Can change subscription details.
+            tag_read: Can read tags.
+            tag_write: can change tags.
+            tax_rate_read: Can read vat rate details.
+            tax_rate_write: Can change vat rate details.
+            transaction_read: Can read transaction details.
+            transaction_write: Can change transaction details.
+            vehicle_read: Can read vehicle details.
+            vehicle_write: Can change vehicle details.
+            wallet_read: Can read wallet details.
+            wallet_write: Can change wallet details.
+            webhook_subscription_read: Can read webhook subscription details.
+            webhook_subscription_write: Can change webhook subscription details.
+x-readme:
+  hidden: false

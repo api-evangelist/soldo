@@ -1,0 +1,877 @@
+openapi: 3.1.0
+info:
+  title: Soldo Business API v2.0 Accounting Classification Wallets API
+  description: Soldo Business API v2.0 OpenAPI specification
+  version: 5.56.0
+servers:
+- url: https://api.soldo.com
+  description: Production server (using live data)
+- url: https://api-demo.soldocloud.net
+  description: Sandbox server (using test data)
+tags:
+- name: Wallets
+paths:
+  /business/v2/wallets:
+    get:
+      tags:
+      - Wallets
+      summary: Search Wallets
+      description: Endpoint to search `Wallets` using filtering parameters.
+      operationId: wallet-search
+      parameters:
+      - name: type
+        in: query
+        description: The type of resource assigned to the `Wallet`.
+        schema:
+          $ref: '#/components/schemas/PrimaryUserType'
+        example: company
+      - name: id
+        in: query
+        description: The ID of the `type` resource.
+        schema:
+          type: string
+          description: The ID of the `type` resource.
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+        example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+      - name: customreferenceId
+        in: query
+        description: The custom reference ID of the `type` resource.
+        schema:
+          type: string
+          description: The custom reference ID of the `type` resource.
+          example: 123456-user-1
+        example: 123456-user-1
+      - name: groupId
+        in: query
+        description: The ID of the `Group` the `Wallet` is related to.
+        schema:
+          type: string
+          description: The ID of the `Group` the `Wallet` is related to.
+          example: 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
+        example: 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
+      - name: name
+        in: query
+        description: The full or partial name of the `Wallet`.
+        schema:
+          type: string
+          description: The full or partial name of the `Wallet`.
+          example: John Doe
+        example: John Doe
+      - name: p
+        in: query
+        description: It indicates the specific page to display (the counter starts from zero).
+        schema:
+          type: integer
+          format: int32
+          default: 0
+          description: It indicates the specific page to display (the counter starts from zero).
+          example: 3
+        example: 3
+      - name: s
+        in: query
+        description: It indicates the number of items per page.
+        schema:
+          type: integer
+          format: int32
+          default: 0
+          description: It indicates the number of items per page.
+          example: 25
+          maximum: 50
+        example: 25
+      - name: d
+        in: query
+        description: It indicates how the pages are ordered.
+        schema:
+          $ref: '#/components/schemas/Direction'
+        example: DESC
+      - name: props
+        in: query
+        description: It indicates the sorting direction applied to the above parameters. To apply a sorting on multiple parameters, set as many times the `props` parameter in the request.
+        schema:
+          type: array
+          description: It indicates the sorting direction applied to the above parameters. To apply a sorting on multiple parameters, set as many times the `props` parameter in the request.
+          example: creationTime
+          items:
+            type: string
+            description: It indicates the sorting direction applied to the above parameters. To apply a sorting on multiple parameters, set as many times the `props` parameter in the request.
+            example: creationTime
+        example: creationTime
+      responses:
+        '200':
+          description: The returned resource is an array containing `Wallets`.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Wallets'
+        '400':
+          description: Your request has missing arguments or is malformed.
+      security:
+      - standardAuth:
+        - wallet_read
+    post:
+      tags:
+      - Wallets
+      summary: Add Wallet
+      description: 'Endpoint to add a new `Wallet`. Only company wallets can be created, a user dedicated wallet for each currency supported by your account is automatically created by the Soldo platform. *Deprecated*: use [/wallets/create](ref:wallet-create) instead.'
+      operationId: wallet-add
+      parameters:
+      - name: X-Soldo-Fingerprint
+        in: header
+        required: true
+        schema:
+          type: string
+          default: '{{fingerprint}}'
+          description: '[Advanced authentication](ref:advanced-authentication): `SHA512SUM` of the fingerprint values listed in the fingerprint order for this endpoint.'
+          example: '{{fingerprint}}'
+      - name: X-Soldo-Fingerprint-Signature
+        in: header
+        required: true
+        schema:
+          type: string
+          default: '{{fingerprint_signature}}'
+          description: '[Advanced authentication](ref:advanced-authentication): Signature of the `X-Soldo-Fingerprint`.'
+          example: '{{fingerprint_signature}}'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddWalletOrder'
+      responses:
+        '200':
+          description: The returned resource is a single `Order`.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Order'
+        '400':
+          description: Your request has missing arguments or is malformed.
+      deprecated: true
+      security:
+      - standardAuth:
+        - wallet_write
+      x-soldo:
+        fingerprint-order: request_timestamp, owner_type, currency, name, token
+  /business/v2/wallets/create:
+    post:
+      tags:
+      - Wallets
+      summary: Create Wallet
+      description: Endpoint to add a new `Wallet`. Only company wallets can be created, a user dedicated wallet for each currency supported by your account is automatically created by the Soldo platform.
+      operationId: wallet-create
+      requestBody:
+        description: Create `Wallet` JSON Parameters.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateWallet'
+        required: true
+      responses:
+        '200':
+          description: The returned resource is a `Wallet`.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Wallet'
+        '400':
+          description: Your request has missing arguments or is malformed.
+      security:
+      - standardAuth:
+        - wallet_write
+  /business/v2/wallets/internalTransfer/{fromWalletId}/{toWalletId}:
+    put:
+      tags:
+      - Wallets
+      summary: Make Internal Transfer
+      description: Endpoint to transfer money between two `Wallets` within the same business account.
+      operationId: wallet-internal-transfer
+      parameters:
+      - name: fromWalletId
+        in: path
+        required: true
+        schema:
+          type: string
+          description: The `Wallet` ID of the source `Wallet`.
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+      - name: toWalletId
+        in: path
+        required: true
+        schema:
+          type: string
+          description: The `Wallet` ID of the destination `Wallet`.
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+      - name: X-Soldo-Fingerprint
+        in: header
+        required: true
+        schema:
+          type: string
+          default: '{{fingerprint}}'
+          description: '[Advanced authentication](ref:advanced-authentication): `SHA512SUM` of the fingerprint values listed in the fingerprint order for this endpoint.'
+          example: '{{fingerprint}}'
+      - name: X-Soldo-Fingerprint-Signature
+        in: header
+        required: true
+        schema:
+          type: string
+          default: '{{fingerprint_signature}}'
+          description: '[Advanced authentication](ref:advanced-authentication): Signature of the `X-Soldo-Fingerprint`.'
+          example: '{{fingerprint_signature}}'
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                amount:
+                  type: number
+                  description: The amount to transfer.
+                  example: 10.25
+                currencyCode:
+                  $ref: '#/components/schemas/ISO4217SupportedCurrency'
+              required:
+              - amount
+              - currencyCode
+      responses:
+        '200':
+          description: The result is a `TransferResult`.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransferResult'
+        '400':
+          description: Your request has missing arguments or is malformed.
+        '404':
+          description: One or more resource requested does not exist.
+      security:
+      - standardAuth:
+        - wallet_write
+      x-soldo:
+        fingerprint-order: amount, currencyCode, fromWalletId, toWalletId, token
+  /business/v2/wallets/{walletId}:
+    get:
+      tags:
+      - Wallets
+      summary: Get Wallet
+      description: Endpoint to retrieve a specific `Wallet` by ID.
+      operationId: wallet-get
+      parameters:
+      - name: walletId
+        in: path
+        required: true
+        schema:
+          type: string
+          description: The `Wallet` ID.
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+      responses:
+        '200':
+          description: The returned resource is a single `Wallet`.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Wallet'
+        '404':
+          description: One or more resource requested does not exist.
+      security:
+      - standardAuth:
+        - wallet_read
+    put:
+      tags:
+      - Wallets
+      summary: Update Wallet
+      description: Endpoint to update a `Wallet`. Only company wallets can be updated, a `User` dedicated wallet for each currency supported by your account is automatically created by the Soldo platform when a `User` gets created.
+      operationId: wallet-update
+      parameters:
+      - name: walletId
+        in: path
+        required: true
+        schema:
+          type: string
+          description: The `Wallet` ID.
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateWallet'
+      responses:
+        '200':
+          description: The returned resource is a single `Wallet`.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Wallet'
+        '400':
+          description: Your request has missing arguments or is malformed.
+        '404':
+          description: One or more resource requested does not exist.
+      security:
+      - standardAuth:
+        - wallet_write
+    delete:
+      tags:
+      - Wallets
+      summary: Delete Wallet
+      description: Endpoint to delete the `Wallet`
+      operationId: wallet-delete
+      parameters:
+      - name: walletId
+        in: path
+        required: true
+        schema:
+          type: string
+          description: The `Wallet` ID.
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+      responses:
+        '204':
+          description: No content as result.
+        '404':
+          description: One or more resource requested does not exist.
+      security:
+      - standardAuth:
+        - wallet_write
+components:
+  schemas:
+    ISO4217SupportedCurrency:
+      type: string
+      description: The [ISO 4217](https://www.six-group.com/en/products-services/financial-information/data-standards.html#scrollTo=maintenance-agency) code of the currency of the `Statement` to search for.
+      enum:
+      - EUR
+      - GBP
+      - USD
+      example: EUR
+    PrimaryUserType:
+      type: string
+      description: The type of resource assigned to the `Wallet`.
+      enum:
+      - main
+      - company
+      - employee
+      - dedicated
+      example: company
+    TransferResult:
+      properties:
+        amount:
+          type: number
+          description: The transferred amount.
+          example: 10.25
+        currency:
+          $ref: '#/components/schemas/ISO4217Currency'
+          description: The currency of the transferred amount.
+          example: EUR
+        datetime:
+          type: string
+          description: The date and time of the transaction.
+          example: '2017-06-01T12:48:40Z'
+        from_wallet:
+          $ref: '#/components/schemas/Wallet'
+          description: The source wallet used for the transfer.
+        to_wallet:
+          $ref: '#/components/schemas/Wallet'
+          description: The destination wallet used for the transfer.
+    Wallets:
+      properties:
+        total:
+          type: integer
+          format: int32
+          description: It represents the total number of available items in the list.
+          example: 168
+        pages:
+          type: integer
+          format: int32
+          description: It represents the total number of available pages.
+          example: 7
+        page_size:
+          type: integer
+          format: int32
+          description: It represents the number of items per page.
+          example: 25
+        current_page:
+          type: integer
+          format: int32
+          description: It indicates the current page (the counter starts from zero).
+          example: 0
+        results_size:
+          type: integer
+          format: int32
+          description: It indicates the size of the array results.
+          example: 25
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Wallet'
+    OrderItem:
+      properties:
+        id:
+          type: string
+          description: The ID of a single item of a specific `Order`.
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+        item_type:
+          type: string
+          description: The type of the ordered item.
+          example: CARD
+        category:
+          type: string
+          description: The category of the ordered item.
+    AccountInfoDeposit:
+      type: string
+      enum:
+      - IBAN
+      - SISAL
+      - SORT_CODE
+      - VIRTUAL_IBAN
+      - SHARED_SWIFT
+      - DEDICATED_SWIFT
+    Wallet:
+      properties:
+        id:
+          type: string
+          description: 'The `Wallet` ID (sortable: yes)'
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+        name:
+          type: string
+          description: 'The name of the `Wallet` (sortable: yes)'
+          example: CompanyWallet1
+        currency_code:
+          $ref: '#/components/schemas/ISO4217Currency'
+          description: 'The [ISO 4217](https://www.six-group.com/en/products-services/financial-information/data-standards.html#scrollTo=maintenance-agency) code of the currency of the `Wallet` (sortable: no)'
+          example: EUR
+        available_amount:
+          type: number
+          description: 'The currently available balance of the `Wallet` (sortable: no)'
+          example: 100
+        blocked_amount:
+          type: number
+          description: 'The blocked balance of the `Wallet` (the overall amount of `Transactions` in `Authorised` status) (sortable: no)'
+          example: 0
+        primary_user_type:
+          $ref: '#/components/schemas/PrimaryUserType'
+          description: 'The type of resource assigned to the `Wallet` (sortable: no)'
+          example: dedicated
+        primary_user_public_id:
+          type: string
+          description: 'The ID of the `User` if the `Wallet` is of type `employee`, not available for other `Wallet` types (sortable: no)'
+          example: XMPL1234-000001
+        custom_reference_id:
+          type: string
+          description: 'The custom reference of the `User` if the `Wallet` is of type `employee`, not available for other wallet types (sortable: yes)'
+          example: 123456-usa-1
+        group_id:
+          type: string
+          deprecated: true
+          description: 'The ID of the `Group` the wallet is related to (sortable: no). In case of multiple groups associated this field contains the first one for backward compatibility.'
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+        groups:
+          type: array
+          description: 'The list of `Group` ID the wallet is related to (sortable: no)'
+          example:
+          - 7bf79328-a7ae-4222-aa54-091ff7f429a7
+          - 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
+          items:
+            type: string
+        label:
+          type: string
+          description: 'The label of the `Wallet` (sortable: yes)'
+          example: CompanyWallet1
+        visible:
+          type: boolean
+          description: 'It determines whether the `Wallet` is visible on the web console (sortable: yes)'
+          example: true
+        creation_time:
+          type: string
+          description: 'The date and time when the `Wallet` was created (sortable: yes)'
+          example: '2017-06-01T12:48:40Z'
+        last_update:
+          type: string
+          description: 'The date and time when the `Wallet` was last updated (sortable: yes)'
+          example: '2017-06-01T12:48:40Z'
+        deposit_account_info:
+          type: array
+          description: The deposit account info of the `Wallet`.
+          example:
+          - 7bf79328-a7ae-4222-aa54-091ff7f429a7
+          - 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
+          items:
+            $ref: '#/components/schemas/DepositAccountInfo'
+        description:
+          type: string
+          description: 'The note of the `Wallet` (sortable: yes)'
+          example: CompanyWallet1
+    UpdateWallet:
+      description: The `Wallet` JSON parameters.
+      properties:
+        name:
+          type: string
+          description: The `Wallet` name.
+          example: John Doe
+        label:
+          type: string
+          description: The `Wallet` label.
+          example: JD
+        description:
+          type: string
+          description: The `Wallet` description.
+          example: My company wallet
+      required:
+      - description
+      - label
+      - name
+    Direction:
+      type: string
+      description: It indicates how the pages are ordered.
+      enum:
+      - ASC
+      - DESC
+      example: DESC
+    Order:
+      properties:
+        id:
+          type: string
+          description: The `Order` ID.
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+        status:
+          $ref: '#/components/schemas/OrderStatus'
+          description: The status of the `Order`.
+          example: PENDING
+        creation_time:
+          type: string
+          description: The date and time when the `Order` was created.
+          example: '2017-06-01T12:48:40Z'
+        last_update_time:
+          type: string
+          description: The last update date of the `Order`.
+          example: '2017-06-01T12:48:40Z'
+        error_code:
+          type: string
+          description: In case is_valid is false, the error code of the `Order` is shown.
+        total_paid_amount:
+          type: number
+          description: The total amount of the `Order`.
+          example: 10.25
+        total_paid_currency:
+          $ref: '#/components/schemas/ISO4217Currency'
+          description: The currency for the total paid amount.
+          example: EUR
+        items:
+          type: array
+          description: The products associated with the `Order`.
+          items:
+            $ref: '#/components/schemas/OrderItem'
+        is_valid:
+          type: boolean
+          description: It states whether the `Order` is valid.
+          example: true
+    AddWalletOrder:
+      description: Add `Wallet` JSON parameters.
+      properties:
+        request_timestamp:
+          type: integer
+          format: int64
+          description: The epoch timestamp in millis. This is checked in Soldo. Requests with timestamp older than 5 seconds will be rejected.
+          example: 1576850500000
+        name:
+          type: string
+          description: The name of the `Wallet`.
+          example: John Doe
+        currency:
+          $ref: '#/components/schemas/ISO4217SupportedCurrency'
+          description: The currency of the `Wallet`.
+          example: EUR
+        owner_type:
+          $ref: '#/components/schemas/AddWalletOwnerType'
+          description: The type of the owner of the `Wallet`.
+          example: company
+      required:
+      - currency
+      - name
+      - request_timestamp
+    DepositAccountInfo:
+      properties:
+        type:
+          $ref: '#/components/schemas/AccountInfoDeposit'
+          description: The `type` of account identification.
+          example: IBAN
+        identification:
+          type: string
+          description: The account identification related to the type.
+          example: GB00ABCD00000123456789
+    CreateWallet:
+      properties:
+        request_timestamp:
+          type: integer
+          format: int64
+          description: The epoch timestamp in millis. This is checked in Soldo. Requests with timestamp older than 5 seconds will be rejected.
+          example: 1576850500000
+        name:
+          type: string
+          description: The name of the `Wallet`.
+          example: John Doe
+        description:
+          type: string
+          description: The description of the `Wallet`.
+          example: My company wallet
+        currency:
+          $ref: '#/components/schemas/ISO4217SupportedCurrency'
+          description: The [ISO 4217](https://www.six-group.com/en/products-services/financial-information/data-standards.html#scrollTo=maintenance-agency) code of the currency of the `Wallet`.
+          example: EUR
+        owner_type:
+          $ref: '#/components/schemas/AddWalletOwnerType'
+          description: The type of the owner of the `Wallet`.
+          example: company
+      required:
+      - currency
+      - name
+      - request_timestamp
+    AddWalletOwnerType:
+      type: string
+      enum:
+      - company
+    ISO4217Currency:
+      type: string
+      enum:
+      - AED
+      - AFN
+      - ALL
+      - AMD
+      - ANG
+      - AOA
+      - ARS
+      - AUD
+      - AWG
+      - AZN
+      - BAM
+      - BBD
+      - BDT
+      - BGN
+      - BHD
+      - BIF
+      - BMD
+      - BND
+      - BOB
+      - BOV
+      - BRL
+      - BSD
+      - BTN
+      - BWP
+      - BYN
+      - BZD
+      - CAD
+      - CDF
+      - CHE
+      - CHF
+      - CHW
+      - CLF
+      - CLP
+      - CNY
+      - COP
+      - COU
+      - CRC
+      - CUC
+      - CUP
+      - CVE
+      - CZK
+      - DJF
+      - DKK
+      - DOP
+      - DZD
+      - EGP
+      - ERN
+      - ETB
+      - EUR
+      - FJD
+      - FKP
+      - GBP
+      - GEL
+      - GHS
+      - GIP
+      - GMD
+      - GNF
+      - GTQ
+      - GYD
+      - HKD
+      - HNL
+      - HRK
+      - HTG
+      - HUF
+      - IDR
+      - ILS
+      - INR
+      - IQD
+      - IRR
+      - ISK
+      - JMD
+      - JOD
+      - JPY
+      - KES
+      - KGS
+      - KHR
+      - KMF
+      - KPW
+      - KRW
+      - KWD
+      - KYD
+      - KZT
+      - LAK
+      - LBP
+      - LKR
+      - LRD
+      - LSL
+      - LYD
+      - MAD
+      - MDL
+      - MGA
+      - MKD
+      - MMK
+      - MNT
+      - MOP
+      - MRO
+      - MRU
+      - MUR
+      - MVR
+      - MWK
+      - MXN
+      - MXV
+      - MYR
+      - MZN
+      - NAD
+      - NGN
+      - NIO
+      - NOK
+      - NPR
+      - NZD
+      - OMR
+      - PAB
+      - PEN
+      - PGK
+      - PHP
+      - PKR
+      - PLN
+      - PYG
+      - QAR
+      - RON
+      - RSD
+      - RUB
+      - RWF
+      - SAR
+      - SBD
+      - SCR
+      - SDG
+      - SEK
+      - SGD
+      - SHP
+      - SLE
+      - SLL
+      - SOS
+      - SRD
+      - SSP
+      - STD
+      - STN
+      - SVC
+      - SYP
+      - SZL
+      - THB
+      - TJS
+      - TMT
+      - TND
+      - TOP
+      - TRY
+      - TTD
+      - TWD
+      - TZS
+      - UAH
+      - UGX
+      - USD
+      - USN
+      - UYI
+      - UYU
+      - UYW
+      - UZS
+      - VED
+      - VEF
+      - VES
+      - VND
+      - VUV
+      - WST
+      - XAF
+      - XAG
+      - XAU
+      - XBA
+      - XBB
+      - XBC
+      - XBD
+      - XCD
+      - XDR
+      - XOF
+      - XPD
+      - XPF
+      - XPT
+      - XSU
+      - XTS
+      - XUA
+      - XXX
+      - YER
+      - ZAR
+      - ZMW
+      - ZWL
+    OrderStatus:
+      type: string
+      enum:
+      - PENDING
+      - ERROR
+      - PLACED
+      - CANCELLED
+      - COMPLETED
+      - COMPLETED_WITH_CREDIT
+  securitySchemes:
+    standardAuth:
+      type: oauth2
+      description: This API uses OAuth 2 with the "Client Credentials" grant flow.
+      flows:
+        clientCredentials:
+          tokenUrl: https://api.soldo.com/oauth/authorize
+          refreshUrl: https://api.soldo.com/oauth/refresh
+          scopes:
+            address_read: Can read address details.
+            address_write: Can update address details.
+            card_read: Can read card details.
+            card_write: Can change card details.
+            company_read: Can read company details.
+            company_write: Can change company details.
+            contact_read: Can read contact details.
+            contact_write: Can change contact details.
+            employee_read: Can read employee details.
+            employee_write: Can change employee details.
+            expense_category_read: Can read expense category details.
+            expense_category_write: Can change expense category details.
+            expense_report_read: Can read expense report details.
+            expense_report_write: Can change expense report details.
+            expense_review_read: Can read expense review status.
+            expense_review_write: Can change expense review status.
+            group_read: Can read group details.
+            group_write: Can change groups details.
+            online_ads_read: Can read online ads details.
+            online_ads_write: Can change online ads details.
+            payment_read: Can read payment details.
+            payment_write: Can change payment details.
+            purchase_read: Can read purchase details.
+            purchase_write: Can change purchase details.
+            refueling_read: Can read refueling details.
+            refueling_write: Can change refueling details.
+            resource_set_read: Can read resource set details.
+            resource_set_write: Can change resource set details.
+            role_read: Can read role details.
+            statement_read: Can read statement details.
+            subscription_read: Can read subscription details.
+            subscription_write: Can change subscription details.
+            tag_read: Can read tags.
+            tag_write: can change tags.
+            tax_rate_read: Can read vat rate details.
+            tax_rate_write: Can change vat rate details.
+            transaction_read: Can read transaction details.
+            transaction_write: Can change transaction details.
+            vehicle_read: Can read vehicle details.
+            vehicle_write: Can change vehicle details.
+            wallet_read: Can read wallet details.
+            wallet_write: Can change wallet details.
+            webhook_subscription_read: Can read webhook subscription details.
+            webhook_subscription_write: Can change webhook subscription details.
+x-readme:
+  hidden: false

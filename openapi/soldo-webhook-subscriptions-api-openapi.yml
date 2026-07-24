@@ -1,0 +1,522 @@
+openapi: 3.1.0
+info:
+  title: Soldo Business API v2.0 Accounting Classification Webhook Subscriptions API
+  description: Soldo Business API v2.0 OpenAPI specification
+  version: 5.56.0
+servers:
+- url: https://api.soldo.com
+  description: Production server (using live data)
+- url: https://api-demo.soldocloud.net
+  description: Sandbox server (using test data)
+tags:
+- name: Webhook Subscriptions
+paths:
+  /business/v2/webhooks/subscriptions:
+    get:
+      tags:
+      - Webhook Subscriptions
+      summary: Search Webhook Subscriptions
+      description: Endpoint to search `WebhookSubscriptions` using filtering parameters.
+      operationId: webhook-subscription-search
+      parameters:
+      - name: webhookUrl
+        in: query
+        schema:
+          type: string
+          description: The url of the `WebhookSubscription`.
+          example: https://your_domain.com/xx/xx
+      - name: enabledEvents
+        in: query
+        schema:
+          type: array
+          description: The list of the enabled events of the search.
+          items:
+            $ref: '#/components/schemas/WebhookEventName'
+      - name: active
+        in: query
+        schema:
+          type: boolean
+          description: The status of the webhook (if false, notifications are not sent).
+      - name: description
+        in: query
+        schema:
+          type: string
+          description: The description of the `WebhookSubscription`.
+          example: Transactions and user webhook
+      - name: p
+        in: query
+        description: It indicates the specific page to display (the counter starts from zero).
+        schema:
+          type: integer
+          format: int32
+          default: 0
+          description: It indicates the specific page to display (the counter starts from zero).
+          example: 3
+        example: 3
+      - name: s
+        in: query
+        description: It indicates the number of items per page.
+        schema:
+          type: integer
+          format: int32
+          default: 0
+          description: It indicates the number of items per page.
+          example: 25
+          maximum: 50
+        example: 25
+      - name: d
+        in: query
+        description: It indicates how the pages are ordered.
+        schema:
+          $ref: '#/components/schemas/Direction'
+        example: DESC
+      - name: props
+        in: query
+        description: It indicates the sorting direction applied to the above parameters. To apply a sorting on multiple parameters, set as many times the `props` parameter in the request.
+        schema:
+          type: array
+          description: It indicates the sorting direction applied to the above parameters. To apply a sorting on multiple parameters, set as many times the `props` parameter in the request.
+          example: creationTime
+          items:
+            type: string
+            description: It indicates the sorting direction applied to the above parameters. To apply a sorting on multiple parameters, set as many times the `props` parameter in the request.
+            example: creationTime
+        example: creationTime
+      responses:
+        '200':
+          description: The result is an array containing `WebhookSubscriptions`.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WebhookSubscriptions'
+        '400':
+          description: Your request has missing arguments or is malformed.
+      security:
+      - standardAuth:
+        - webhook_subscription_read
+    post:
+      tags:
+      - Webhook Subscriptions
+      summary: Add Webhook Subscription
+      description: Endpoint to add a new `WebhookSubscription`.
+      operationId: webhook-subscription-add
+      parameters:
+      - name: X-Soldo-Fingerprint
+        in: header
+        required: true
+        schema:
+          type: string
+          default: '{{fingerprint}}'
+          description: '[Advanced authentication](ref:advanced-authentication): `SHA512SUM` of the fingerprint values listed in the fingerprint order for this endpoint.'
+          example: '{{fingerprint}}'
+      - name: X-Soldo-Fingerprint-Signature
+        in: header
+        required: true
+        schema:
+          type: string
+          default: '{{fingerprint_signature}}'
+          description: '[Advanced authentication](ref:advanced-authentication): Signature of the `X-Soldo-Fingerprint`.'
+          example: '{{fingerprint_signature}}'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateWebhookSubscription'
+      responses:
+        '200':
+          description: The returned resource is a single `WebhookSubscription`.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WebhookSubscription'
+        '400':
+          description: Your request has missing arguments or is malformed.
+      security:
+      - standardAuth:
+        - webhook_subscription_write
+      x-soldo:
+        fingerprint-order: webhook_url, enabled_events(joined), active, token
+  /business/v2/webhooks/subscriptions/{webhookSubscriptionId}:
+    put:
+      tags:
+      - Webhook Subscriptions
+      summary: Update Webhook Subscription
+      description: Endpoint to update a specific `WebhookSubscription`.
+      operationId: webhook-subscription-update
+      parameters:
+      - name: webhookSubscriptionId
+        in: path
+        required: true
+        schema:
+          type: string
+          description: The `WebhookSubscription` ID.
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+      - name: X-Soldo-Fingerprint
+        in: header
+        required: true
+        schema:
+          type: string
+          default: '{{fingerprint}}'
+          description: '[Advanced authentication](ref:advanced-authentication): `SHA512SUM` of the fingerprint values listed in the fingerprint order for this endpoint.'
+          example: '{{fingerprint}}'
+      - name: X-Soldo-Fingerprint-Signature
+        in: header
+        required: true
+        schema:
+          type: string
+          default: '{{fingerprint_signature}}'
+          description: '[Advanced authentication](ref:advanced-authentication): Signature of the `X-Soldo-Fingerprint`.'
+          example: '{{fingerprint_signature}}'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateWebhookSubscription'
+      responses:
+        '200':
+          description: The returned resource is a single `WebhookSubscription`.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WebhookSubscription'
+        '400':
+          description: Your request has missing arguments or is malformed.
+        '404':
+          description: One or more resource requested does not exist.
+      security:
+      - standardAuth:
+        - webhook_subscription_write
+      x-soldo:
+        fingerprint-order: webhookSubscriptionId, webhook_url, enabled_events (joined), active, token
+    delete:
+      tags:
+      - Webhook Subscriptions
+      summary: Delete Webhook Subscription
+      description: Endpoint to delete a specific `WebhookSubscription`.
+      operationId: webhook-subscription-delete
+      parameters:
+      - name: webhookSubscriptionId
+        in: path
+        required: true
+        schema:
+          type: string
+          description: The `WebhookSubscription` ID.
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+      - name: X-Soldo-Fingerprint
+        in: header
+        required: true
+        schema:
+          type: string
+          default: '{{fingerprint}}'
+          description: '[Advanced authentication](ref:advanced-authentication): `SHA512SUM` of the fingerprint values listed in the fingerprint order for this endpoint.'
+          example: '{{fingerprint}}'
+      - name: X-Soldo-Fingerprint-Signature
+        in: header
+        required: true
+        schema:
+          type: string
+          default: '{{fingerprint_signature}}'
+          description: '[Advanced authentication](ref:advanced-authentication): Signature of the `X-Soldo-Fingerprint`.'
+          example: '{{fingerprint_signature}}'
+      responses:
+        '204':
+          description: No content as result.
+        '400':
+          description: Your request has missing arguments or is malformed.
+      security:
+      - standardAuth:
+        - webhook_subscription_write
+      x-soldo:
+        fingerprint-order: id, token
+  /business/v2/webhooks/subscriptions/{webhookSubscriptionsId}:
+    get:
+      tags:
+      - Webhook Subscriptions
+      summary: Get Webhook Subscription
+      description: Endpoint to retrieve a specific `WebhookSubscription` by ID.
+      operationId: webhook-subscription-get
+      parameters:
+      - name: webhookSubscriptionsId
+        in: path
+        required: true
+        schema:
+          type: string
+          description: The `WebhookSubscription` ID.
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+      responses:
+        '400':
+          description: Your request has missing arguments or is malformed.
+        '404':
+          description: One or more resource requested does not exist.
+        default:
+          description: The returned resource is a single `WebhookSubscription`.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WebhookSubscription'
+      security:
+      - standardAuth:
+        - webhook_subscription_read
+components:
+  schemas:
+    WebhookEventName:
+      type: string
+      enum:
+      - business_trip_created
+      - business_trip_updated
+      - business_trip_deleted
+      - card_activated
+      - card_change_status
+      - card_creation
+      - card_destroyed
+      - card_lost
+      - card_replaced
+      - card_stolen
+      - card_label_updated
+      - card_assignee_updated
+      - add_resources_card
+      - add_resources_member
+      - add_resources_wallet
+      - create_group
+      - delete_group
+      - move_resources_card
+      - move_resources_member
+      - move_resources_wallet
+      - remove_resources_card
+      - remove_resources_member
+      - remove_resources_wallet
+      - update_group
+      - store_order_completed
+      - store_order_placed
+      - balanced_transfer
+      - billing
+      - card_authorization
+      - conversion
+      - customer_care_deposit
+      - customer_care_withdraw
+      - edit_tag
+      - inbound_payment
+      - inbound_payment_reversal
+      - internal_transfer
+      - joule_feed
+      - load_failed
+      - load_money
+      - recurring_billing
+      - scheduled_transfer
+      - transaction_adjustment
+      - unload_money
+      - wiretransfer
+      - upload_completed
+      - attachment_delete
+      - new_user
+      - user_status_changed
+      - user_updated
+      - wallet_created
+      - wallet_deleted
+      - vehicle_create
+      - vehicle_update
+      - vehicle_delete
+      - purchase_create
+      - purchase_update
+      - purchase_delete
+      - purchase_redeem_card
+      - created_expense_configuration
+      - disabled_expense_configuration
+      - enabled_expense_configuration
+      - updated_expense_configuration
+      - completed_transactions_import
+      - updated_transaction
+      - change_expense_type
+      - subscription_activated
+      - subscription_created
+      - subscription_updated
+      - subscription_deleted
+      - subscription_assignee_added
+      - subscription_assignee_removed
+      - online_ads_activated
+      - online_ads_created
+      - online_ads_updated
+      - online_ads_deleted
+      - online_ads_assignee_added
+      - online_ads_assignee_removed
+      - transaction_created
+      - transaction_modified
+      - transaction_deleted
+      - transaction_business_trip_linked
+      - transaction_business_trip_unlinked
+      - contact_created
+      - contact_updated
+      - contact_deleted
+    WebhookSubscription:
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: The `WebhookSubscription` ID.
+        webhook_url:
+          type: string
+          description: The URL of `WebhookSubscription`.
+          example: https://your_domain.com/xx/xx
+        enabled_events:
+          type: array
+          description: The list of subscribed events.
+          items:
+            $ref: '#/components/schemas/WebhookEventName'
+          uniqueItems: true
+        description:
+          type: string
+          description: A custom description of the `WebhookSubscription`.
+          example: Report updates
+        active:
+          type: boolean
+          description: The status of the `WebhookSubscription`.
+          example: true
+        creation_date:
+          type: string
+          description: 'The date and time when the `WebhookSubscription` was created (sortable: yes).'
+          example: '2017-06-01T12:48:40Z'
+        last_update:
+          type: string
+          description: 'The last date and time when the `WebhookSubscription` was last updated (sortable: yes).'
+          example: '2017-06-01T12:48:40Z'
+    Direction:
+      type: string
+      description: It indicates how the pages are ordered.
+      enum:
+      - ASC
+      - DESC
+      example: DESC
+    CreateWebhookSubscription:
+      description: Create `WebhookSubscription` JSON parameters.
+      properties:
+        webhook_url:
+          type: string
+          description: The url of the `WebhookSubscription`.
+          example: https://your_domain.com/xx/xx
+        enabled_events:
+          type: array
+          description: The list of the `WebhookSubscription` enabled events.
+          example:
+          - card_activated
+          items:
+            $ref: '#/components/schemas/WebhookEventName'
+        description:
+          type: string
+          description: The description of the `WebhookSubscription`.
+          example: Google Ads Campaign
+        active:
+          type: boolean
+          description: The status of the `WebhookSubscription` (if `false`, notifications are not sent).
+          example: false
+      required:
+      - active
+      - enabled_events
+      - webhook_url
+    UpdateWebhookSubscription:
+      description: Update `WebhookSubscription` JSON parameters.
+      properties:
+        webhook_url:
+          type: string
+          description: The URL of the `WebhookSubscription`.
+          example: https://your_domain.com/xx/xx
+        enabled_events:
+          type: array
+          description: The list of the `WebhookSubscription` enabled events.
+          example:
+          - card_activated
+          items:
+            $ref: '#/components/schemas/WebhookEventName'
+        description:
+          type: string
+          description: The description of the `WebhookSubscription`.
+          example: Report updates
+        active:
+          type: boolean
+          description: The status of the `WebhookSubscription` (if `false`, notifications are not sent).
+          example: true
+    WebhookSubscriptions:
+      properties:
+        total:
+          type: integer
+          format: int32
+          description: It represents the total number of available items in the list.
+          example: 168
+        pages:
+          type: integer
+          format: int32
+          description: It represents the total number of available pages.
+          example: 7
+        page_size:
+          type: integer
+          format: int32
+          description: It represents the number of items per page.
+          example: 25
+        current_page:
+          type: integer
+          format: int32
+          description: It indicates the current page (the counter starts from zero).
+          example: 0
+        results_size:
+          type: integer
+          format: int32
+          description: It indicates the size of the array results.
+          example: 25
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/WebhookSubscription'
+  securitySchemes:
+    standardAuth:
+      type: oauth2
+      description: This API uses OAuth 2 with the "Client Credentials" grant flow.
+      flows:
+        clientCredentials:
+          tokenUrl: https://api.soldo.com/oauth/authorize
+          refreshUrl: https://api.soldo.com/oauth/refresh
+          scopes:
+            address_read: Can read address details.
+            address_write: Can update address details.
+            card_read: Can read card details.
+            card_write: Can change card details.
+            company_read: Can read company details.
+            company_write: Can change company details.
+            contact_read: Can read contact details.
+            contact_write: Can change contact details.
+            employee_read: Can read employee details.
+            employee_write: Can change employee details.
+            expense_category_read: Can read expense category details.
+            expense_category_write: Can change expense category details.
+            expense_report_read: Can read expense report details.
+            expense_report_write: Can change expense report details.
+            expense_review_read: Can read expense review status.
+            expense_review_write: Can change expense review status.
+            group_read: Can read group details.
+            group_write: Can change groups details.
+            online_ads_read: Can read online ads details.
+            online_ads_write: Can change online ads details.
+            payment_read: Can read payment details.
+            payment_write: Can change payment details.
+            purchase_read: Can read purchase details.
+            purchase_write: Can change purchase details.
+            refueling_read: Can read refueling details.
+            refueling_write: Can change refueling details.
+            resource_set_read: Can read resource set details.
+            resource_set_write: Can change resource set details.
+            role_read: Can read role details.
+            statement_read: Can read statement details.
+            subscription_read: Can read subscription details.
+            subscription_write: Can change subscription details.
+            tag_read: Can read tags.
+            tag_write: can change tags.
+            tax_rate_read: Can read vat rate details.
+            tax_rate_write: Can change vat rate details.
+            transaction_read: Can read transaction details.
+            transaction_write: Can change transaction details.
+            vehicle_read: Can read vehicle details.
+            vehicle_write: Can change vehicle details.
+            wallet_read: Can read wallet details.
+            wallet_write: Can change wallet details.
+            webhook_subscription_read: Can read webhook subscription details.
+            webhook_subscription_write: Can change webhook subscription details.
+x-readme:
+  hidden: false

@@ -1,0 +1,471 @@
+openapi: 3.1.0
+info:
+  title: Soldo Business API v2.0 Accounting Classification Company API
+  description: Soldo Business API v2.0 OpenAPI specification
+  version: 5.56.0
+servers:
+- url: https://api.soldo.com
+  description: Production server (using live data)
+- url: https://api-demo.soldocloud.net
+  description: Sandbox server (using test data)
+tags:
+- name: Company
+paths:
+  /business/v2/company:
+    get:
+      tags:
+      - Company
+      summary: Get Company
+      description: Endpoint to retrieve one's own `Company` info.
+      operationId: company-get
+      responses:
+        '200':
+          description: The returned resource is one's own `Company`.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Company'
+      security:
+      - standardAuth:
+        - company_read
+components:
+  schemas:
+    Address:
+      properties:
+        id:
+          type: string
+          description: The `Address` ID.
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+        recipient:
+          type: string
+          description: The recipient of the `Address`
+          example: JohnSmith
+        name:
+          type: string
+          description: The actual name of the `Address`.
+          example: Foo Street 75
+        line1:
+          type: string
+          description: The `Address` street.
+          example: Bar Street 64
+        line2:
+          type: string
+          description: An optional other street.
+          example: Other street 31
+        country:
+          type: string
+          description: The country of the `Address`.
+          example: GB
+        county:
+          type: string
+          description: The county of the `Address`.
+          example: LD
+        city:
+          type: string
+          description: The city of the `Address`.
+          example: London
+        post_code:
+          type: string
+          description: The postal code of the `Address`.
+          example: '00000'
+        delivery_phone_number:
+          type: string
+          description: Delivery phone number
+          example: '+441234567890'
+        default_shipping:
+          type: boolean
+          description: True if the `Address` is the default shipping address.
+          example: false
+        type:
+          type: string
+          description: The type of the `Address`.
+          example: SHIPPING
+        category:
+          $ref: '#/components/schemas/AddressCategory'
+          description: The category of the `Address`.
+          example: COMPANY
+        user_id:
+          type: string
+          description: The `User` ID, only if category of the `Address` is `USER`.
+        creation_time:
+          type: string
+          description: The date and time when the `Address` was created.
+          example: '2017-06-01T12:48:40Z'
+        last_update:
+          type: string
+          description: The date and time when the `Address` was last updated.
+          example: '2017-06-01T12:48:40Z'
+    AddressCategory:
+      type: string
+      enum:
+      - USER
+      - COMPANY
+    FinancialEntity:
+      type: string
+      enum:
+      - SFS-UK
+      - SFS-IRL
+    Company:
+      properties:
+        name:
+          type: string
+          description: The name of the `Company`.
+          example: Example Inc.
+        icon_code:
+          type: string
+          deprecated: true
+          description: The iconCode of the `Company`.
+        vat_number:
+          type: string
+          description: The VAT number of the `Company`.
+          example: 98746784967
+        company_account_id:
+          type: string
+          description: The `Company` ID requested at the login.
+          example: XMPL1234
+        shipping_address:
+          $ref: '#/components/schemas/Address'
+          description: The default shipping `Address` of the `Company`.
+        time_zone:
+          type: string
+          description: The time zone name of the country the `Company` Soldo account is registered to (based on tz database format).
+          example: Europe/London
+        market:
+          $ref: '#/components/schemas/ISO3166Country'
+          description: The [ISO 3166-1 alpha-3](https://www.iso.org/obp/ui/#search/code/) code of the country the `Company` Soldo account is registered in.
+          example: GBR
+        financial_entity:
+          $ref: '#/components/schemas/FinancialEntity'
+          description: The Soldo entity providing financial services to the ‘Company‘ (‘SFS-UK‘ stands for Soldo Financial Services Ltd. while ‘SFS-IRL‘ stands for Soldo Financial Services Ireland DAC).
+          example: SFS-IRL
+        creation_time:
+          type: string
+          description: The date and time when the `Company` was created.
+          example: '2017-06-01T12:48:40Z'
+        last_update:
+          type: string
+          description: The date and time when the `Company` was last updated.
+          example: '2017-06-01T12:48:40Z'
+    ISO3166Country:
+      type: string
+      enum:
+      - ASC
+      - AND
+      - ARE
+      - AFG
+      - ATG
+      - AIA
+      - ALB
+      - ARM
+      - ANT
+      - AGO
+      - ATA
+      - ARG
+      - ASM
+      - AUT
+      - AUS
+      - ABW
+      - ALA
+      - AZE
+      - BIH
+      - BRB
+      - BGD
+      - BEL
+      - BFA
+      - BGR
+      - BHR
+      - BDI
+      - BEN
+      - BLM
+      - BMU
+      - BRN
+      - BOL
+      - BES
+      - BRA
+      - BHS
+      - BTN
+      - BUR
+      - BVT
+      - BWA
+      - BLR
+      - BLZ
+      - CAN
+      - CCK
+      - COD
+      - CAF
+      - COG
+      - CHE
+      - CIV
+      - COK
+      - CHL
+      - CMR
+      - CHN
+      - COL
+      - CPT
+      - CRI
+      - CSXX
+      - CUB
+      - CPV
+      - CUW
+      - CXR
+      - CYP
+      - CZE
+      - DEU
+      - DGA
+      - DJI
+      - DNK
+      - DMA
+      - DOM
+      - DZA
+      - ECU
+      - EST
+      - EGY
+      - ESH
+      - ERI
+      - ESP
+      - ETH
+      - FIN
+      - FJI
+      - FLK
+      - FSM
+      - FRO
+      - FRA
+      - FXX
+      - GAB
+      - GBR
+      - GRD
+      - GEO
+      - GUF
+      - GGY
+      - GHA
+      - GIB
+      - GRL
+      - GMB
+      - GIN
+      - GLP
+      - GNQ
+      - GRC
+      - SGS
+      - GTM
+      - GUM
+      - GNB
+      - GUY
+      - HKG
+      - HMD
+      - HND
+      - HRV
+      - HTI
+      - HUN
+      - IDN
+      - IRL
+      - ISR
+      - IMN
+      - IND
+      - IOT
+      - IRQ
+      - IRN
+      - ISL
+      - ITA
+      - JEY
+      - JAM
+      - JOR
+      - JPN
+      - KEN
+      - KGZ
+      - KHM
+      - KIR
+      - COM
+      - KNA
+      - PRK
+      - KOR
+      - KWT
+      - CYM
+      - KAZ
+      - LAO
+      - LBN
+      - LCA
+      - LIE
+      - LKA
+      - LBR
+      - LSO
+      - LTU
+      - LUX
+      - LVA
+      - LBY
+      - MAR
+      - MCO
+      - MDA
+      - MNE
+      - MAF
+      - MDG
+      - MHL
+      - MKD
+      - MLI
+      - MMR
+      - MNG
+      - MAC
+      - MNP
+      - MTQ
+      - MRT
+      - MSR
+      - MLT
+      - MUS
+      - MDV
+      - MWI
+      - MEX
+      - MYS
+      - MOZ
+      - NAM
+      - NCL
+      - NER
+      - NFK
+      - NGA
+      - NIC
+      - NLD
+      - NOR
+      - NPL
+      - NRU
+      - NTZ
+      - NIU
+      - NZL
+      - OMN
+      - PAN
+      - PER
+      - PYF
+      - PNG
+      - PHL
+      - PAK
+      - POL
+      - SPM
+      - PCN
+      - PRI
+      - PSE
+      - PRT
+      - PLW
+      - PRY
+      - QAT
+      - REU
+      - ROU
+      - ROM
+      - SRB
+      - RUS
+      - RWA
+      - SAU
+      - SLB
+      - SYC
+      - SDN
+      - SWE
+      - SGP
+      - SHN
+      - SVN
+      - SJM
+      - SVK
+      - SLE
+      - SMR
+      - SEN
+      - SOM
+      - SUR
+      - SSD
+      - STP
+      - SUN
+      - SLV
+      - SXM
+      - SYR
+      - SWZ
+      - TAA
+      - TCA
+      - TCD
+      - ATF
+      - TGO
+      - THA
+      - TJK
+      - TKL
+      - TLS
+      - TKM
+      - TUN
+      - TON
+      - TUR
+      - TTO
+      - TUV
+      - TWN
+      - TZA
+      - UKR
+      - UGA
+      - UMI
+      - USA
+      - URY
+      - UZB
+      - VAT
+      - VCT
+      - VEN
+      - VGB
+      - VIR
+      - VNM
+      - VUT
+      - WLF
+      - WSM
+      - XKX
+      - XXK
+      - QZZ
+      - YEM
+      - MYT
+      - YUCS
+      - ZAF
+      - ZMB
+      - ZRCD
+      - ZWE
+  securitySchemes:
+    standardAuth:
+      type: oauth2
+      description: This API uses OAuth 2 with the "Client Credentials" grant flow.
+      flows:
+        clientCredentials:
+          tokenUrl: https://api.soldo.com/oauth/authorize
+          refreshUrl: https://api.soldo.com/oauth/refresh
+          scopes:
+            address_read: Can read address details.
+            address_write: Can update address details.
+            card_read: Can read card details.
+            card_write: Can change card details.
+            company_read: Can read company details.
+            company_write: Can change company details.
+            contact_read: Can read contact details.
+            contact_write: Can change contact details.
+            employee_read: Can read employee details.
+            employee_write: Can change employee details.
+            expense_category_read: Can read expense category details.
+            expense_category_write: Can change expense category details.
+            expense_report_read: Can read expense report details.
+            expense_report_write: Can change expense report details.
+            expense_review_read: Can read expense review status.
+            expense_review_write: Can change expense review status.
+            group_read: Can read group details.
+            group_write: Can change groups details.
+            online_ads_read: Can read online ads details.
+            online_ads_write: Can change online ads details.
+            payment_read: Can read payment details.
+            payment_write: Can change payment details.
+            purchase_read: Can read purchase details.
+            purchase_write: Can change purchase details.
+            refueling_read: Can read refueling details.
+            refueling_write: Can change refueling details.
+            resource_set_read: Can read resource set details.
+            resource_set_write: Can change resource set details.
+            role_read: Can read role details.
+            statement_read: Can read statement details.
+            subscription_read: Can read subscription details.
+            subscription_write: Can change subscription details.
+            tag_read: Can read tags.
+            tag_write: can change tags.
+            tax_rate_read: Can read vat rate details.
+            tax_rate_write: Can change vat rate details.
+            transaction_read: Can read transaction details.
+            transaction_write: Can change transaction details.
+            vehicle_read: Can read vehicle details.
+            vehicle_write: Can change vehicle details.
+            wallet_read: Can read wallet details.
+            wallet_write: Can change wallet details.
+            webhook_subscription_read: Can read webhook subscription details.
+            webhook_subscription_write: Can change webhook subscription details.
+x-readme:
+  hidden: false

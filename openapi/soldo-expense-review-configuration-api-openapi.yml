@@ -1,0 +1,268 @@
+openapi: 3.1.0
+info:
+  title: Soldo Business API v2.0 Accounting Classification Expense Review Configuration API
+  description: Soldo Business API v2.0 OpenAPI specification
+  version: 5.56.0
+servers:
+- url: https://api.soldo.com
+  description: Production server (using live data)
+- url: https://api-demo.soldocloud.net
+  description: Sandbox server (using test data)
+tags:
+- name: Expense Review Configuration
+paths:
+  /business/v2/expense-review/configuration:
+    get:
+      tags:
+      - Expense Review Configuration
+      summary: Get Expense Review Configuration
+      description: Endpoint to get `ExpenseReview` configuration
+      operationId: expense-review-configuration-get
+      responses:
+        '200':
+          description: The result is the configuration of `ExpenseReview` resource.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExpenseReviewConfiguration'
+        '400':
+          description: One or more resource requested does not exist.
+      security:
+      - standardAuth:
+        - expense_review_read
+    put:
+      tags:
+      - Expense Review Configuration
+      summary: Update Expense Review Configuration
+      description: Endpoint to update a specific `ExpenseReview` Configuration.
+      operationId: expense-review-configuration-update
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateExpenseReviewConfiguration'
+      responses:
+        '200':
+          description: The returned resource is an `ExpenseReview` configuration.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExpenseReviewConfiguration'
+        '400':
+          description: Your request has missing arguments or is malformed.
+      security:
+      - standardAuth:
+        - expense_review_write
+    post:
+      tags:
+      - Expense Review Configuration
+      summary: Add Expense Review Configuration
+      description: Endpoint to add an `ExpenseReview` configuration.
+      operationId: expense-review-configuration-add
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateExpenseReviewConfiguration'
+      responses:
+        '200':
+          description: The returned resource is a single `ExpenseReview` configuration.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExpenseReviewConfiguration'
+        '400':
+          description: Your request has missing arguments or is malformed.
+      security:
+      - standardAuth:
+        - expense_review_write
+components:
+  schemas:
+    CreateExpenseReviewConfiguration:
+      description: Create conf JSON parameters.
+      properties:
+        request_timestamp:
+          type: integer
+          format: int64
+          description: The epoch timestamp in millis. This is checked in Soldo. Requests with timestamp older than 5 seconds will be rejected.
+          example: 1576850500000
+        start_date:
+          type: string
+          description: The starting date from which the expenses can be reviewed.
+          example: '2017-06-01T12:48:40Z'
+        transaction_categories:
+          type: array
+          description: It determines the filter by category of the transaction.
+          items:
+            $ref: '#/components/schemas/ExpenseTransactionCategoryInput'
+          uniqueItems: true
+        activity_groups:
+          type: array
+          description: It determines the filter by types of cards whose transactions are considered as expenses to be reviewed.
+          items:
+            $ref: '#/components/schemas/ExpenseConfigurationActivityGroup'
+          uniqueItems: true
+        policy_url:
+          type: string
+          description: The url of the company spending policy.
+          example: https://www.policy.pdf
+        start_date_type:
+          $ref: '#/components/schemas/ExpenseDateType'
+          description: It determines the filter by the type of date, multiple statuses can be included.
+          example: SETTLEMENT
+      required:
+      - activity_groups
+      - policy_url
+      - request_timestamp
+      - start_date
+    ExpenseConfigurationActivityGroup:
+      type: string
+      enum:
+      - USER
+      - COMPANY
+      - PURCHASE
+      - SUBSCRIPTION
+      - ONLINE_ADS
+      - OUT_OF_PLATFORM_COMPANY
+      - OUT_OF_PLATFORM_PERSONAL
+    ExpenseTransactionCategory:
+      type: string
+      enum:
+      - Payment
+      - Withdrawal
+      - Refund
+      - Chargeback
+      - MileageReimbursement
+    ExpenseDateType:
+      type: string
+      enum:
+      - TRANSACTION
+      - SETTLEMENT
+    ExpenseReviewConfiguration:
+      properties:
+        start_date:
+          type: string
+          description: The starting date from which the expenses can be reviewed.
+          example: '2017-06-01T12:48:40Z'
+        transaction_categories:
+          type: array
+          description: It determines the filter by category of the `Transaction`.
+          items:
+            $ref: '#/components/schemas/ExpenseTransactionCategory'
+          uniqueItems: true
+        activity_groups:
+          type: array
+          description: It determines the filter by types of `Cards` whose `Transactions` are considered as expenses to be reviewed.
+          items:
+            $ref: '#/components/schemas/ExpenseConfigurationActivityGroup'
+          uniqueItems: true
+        policy_url:
+          type: string
+          description: The url of the company spending policy
+          example: https://www.policy.pdf
+        start_date_type:
+          $ref: '#/components/schemas/ExpenseDateType'
+          description: It determines the type of date filter to be used.
+          example: SETTLEMENT
+        enabled:
+          type: boolean
+          description: Indicates `ExpenseReview` configuration is enabled.
+        locked:
+          type: boolean
+          description: Indicates `ExpenseReview` configuration is locked.
+          example: false
+        update_timestamp:
+          type: string
+          description: The date and time when the configuration was last updated.
+          example: '2017-06-01T12:48:40Z'
+    UpdateExpenseReviewConfiguration:
+      description: Update Conf JSON parameters.
+      properties:
+        request_timestamp:
+          type: integer
+          format: int64
+          description: The epoch timestamp in millis. This is checked in Soldo. Requests with timestamp older than 5 seconds will be rejected.
+          example: 1576850500000
+        start_date:
+          type: string
+          description: The starting date from which the expenses can be reviewed.
+          example: '2017-06-01T12:48:40Z'
+        activity_groups:
+          type: array
+          description: It determines the filter by types of cards whose transactions are considered as expenses to be reviewed.
+          items:
+            $ref: '#/components/schemas/ExpenseConfigurationActivityGroup'
+          uniqueItems: true
+        policy_url:
+          type: string
+          description: The url of the company spending policy.
+          example: https://www.policy.pdf
+        start_date_type:
+          $ref: '#/components/schemas/ExpenseDateType'
+          description: It determines the filter by the type of date, multiple statuses can be included.
+          example: TRANSACTION
+        enabled:
+          type: boolean
+          description: It indicates ExpenseReview configuration is enabled.
+          example: false
+      required:
+      - request_timestamp
+    ExpenseTransactionCategoryInput:
+      type: string
+      enum:
+      - Payment
+  securitySchemes:
+    standardAuth:
+      type: oauth2
+      description: This API uses OAuth 2 with the "Client Credentials" grant flow.
+      flows:
+        clientCredentials:
+          tokenUrl: https://api.soldo.com/oauth/authorize
+          refreshUrl: https://api.soldo.com/oauth/refresh
+          scopes:
+            address_read: Can read address details.
+            address_write: Can update address details.
+            card_read: Can read card details.
+            card_write: Can change card details.
+            company_read: Can read company details.
+            company_write: Can change company details.
+            contact_read: Can read contact details.
+            contact_write: Can change contact details.
+            employee_read: Can read employee details.
+            employee_write: Can change employee details.
+            expense_category_read: Can read expense category details.
+            expense_category_write: Can change expense category details.
+            expense_report_read: Can read expense report details.
+            expense_report_write: Can change expense report details.
+            expense_review_read: Can read expense review status.
+            expense_review_write: Can change expense review status.
+            group_read: Can read group details.
+            group_write: Can change groups details.
+            online_ads_read: Can read online ads details.
+            online_ads_write: Can change online ads details.
+            payment_read: Can read payment details.
+            payment_write: Can change payment details.
+            purchase_read: Can read purchase details.
+            purchase_write: Can change purchase details.
+            refueling_read: Can read refueling details.
+            refueling_write: Can change refueling details.
+            resource_set_read: Can read resource set details.
+            resource_set_write: Can change resource set details.
+            role_read: Can read role details.
+            statement_read: Can read statement details.
+            subscription_read: Can read subscription details.
+            subscription_write: Can change subscription details.
+            tag_read: Can read tags.
+            tag_write: can change tags.
+            tax_rate_read: Can read vat rate details.
+            tax_rate_write: Can change vat rate details.
+            transaction_read: Can read transaction details.
+            transaction_write: Can change transaction details.
+            vehicle_read: Can read vehicle details.
+            vehicle_write: Can change vehicle details.
+            wallet_read: Can read wallet details.
+            wallet_write: Can change wallet details.
+            webhook_subscription_read: Can read webhook subscription details.
+            webhook_subscription_write: Can change webhook subscription details.
+x-readme:
+  hidden: false

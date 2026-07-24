@@ -1,0 +1,521 @@
+openapi: 3.1.0
+info:
+  title: Soldo Business API v2.0 Accounting Classification Card Rules Presets API
+  description: Soldo Business API v2.0 OpenAPI specification
+  version: 5.56.0
+servers:
+- url: https://api.soldo.com
+  description: Production server (using live data)
+- url: https://api-demo.soldocloud.net
+  description: Sandbox server (using test data)
+tags:
+- name: Card Rules Presets
+paths:
+  /business/v2/cards/presets/{presetId}:
+    get:
+      tags:
+      - Card Rules Presets
+      summary: Get Preset
+      description: Endpoint to get a `CardRulePreset` by ID.
+      operationId: card-rule-preset-get
+      parameters:
+      - name: presetId
+        in: path
+        description: The `CardRulePreset` ID
+        required: true
+        schema:
+          type: string
+        example: 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
+      responses:
+        '200':
+          description: The returned resource is a `CardRulePreset`.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CardRulePreset'
+        '400':
+          description: Your request has missing arguments or is malformed.
+        '404':
+          description: One or more resource requested does not exist.
+      security:
+      - standardAuth:
+        - card_read
+    delete:
+      tags:
+      - Card Rules Presets
+      summary: Delete Preset
+      description: Endpoint to delete a `CardRulePreset` by ID.
+      operationId: card-rule-preset-delete
+      parameters:
+      - name: presetId
+        in: path
+        description: The `CardRulePreset` ID.
+        required: true
+        schema:
+          type: string
+        example: 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
+      responses:
+        '204':
+          description: No content as result.
+        '400':
+          description: Your request has missing arguments or is malformed.
+        '404':
+          description: One or more resource requested does not exist.
+      security:
+      - standardAuth:
+        - card_write
+  /business/v2/cards/presets:
+    get:
+      tags:
+      - Card Rules Presets
+      summary: Search Presets
+      description: Endpoint to find `CardRulePresets` using filtering parameters.
+      operationId: card-rule-preset-search
+      parameters:
+      - name: currency
+        in: query
+        description: the currency of the `CardRulePreset`.
+        schema:
+          type: array
+          description: the currency of the `CardRulePreset`.
+          items:
+            $ref: '#/components/schemas/ISO4217Currency'
+        example: EUR
+      - name: name
+        in: query
+        description: The name of the `CardRulePreset`.
+        schema:
+          type: string
+          description: The name of the `CardRulePreset`.
+          example: DefaultPreset
+        example: DefaultPreset
+      - name: p
+        in: query
+        description: It indicates the specific page to display (the counter starts from zero).
+        schema:
+          type: integer
+          format: int32
+          default: 0
+          description: It indicates the specific page to display (the counter starts from zero).
+          example: 3
+        example: 3
+      - name: s
+        in: query
+        description: It indicates the number of items per page.
+        schema:
+          type: integer
+          format: int32
+          default: 0
+          description: It indicates the number of items per page.
+          example: 25
+          maximum: 50
+        example: 25
+      - name: d
+        in: query
+        description: It indicates how the pages are ordered.
+        schema:
+          $ref: '#/components/schemas/Direction'
+        example: DESC
+      - name: props
+        in: query
+        description: It indicates the sorting direction applied to the above parameters. To apply a sorting on multiple parameters, set as many times the `props` parameter in the request.
+        schema:
+          type: array
+          description: It indicates the sorting direction applied to the above parameters. To apply a sorting on multiple parameters, set as many times the `props` parameter in the request.
+          example: creationTime
+          items:
+            type: string
+            description: It indicates the sorting direction applied to the above parameters. To apply a sorting on multiple parameters, set as many times the `props` parameter in the request.
+            example: creationTime
+        example: creationTime
+      responses:
+        '200':
+          description: The results array contains `CardRulePreset`.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CardRulePresets'
+      security:
+      - standardAuth:
+        - card_write
+  /business/v2/cards/{cardId}/presets/{presetId}:
+    put:
+      tags:
+      - Card Rules Presets
+      summary: Add Preset to Card
+      description: Endpoint to add a `CardRulePreset` to a `Card`.
+      operationId: card-rule-preset-set
+      parameters:
+      - name: cardId
+        in: path
+        description: The `Card` ID
+        required: true
+        schema:
+          type: string
+        example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+      - name: presetId
+        in: path
+        description: The `CardRulePreset` ID
+        required: true
+        schema:
+          type: string
+        example: 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
+      - name: X-Soldo-Fingerprint
+        in: header
+        required: true
+        schema:
+          type: string
+          default: '{{fingerprint}}'
+          description: '[Advanced authentication](ref:advanced-authentication): `SHA512SUM` of the fingerprint values listed in the fingerprint order for this endpoint.'
+          example: '{{fingerprint}}'
+      - name: X-Soldo-Fingerprint-Signature
+        in: header
+        required: true
+        schema:
+          type: string
+          default: '{{fingerprint_signature}}'
+          description: '[Advanced authentication](ref:advanced-authentication): Signature of the `X-Soldo-Fingerprint`.'
+          example: '{{fingerprint_signature}}'
+      responses:
+        '204':
+          description: No content as result.
+        '400':
+          description: Your request has missing arguments or is malformed.
+      security:
+      - standardAuth:
+        - card_write
+      x-soldo:
+        fingerprint-order: cardId, presetId, token
+    delete:
+      tags:
+      - Card Rules Presets
+      summary: Remove Preset from Card
+      description: Endpoint to remove a `CardRulePreset` from a `Card`.
+      operationId: card-rule-preset-unset
+      parameters:
+      - name: cardId
+        in: path
+        description: The `Card` ID.
+        required: true
+        schema:
+          type: string
+        example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+      - name: presetId
+        in: path
+        description: The `CardRulePreset` ID.
+        required: true
+        schema:
+          type: string
+        example: 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
+      responses:
+        '204':
+          description: No content as result.
+        '400':
+          description: Your request has missing arguments or is malformed.
+      security:
+      - standardAuth:
+        - card_write
+components:
+  schemas:
+    CardRulePreset:
+      properties:
+        id:
+          type: string
+          description: 'The `CardRulePreset` ID (sortable: no).'
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+        name:
+          type: string
+          description: 'The name of `CardRulePreset` (sortable: no).'
+          example: DefaultPreset
+        description:
+          type: string
+          description: 'The description of `CardRulePreset` (sortable: no).'
+          example: Default CardRule preset policy
+        creation_time:
+          type: string
+          description: The date and time when the `CardRulePreset` was created.
+          example: '2017-06-01T12:48:40Z'
+        last_update_time:
+          type: string
+          description: The date and time when the `CardRulePreset` was last updated.
+          example: '2017-06-01T12:48:40Z'
+    CardRulePresets:
+      properties:
+        total:
+          type: integer
+          format: int32
+          description: It represents the total number of available items in the list.
+          example: 168
+        pages:
+          type: integer
+          format: int32
+          description: It represents the total number of available pages.
+          example: 7
+        page_size:
+          type: integer
+          format: int32
+          description: It represents the number of items per page.
+          example: 25
+        current_page:
+          type: integer
+          format: int32
+          description: It indicates the current page (the counter starts from zero).
+          example: 0
+        results_size:
+          type: integer
+          format: int32
+          description: It indicates the size of the array results.
+          example: 25
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/CardRulePreset'
+    ISO4217Currency:
+      type: string
+      enum:
+      - AED
+      - AFN
+      - ALL
+      - AMD
+      - ANG
+      - AOA
+      - ARS
+      - AUD
+      - AWG
+      - AZN
+      - BAM
+      - BBD
+      - BDT
+      - BGN
+      - BHD
+      - BIF
+      - BMD
+      - BND
+      - BOB
+      - BOV
+      - BRL
+      - BSD
+      - BTN
+      - BWP
+      - BYN
+      - BZD
+      - CAD
+      - CDF
+      - CHE
+      - CHF
+      - CHW
+      - CLF
+      - CLP
+      - CNY
+      - COP
+      - COU
+      - CRC
+      - CUC
+      - CUP
+      - CVE
+      - CZK
+      - DJF
+      - DKK
+      - DOP
+      - DZD
+      - EGP
+      - ERN
+      - ETB
+      - EUR
+      - FJD
+      - FKP
+      - GBP
+      - GEL
+      - GHS
+      - GIP
+      - GMD
+      - GNF
+      - GTQ
+      - GYD
+      - HKD
+      - HNL
+      - HRK
+      - HTG
+      - HUF
+      - IDR
+      - ILS
+      - INR
+      - IQD
+      - IRR
+      - ISK
+      - JMD
+      - JOD
+      - JPY
+      - KES
+      - KGS
+      - KHR
+      - KMF
+      - KPW
+      - KRW
+      - KWD
+      - KYD
+      - KZT
+      - LAK
+      - LBP
+      - LKR
+      - LRD
+      - LSL
+      - LYD
+      - MAD
+      - MDL
+      - MGA
+      - MKD
+      - MMK
+      - MNT
+      - MOP
+      - MRO
+      - MRU
+      - MUR
+      - MVR
+      - MWK
+      - MXN
+      - MXV
+      - MYR
+      - MZN
+      - NAD
+      - NGN
+      - NIO
+      - NOK
+      - NPR
+      - NZD
+      - OMR
+      - PAB
+      - PEN
+      - PGK
+      - PHP
+      - PKR
+      - PLN
+      - PYG
+      - QAR
+      - RON
+      - RSD
+      - RUB
+      - RWF
+      - SAR
+      - SBD
+      - SCR
+      - SDG
+      - SEK
+      - SGD
+      - SHP
+      - SLE
+      - SLL
+      - SOS
+      - SRD
+      - SSP
+      - STD
+      - STN
+      - SVC
+      - SYP
+      - SZL
+      - THB
+      - TJS
+      - TMT
+      - TND
+      - TOP
+      - TRY
+      - TTD
+      - TWD
+      - TZS
+      - UAH
+      - UGX
+      - USD
+      - USN
+      - UYI
+      - UYU
+      - UYW
+      - UZS
+      - VED
+      - VEF
+      - VES
+      - VND
+      - VUV
+      - WST
+      - XAF
+      - XAG
+      - XAU
+      - XBA
+      - XBB
+      - XBC
+      - XBD
+      - XCD
+      - XDR
+      - XOF
+      - XPD
+      - XPF
+      - XPT
+      - XSU
+      - XTS
+      - XUA
+      - XXX
+      - YER
+      - ZAR
+      - ZMW
+      - ZWL
+    Direction:
+      type: string
+      description: It indicates how the pages are ordered.
+      enum:
+      - ASC
+      - DESC
+      example: DESC
+  securitySchemes:
+    standardAuth:
+      type: oauth2
+      description: This API uses OAuth 2 with the "Client Credentials" grant flow.
+      flows:
+        clientCredentials:
+          tokenUrl: https://api.soldo.com/oauth/authorize
+          refreshUrl: https://api.soldo.com/oauth/refresh
+          scopes:
+            address_read: Can read address details.
+            address_write: Can update address details.
+            card_read: Can read card details.
+            card_write: Can change card details.
+            company_read: Can read company details.
+            company_write: Can change company details.
+            contact_read: Can read contact details.
+            contact_write: Can change contact details.
+            employee_read: Can read employee details.
+            employee_write: Can change employee details.
+            expense_category_read: Can read expense category details.
+            expense_category_write: Can change expense category details.
+            expense_report_read: Can read expense report details.
+            expense_report_write: Can change expense report details.
+            expense_review_read: Can read expense review status.
+            expense_review_write: Can change expense review status.
+            group_read: Can read group details.
+            group_write: Can change groups details.
+            online_ads_read: Can read online ads details.
+            online_ads_write: Can change online ads details.
+            payment_read: Can read payment details.
+            payment_write: Can change payment details.
+            purchase_read: Can read purchase details.
+            purchase_write: Can change purchase details.
+            refueling_read: Can read refueling details.
+            refueling_write: Can change refueling details.
+            resource_set_read: Can read resource set details.
+            resource_set_write: Can change resource set details.
+            role_read: Can read role details.
+            statement_read: Can read statement details.
+            subscription_read: Can read subscription details.
+            subscription_write: Can change subscription details.
+            tag_read: Can read tags.
+            tag_write: can change tags.
+            tax_rate_read: Can read vat rate details.
+            tax_rate_write: Can change vat rate details.
+            transaction_read: Can read transaction details.
+            transaction_write: Can change transaction details.
+            vehicle_read: Can read vehicle details.
+            vehicle_write: Can change vehicle details.
+            wallet_read: Can read wallet details.
+            wallet_write: Can change wallet details.
+            webhook_subscription_read: Can read webhook subscription details.
+            webhook_subscription_write: Can change webhook subscription details.
+x-readme:
+  hidden: false

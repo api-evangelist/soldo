@@ -1,0 +1,603 @@
+openapi: 3.1.0
+info:
+  title: Soldo Business API v2.0 Accounting Classification Workflows API
+  description: Soldo Business API v2.0 OpenAPI specification
+  version: 5.56.0
+servers:
+- url: https://api.soldo.com
+  description: Production server (using live data)
+- url: https://api-demo.soldocloud.net
+  description: Sandbox server (using test data)
+tags:
+- name: Workflows
+paths:
+  /business/v2/workflows:
+    get:
+      tags:
+      - Workflows
+      summary: Search Workflows
+      description: Endpoint to search `Workflows`.
+      operationId: workflow-search
+      parameters:
+      - name: status
+        in: query
+        description: The status of the `Workflow`.
+        schema:
+          type: array
+          description: The status of the `Workflow`.
+          items:
+            $ref: '#/components/schemas/WorkflowStatusSearch'
+        example: ACTIVE
+      - name: targetTypes
+        in: query
+        description: The type of the `Workflow`.
+        schema:
+          type: array
+          description: The type of the `Workflow`.
+          items:
+            $ref: '#/components/schemas/WorkflowTargetType'
+        example: USER
+      - name: text
+        in: query
+        description: A simple text to search `Workflow` by `name` or `description`.
+        schema:
+          type: string
+          description: A simple text to search `Workflow` by `name` or `description`.
+          example: Workflow
+        example: Workflow
+      - name: p
+        in: query
+        description: '0'
+        schema:
+          type: integer
+          format: int32
+          default: 0
+          description: It indicates the specific page to display (the counter starts from zero).
+          example: 3
+        example: 3
+      - name: s
+        in: query
+        description: It indicates the number of items per page.
+        schema:
+          type: integer
+          format: int32
+          default: 0
+          description: It indicates the number of items per page.
+          example: 25
+          maximum: 50
+        example: 25
+      - name: props
+        in: query
+        schema:
+          type: array
+          description: It indicates the sorting direction applied to the above parameters. To apply a sorting on multiple parameters, set as many times the `props` parameter in the request.
+          example: creationTime
+          items:
+            type: string
+            description: It indicates the sorting direction applied to the above parameters. To apply a sorting on multiple parameters, set as many times the `props` parameter in the request.
+            example: creationTime
+      responses:
+        '200':
+          description: The result is an array containing `Workflows`.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Workflows'
+        '400':
+          description: Your request has missing arguments or is malformed.
+      security:
+      - standardAuth:
+        - workflow_read
+    post:
+      tags:
+      - Workflows
+      summary: Add Workflow
+      description: Endpoint to add a new `Workflow`.
+      operationId: workflow-add
+      requestBody:
+        description: Workflow creation parameters.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateWorkflow'
+      responses:
+        '200':
+          description: The created `Workflow`.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Workflow'
+        '400':
+          description: Your request has missing arguments or is malformed.
+      security:
+      - standardAuth:
+        - workflow_write
+  /business/v2/workflows/{workflowId}:
+    get:
+      tags:
+      - Workflows
+      summary: Get Workflow
+      description: Endpoint to get a specific `Workflow` by ID.
+      operationId: workflow-get
+      parameters:
+      - name: workflowId
+        in: path
+        description: The workflow ID.
+        required: true
+        schema:
+          type: string
+        example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+      responses:
+        '200':
+          description: The result is a single `Workflow`.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Workflow'
+        '404':
+          description: One or more resource requested does not exist.
+      security:
+      - standardAuth:
+        - workflow_read
+    put:
+      tags:
+      - Workflows
+      summary: Update Workflow
+      description: Endpoint to update an existing `Workflow`,for some types, this might generate a new ID.
+      operationId: workflow-update
+      parameters:
+      - name: workflowId
+        in: path
+        required: true
+        schema:
+          type: string
+          description: The workflow ID.
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateWorkflow'
+      responses:
+        '200':
+          description: The updated `Workflow`.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Workflow'
+        '400':
+          description: Your request has missing arguments or is malformed.
+        '404':
+          description: One or more resource requested does not exist.
+      security:
+      - standardAuth:
+        - workflow_write
+    delete:
+      tags:
+      - Workflows
+      summary: 'Delete Workflow '
+      description: Endpoint to delete a `Workflow`.
+      operationId: workflow-delete
+      parameters:
+      - name: workflowId
+        in: path
+        required: true
+        schema:
+          type: string
+          description: The `Workflow` ID.
+          example: ' 2d9f6514-4004-4122-b7f2-dcf7e034741c'
+      responses:
+        '204':
+          description: No content as result.
+        '404':
+          description: One or more resource requested does not exist.
+      security:
+      - standardAuth:
+        - workflow_write
+  /business/v2/workflows/{workflowId}/status:
+    put:
+      tags:
+      - Workflows
+      summary: Update Workflow Status
+      description: Endpoint to update a specific `Workflow` status (ACTIVE, DEACTIVATED, DELETED).
+      operationId: workflow-status-update
+      parameters:
+      - name: workflowId
+        in: path
+        required: true
+        schema:
+          type: string
+          description: The workflow ID.
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateWorkflowStatus'
+      responses:
+        '204':
+          description: No content as result.
+        '404':
+          description: One or more resource requested does not exist.
+      security:
+      - standardAuth:
+        - workflow_write
+components:
+  schemas:
+    UpdateWorkflow:
+      description: Base schema for workflow update. The actual fields depend on the `target_type`.
+      discriminator:
+        propertyName: target_type
+        mapping:
+          FUNDS: '#/components/schemas/UpdateFundWorkflow'
+          GOODS_AND_SERVICES: '#/components/schemas/UpdateGoodsServicesWorkflow'
+          TRIP: '#/components/schemas/UpdateTripWorkflow'
+      properties:
+        name:
+          type: string
+          description: The name of the `Workflow`.
+          example: Workflow
+        description:
+          type: string
+          description: The description of the `Workflow`.
+          example: My Workflow Description
+        policy_url:
+          type: string
+          description: The URL of the policy document for the `Workflow`.
+          example: https://www.example.com/policy.pdf
+        steps:
+          type: array
+          description: The ordered set of workflow steps, where each step includes its configuration and the reviewers assigned for approval or review actions.
+          items:
+            $ref: '#/components/schemas/WorkflowProcessStep'
+        visibilities:
+          type: array
+          description: Workflow visibility definition. This field contains the list of users that are able to see this workflow. To grant access to all users, pass an empty list or -1.
+          items:
+            $ref: '#/components/schemas/PersistVisibility'
+        target_type:
+          $ref: '#/components/schemas/WorkflowTargetType'
+          description: The type of the `Workflow`.
+          example: FUNDS
+      required:
+      - steps
+      - target_type
+      - visibilities
+    WorkflowStatus:
+      type: string
+      enum:
+      - ACTIVE
+      - DEACTIVATED
+      - DELETED
+    WorkflowProcessStep:
+      properties:
+        step_number:
+          type: integer
+          format: int32
+          default: '1'
+          description: A number which identifies the order of the step. The first step should start with `1`, the following steps number should be previous `step_number + 1` without any gap.
+          example: 2
+          minimum: 1
+        reviewer_type:
+          $ref: '#/components/schemas/WorkflowReviewerType'
+          description: The type of reviewer who can review this step.
+          example: USER
+        reviewer_info:
+          $ref: '#/components/schemas/WorkflowReviewerInfo'
+          description: One or more IDs to identify who can review this step (only required in case of reviewer of type `ROLE` and `USER`).
+        automation_rule:
+          $ref: '#/components/schemas/WorkflowAutomationRule'
+          description: An automation to automatically review the step when certain conditions are met.
+      required:
+      - reviewer_type
+      - step_number
+    WorkflowReviewerInfo:
+      properties:
+        ids:
+          type: array
+          description: The ID of the reviewers (only required in case of reviewer of type `ROLE` and `USER`).
+          example:
+          - 7bf79328-a7ae-4222-aa54-091ff7f429a7
+          - 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
+          items:
+            type: string
+      required:
+      - ids
+    WorkflowStatusSearch:
+      type: string
+      description: The status of the `Workflow`.
+      enum:
+      - ACTIVE
+      - INACTIVE
+    WorkflowStepStatus:
+      type: string
+      enum:
+      - APPROVED
+      - PARTIALLY_APPROVED
+      - DECLINED
+    VisibilityOwnerType:
+      type: string
+      enum:
+      - USER
+    WorkflowReviewerType:
+      type: string
+      enum:
+      - LINE_MANAGER
+      - ROLE
+      - USER
+    WorkflowAmountCondition:
+      properties:
+        amount:
+          type: number
+          description: The amount a transaction must exceed / not exceed in order to satisfy the condition.
+          example: 10.25
+        operator:
+          $ref: '#/components/schemas/WorkflowComparator'
+          description: The logical operator to be used in relationship to the transaction amount.
+          example: LOWER_EQUAL
+      required:
+      - amount
+      - operator
+    Workflows:
+      properties:
+        total:
+          type: integer
+          format: int32
+          description: It represents the total number of available items in the list.
+          example: 168
+        pages:
+          type: integer
+          format: int32
+          description: It represents the total number of available pages.
+          example: 7
+        page_size:
+          type: integer
+          format: int32
+          description: It represents the number of items per page.
+          example: 25
+        current_page:
+          type: integer
+          format: int32
+          description: It indicates the current page (the counter starts from zero).
+          example: 0
+        results_size:
+          type: integer
+          format: int32
+          description: It indicates the size of the array results.
+          example: 25
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/WorkflowItem'
+    PersistVisibility:
+      properties:
+        type:
+          $ref: '#/components/schemas/VisibilityOwnerType'
+          description: The type of user or group that can see this workflow.
+          example: ACTIVE
+        value:
+          type: array
+          description: One or more values that identify the visibility condition. If the type is `USER`, the value must be `ALL`.
+          example:
+          - 7bf79328-a7ae-4222-aa54-091ff7f429a7
+          - 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
+          items:
+            type: string
+      required:
+      - type
+      - value
+    UpdateWorkflowStatus:
+      description: Status update parameters.
+      properties:
+        status:
+          $ref: '#/components/schemas/WorkflowStatus'
+          description: The status of the `Workflow`.
+      required:
+      - status
+    Workflow:
+      description: Base schema for workflow. The actual fields depend on the `target_type`.
+      discriminator:
+        propertyName: target_type
+      properties:
+        id:
+          type: string
+          description: The `Workflow` ID.
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+        name:
+          type: string
+          description: The name of the `Workflow`.
+          example: Workflow
+        description:
+          type: string
+          description: The description of the `Workflow`.
+          example: My Workflow Description
+        policy_url:
+          type: string
+          description: The URL of the policy document for the `Workflow`.
+          example: https://www.example.com/policy.pdf
+        status:
+          $ref: '#/components/schemas/WorkflowStatus'
+          description: The status of the `Workflow`.
+          example: ACTIVE
+        target_type:
+          $ref: '#/components/schemas/WorkflowTargetType'
+          description: The type of the `Workflow`.
+          example: FUNDS
+        priority:
+          type: integer
+          format: int32
+          description: The priority of the `Workflow`.
+          example: 1
+        steps_count:
+          type: integer
+          format: int32
+          description: The number of steps in the `Workflow`.
+          example: 1
+        steps:
+          type: array
+          description: The ordered set of workflow steps, where each step includes its configuration and the reviewers assigned for approval or review actions.
+          items:
+            $ref: '#/components/schemas/WorkflowProcessStep'
+        visibilities:
+          type: array
+          description: Workflow visibility definition. This field contains the list of users that are able to see this workflow. To grant access to all users, pass an empty list or -1.
+          items:
+            $ref: '#/components/schemas/PersistVisibility'
+      required:
+      - steps
+      - visibilities
+    CreateWorkflow:
+      description: Base schema for workflow creation. The actual fields depend on the `target_type`.
+      discriminator:
+        propertyName: target_type
+        mapping:
+          FUNDS: '#/components/schemas/CreateFundsWorkflow'
+          GOODS_AND_SERVICES: '#/components/schemas/CreateGoodsServicesWorkflow'
+          TRIP: '#/components/schemas/CreateTripWorkflow'
+      properties:
+        name:
+          type: string
+          description: The name of the `Workflow`.
+          example: Workflow
+        description:
+          type: string
+          description: The description of the `Workflow`.
+          example: My Workflow Description
+        policy_url:
+          type: string
+          description: The URL of the policy document for the `Workflow`.
+          example: https://www.example.com/policy.pdf
+        steps:
+          type: array
+          description: The ordered set of workflow steps, where each step includes its configuration and the reviewers assigned for approval or review actions.
+          items:
+            $ref: '#/components/schemas/WorkflowProcessStep'
+        visibilities:
+          type: array
+          description: Workflow visibility definition. This field contains the list of users that are able to see this workflow. To grant access to all users, pass an empty list or -1.
+          items:
+            $ref: '#/components/schemas/PersistVisibility'
+        target_type:
+          $ref: '#/components/schemas/WorkflowTargetType'
+          description: The type of the `Workflow`.
+          enum:
+          - FUNDS
+          - GOODS_AND_SERVICES
+          - TRIP
+          example: FUNDS
+      required:
+      - description
+      - name
+      - steps
+      - target_type
+      - visibilities
+    WorkflowItem:
+      properties:
+        id:
+          type: string
+          description: The `Workflow` ID.
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+        name:
+          type: string
+          description: The name of the `Workflow`.
+          example: Workflow
+        description:
+          type: string
+          description: The description of the `Workflow`.
+          example: My Workflow Description
+        status:
+          $ref: '#/components/schemas/WorkflowStatus'
+          description: The status of the `Workflow`.
+          example: ACTIVE
+        target_type:
+          $ref: '#/components/schemas/WorkflowTargetType'
+          description: The type of the `Workflow`.
+          example: FUNDS
+        steps_count:
+          type: integer
+          format: int32
+          description: The number of steps in the `Workflow`.
+          example: 1
+    WorkflowComparator:
+      type: string
+      enum:
+      - HIGHER_EQUAL
+      - LOWER_EQUAL
+    WorkflowTargetType:
+      type: string
+      enum:
+      - FUNDS
+      - GOODS_AND_SERVICES
+      - TRIP
+    WorkflowAutomationRule:
+      properties:
+        expense_status:
+          $ref: '#/components/schemas/WorkflowStepStatus'
+          description: The status of the expense in case the conditions of the automation rules are satisfied.
+          example: PARTIALLY_APPROVED
+        required_info:
+          type: boolean
+          default: 'false'
+          description: A boolean to define whether a transaction should have all the required info (as defined on the Reminders feature) completed.
+          example: true
+        amount_condition:
+          $ref: '#/components/schemas/WorkflowAmountCondition'
+          description: A condition based on the transaction amount.
+      required:
+      - expense_status
+      - required_info
+  securitySchemes:
+    standardAuth:
+      type: oauth2
+      description: This API uses OAuth 2 with the "Client Credentials" grant flow.
+      flows:
+        clientCredentials:
+          tokenUrl: https://api.soldo.com/oauth/authorize
+          refreshUrl: https://api.soldo.com/oauth/refresh
+          scopes:
+            address_read: Can read address details.
+            address_write: Can update address details.
+            card_read: Can read card details.
+            card_write: Can change card details.
+            company_read: Can read company details.
+            company_write: Can change company details.
+            contact_read: Can read contact details.
+            contact_write: Can change contact details.
+            employee_read: Can read employee details.
+            employee_write: Can change employee details.
+            expense_category_read: Can read expense category details.
+            expense_category_write: Can change expense category details.
+            expense_report_read: Can read expense report details.
+            expense_report_write: Can change expense report details.
+            expense_review_read: Can read expense review status.
+            expense_review_write: Can change expense review status.
+            group_read: Can read group details.
+            group_write: Can change groups details.
+            online_ads_read: Can read online ads details.
+            online_ads_write: Can change online ads details.
+            payment_read: Can read payment details.
+            payment_write: Can change payment details.
+            purchase_read: Can read purchase details.
+            purchase_write: Can change purchase details.
+            refueling_read: Can read refueling details.
+            refueling_write: Can change refueling details.
+            resource_set_read: Can read resource set details.
+            resource_set_write: Can change resource set details.
+            role_read: Can read role details.
+            statement_read: Can read statement details.
+            subscription_read: Can read subscription details.
+            subscription_write: Can change subscription details.
+            tag_read: Can read tags.
+            tag_write: can change tags.
+            tax_rate_read: Can read vat rate details.
+            tax_rate_write: Can change vat rate details.
+            transaction_read: Can read transaction details.
+            transaction_write: Can change transaction details.
+            vehicle_read: Can read vehicle details.
+            vehicle_write: Can change vehicle details.
+            wallet_read: Can read wallet details.
+            wallet_write: Can change wallet details.
+            webhook_subscription_read: Can read webhook subscription details.
+            webhook_subscription_write: Can change webhook subscription details.
+x-readme:
+  hidden: false

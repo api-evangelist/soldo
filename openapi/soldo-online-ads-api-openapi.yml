@@ -1,0 +1,877 @@
+openapi: 3.1.0
+info:
+  title: Soldo Business API v2.0 Accounting Classification Online Ads API
+  description: Soldo Business API v2.0 OpenAPI specification
+  version: 5.56.0
+servers:
+- url: https://api.soldo.com
+  description: Production server (using live data)
+- url: https://api-demo.soldocloud.net
+  description: Sandbox server (using test data)
+tags:
+- name: Online Ads
+paths:
+  /business/v2/online-ads/{onlineAdId}:
+    get:
+      tags:
+      - Online Ads
+      summary: Get Online Ads
+      description: Endpoint to get a specific `OnlineAd` by ID.
+      operationId: online-ads-get
+      parameters:
+      - name: onlineAdId
+        in: path
+        required: true
+        schema:
+          type: string
+          description: The `OnlineAd` ID.
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+      responses:
+        '200':
+          description: The result is a single `OnlineAd`.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OnlineAds'
+        '400':
+          description: Your request has missing arguments or is malformed.
+      security:
+      - standardAuth:
+        - online_ads_read
+    put:
+      tags:
+      - Online Ads
+      summary: Update Online Ads
+      description: Endpoint to update a specific `OnlineAd`.
+      operationId: online-ads-update
+      parameters:
+      - name: onlineAdId
+        in: path
+        required: true
+        schema:
+          type: string
+          description: The `OnlineAd` ID.
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+      - name: X-Soldo-Fingerprint
+        in: header
+        required: true
+        schema:
+          type: string
+          default: '{{fingerprint}}'
+          description: '[Advanced authentication](ref:advanced-authentication): `SHA512SUM` of the fingerprint values listed in the fingerprint order for this endpoint.'
+          example: '{{fingerprint}}'
+      - name: X-Soldo-Fingerprint-Signature
+        in: header
+        required: true
+        schema:
+          type: string
+          default: '{{fingerprint_signature}}'
+          description: '[Advanced authentication](ref:advanced-authentication): Signature of the `X-Soldo-Fingerprint`.'
+          example: '{{fingerprint_signature}}'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateOnlineAds'
+      responses:
+        '200':
+          description: The returned resource is a single `OnlineAd`.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OnlineAds'
+        '400':
+          description: Your request has missing arguments or is malformed.
+      security:
+      - standardAuth:
+        - online_ads_write
+      x-soldo:
+        fingerprint-order: id, name, wallet_id, token
+    post:
+      tags:
+      - Online Ads
+      summary: Activate Online Ads
+      description: Endpoint to activate a specific `OnlineAd`.
+      operationId: online-ads-activate
+      parameters:
+      - name: onlineAdId
+        in: path
+        required: true
+        schema:
+          type: string
+          description: The `OnlineAd` ID.
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+      - name: X-Soldo-Fingerprint
+        in: header
+        required: true
+        schema:
+          type: string
+          default: '{{fingerprint}}'
+          description: '[Advanced authentication](ref:advanced-authentication): `SHA512SUM` of the fingerprint values listed in the fingerprint order for this endpoint.'
+          example: '{{fingerprint}}'
+      - name: X-Soldo-Fingerprint-Signature
+        in: header
+        required: true
+        schema:
+          type: string
+          default: '{{fingerprint_signature}}'
+          description: '[Advanced authentication](ref:advanced-authentication): Signature of the `X-Soldo-Fingerprint`.'
+          example: '{{fingerprint_signature}}'
+      responses:
+        '200':
+          description: The `Order` of the reserved `Card` for the `OnlineAd`.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Order'
+        '400':
+          description: Your request has missing arguments or is malformed.
+      security:
+      - standardAuth:
+        - online_ads_write
+      x-soldo:
+        fingerprint-order: id, token
+    delete:
+      tags:
+      - Online Ads
+      summary: Delete Online Ads
+      description: Endpoint to delete a specific `OnlineAd`.
+      operationId: online-ads-delete
+      parameters:
+      - name: onlineAdId
+        in: path
+        required: true
+        schema:
+          type: string
+          description: The `OnlineAd` ID.
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+      responses:
+        '204':
+          description: No content as result.
+        '400':
+          description: Your request has missing arguments or is malformed.
+      security:
+      - standardAuth:
+        - online_ads_write
+  /business/v2/online-ads/{onlineAdId}/addAssignees:
+    put:
+      tags:
+      - Online Ads
+      summary: Add assignees to Online Ads
+      description: Endpoint to add assignees to an `OnlineAd`.
+      operationId: online-ads-assignees-add
+      parameters:
+      - name: onlineAdId
+        in: path
+        required: true
+        schema:
+          type: string
+          description: The `OnlineAd` ID.
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+      - name: X-Soldo-Fingerprint
+        in: header
+        required: true
+        schema:
+          type: string
+          default: '{{fingerprint}}'
+          description: '[Advanced authentication](ref:advanced-authentication): `SHA512SUM` of the fingerprint values listed in the fingerprint order for this endpoint.'
+          example: '{{fingerprint}}'
+      - name: X-Soldo-Fingerprint-Signature
+        in: header
+        required: true
+        schema:
+          type: string
+          default: '{{fingerprint_signature}}'
+          description: '[Advanced authentication](ref:advanced-authentication): Signature of the `X-Soldo-Fingerprint`.'
+          example: '{{fingerprint_signature}}'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddAssignees'
+      responses:
+        '200':
+          description: The returned resource is a single `OnlineAd`.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OnlineAds'
+        '400':
+          description: Your request has missing arguments or is malformed.
+      security:
+      - standardAuth:
+        - online_ads_write
+      x-soldo:
+        fingerprint-order: id, token
+  /business/v2/online-ads:
+    get:
+      tags:
+      - Online Ads
+      summary: Search Online Ads
+      description: Endpoint to search `OnlineAds` using filtering parameters.
+      operationId: online-ads-search
+      parameters:
+      - name: text
+        in: query
+        description: A simple text to search in the `OnlineAds` data (name, description, assignee name).
+        schema:
+          type: string
+          description: A simple text to search in the `OnlineAds` data (name, description, assignee name).
+          example: onlinename
+        example: onlinename
+      - name: platforms
+        in: query
+        description: The `OnlineAds` platform.
+        schema:
+          type: array
+          description: The `OnlineAds` platform.
+          items:
+            $ref: '#/components/schemas/OnlineAdsPlatform'
+          uniqueItems: true
+        example: GOOGLE
+      - name: assignees
+        in: query
+        schema:
+          type: array
+          description: The `OnlineAds` assignees.
+          example: 776f5018-07e5-426b-a426-8b23fa1e985d
+          items:
+            type: string
+            description: The `OnlineAds` assignees.
+            example: 776f5018-07e5-426b-a426-8b23fa1e985d
+          uniqueItems: true
+      - name: statuses
+        in: query
+        description: The Online Ad status.
+        schema:
+          type: array
+          description: The Online Ad status.
+          items:
+            $ref: '#/components/schemas/OnlineAdsStatus'
+          uniqueItems: true
+        example: ACTIVE
+      - name: p
+        in: query
+        description: It indicates the specific page to display (the counter starts from zero).
+        schema:
+          type: integer
+          format: int32
+          default: 0
+          description: It indicates the specific page to display (the counter starts from zero).
+          example: 3
+        example: 3
+      - name: s
+        in: query
+        description: It indicates the number of items per page.
+        schema:
+          type: integer
+          format: int32
+          default: 0
+          description: It indicates the number of items per page.
+          example: 25
+          maximum: 50
+        example: 25
+      - name: d
+        in: query
+        description: It indicates how the pages are ordered.
+        schema:
+          $ref: '#/components/schemas/Direction'
+        example: DESC
+      - name: props
+        in: query
+        description: It indicates the sorting direction applied to the above parameters. To apply a sorting on multiple parameters, set as many times the `props` parameter in the request.
+        schema:
+          type: array
+          description: It indicates the sorting direction applied to the above parameters. To apply a sorting on multiple parameters, set as many times the `props` parameter in the request.
+          example: creationTime
+          items:
+            type: string
+            description: It indicates the sorting direction applied to the above parameters. To apply a sorting on multiple parameters, set as many times the `props` parameter in the request.
+            example: creationTime
+        example: creationTime
+      responses:
+        '200':
+          description: The result is an array containing `OnlineAds`.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OnlineAdsList'
+        '400':
+          description: Your request has missing arguments or is malformed.
+      security:
+      - standardAuth:
+        - online_ads_read
+    post:
+      tags:
+      - Online Ads
+      summary: Add Online Ads
+      description: Endpoint to add a new `OnlineAd`.
+      operationId: online-ads-add
+      parameters:
+      - name: X-Soldo-Fingerprint
+        in: header
+        required: true
+        schema:
+          type: string
+          default: '{{fingerprint}}'
+          description: '[Advanced authentication](ref:advanced-authentication): `SHA512SUM` of the fingerprint values listed in the fingerprint order for this endpoint.'
+          example: '{{fingerprint}}'
+      - name: X-Soldo-Fingerprint-Signature
+        in: header
+        required: true
+        schema:
+          type: string
+          default: '{{fingerprint_signature}}'
+          description: '[Advanced authentication](ref:advanced-authentication): Signature of the `X-Soldo-Fingerprint`.'
+          example: '{{fingerprint_signature}}'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateOnlineAds'
+      responses:
+        '200':
+          description: The result is an `OnlineAd`.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OnlineAds'
+        '400':
+          description: Your request has missing arguments or is malformed.
+      security:
+      - standardAuth:
+        - online_ads_write
+      x-soldo:
+        fingerprint-order: name, platform, wallet_id, token
+  /business/v2/online-ads/{onlineAdId}/removeAssignees:
+    put:
+      tags:
+      - Online Ads
+      summary: Remove assignees from Online Ads
+      description: Endpoint to remove assignees from an `OnlineAd`.
+      operationId: online-ads-assignees-remove
+      parameters:
+      - name: onlineAdId
+        in: path
+        required: true
+        schema:
+          type: string
+          description: The `OnlineAd` ID.
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RemoveAssignees'
+      responses:
+        '200':
+          description: The returned resource is a single `OnlineAd`.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OnlineAds'
+        '400':
+          description: Your request has missing arguments or is malformed.
+      security:
+      - standardAuth:
+        - online_ads_write
+components:
+  schemas:
+    OnlineAdsStatus:
+      type: string
+      enum:
+      - ACTIVE
+      - ASSIGNED
+      - CANCELLED
+    OrderItem:
+      properties:
+        id:
+          type: string
+          description: The ID of a single item of a specific `Order`.
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+        item_type:
+          type: string
+          description: The type of the ordered item.
+          example: CARD
+        category:
+          type: string
+          description: The category of the ordered item.
+    OnlineAdsPlatform:
+      type: string
+      enum:
+      - GOOGLE
+      - TWITTER
+      - TABOOLA
+      - PINTEREST
+      - MICROSOFT
+      - FACEBOOK
+      - AMAZON
+      - APPLE
+      - TIKTOK
+      - LINKEDIN
+      - INSTAGRAM
+      - OTHER
+    Direction:
+      type: string
+      description: It indicates how the pages are ordered.
+      enum:
+      - ASC
+      - DESC
+      example: DESC
+    Order:
+      properties:
+        id:
+          type: string
+          description: The `Order` ID.
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+        status:
+          $ref: '#/components/schemas/OrderStatus'
+          description: The status of the `Order`.
+          example: PENDING
+        creation_time:
+          type: string
+          description: The date and time when the `Order` was created.
+          example: '2017-06-01T12:48:40Z'
+        last_update_time:
+          type: string
+          description: The last update date of the `Order`.
+          example: '2017-06-01T12:48:40Z'
+        error_code:
+          type: string
+          description: In case is_valid is false, the error code of the `Order` is shown.
+        total_paid_amount:
+          type: number
+          description: The total amount of the `Order`.
+          example: 10.25
+        total_paid_currency:
+          $ref: '#/components/schemas/ISO4217Currency'
+          description: The currency for the total paid amount.
+          example: EUR
+        items:
+          type: array
+          description: The products associated with the `Order`.
+          items:
+            $ref: '#/components/schemas/OrderItem'
+        is_valid:
+          type: boolean
+          description: It states whether the `Order` is valid.
+          example: true
+    UpdateOnlineAds:
+      description: Update `OnlineAd` JSON parameters.
+      properties:
+        name:
+          type: string
+          description: The name of the `OnlineAds`.
+          example: Google Ads
+        description:
+          type: string
+          description: The description `OnlineAds`.
+          example: Google Ads Campaign
+        wallet_id:
+          type: string
+          description: The `Wallet` ID associated to the `OnlineAds`.
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+    OnlineAds:
+      properties:
+        id:
+          type: string
+          description: The `OnlineAds` ID.
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+        name:
+          type: string
+          description: The name of the `OnlineAds`.
+          example: EXAMPLE ONLINE AD
+        description:
+          type: string
+          description: A custom description of the `OnlineAds`.
+          example: This is an online advertisement
+        platform:
+          $ref: '#/components/schemas/OnlineAdsPlatform'
+          description: The platform the `OnlineAds` are made on.
+          example: OTHER
+        assignees:
+          type: array
+          description: List of `User` IDs currently assigned to the `OnlineAds` and its `Cards`.
+          example:
+          - XMPL1234-000001
+          - XMPL1234-000002
+          - XMPL1234-000003
+          items:
+            type: string
+        status:
+          $ref: '#/components/schemas/OnlineAdsStatus'
+          description: The status of the `OnlineAds`.
+          example: ACTIVE
+        wallet_id:
+          type: string
+          description: The `Wallet` ID the `OnlineAds` and its `Card` are linked to.
+          example: 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
+        last_spent_date:
+          type: string
+          description: The date and time of the last `Transaction` made with the `Card`.
+          example: '2020-05-07T12:48:40Z'
+        last_spent:
+          type: number
+          description: The amount of the last `Transaction` made with the `Card`.
+          example: 75.01
+        total_spent:
+          type: number
+          description: The overall amount spent with the `Card`.
+          example: 775.01
+        card_id:
+          type: string
+          description: The ID of the `Card` reserved for this `OnlineAds` (only available after the `OnlineAds` has been activated).
+          example: c861cc24-6663-410f-8c78-73f886fff4ef
+        creation_time:
+          type: string
+          description: The date and time when the `OnlineAds` was created.
+          example: '2017-06-01T12:48:40Z'
+        last_update_time:
+          type: string
+          description: The date and time when the `OnlineAds` was last updated.
+          example: '2017-06-01T12:48:40Z'
+    CreateOnlineAds:
+      description: Add `OnlineAd` JSON parameters.
+      properties:
+        name:
+          type: string
+          description: The name of the `OnlineAds`.
+          example: Google Ads
+        description:
+          type: string
+          description: The description of the `OnlineAds`.
+          example: Google Ads Campaign
+        platform:
+          $ref: '#/components/schemas/OnlineAdsPlatform'
+          description: The platform of the `OnlineAds`.
+          example: GOOGLE
+        assignees:
+          type: array
+          description: List of `User` IDs to be assigned to the `OnlineAds` and its `Cards`.
+          example:
+          - XMPL1234-000001
+          - XMPL1234-000002
+          - XMPL1234-000003
+          items:
+            type: string
+          uniqueItems: true
+        wallet_id:
+          type: string
+          description: The `Wallet` ID associated to the `OnlineAds`.
+          example: 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
+      required:
+      - assignees
+      - description
+      - name
+      - platform
+      - wallet_id
+    ISO4217Currency:
+      type: string
+      enum:
+      - AED
+      - AFN
+      - ALL
+      - AMD
+      - ANG
+      - AOA
+      - ARS
+      - AUD
+      - AWG
+      - AZN
+      - BAM
+      - BBD
+      - BDT
+      - BGN
+      - BHD
+      - BIF
+      - BMD
+      - BND
+      - BOB
+      - BOV
+      - BRL
+      - BSD
+      - BTN
+      - BWP
+      - BYN
+      - BZD
+      - CAD
+      - CDF
+      - CHE
+      - CHF
+      - CHW
+      - CLF
+      - CLP
+      - CNY
+      - COP
+      - COU
+      - CRC
+      - CUC
+      - CUP
+      - CVE
+      - CZK
+      - DJF
+      - DKK
+      - DOP
+      - DZD
+      - EGP
+      - ERN
+      - ETB
+      - EUR
+      - FJD
+      - FKP
+      - GBP
+      - GEL
+      - GHS
+      - GIP
+      - GMD
+      - GNF
+      - GTQ
+      - GYD
+      - HKD
+      - HNL
+      - HRK
+      - HTG
+      - HUF
+      - IDR
+      - ILS
+      - INR
+      - IQD
+      - IRR
+      - ISK
+      - JMD
+      - JOD
+      - JPY
+      - KES
+      - KGS
+      - KHR
+      - KMF
+      - KPW
+      - KRW
+      - KWD
+      - KYD
+      - KZT
+      - LAK
+      - LBP
+      - LKR
+      - LRD
+      - LSL
+      - LYD
+      - MAD
+      - MDL
+      - MGA
+      - MKD
+      - MMK
+      - MNT
+      - MOP
+      - MRO
+      - MRU
+      - MUR
+      - MVR
+      - MWK
+      - MXN
+      - MXV
+      - MYR
+      - MZN
+      - NAD
+      - NGN
+      - NIO
+      - NOK
+      - NPR
+      - NZD
+      - OMR
+      - PAB
+      - PEN
+      - PGK
+      - PHP
+      - PKR
+      - PLN
+      - PYG
+      - QAR
+      - RON
+      - RSD
+      - RUB
+      - RWF
+      - SAR
+      - SBD
+      - SCR
+      - SDG
+      - SEK
+      - SGD
+      - SHP
+      - SLE
+      - SLL
+      - SOS
+      - SRD
+      - SSP
+      - STD
+      - STN
+      - SVC
+      - SYP
+      - SZL
+      - THB
+      - TJS
+      - TMT
+      - TND
+      - TOP
+      - TRY
+      - TTD
+      - TWD
+      - TZS
+      - UAH
+      - UGX
+      - USD
+      - USN
+      - UYI
+      - UYU
+      - UYW
+      - UZS
+      - VED
+      - VEF
+      - VES
+      - VND
+      - VUV
+      - WST
+      - XAF
+      - XAG
+      - XAU
+      - XBA
+      - XBB
+      - XBC
+      - XBD
+      - XCD
+      - XDR
+      - XOF
+      - XPD
+      - XPF
+      - XPT
+      - XSU
+      - XTS
+      - XUA
+      - XXX
+      - YER
+      - ZAR
+      - ZMW
+      - ZWL
+    OrderStatus:
+      type: string
+      enum:
+      - PENDING
+      - ERROR
+      - PLACED
+      - CANCELLED
+      - COMPLETED
+      - COMPLETED_WITH_CREDIT
+    AddAssignees:
+      description: Add `Subscription` assignees JSON parameters.
+      properties:
+        add_assignees:
+          type: array
+          description: List of new `User` IDs to add as assignees.
+          example:
+          - XMPL1234-000001
+          - XMPL1234-000002
+          - XMPL1234-000003
+          items:
+            type: string
+      required:
+      - add_assignees
+    OnlineAdsList:
+      properties:
+        total:
+          type: integer
+          format: int32
+          description: It represents the total number of available items in the list.
+          example: 168
+        pages:
+          type: integer
+          format: int32
+          description: It represents the total number of available pages.
+          example: 7
+        page_size:
+          type: integer
+          format: int32
+          description: It represents the number of items per page.
+          example: 25
+        current_page:
+          type: integer
+          format: int32
+          description: It indicates the current page (the counter starts from zero).
+          example: 0
+        results_size:
+          type: integer
+          format: int32
+          description: It indicates the size of the array results.
+          example: 25
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/OnlineAds'
+    RemoveAssignees:
+      description: Remove `Subscription` assignees JSON parameters.
+      properties:
+        remove_assignees:
+          type: array
+          description: List of `User` IDs to remove from assignees.
+          example:
+          - XMPL1234-000001
+          - XMPL1234-000002
+          - XMPL1234-000003
+          items:
+            type: string
+      required:
+      - remove_assignees
+  securitySchemes:
+    standardAuth:
+      type: oauth2
+      description: This API uses OAuth 2 with the "Client Credentials" grant flow.
+      flows:
+        clientCredentials:
+          tokenUrl: https://api.soldo.com/oauth/authorize
+          refreshUrl: https://api.soldo.com/oauth/refresh
+          scopes:
+            address_read: Can read address details.
+            address_write: Can update address details.
+            card_read: Can read card details.
+            card_write: Can change card details.
+            company_read: Can read company details.
+            company_write: Can change company details.
+            contact_read: Can read contact details.
+            contact_write: Can change contact details.
+            employee_read: Can read employee details.
+            employee_write: Can change employee details.
+            expense_category_read: Can read expense category details.
+            expense_category_write: Can change expense category details.
+            expense_report_read: Can read expense report details.
+            expense_report_write: Can change expense report details.
+            expense_review_read: Can read expense review status.
+            expense_review_write: Can change expense review status.
+            group_read: Can read group details.
+            group_write: Can change groups details.
+            online_ads_read: Can read online ads details.
+            online_ads_write: Can change online ads details.
+            payment_read: Can read payment details.
+            payment_write: Can change payment details.
+            purchase_read: Can read purchase details.
+            purchase_write: Can change purchase details.
+            refueling_read: Can read refueling details.
+            refueling_write: Can change refueling details.
+            resource_set_read: Can read resource set details.
+            resource_set_write: Can change resource set details.
+            role_read: Can read role details.
+            statement_read: Can read statement details.
+            subscription_read: Can read subscription details.
+            subscription_write: Can change subscription details.
+            tag_read: Can read tags.
+            tag_write: can change tags.
+            tax_rate_read: Can read vat rate details.
+            tax_rate_write: Can change vat rate details.
+            transaction_read: Can read transaction details.
+            transaction_write: Can change transaction details.
+            vehicle_read: Can read vehicle details.
+            vehicle_write: Can change vehicle details.
+            wallet_read: Can read wallet details.
+            wallet_write: Can change wallet details.
+            webhook_subscription_read: Can read webhook subscription details.
+            webhook_subscription_write: Can change webhook subscription details.
+x-readme:
+  hidden: false

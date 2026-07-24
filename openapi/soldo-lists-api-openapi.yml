@@ -1,0 +1,402 @@
+openapi: 3.1.0
+info:
+  title: Soldo Business API v2.0 Accounting Classification Lists API
+  description: Soldo Business API v2.0 OpenAPI specification
+  version: 5.56.0
+servers:
+- url: https://api.soldo.com
+  description: Production server (using live data)
+- url: https://api-demo.soldocloud.net
+  description: Sandbox server (using test data)
+tags:
+- name: Lists
+paths:
+  /business/v2/dictionaries:
+    get:
+      tags:
+      - Lists
+      summary: Search Lists
+      description: Endpoint to search `Lists` using filtering parameters.
+      operationId: list-search
+      parameters:
+      - name: visible
+        in: query
+        schema:
+          type: boolean
+          description: It determines whether the `List` is active.
+          example: true
+      - name: text
+        in: query
+        schema:
+          type: string
+          description: A text to search in the `List` data (name).
+          example: something
+      - name: p
+        in: query
+        description: It indicates the specific page to display (the counter starts from zero).
+        schema:
+          type: integer
+          format: int32
+          default: 0
+          description: It indicates the specific page to display (the counter starts from zero).
+          example: 3
+        example: 3
+      - name: s
+        in: query
+        description: It indicates the number of items per page.
+        schema:
+          type: integer
+          format: int32
+          default: 0
+          description: It indicates the number of items per page.
+          example: 25
+          maximum: 50
+        example: 25
+      - name: d
+        in: query
+        description: It indicates how the pages are ordered.
+        schema:
+          $ref: '#/components/schemas/Direction'
+        example: DESC
+      - name: props
+        in: query
+        description: It indicates the sorting direction applied to the above parameters. To apply a sorting on multiple parameters, set as many times the `props` parameter in the request.
+        schema:
+          type: array
+          description: It indicates the sorting direction applied to the above parameters. To apply a sorting on multiple parameters, set as many times the `props` parameter in the request.
+          example: creationTime
+          items:
+            type: string
+            description: It indicates the sorting direction applied to the above parameters. To apply a sorting on multiple parameters, set as many times the `props` parameter in the request.
+            example: creationTime
+        example: creationTime
+      responses:
+        '200':
+          description: The result is an array containing `Lists`.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TagDictionaries'
+      security:
+      - standardAuth:
+        - tag_read
+    post:
+      tags:
+      - Lists
+      summary: Add List
+      description: Endpoint to add a new `List`.
+      operationId: list-add
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                dictionary:
+                  type: string
+                  description: The name of the `List`.
+                  example: CustomTransactionMetadata
+                uniqueSelectTag:
+                  type: boolean
+                  description: It determines whether multiple `Tags` of the `List` can be selected.
+                  example: true
+                required:
+                  type: boolean
+                  description: It determines required.
+                  example: false
+                roles:
+                  type: array
+                  description: List of `Roles` to can view items in transaction details.
+                  example:
+                  - 7bf79328-a7ae-4222-aa54-091ff7f429a7
+                  - 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
+                  items:
+                    type: string
+                    description: List of `Roles` to can view items in transaction details.
+                    example: '["7bf79328-a7ae-4222-aa54-091ff7f429a7","2d65bd5e-3fdf-4002-b166-bde7fb8863fa"]'
+                users:
+                  type: array
+                  description: List of `User` IDs to can view items in transaction details..
+                  example:
+                  - XMPL1234-000001
+                  - XMPL1234-000002
+                  - XMPL1234-000003
+                  items:
+                    type: string
+                    description: List of `User` IDs to can view items in transaction details..
+                    example: '["XMPL1234-000001","XMPL1234-000002","XMPL1234-000003"]'
+      responses:
+        '200':
+          description: The returned resource is a single `List`.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TagDictionary'
+        '400':
+          description: Your request has missing arguments or is malformed.
+        '404':
+          description: One or more resource requested does not exist.
+      security:
+      - standardAuth:
+        - tag_write
+  /business/v2/dictionaries/{listId}:
+    get:
+      tags:
+      - Lists
+      summary: Get List
+      description: Endpoint to get a specific `List` by ID.
+      operationId: list-get
+      parameters:
+      - name: listId
+        in: path
+        required: true
+        schema:
+          type: string
+          description: The `List` ID.
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+      responses:
+        '200':
+          description: The returned resource is a single `List`.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TagDictionary'
+        '404':
+          description: One or more resource requested does not exist.
+      security:
+      - standardAuth:
+        - tag_read
+    put:
+      tags:
+      - Lists
+      summary: Update List
+      description: Endpoint to update the configuration of a `List`.
+      operationId: list-update
+      parameters:
+      - name: listId
+        in: path
+        required: true
+        schema:
+          type: string
+          description: The `List` ID.
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                dictionary:
+                  type: string
+                  description: The name of the `List`.
+                  example: ExampleTagDictionary
+                uniqueSelectTag:
+                  type: boolean
+                  description: It determines whether multiple `Tags` of the `List` can be selected.
+                  example: false
+                required:
+                  type: boolean
+                  deprecated: true
+                  description: It determines whether it's required or not.
+                  example: false
+                visible:
+                  type: boolean
+                  description: It determines whether the `List` is active.
+                  example: true
+                roles:
+                  type: array
+                  description: List of `Roles` to can view items in transaction details.
+                  example:
+                  - 7bf79328-a7ae-4222-aa54-091ff7f429a7
+                  - 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
+                  items:
+                    type: string
+                    description: List of `Roles` to can view items in transaction details.
+                    example: '["7bf79328-a7ae-4222-aa54-091ff7f429a7","2d65bd5e-3fdf-4002-b166-bde7fb8863fa"]'
+                users:
+                  type: array
+                  description: List of `User` IDs to can view items in transaction details..
+                  example:
+                  - XMPL1234-000001
+                  - XMPL1234-000002
+                  - XMPL1234-000003
+                  items:
+                    type: string
+                    description: List of `User` IDs to can view items in transaction details..
+                    example: '["XMPL1234-000001","XMPL1234-000002","XMPL1234-000003"]'
+      responses:
+        '200':
+          description: The returned resource is a single `List`.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TagDictionary'
+        '400':
+          description: Your request has missing arguments or is malformed.
+        '404':
+          description: One or more resource requested does not exist.
+      security:
+      - standardAuth:
+        - tag_write
+    delete:
+      tags:
+      - Lists
+      summary: Delete List
+      description: Endpoint to delete a `List`.
+      operationId: list-delete
+      parameters:
+      - name: listId
+        in: path
+        required: true
+        schema:
+          type: string
+          description: The `List` ID.
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+      responses:
+        '204':
+          description: No content as result.
+        '400':
+          description: Your request has missing arguments or is malformed.
+        '404':
+          description: One or more resource requested does not exist.
+      security:
+      - standardAuth:
+        - tag_write
+components:
+  schemas:
+    TagDictionaries:
+      properties:
+        total:
+          type: integer
+          format: int32
+          description: It represents the total number of available items in the list.
+          example: 168
+        pages:
+          type: integer
+          format: int32
+          description: It represents the total number of available pages.
+          example: 7
+        page_size:
+          type: integer
+          format: int32
+          description: It represents the number of items per page.
+          example: 25
+        current_page:
+          type: integer
+          format: int32
+          description: It indicates the current page (the counter starts from zero).
+          example: 0
+        results_size:
+          type: integer
+          format: int32
+          description: It indicates the size of the array results.
+          example: 25
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/TagDictionary'
+    Direction:
+      type: string
+      description: It indicates how the pages are ordered.
+      enum:
+      - ASC
+      - DESC
+      example: DESC
+    TagDictionary:
+      properties:
+        id:
+          type: string
+          description: The ID of the `List`.
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+        dictionary:
+          type: string
+          description: The name of the `List`.
+          example: ExampleTagDictionary
+        visible:
+          type: boolean
+          description: It determines whether the `List` is active.
+          example: true
+        creation_time:
+          type: string
+          description: The date and time when the `List` was created.
+          example: '2017-06-01T12:48:40Z'
+        last_update:
+          type: string
+          description: The date and time when the `List` was last updated.
+          example: '2017-06-01T12:48:40Z'
+        roles:
+          type: array
+          description: 'The list of `Roles` that can view the items in the transaction details.(sortable: no).'
+          example:
+          - 7bf79328-a7ae-4222-aa54-091ff7f429a7
+          - 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
+          items:
+            type: string
+        users:
+          type: array
+          description: 'The list of `Users` that can view the items in the transaction details. (sortable: no).'
+          example:
+          - XMPL1234-000001
+          - XMPL1234-000002
+          - XMPL1234-000003
+          items:
+            type: string
+        is_unique_select_tag:
+          type: boolean
+          description: It determines whether multiple tags of the `List` can be selected.
+          example: false
+  securitySchemes:
+    standardAuth:
+      type: oauth2
+      description: This API uses OAuth 2 with the "Client Credentials" grant flow.
+      flows:
+        clientCredentials:
+          tokenUrl: https://api.soldo.com/oauth/authorize
+          refreshUrl: https://api.soldo.com/oauth/refresh
+          scopes:
+            address_read: Can read address details.
+            address_write: Can update address details.
+            card_read: Can read card details.
+            card_write: Can change card details.
+            company_read: Can read company details.
+            company_write: Can change company details.
+            contact_read: Can read contact details.
+            contact_write: Can change contact details.
+            employee_read: Can read employee details.
+            employee_write: Can change employee details.
+            expense_category_read: Can read expense category details.
+            expense_category_write: Can change expense category details.
+            expense_report_read: Can read expense report details.
+            expense_report_write: Can change expense report details.
+            expense_review_read: Can read expense review status.
+            expense_review_write: Can change expense review status.
+            group_read: Can read group details.
+            group_write: Can change groups details.
+            online_ads_read: Can read online ads details.
+            online_ads_write: Can change online ads details.
+            payment_read: Can read payment details.
+            payment_write: Can change payment details.
+            purchase_read: Can read purchase details.
+            purchase_write: Can change purchase details.
+            refueling_read: Can read refueling details.
+            refueling_write: Can change refueling details.
+            resource_set_read: Can read resource set details.
+            resource_set_write: Can change resource set details.
+            role_read: Can read role details.
+            statement_read: Can read statement details.
+            subscription_read: Can read subscription details.
+            subscription_write: Can change subscription details.
+            tag_read: Can read tags.
+            tag_write: can change tags.
+            tax_rate_read: Can read vat rate details.
+            tax_rate_write: Can change vat rate details.
+            transaction_read: Can read transaction details.
+            transaction_write: Can change transaction details.
+            vehicle_read: Can read vehicle details.
+            vehicle_write: Can change vehicle details.
+            wallet_read: Can read wallet details.
+            wallet_write: Can change wallet details.
+            webhook_subscription_read: Can read webhook subscription details.
+            webhook_subscription_write: Can change webhook subscription details.
+x-readme:
+  hidden: false

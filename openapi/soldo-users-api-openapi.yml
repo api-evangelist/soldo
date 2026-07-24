@@ -1,0 +1,1046 @@
+openapi: 3.1.0
+info:
+  title: Soldo Business API v2.0 Accounting Classification Users API
+  description: Soldo Business API v2.0 OpenAPI specification
+  version: 5.56.0
+servers:
+- url: https://api.soldo.com
+  description: Production server (using live data)
+- url: https://api-demo.soldocloud.net
+  description: Sandbox server (using test data)
+tags:
+- name: Users
+paths:
+  /business/v2/employees/create:
+    post:
+      tags:
+      - Users
+      summary: Create User
+      description: Endpoint to create a new `User`.
+      operationId: user-create
+      parameters:
+      - name: X-Soldo-Fingerprint
+        in: header
+        required: true
+        schema:
+          type: string
+          default: '{{fingerprint}}'
+          description: '[Advanced authentication](ref:advanced-authentication): `SHA512SUM` of the fingerprint values listed in the fingerprint order for this endpoint.'
+          example: '{{fingerprint}}'
+      - name: X-Soldo-Fingerprint-Signature
+        in: header
+        required: true
+        schema:
+          type: string
+          default: '{{fingerprint_signature}}'
+          description: '[Advanced authentication](ref:advanced-authentication): Signature of the `X-Soldo-Fingerprint`.'
+          example: '{{fingerprint_signature}}'
+      requestBody:
+        description: Create employee JSON Parameters
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateUser'
+        required: true
+      responses:
+        '200':
+          description: The returned result is an `User`.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '400':
+          description: Your request has missing arguments or is malformed.
+      security:
+      - standardAuth:
+        - employee_write
+      x-soldo:
+        fingerprint-order: request_timestamp, name, surname, mobile_access, web_access, token
+  /business/v2/employees/{userId}:
+    get:
+      tags:
+      - Users
+      summary: Get User
+      description: Endpoint to retrieve a specific `User` by ID.
+      operationId: user-get
+      parameters:
+      - name: userId
+        in: path
+        required: true
+        schema:
+          type: string
+          description: The `User` ID.
+          example: XMPL1234-000001
+      responses:
+        '200':
+          description: The returned resource is a single `User`.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '404':
+          description: One or more resource requested does not exist.
+      security:
+      - standardAuth:
+        - employee_read
+    put:
+      tags:
+      - Users
+      summary: Update User
+      description: Endpoint to update an `User`.
+      operationId: user-update
+      parameters:
+      - name: userId
+        in: path
+        required: true
+        schema:
+          type: string
+          description: The `User` ID.
+          example: XMPL1234-000001
+      - name: X-Soldo-Fingerprint
+        in: header
+        required: true
+        schema:
+          type: string
+          default: '{{fingerprint}}'
+          description: '[Advanced authentication](ref:advanced-authentication): `SHA512SUM` of the fingerprint values listed in the fingerprint order for this endpoint.'
+          example: '{{fingerprint}}'
+      - name: X-Soldo-Fingerprint-Signature
+        in: header
+        required: true
+        schema:
+          type: string
+          default: '{{fingerprint_signature}}'
+          description: '[Advanced authentication](ref:advanced-authentication): Signature of the `X-Soldo-Fingerprint`.'
+          example: '{{fingerprint_signature}}'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateUser'
+      responses:
+        '200':
+          description: The returned result is a single `User`.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '400':
+          description: Your request has missing arguments or is malformed.
+        '404':
+          description: One or more resource requested does not exist.
+      security:
+      - standardAuth:
+        - employee_write
+      x-soldo:
+        fingerprint-order: custom_reference_id, job_title, mobile_number, mobile_prefix, email, enable_mobile_credential, enable_web_credential, token
+    delete:
+      tags:
+      - Users
+      summary: Delete User
+      description: Endpoint to delete an `User`.
+      operationId: user-delete
+      parameters:
+      - name: userId
+        in: path
+        required: true
+        schema:
+          type: string
+          description: The `User` ID.
+          example: XMPL1234-000001
+      responses:
+        '204':
+          description: No content as result.
+        '404':
+          description: One or more resource requested does not exist.
+      security:
+      - standardAuth:
+        - employee_write
+  /business/v2/employees:
+    get:
+      tags:
+      - Users
+      summary: Search Users
+      description: Endpoint to find `Users` using filtering parameters.
+      operationId: user-search
+      parameters:
+      - name: customreferenceId
+        in: query
+        description: The reference of the `User` in an external system.
+        schema:
+          type: string
+          description: The reference of the `User` in an external system.
+          example: IDEMPLOY111
+        example: IDEMPLOY111
+      - name: name
+        in: query
+        description: The name of the `User`.
+        schema:
+          type: string
+          description: The name of the `User`.
+          example: John
+        example: John
+      - name: surname
+        in: query
+        description: The surname of the `User`.
+        schema:
+          type: string
+          description: The surname of the `User`.
+          example: Doe
+        example: Doe
+      - name: visible
+        in: query
+        description: The visibility property of the `User`.
+        schema:
+          type: boolean
+          description: The visibility property of the `User`.
+          example: true
+        example: true
+      - name: jobTitle
+        in: query
+        description: The job title of the `User`.
+        schema:
+          type: string
+          description: The job title of the `User`.
+          example: HR Specialist
+        example: HR Specialist
+      - name: department
+        in: query
+        description: The department of the `User`.
+        schema:
+          type: string
+          description: The department of the `User`.
+          example: HR departement
+        example: HR departement
+      - name: email
+        in: query
+        description: The email address of the `User`.
+        schema:
+          type: string
+          description: The email address of the `User`.
+          example: johndoe@email.com
+        example: johndoe@email.com
+      - name: mobile
+        in: query
+        description: The mobile number of the `User`.
+        schema:
+          type: string
+          description: The mobile number of the `User`.
+          example: johndoe@email.com
+        example: johndoe@email.com
+      - name: status
+        in: query
+        description: The status of the `User`.
+        schema:
+          $ref: '#/components/schemas/UserStatus'
+        example: ACTIVE
+      - name: id
+        in: query
+        description: The ID of the `User`.
+        schema:
+          type: string
+          description: The ID of the `User`.
+          example: XMPL1234-000001
+        example: XMPL1234-000001
+      - name: groupId
+        in: query
+        description: The ID of the `Group` the `User` is a member of.
+        schema:
+          type: string
+          description: The ID of the `Group` the `User` is a member of.
+          example: 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
+        example: 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
+      - name: reportsTo
+        in: query
+        schema:
+          type: array
+          description: The IDs of the `User` resources to which they could report to.
+          example:
+          - XMPL1234-000001
+          - XMPL1234-000002
+          - XMPL1234-000003
+          items:
+            type: string
+            description: The IDs of the `User` resources to which they could report to.
+            example: '["XMPL1234-000001","XMPL1234-000002","XMPL1234-000003"]'
+      - name: workStatus
+        in: query
+        schema:
+          type: array
+          description: Filters users by their work status.
+          items:
+            $ref: '#/components/schemas/WorkStatus'
+          uniqueItems: true
+      - name: expensePolicyId
+        in: query
+        schema:
+          type: array
+          description: The IDs of the `ExpensePolicy` resources to search for.
+          example:
+          - XMPL1234-000001
+          - XMPL1234-000002
+          - XMPL1234-000003
+          items:
+            type: string
+            description: The IDs of the `ExpensePolicy` resources to search for.
+            example: '["XMPL1234-000001","XMPL1234-000002","XMPL1234-000003"]'
+      - name: excludeExpensePolicyId
+        in: query
+        schema:
+          type: array
+          description: The IDs of the `ExpensePolicy` resources to exclude. `User` resources with no `ExpensePolicy` assigned will be excluded.
+          example:
+          - XMPL1234-000001
+          - XMPL1234-000002
+          - XMPL1234-000003
+          items:
+            type: string
+            description: The IDs of the `ExpensePolicy` resources to exclude. `User` resources with no `ExpensePolicy` assigned will be excluded.
+            example: '["XMPL1234-000001","XMPL1234-000002","XMPL1234-000003"]'
+      - name: withoutExpensePolicy
+        in: query
+        schema:
+          type: boolean
+          description: Whether to search for `User` resources with no `ExpensePolicy` assigned.
+          example: true
+      - name: p
+        in: query
+        description: It indicates the specific page to display (the counter starts from zero).
+        schema:
+          type: integer
+          format: int32
+          default: 0
+          description: It indicates the specific page to display (the counter starts from zero).
+          example: 3
+        example: 3
+      - name: s
+        in: query
+        description: It indicates the number of items per page.
+        schema:
+          type: integer
+          format: int32
+          default: 0
+          description: It indicates the number of items per page.
+          example: 25
+          maximum: 50
+        example: 25
+      - name: d
+        in: query
+        description: It indicates how the pages are ordered.
+        schema:
+          $ref: '#/components/schemas/Direction'
+        example: DESC
+      - name: props
+        in: query
+        description: It indicates the sorting direction applied to the above parameters. To apply a sorting on multiple parameters, set as many times the `props` parameter in the request.
+        schema:
+          type: array
+          description: It indicates the sorting direction applied to the above parameters. To apply a sorting on multiple parameters, set as many times the `props` parameter in the request.
+          example: creationTime
+          items:
+            type: string
+            description: It indicates the sorting direction applied to the above parameters. To apply a sorting on multiple parameters, set as many times the `props` parameter in the request.
+            example: creationTime
+        example: creationTime
+      responses:
+        '200':
+          description: The result array contains `Users`.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Users'
+        '400':
+          description: Your request has missing arguments or is malformed.
+      security:
+      - standardAuth:
+        - employee_read
+  /business/v2/employees/{userId}/access-modes:
+    get:
+      tags:
+      - Users
+      summary: Retrieve User Access Modes
+      description: Endpoint to retrieve the `User` access modes.
+      operationId: user-access-modes-get
+      parameters:
+      - name: userId
+        in: path
+        required: true
+        schema:
+          type: string
+          description: The `User` ID.
+          example: XMPL1234-000001
+      - name: channel
+        in: query
+        schema:
+          $ref: '#/components/schemas/Channel'
+      responses:
+        '200':
+          description: The access modes configure for the given `User`.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserAccessModeList'
+        '404':
+          description: One or more resource requested does not exist.
+      security:
+      - standardAuth:
+        - employee_read
+    put:
+      tags:
+      - Users
+      summary: Update User Access Modes
+      description: Endpoint to update the `User` access modes.
+      operationId: user-access-modes-update
+      parameters:
+      - name: userId
+        in: path
+        required: true
+        schema:
+          type: string
+          description: The `User` ID.
+          example: XMPL1234-000001
+      - name: X-Soldo-Fingerprint
+        in: header
+        required: true
+        schema:
+          type: string
+          default: '{{fingerprint}}'
+          description: '[Advanced authentication](ref:advanced-authentication): `SHA512SUM` of the fingerprint values listed in the fingerprint order for this endpoint.'
+          example: '{{fingerprint}}'
+      - name: X-Soldo-Fingerprint-Signature
+        in: header
+        required: true
+        schema:
+          type: string
+          default: '{{fingerprint_signature}}'
+          description: '[Advanced authentication](ref:advanced-authentication): Signature of the `X-Soldo-Fingerprint`.'
+          example: '{{fingerprint_signature}}'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateUserAccessModes'
+      responses:
+        '204':
+          description: No content as result.
+        '400':
+          description: Your request has missing arguments or is malformed.
+        '404':
+          description: One or more resource requested does not exist.
+      security:
+      - standardAuth:
+        - employee_write
+      x-soldo:
+        fingerprint-order: request_timestamp, userId, token
+  /business/v2/employees/{userId}/status:
+    put:
+      tags:
+      - Users
+      summary: Update User Status
+      description: Endpoint to update an `User` status.
+      operationId: user-status-update
+      parameters:
+      - name: userId
+        in: path
+        required: true
+        schema:
+          type: string
+          description: The `User` ID.
+          example: XMPL1234-000001
+      - name: X-Soldo-Fingerprint
+        in: header
+        required: true
+        schema:
+          type: string
+          default: '{{fingerprint}}'
+          description: '[Advanced authentication](ref:advanced-authentication): `SHA512SUM` of the fingerprint values listed in the fingerprint order for this endpoint.'
+          example: '{{fingerprint}}'
+      - name: X-Soldo-Fingerprint-Signature
+        in: header
+        required: true
+        schema:
+          type: string
+          default: '{{fingerprint_signature}}'
+          description: '[Advanced authentication](ref:advanced-authentication): Signature of the `X-Soldo-Fingerprint`.'
+          example: '{{fingerprint_signature}}'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateUserStatus'
+      responses:
+        '200':
+          description: The returned result is a single `User`.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '400':
+          description: Your request has missing arguments or is malformed.
+        '404':
+          description: One or more resource requested does not exist.
+      security:
+      - standardAuth:
+        - employee_write
+      x-soldo:
+        fingerprint-order: userId, status, token
+components:
+  schemas:
+    UserItem:
+      properties:
+        id:
+          type: string
+          description: The `User` ID.
+          example: XMPL1234-000001
+        name:
+          type: string
+          description: 'The name of the `User` (sortable: yes).'
+          example: John
+        surname:
+          type: string
+          description: 'The surname of the `User` (sortable: yes).'
+          example: Smith
+        middlename:
+          type: string
+          description: 'The middlename of the `User` (sortable: no).'
+          example: John
+        dob:
+          type: string
+          description: The Date of birth of the `User`.
+          example: '1970-10-21'
+        job_title:
+          type: string
+          description: 'The job title of the `User` (sortable: yes).'
+          example: Business Strategist
+        department:
+          type: string
+          description: 'The department of the `User` (sortable: no).'
+          example: Research & Development
+        email:
+          type: string
+          description: 'The email address of the `User` (sortable: no).'
+          example: jdoe@fake.soldo.com
+        mobile:
+          type: string
+          description: 'The mobile number of the `User` including the country code (sortable: no).'
+          example: '+44123323232'
+        custom_reference_id:
+          type: string
+          description: 'The reference of the employee in an external system (sortable: yes).'
+          example: 123456-user-1
+        status:
+          $ref: '#/components/schemas/UserStatus'
+          description: 'The status of the `User` (sortable: yes).'
+          example: ACTIVE
+        visible:
+          type: boolean
+          description: 'It determines whether the `User` is visible in the web console (sortable: yes).'
+          example: true
+        groups:
+          type: array
+          description: 'The list of `Groups` ID the `User` is member of (sortable: no).'
+          example:
+          - 7bf79328-a7ae-4222-aa54-091ff7f429a7
+          - 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
+          items:
+            type: string
+        reports_to:
+          type: string
+          description: The ID of the `User` it reports to.
+          example: XMPL1234-000001
+        roles:
+          type: array
+          description: The list of `UserRole` of the `User`.
+          items:
+            $ref: '#/components/schemas/UserRole'
+        contact_id:
+          type: string
+          description: The ID of the `Contact` assigned to the `User`. This information can be updated from the [Add Contact](ref:contact-add) and [Update Contact](ref:contact-update) endpoints.
+          example: 135fdb6c-2e77-4fc0-a79f-2453fde75ef7
+        creation_time:
+          type: string
+          description: 'The date and time when the `User` was created (sortable: yes).'
+          example: '2017-06-01T12:48:40Z'
+        last_update:
+          type: string
+          description: 'The date and time when the `User` was last updated (sortable: yes).'
+          example: '2017-06-01T12:48:40Z'
+        work_status:
+          $ref: '#/components/schemas/WorkStatus'
+          description: The work status of the `User`.
+          example: OUT_OF_OFFICE
+    UpdateUserStatus:
+      description: Update `User` status JSON parameters.
+      properties:
+        status:
+          $ref: '#/components/schemas/UpdatableUserStatus'
+          description: The new `User` status.
+          example: ACTIVE
+        credentialResetMode:
+          $ref: '#/components/schemas/CredentialResetMode'
+          default: NONE
+          description: How to reset credentials of the `User` being activated.
+          example: WEB_AND_MOBILE
+      required:
+      - status
+    UserRole:
+      properties:
+        id:
+          type: string
+          description: The ID of the `UserRole`.
+          example: superAdmin
+        name:
+          type: string
+          description: The name of the `UserRole`.
+          example: superAdmin
+        description:
+          type: string
+          description: The description of the `UserRole`.
+          example: The SuperAdmin role
+        scope:
+          type: string
+          description: The scope of the `UserRole`.
+          example: ALL
+    UpdateUser:
+      description: Update `User` JSON parameters.
+      properties:
+        job_title:
+          type: string
+          description: The job title of the `User`.
+          example: Business Strategist
+        mobile_number:
+          type: string
+          description: The mobile number of the `User` including the country code.
+          example: '+44123323232'
+        mobile_prefix:
+          type: string
+          description: The mobile number country code, it must be the same included in the `mobile_number` field
+          example: '+44'
+        email:
+          type: string
+          description: The email of the `User` it is required for web credentials.
+          example: jdoe@fake.soldo.com
+        enable_mobile_credential:
+          type: boolean
+          description: True if the `User` has the mobile access enabled.
+          example: true
+        enable_web_credential:
+          type: boolean
+          description: True if the `User` has the web access enabled.
+          example: false
+        custom_reference_id:
+          type: string
+          description: The `User` reference in an external system.
+          example: 123456-user-1
+        reports_to:
+          type: string
+          description: 'The ID of the `User` it reports to. In order to remove a previously set value, the field should be included in the payload as an empty string `"reports_to"`: `""`.'
+          example: XMPL1234-000001
+        skip_credential_notification:
+          type: boolean
+          description: Avoid to notify user upon credential status change driven by `enable_mobile_credential` or `enable_web_credential` flags.
+          example: true
+    UserAccessModeList:
+      properties:
+        user_access_mode:
+          type: array
+          items:
+            $ref: '#/components/schemas/UserAccessMode'
+    CredentialResetMode:
+      type: string
+      enum:
+      - NONE
+      - WEB
+      - MOBILE
+      - MOBILE_AND_WEB
+    UpdateUserAccessModes:
+      description: Update `User` access JSON parameters.
+      properties:
+        request_timestamp:
+          type: integer
+          format: int64
+          description: The epoch timestamp in millis. This is checked in Soldo. Requests with timestamp older than 5 seconds will be rejected.
+          example: 1576850500000
+        access_modes:
+          type: array
+          description: The access modes to apply to the given `User`.
+          items:
+            $ref: '#/components/schemas/UserAccessMode'
+        skip_credential_notification:
+          type: boolean
+          default: 'true'
+          description: Avoid to notify user upon credential status change driven by `access_modes` field.
+          example: true
+      required:
+      - access_modes
+      - request_timestamp
+    Address:
+      properties:
+        id:
+          type: string
+          description: The `Address` ID.
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+        recipient:
+          type: string
+          description: The recipient of the `Address`
+          example: JohnSmith
+        name:
+          type: string
+          description: The actual name of the `Address`.
+          example: Foo Street 75
+        line1:
+          type: string
+          description: The `Address` street.
+          example: Bar Street 64
+        line2:
+          type: string
+          description: An optional other street.
+          example: Other street 31
+        country:
+          type: string
+          description: The country of the `Address`.
+          example: GB
+        county:
+          type: string
+          description: The county of the `Address`.
+          example: LD
+        city:
+          type: string
+          description: The city of the `Address`.
+          example: London
+        post_code:
+          type: string
+          description: The postal code of the `Address`.
+          example: '00000'
+        delivery_phone_number:
+          type: string
+          description: Delivery phone number
+          example: '+441234567890'
+        default_shipping:
+          type: boolean
+          description: True if the `Address` is the default shipping address.
+          example: false
+        type:
+          type: string
+          description: The type of the `Address`.
+          example: SHIPPING
+        category:
+          $ref: '#/components/schemas/AddressCategory'
+          description: The category of the `Address`.
+          example: COMPANY
+        user_id:
+          type: string
+          description: The `User` ID, only if category of the `Address` is `USER`.
+        creation_time:
+          type: string
+          description: The date and time when the `Address` was created.
+          example: '2017-06-01T12:48:40Z'
+        last_update:
+          type: string
+          description: The date and time when the `Address` was last updated.
+          example: '2017-06-01T12:48:40Z'
+    CreateUser:
+      properties:
+        request_timestamp:
+          type: integer
+          format: int64
+          description: The epoch timestamp in millis. This is checked in Soldo. Requests with timestamp older than 5 seconds will be rejected.
+          example: 1576850500000
+        name:
+          type: string
+          description: The name of the `User`.
+          example: John
+        middlename:
+          type: string
+          description: The middle name of the `User`.
+          example: John
+        surname:
+          type: string
+          description: The surname of the `User`.
+          example: Smith
+        job_title:
+          type: string
+          description: The job title of the `User`.
+          example: Business Strategist
+        email:
+          type: string
+          description: The email address of the `User`.
+          example: jdoe@fake.soldo.com
+        mobile:
+          type: string
+          description: The mobile number of the `User`.
+          example: '+44123323232'
+        mobile_prefix:
+          type: string
+          description: The mobile number country prefix (e.g. +44).
+          example: '+44'
+        mobile_access:
+          type: boolean
+          default: 'false'
+          description: It determines whether the `User` has mobile access.
+          example: true
+        web_access:
+          type: boolean
+          default: 'false'
+          description: It determines whether the `User` has web access.
+          example: true
+        custom_reference_id:
+          type: string
+          description: The `User` reference in an external system.
+          example: 123456-user-1
+        reports_to:
+          type: string
+          description: The ID of the `User` they report to.
+          example: XMPL1234-000001
+        status:
+          $ref: '#/components/schemas/UpdatableUserStatus'
+          default: ACTIVE
+          description: The status of the `User` being created.
+          example: ACTIVE
+      required:
+      - mobile
+      - mobile_access
+      - mobile_prefix
+      - name
+      - request_timestamp
+      - surname
+      - web_access
+    UserAccessMode:
+      properties:
+        channel:
+          $ref: '#/components/schemas/Channel'
+          description: The channel for which the access mode applies.
+          example: WEB
+        auth_mode:
+          $ref: '#/components/schemas/UserAuthMode'
+          description: The authentication mode required for the `User` while accessing from the given channel.
+          example: SSO
+      required:
+      - auth_mode
+      - channel
+    Direction:
+      type: string
+      description: It indicates how the pages are ordered.
+      enum:
+      - ASC
+      - DESC
+      example: DESC
+    WorkStatus:
+      type: string
+      enum:
+      - AVAILABLE
+      - OUT_OF_OFFICE
+    Channel:
+      type: string
+      enum:
+      - WEB
+      - MOBILE
+    UpdatableUserStatus:
+      type: string
+      enum:
+      - ACTIVE
+      - INACTIVE
+    User:
+      properties:
+        id:
+          type: string
+          description: The `User` ID.
+          example: XMPL1234-000001
+        name:
+          type: string
+          description: 'The name of the `User` (sortable: yes).'
+          example: John
+        surname:
+          type: string
+          description: 'The surname of the `User` (sortable: yes).'
+          example: Smith
+        middlename:
+          type: string
+          description: 'The middlename of the `User` (sortable: no).'
+          example: John
+        dob:
+          type: string
+          description: The Date of birth of the `User`.
+          example: '1970-10-21'
+        job_title:
+          type: string
+          description: 'The job title of the `User` (sortable: yes).'
+          example: Business Strategist
+        department:
+          type: string
+          description: 'The department of the `User` (sortable: no).'
+          example: Research & Development
+        email:
+          type: string
+          description: 'The email address of the `User` (sortable: no).'
+          example: jdoe@fake.soldo.com
+        mobile:
+          type: string
+          description: 'The mobile number of the `User` including the country code (sortable: no).'
+          example: '+44123323232'
+        mobile_prefix:
+          type: string
+          description: 'The mobile number country code (sortable: no).'
+          example: '+44'
+        custom_reference_id:
+          type: string
+          description: 'The reference of the employee in an external system (sortable: yes).'
+          example: 123456-user-1
+        status:
+          $ref: '#/components/schemas/UserStatus'
+          description: 'The status of the `User` (sortable: yes).'
+          example: ACTIVE
+        visible:
+          type: boolean
+          description: 'It determines whether the `User` is visible in the web console (sortable: yes).'
+          example: true
+        mobile_access:
+          type: boolean
+          description: 'It determines whether the `User` has mobile access (sortable: no).'
+          example: true
+        web_access:
+          type: boolean
+          description: 'It determines whether the `User` has web access (sortable: no).'
+          example: true
+        groups:
+          type: array
+          description: 'The list of `Groups` ID the `User` is member of (sortable: no).'
+          example:
+          - 7bf79328-a7ae-4222-aa54-091ff7f429a7
+          - 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
+          items:
+            type: string
+        shipping_address:
+          $ref: '#/components/schemas/Address'
+          description: The default shipping `Address` of the `User`.
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+        reports_to:
+          type: string
+          description: The ID of the `User` it reports to.
+          example: XMPL1234-000001
+        roles:
+          type: array
+          description: The list of `UserRole` of the `User`.
+          items:
+            $ref: '#/components/schemas/UserRole'
+        contact_id:
+          type: string
+          description: The ID of the `Contact` assigned to the `User`. This information can be updated from the [Add Contact](ref:contact-add) and [Update Contact](ref:contact-update) endpoints.
+          example: 135fdb6c-2e77-4fc0-a79f-2453fde75ef7
+        creation_time:
+          type: string
+          description: 'The date and time when the `User` was created (sortable: yes).'
+          example: '2017-06-01T12:48:40Z'
+        last_update:
+          type: string
+          description: 'The date and time when the `User` was last updated (sortable: yes).'
+          example: '2017-06-01T12:48:40Z'
+        work_status:
+          $ref: '#/components/schemas/WorkStatus'
+          description: The work status of the `User`.
+          example: OUT_OF_OFFICE
+    UserAuthMode:
+      type: string
+      enum:
+      - SOLDO
+      - SSO
+    AddressCategory:
+      type: string
+      enum:
+      - USER
+      - COMPANY
+    UserStatus:
+      type: string
+      enum:
+      - ACTIVE
+      - INACTIVE
+      - BLOCKED
+      - SUSPENDED
+      - PENDING
+      - ARCHIVED
+    Users:
+      properties:
+        total:
+          type: integer
+          format: int32
+          description: It represents the total number of available items in the list.
+          example: 168
+        pages:
+          type: integer
+          format: int32
+          description: It represents the total number of available pages.
+          example: 7
+        page_size:
+          type: integer
+          format: int32
+          description: It represents the number of items per page.
+          example: 25
+        current_page:
+          type: integer
+          format: int32
+          description: It indicates the current page (the counter starts from zero).
+          example: 0
+        results_size:
+          type: integer
+          format: int32
+          description: It indicates the size of the array results.
+          example: 25
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/UserItem'
+  securitySchemes:
+    standardAuth:
+      type: oauth2
+      description: This API uses OAuth 2 with the "Client Credentials" grant flow.
+      flows:
+        clientCredentials:
+          tokenUrl: https://api.soldo.com/oauth/authorize
+          refreshUrl: https://api.soldo.com/oauth/refresh
+          scopes:
+            address_read: Can read address details.
+            address_write: Can update address details.
+            card_read: Can read card details.
+            card_write: Can change card details.
+            company_read: Can read company details.
+            company_write: Can change company details.
+            contact_read: Can read contact details.
+            contact_write: Can change contact details.
+            employee_read: Can read employee details.
+            employee_write: Can change employee details.
+            expense_category_read: Can read expense category details.
+            expense_category_write: Can change expense category details.
+            expense_report_read: Can read expense report details.
+            expense_report_write: Can change expense report details.
+            expense_review_read: Can read expense review status.
+            expense_review_write: Can change expense review status.
+            group_read: Can read group details.
+            group_write: Can change groups details.
+            online_ads_read: Can read online ads details.
+            online_ads_write: Can change online ads details.
+            payment_read: Can read payment details.
+            payment_write: Can change payment details.
+            purchase_read: Can read purchase details.
+            purchase_write: Can change purchase details.
+            refueling_read: Can read refueling details.
+            refueling_write: Can change refueling details.
+            resource_set_read: Can read resource set details.
+            resource_set_write: Can change resource set details.
+            role_read: Can read role details.
+            statement_read: Can read statement details.
+            subscription_read: Can read subscription details.
+            subscription_write: Can change subscription details.
+            tag_read: Can read tags.
+            tag_write: can change tags.
+            tax_rate_read: Can read vat rate details.
+            tax_rate_write: Can change vat rate details.
+            transaction_read: Can read transaction details.
+            transaction_write: Can change transaction details.
+            vehicle_read: Can read vehicle details.
+            vehicle_write: Can change vehicle details.
+            wallet_read: Can read wallet details.
+            wallet_write: Can change wallet details.
+            webhook_subscription_read: Can read webhook subscription details.
+            webhook_subscription_write: Can change webhook subscription details.
+x-readme:
+  hidden: false

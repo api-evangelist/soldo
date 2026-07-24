@@ -1,0 +1,656 @@
+openapi: 3.1.0
+info:
+  title: Soldo Business API v2.0 Accounting Classification Expense Review Processes API
+  description: Soldo Business API v2.0 OpenAPI specification
+  version: 5.56.0
+servers:
+- url: https://api.soldo.com
+  description: Production server (using live data)
+- url: https://api-demo.soldocloud.net
+  description: Sandbox server (using test data)
+tags:
+- name: Expense Review Processes
+paths:
+  /business/v2/expense-review/processes:
+    get:
+      tags:
+      - Expense Review Processes
+      summary: Search Expense Review Processes
+      description: Endpoint to search `ExpenseReviewProcesses`.
+      operationId: expense-review-processes-search
+      parameters:
+      - name: status
+        in: query
+        description: The status of the `ExpenseReviewProcess`.
+        schema:
+          type: array
+          description: The status of the `ExpenseReviewProcess`.
+          items:
+            $ref: '#/components/schemas/ExpenseReviewProcessStatusSearch'
+        example: ACTIVE
+      - name: text
+        in: query
+        description: A simple text to search `ExpenseReviewProcess` by `name` or `description`.
+        schema:
+          type: string
+          description: A simple text to search `ExpenseReviewProcess` by `name` or `description`.
+          example: EXPENSE REVIEW PROCESS
+        example: EXPENSE REVIEW PROCESS
+      - name: p
+        in: query
+        description: '0'
+        schema:
+          type: integer
+          format: int32
+          default: 0
+          description: It indicates the specific page to display (the counter starts from zero).
+          example: 3
+        example: 3
+      - name: s
+        in: query
+        description: It indicates the number of items per page.
+        schema:
+          type: integer
+          format: int32
+          default: 0
+          description: It indicates the number of items per page.
+          example: 25
+          maximum: 50
+        example: 25
+      - name: props
+        in: query
+        schema:
+          type: array
+          description: It indicates the sorting direction applied to the above parameters. To apply a sorting on multiple parameters, set as many times the `props` parameter in the request.
+          example: creationTime
+          items:
+            type: string
+            description: It indicates the sorting direction applied to the above parameters. To apply a sorting on multiple parameters, set as many times the `props` parameter in the request.
+            example: creationTime
+      responses:
+        '200':
+          description: The result is an array containing `ExpenseReviewProcesses`.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExpenseReviewProcesses'
+        '400':
+          description: Your request has missing arguments or is malformed.
+      security:
+      - standardAuth:
+        - expense_review_read
+    post:
+      tags:
+      - Expense Review Processes
+      summary: Add Expense Review Process
+      description: Endpoint to add an `ExpenseReviewProcess`.
+      operationId: expense-review-process-add
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateExpenseReviewProcess'
+      responses:
+        '200':
+          description: The result is a single `ExpenseReviewProcess`.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExpenseReviewProcess'
+        '400':
+          description: Your request has missing arguments or is malformed.
+        '404':
+          description: One or more resource requested does not exist.
+      security:
+      - standardAuth:
+        - expense_review_write
+  /business/v2/expense-review/processes/priority:
+    post:
+      tags:
+      - Expense Review Processes
+      summary: Change Expense Review Processes Priority
+      description: Endpoint to change the `ExpenseReviewProcess` order of priority.
+      operationId: expense-review-process-priority-change
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ExpenseReviewProcessPriority'
+      responses:
+        '204':
+          description: No content as result.
+        '400':
+          description: Your request has missing arguments or is malformed.
+        '404':
+          description: One or more resource requested does not exist.
+      security:
+      - standardAuth:
+        - expense_review_write
+  /business/v2/expense-review/processes/{processId}:
+    get:
+      tags:
+      - Expense Review Processes
+      summary: Get Expense Review Process
+      description: Endpoint to get the `ExpenseReviewProcess`.
+      operationId: expense-review-process-get
+      parameters:
+      - name: processId
+        in: path
+        required: true
+        schema:
+          type: string
+          description: The `ExpenseReviewProcess` ID.
+          example: ' 2d9f6514-4004-4122-b7f2-dcf7e034741c'
+      responses:
+        '200':
+          description: The result is a single `ExpenseReviewProcess`.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExpenseReviewProcess'
+        '404':
+          description: One or more resource requested does not exist.
+      security:
+      - standardAuth:
+        - expense_review_read
+    put:
+      tags:
+      - Expense Review Processes
+      summary: Update Expense Review Process
+      description: Be aware that any change made on the steps of an `ExpenseReviewProcess` configuration is not applied to already existing transactions. If you need to apply the changes to already existing transactions, you can use the [Recalculate Expense Review Processes](ref:expense-review-process-recalculate) endpoint. Also, the object returned upon update might have a different ID.
+      operationId: expense-review-process-update
+      parameters:
+      - name: processId
+        in: path
+        required: true
+        schema:
+          type: string
+          description: The `ExpenseReviewProcess` ID.
+          example: ' 2d9f6514-4004-4122-b7f2-dcf7e034741c'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateExpenseReviewProcess'
+      responses:
+        '200':
+          description: The result is a single `ExpenseReviewProcess`.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExpenseReviewProcess'
+        '400':
+          description: Your request has missing arguments or is malformed.
+        '404':
+          description: One or more resource requested does not exist.
+      security:
+      - standardAuth:
+        - expense_review_write
+    delete:
+      tags:
+      - Expense Review Processes
+      summary: Delete Expense Review Process
+      description: Endpoint to delete a `ExpenseReviewProcess`.
+      operationId: expense-review-process-delete
+      parameters:
+      - name: processId
+        in: path
+        required: true
+        schema:
+          type: string
+          description: The `ExpenseReviewProcess` ID.
+          example: ' 2d9f6514-4004-4122-b7f2-dcf7e034741c'
+      responses:
+        '204':
+          description: No content as result.
+        '404':
+          description: One or more resource requested does not exist.
+      security:
+      - standardAuth:
+        - expense_review_write
+  /business/v2/expense-review/processes/recalculate:
+    post:
+      tags:
+      - Expense Review Processes
+      summary: 'Recalculate Expense Review Process '
+      description: Endpoint to recalculate the `ExpenseReviewProcess` a transaction is included into. This is particularly useful in case a change made on an `ExpenseReviewProcess` configuration should be applied to already existing transactions. In case a recalculated transaction is included into the same `ExpenseReviewProcess`, the transaction will remain assigned to the same approval step. This endpoint supports up to 100 transactions per single request.
+      operationId: expense-review-process-recalculate
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RecalculateExpenseReviewProcess'
+      responses:
+        '204':
+          description: No content as result.
+        '400':
+          description: Your request has missing arguments or is malformed.
+        '404':
+          description: One or more resource requested does not exist.
+      security:
+      - standardAuth:
+        - expense_review_write
+  /business/v2/expense-review/processes/{processId}/status:
+    put:
+      tags:
+      - Expense Review Processes
+      summary: Update Expense Review Process Status
+      description: Endpoint to update a specific `ExpenseReviewProcess` status.
+      operationId: expense-review-process-status-update
+      parameters:
+      - name: processId
+        in: path
+        required: true
+        schema:
+          type: string
+          description: The `ExpenseReviewProcess` ID.
+          example: ' 2d9f6514-4004-4122-b7f2-dcf7e034741c'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateExpenseReviewProcessStatus'
+      responses:
+        '200':
+          description: The result is a single `ExpenseReviewProcess`.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExpenseReviewProcess'
+        '400':
+          description: Your request has missing arguments or is malformed.
+        '404':
+          description: One or more resource requested does not exist.
+      security:
+      - standardAuth:
+        - expense_review_write
+components:
+  schemas:
+    ExpenseReviewProcessChangeStatus:
+      type: string
+      enum:
+      - ACTIVE
+      - INACTIVE
+    ExpenseReviewProcessComparator:
+      type: string
+      enum:
+      - HIGHER_EQUAL
+      - LOWER_EQUAL
+    ExpenseReviewProcessStepStatus:
+      type: string
+      enum:
+      - APPROVED
+      - PARTIALLY_APPROVED
+      - DECLINED
+    CreateExpenseReviewProcess:
+      description: Create `ExpenseReviewProcess` JSON parameters.
+      properties:
+        name:
+          type: string
+          description: The name of the `ExpenseReviewProcess`.
+          example: EXPENSE REVIEW PROCESS
+        description:
+          type: string
+          description: The description of the `ExpenseReviewProcess`.
+          example: EXPENSE REVIEW PROCESS DESCRIPTION
+        conditions:
+          type: array
+          description: The conditions a transaction needs to match in order to be included in the `ExpenseReviewProcess`.
+          items:
+            $ref: '#/components/schemas/ExpenseReviewProcessCondition'
+        steps:
+          type: array
+          description: The approval steps a transaction needs to go through in order to be reviewed.
+          items:
+            $ref: '#/components/schemas/ExpenseReviewProcessStep'
+      required:
+      - conditions
+      - description
+      - name
+      - steps
+    ExpenseReviewProcesses:
+      properties:
+        total:
+          type: integer
+          format: int32
+          description: It represents the total number of available items in the list.
+          example: 168
+        pages:
+          type: integer
+          format: int32
+          description: It represents the total number of available pages.
+          example: 7
+        page_size:
+          type: integer
+          format: int32
+          description: It represents the number of items per page.
+          example: 25
+        current_page:
+          type: integer
+          format: int32
+          description: It indicates the current page (the counter starts from zero).
+          example: 0
+        results_size:
+          type: integer
+          format: int32
+          description: It indicates the size of the array results.
+          example: 25
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/ExpenseReviewProcessItems'
+    ExpenseReviewProcessItems:
+      properties:
+        id:
+          type: string
+          description: The `ExpenseReviewProcess` ID.
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+        name:
+          type: string
+          description: 'The name of the `ExpenseReviewProcess` (sortable: yes).'
+          example: EXPENSE REVIEW PROCESS
+        description:
+          type: string
+          description: A textual description of the `ExpenseReviewProcess`.
+          example: EXPENSE REVIEW PROCESS DESCRIPTION
+        steps_count:
+          type: integer
+          format: int32
+          description: The total number of approval steps.
+          example: 2
+        priority:
+          type: integer
+          format: int32
+          description: 'The order of priority in which the `ExpenseReviewProcess` will be executed (sortable: yes).'
+          example: 2
+        status:
+          $ref: '#/components/schemas/ExpenseReviewProcessStatus'
+          description: 'The status of the `ExpenseReviewProcess` (sortable: yes).'
+          example: ACTIVE
+    ExpenseReviewProcessStep:
+      properties:
+        step_number:
+          type: integer
+          format: int32
+          default: '1'
+          description: A number which identifies the order of the step. The first step should start with `1`, the following steps number should be previous `step_number + 1` without any gap.
+          example: 2
+          minimum: 1
+        reviewer_type:
+          $ref: '#/components/schemas/ExpenseReviewProcessReviewerType'
+          description: The type of reviewer who can review this step.
+          example: USER
+        reviewer_info:
+          $ref: '#/components/schemas/ExpenseReviewProcessReviewerInfo'
+          description: One or more IDs to identify who can review this step (only required in case of reviewer of type `ROLE` and `USER`).
+        automation_rule:
+          $ref: '#/components/schemas/ExpenseReviewProcessAutomationRule'
+          description: An automation to automatically review the step when certain conditions are met.
+      required:
+      - reviewer_type
+      - step_number
+    RecalculateExpenseReviewProcess:
+      description: Recalculate `ExpenseReviewProcess` JSON parameters.
+      properties:
+        transaction_ids:
+          type: array
+          description: A list of transaction IDs for which the `ExpenseReviewProcess` they’re included into should be recalculated.
+          example:
+          - 7bf79328-a7ae-4222-aa54-091ff7f429a7
+          - 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
+          items:
+            type: string
+      required:
+      - transaction_ids
+    UpdateExpenseReviewProcess:
+      description: Update ExpenseReviewProcessStatus JSON parameters.
+      properties:
+        name:
+          type: string
+          description: The name of the `ExpenseReviewProcess`.
+          example: EXPENSE REVIEW PROCESS
+        description:
+          type: string
+          description: The description of the `ExpenseReviewProcess`.
+          example: EXPENSE REVIEW PROCESS DESCRIPTION
+        conditions:
+          type: array
+          description: The conditions a transaction needs to match in order to be included in the `ExpenseReviewProcess`.
+          items:
+            $ref: '#/components/schemas/ExpenseReviewProcessCondition'
+        steps:
+          type: array
+          description: The approval steps a transaction needs to go through in order to be reviewed.
+          items:
+            $ref: '#/components/schemas/ExpenseReviewProcessStep'
+      required:
+      - conditions
+      - description
+      - name
+      - steps
+    UpdateExpenseReviewProcessStatus:
+      description: Update ExpenseReviewProcessStatus JSON parameters.
+      properties:
+        status:
+          $ref: '#/components/schemas/ExpenseReviewProcessChangeStatus'
+          description: The status of the `ExpenseReviewProcess`.
+          example: ACTIVE
+      required:
+      - status
+    ExpenseReviewProcessReviewerType:
+      type: string
+      enum:
+      - LINE_MANAGER
+      - ROLE
+      - USER
+    ExpenseReviewProcess:
+      properties:
+        id:
+          type: string
+          description: The `ExpenseReviewProcess` id.
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+        name:
+          type: string
+          description: The name of the`ExpenseReviewProcess`.
+          example: EXPENSE REVIEW PROCESS
+        description:
+          type: string
+          description: A textual description of the `ExpenseReviewProcess`.
+          example: EXPENSE REVIEW PROCESS DESCRIPTION
+        steps_count:
+          type: integer
+          format: int32
+          description: The total number of approval steps.
+          example: 2
+        priority:
+          type: integer
+          format: int32
+          description: The order of priority in which the `ExpenseReviewProcess` will be executed.
+          example: 2
+        status:
+          $ref: '#/components/schemas/ExpenseReviewProcessStatus'
+          description: The status of `ExpenseReviewProcess`.
+          example: ACTIVE
+        conditions:
+          type: array
+          description: The conditions a transaction needs to match in order to be included in the `ExpenseReviewProcess`.
+          items:
+            $ref: '#/components/schemas/ExpenseReviewProcessCondition'
+        steps:
+          type: array
+          description: The approval steps a transaction needs to go through in order to be reviewed.
+          items:
+            $ref: '#/components/schemas/ExpenseReviewProcessStep'
+      required:
+      - conditions
+      - description
+      - name
+      - status
+      - steps
+      - steps_count
+    ExpenseReviewProcessConditionType:
+      type: string
+      enum:
+      - COMPANY_CARD
+      - COMPANY_WALLET
+      - EXPENSE_CATEGORY
+      - EXPENSE_TYPE
+      - MAIN_WALLET
+      - ONLINE_ADS_CARD
+      - OUT_OF_PLATFORM_COMPANY
+      - OUT_OF_PLATFORM_PERSONAL
+      - PURCHASE
+      - SUBSCRIPTION_CARD
+      - TAG
+      - USER
+      - USER_CARD
+    ExpenseReviewProcessPriority:
+      description: Change `ExpenseReviewProcess` priority JSON parameters.
+      properties:
+        priorities:
+          type: array
+          description: A list of `ExpenseReviewProcesses` for which the priority should be updated with their new priority.
+          items:
+            $ref: '#/components/schemas/ExpenseReviewProcessPriorities'
+      required:
+      - priorities
+    ExpenseReviewProcessStatusSearch:
+      type: string
+      description: The status of the `ExpenseReviewProcess`.
+      enum:
+      - ACTIVE
+      - INACTIVE
+    ExpenseReviewProcessPriorities:
+      properties:
+        new_priority:
+          type: number
+          default: '1'
+          description: The new order of priority in which the `ExpenseReviewProcess` will be executed.
+          example: 2
+          minimum: 1
+        process_id:
+          type: string
+          description: The ID of the `ExpenseReviewProcess` for which the priority should be updated.
+          example: 135fdb6c-2e77-4fc0-a79f-2453fde75ef7
+      required:
+      - new_priority
+      - process_id
+    ExpenseReviewProcessCondition:
+      properties:
+        type:
+          $ref: '#/components/schemas/ExpenseReviewProcessConditionType'
+          description: The type of the condition.
+          example: USER
+        value:
+          type: array
+          description: 'One or more values which identify the type of condition. In case of type `OUT_OF_PLATFORM_COMPANY`, `OUT_OF_PLATFORM_PERSONAL` and `PURCHASE` the value must be `ALL`. In case of `EXPENSE_TYPE` the accepted values are: `COMPANY`, `PERSONAL`, `TRAVEL_AND_ENTERTAINMENT`. In case of `ONLINE_ADS_CARD` and `SUBSCRIPTION_CARD` it’s the ID of the corresponding card. In all the other cases it’s the public ID of the resource as returned by the corresponding endpoint.'
+          example:
+          - 7bf79328-a7ae-4222-aa54-091ff7f429a7
+          - 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
+          items:
+            type: string
+      required:
+      - type
+      - value
+    ExpenseReviewProcessAmountCondition:
+      properties:
+        amount:
+          type: number
+          description: The amount a transaction must exceed / not exceed in order to satisfy the condition.
+          example: 10.25
+        operator:
+          $ref: '#/components/schemas/ExpenseReviewProcessComparator'
+          description: The logical operator to be used in relationship to the transaction amount.
+          example: LOWER_EQUAL
+      required:
+      - amount
+      - operator
+    ExpenseReviewProcessStatus:
+      type: string
+      enum:
+      - ACTIVE
+      - INACTIVE
+    ExpenseReviewProcessAutomationRule:
+      properties:
+        expense_status:
+          $ref: '#/components/schemas/ExpenseReviewProcessStepStatus'
+          description: The status of the expense in case the conditions of the automation rules are satisfied.
+          example: PARTIALLY_APPROVED
+        required_info:
+          type: boolean
+          default: 'false'
+          description: A boolean to define whether a transaction should have all the required info (as defined on the Reminders feature) completed.
+          example: true
+        amount_condition:
+          $ref: '#/components/schemas/ExpenseReviewProcessAmountCondition'
+          description: A condition based on the transaction amount.
+      required:
+      - expense_status
+      - required_info
+    ExpenseReviewProcessReviewerInfo:
+      properties:
+        id:
+          type: array
+          description: The ID of the reviewer as returned by the corresponding endpoint (only required in case of reviewer of type `ROLE` and `USER`).
+          example:
+          - 7bf79328-a7ae-4222-aa54-091ff7f429a7
+          - 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
+          items:
+            type: string
+      required:
+      - id
+  securitySchemes:
+    standardAuth:
+      type: oauth2
+      description: This API uses OAuth 2 with the "Client Credentials" grant flow.
+      flows:
+        clientCredentials:
+          tokenUrl: https://api.soldo.com/oauth/authorize
+          refreshUrl: https://api.soldo.com/oauth/refresh
+          scopes:
+            address_read: Can read address details.
+            address_write: Can update address details.
+            card_read: Can read card details.
+            card_write: Can change card details.
+            company_read: Can read company details.
+            company_write: Can change company details.
+            contact_read: Can read contact details.
+            contact_write: Can change contact details.
+            employee_read: Can read employee details.
+            employee_write: Can change employee details.
+            expense_category_read: Can read expense category details.
+            expense_category_write: Can change expense category details.
+            expense_report_read: Can read expense report details.
+            expense_report_write: Can change expense report details.
+            expense_review_read: Can read expense review status.
+            expense_review_write: Can change expense review status.
+            group_read: Can read group details.
+            group_write: Can change groups details.
+            online_ads_read: Can read online ads details.
+            online_ads_write: Can change online ads details.
+            payment_read: Can read payment details.
+            payment_write: Can change payment details.
+            purchase_read: Can read purchase details.
+            purchase_write: Can change purchase details.
+            refueling_read: Can read refueling details.
+            refueling_write: Can change refueling details.
+            resource_set_read: Can read resource set details.
+            resource_set_write: Can change resource set details.
+            role_read: Can read role details.
+            statement_read: Can read statement details.
+            subscription_read: Can read subscription details.
+            subscription_write: Can change subscription details.
+            tag_read: Can read tags.
+            tag_write: can change tags.
+            tax_rate_read: Can read vat rate details.
+            tax_rate_write: Can change vat rate details.
+            transaction_read: Can read transaction details.
+            transaction_write: Can change transaction details.
+            vehicle_read: Can read vehicle details.
+            vehicle_write: Can change vehicle details.
+            wallet_read: Can read wallet details.
+            wallet_write: Can change wallet details.
+            webhook_subscription_read: Can read webhook subscription details.
+            webhook_subscription_write: Can change webhook subscription details.
+x-readme:
+  hidden: false

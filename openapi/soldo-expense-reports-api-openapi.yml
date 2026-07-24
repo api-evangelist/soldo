@@ -1,0 +1,448 @@
+openapi: 3.1.0
+info:
+  title: Soldo Business API v2.0 Accounting Classification Expense Reports API
+  description: Soldo Business API v2.0 OpenAPI specification
+  version: 5.56.0
+servers:
+- url: https://api.soldo.com
+  description: Production server (using live data)
+- url: https://api-demo.soldocloud.net
+  description: Sandbox server (using test data)
+tags:
+- name: Expense Reports
+paths:
+  /business/v2/expense-reports/{expenseReportId}:
+    get:
+      tags:
+      - Expense Reports
+      summary: Get Expense Report
+      description: Endpoint to get a specific  `ExpenseReport` by ID.
+      operationId: expense-report-get
+      parameters:
+      - name: expenseReportId
+        in: path
+        required: true
+        schema:
+          type: string
+          description: The `ExpenseReport` ID.
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+      responses:
+        '200':
+          description: The result is a single  `ExpenseReport`.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExpenseReport'
+        '404':
+          description: One or more resource requested does not exist.
+      security:
+      - standardAuth:
+        - expense_report_read
+    put:
+      tags:
+      - Expense Reports
+      summary: Update Expense Report
+      description: Endpoint to update a specific `ExpenseReport`.
+      operationId: expense-report-update
+      parameters:
+      - name: expenseReportId
+        in: path
+        required: true
+        schema:
+          type: string
+          description: The `ExpenseReport` ID .
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateExpenseReport'
+      responses:
+        '200':
+          description: The returned resource is a single `ExpenseReport`.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExpenseReport'
+        '400':
+          description: Your request has missing arguments or is malformed.
+      security:
+      - standardAuth:
+        - expense_report_write
+    delete:
+      tags:
+      - Expense Reports
+      summary: Delete Expense Report
+      description: Endpoint to delete a specific `ExpenseReport`.
+      operationId: expense-report-delete
+      parameters:
+      - name: expenseReportId
+        in: path
+        required: true
+        schema:
+          type: string
+          description: The `ExpenseReport` ID.
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+      responses:
+        '204':
+          description: No content as result.
+        '400':
+          description: Your request has missing arguments or is malformed.
+      security:
+      - standardAuth:
+        - expense_report_write
+  /business/v2/expense-reports/{expenseReportId}/download:
+    get:
+      tags:
+      - Expense Reports
+      summary: Download Expense Report
+      description: Endpoint to download `ExpenseReport` by ID.
+      operationId: expense-report-download
+      parameters:
+      - name: expenseReportId
+        in: path
+        required: true
+        schema:
+          type: string
+          description: The `ExpenseReport` ID .
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+      - name: fileType
+        in: query
+        description: The `ExpenseReport` file type.
+        schema:
+          $ref: '#/components/schemas/ExpenseReportFileType'
+        example: PDF
+      responses:
+        '200':
+          description: The result is a URL to download `ExpenseReport`.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExpenseReportDownload'
+        '400':
+          description: Your request has missing arguments or is malformed.
+      security:
+      - standardAuth:
+        - expense_report_read
+  /business/v2/expense-reports:
+    get:
+      tags:
+      - Expense Reports
+      summary: Search Expense Reports
+      description: Endpoint to search `ExpenseReport` using filtering parameters.
+      operationId: expense-report-search
+      parameters:
+      - name: number
+        in: query
+        description: The `ExpenseReport` number.
+        schema:
+          type: string
+          description: The `ExpenseReport` number.
+          example: NR9912098
+        example: NR9912098
+      - name: trxOwnerId
+        in: query
+        description: The ID of the `User` who made the expenses included in the `ExpenseReport`.
+        schema:
+          type: string
+          description: The ID of the `User` who made the expenses included in the `ExpenseReport`.
+          example: XMPL1234-000003
+        example: XMPL1234-000003
+      - name: trxDateFrom
+        in: query
+        description: 'The beginning of the period of the search `fromDate` included (i.e. greater than or equal to) (Formats: `yyyy-MM-dd`, `yyyy-MM-ddThh:mm:ss`, `yyyy-MM-ddThh:mm:ssZ`).'
+        schema:
+          $ref: '#/components/schemas/DateParam'
+        example: '2020-04-06T12:48:40Z'
+      - name: trxDateTo
+        in: query
+        description: 'The beginning of the period of the search `fromDate` included (i.e. greater than or equal to) (Formats: `yyyy-MM-dd`, `yyyy-MM-ddThh:mm:ss`, `yyyy-MM-ddThh:mm:ssZ`).'
+        schema:
+          $ref: '#/components/schemas/DateParam'
+        example: '2020-04-06T12:48:40Z'
+      - name: status
+        in: query
+        description: The `ExpenseReport` status.
+        schema:
+          type: array
+          description: The `ExpenseReport` status.
+          items:
+            $ref: '#/components/schemas/ExpenseReportStatus'
+          uniqueItems: true
+        example: PROCESSED
+      - name: type
+        in: query
+        description: The `ExpenseReport` type.
+        schema:
+          type: array
+          description: The `ExpenseReport` type.
+          items:
+            $ref: '#/components/schemas/ExpenseReportType'
+          uniqueItems: true
+        example: EMPLOYEE
+      - name: toReimburse
+        in: query
+        description: It determines whether only reports with or without an amount to be reimbursed should be returned.
+        schema:
+          type: boolean
+          description: It determines whether only reports with or without an amount to be reimbursed should be returned.
+          example: true
+        example: true
+      - name: exportedDate
+        in: query
+        description: 'The date when the `ExpenseReport` got exported
+
+          (Formats: yyyy-MM-dd, yyyy-MM-ddThh:mm:ss, yyyy-MM-ddThh:mm:ssZ).'
+        schema:
+          $ref: '#/components/schemas/DateParam'
+        example: '2020-04-06T12:48:40Z'
+      - name: p
+        in: query
+        description: It indicates the specific page to display (the counter starts from zero).
+        schema:
+          type: integer
+          format: int32
+          default: 0
+          description: It indicates the specific page to display (the counter starts from zero).
+          example: 3
+        example: 3
+      - name: s
+        in: query
+        description: It indicates the number of items per page.
+        schema:
+          type: integer
+          format: int32
+          default: 0
+          description: It indicates the number of items per page.
+          example: 25
+          maximum: 50
+        example: 25
+      - name: d
+        in: query
+        description: It indicates how the pages are ordered.
+        schema:
+          $ref: '#/components/schemas/Direction'
+        example: DESC
+      - name: props
+        in: query
+        description: It indicates the sorting direction applied to the above parameters. To apply a sorting on multiple parameters, set as many times the `props` parameter in the request.
+        schema:
+          type: array
+          description: It indicates the sorting direction applied to the above parameters. To apply a sorting on multiple parameters, set as many times the `props` parameter in the request.
+          example: creationTime
+          items:
+            type: string
+            description: It indicates the sorting direction applied to the above parameters. To apply a sorting on multiple parameters, set as many times the `props` parameter in the request.
+            example: creationTime
+        example: creationTime
+      responses:
+        '200':
+          description: The result is an array containing `ExpenseReport`.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExpenseReports'
+        '400':
+          description: Your request has missing arguments or is malformed.
+      security:
+      - standardAuth:
+        - expense_report_read
+components:
+  schemas:
+    ExpenseReportStatusUpdate:
+      type: string
+      enum:
+      - PROCESSED
+      - CANCELLED
+    DateParam:
+      description: 'The end of the period of the search `toDate` included (i.e. less than) (Formats: `yyyy-MM-dd`, `yyyy-MM-ddThh:mm:ss`, `yyyy-MM-ddThh:mm:ssZ`).'
+      example: '1970-01-30'
+    ExpenseReportDownload:
+      properties:
+        file_url:
+          type: string
+          description: 'The  `ExpenseReport`file URL '
+    UpdateExpenseReport:
+      description: Update `ExpenseReport` Request JSON parameters.
+      properties:
+        approver_id:
+          type: string
+          description: The ID of the SuperAdmin `User` who approves/rejects the expense.
+          example: XMPL1234-000003
+        status:
+          $ref: '#/components/schemas/ExpenseReportStatusUpdate'
+          description: The status of the  `ExpenseReport`.
+          example: PROCESSED
+    ExpenseReportType:
+      type: string
+      enum:
+      - EMPLOYEE
+      - COMPANY
+    Direction:
+      type: string
+      description: It indicates how the pages are ordered.
+      enum:
+      - ASC
+      - DESC
+      example: DESC
+    ExpenseReportStatus:
+      type: string
+      description: The `ExpenseReport` status.
+      enum:
+      - PROCESSED
+      - CANCELLED
+      - TO_BE_PROCESSED
+    ExpenseReportFileType:
+      type: string
+      description: The `ExpenseReport` file type.
+      enum:
+      - PDF
+      - PDF_WITH_ATTACHMENTS
+      example: PDF
+    ExpenseReportStatusOutput:
+      type: string
+      enum:
+      - PROCESSED
+      - CANCELLED
+      - DELETED
+      - TO_BE_PROCESSED
+    ExpenseReport:
+      properties:
+        reimburse_amount:
+          type: number
+          description: The amount to be reimbursed to the user.
+        deduct_amount:
+          type: number
+          description: The amount to be deducted from the user.
+        process_amount:
+          type: number
+          description: The amount to be processed.
+        file_url:
+          type: string
+          description: The Base64 string of the File URL encrypted by DES in ECB mode, Pkcs7 padding scheme and using Token for key.
+        id:
+          type: string
+          description: The  `ExpenseReport` ID .
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+        protocol:
+          type: string
+          description: The  `ExpenseReport` ID protocol.
+        number:
+          type: string
+          description: The  `ExpenseReport` number.
+        type:
+          $ref: '#/components/schemas/ExpenseReportType'
+          description: The type of the  `ExpenseReport`.
+        status:
+          $ref: '#/components/schemas/ExpenseReportStatusOutput'
+          description: The status of the  `ExpenseReport`.
+        exported_date:
+          type: string
+          description: The date when the  `ExpenseReport` got exported.
+        exported_by:
+          type: string
+          description: The ID of the user who exported the  `ExpenseReport`.
+        trx_owner_id:
+          type: string
+          description: The  ID of the user who made the expenses included in the  `ExpenseReport`.
+        trx_date_from:
+          type: string
+          description: The date of the oldest expense included in the  `ExpenseReport`.
+        trx_date_to:
+          type: string
+          description: The date of the most recent expense included in the  `ExpenseReport`.
+        processed_date:
+          type: string
+          description: The date when the expense report got processed.
+        processed_by:
+          type: string
+          description: The ID of the user who processed the  `ExpenseReport`.
+        reimbursement_transaction_id:
+          type: string
+          description: The ID of the transaction of the `ExpenseReport`.
+    ExpenseReports:
+      properties:
+        total:
+          type: integer
+          format: int32
+          description: It represents the total number of available items in the list.
+          example: 168
+        pages:
+          type: integer
+          format: int32
+          description: It represents the total number of available pages.
+          example: 7
+        page_size:
+          type: integer
+          format: int32
+          description: It represents the number of items per page.
+          example: 25
+        current_page:
+          type: integer
+          format: int32
+          description: It indicates the current page (the counter starts from zero).
+          example: 0
+        results_size:
+          type: integer
+          format: int32
+          description: It indicates the size of the array results.
+          example: 25
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/ExpenseReport'
+  securitySchemes:
+    standardAuth:
+      type: oauth2
+      description: This API uses OAuth 2 with the "Client Credentials" grant flow.
+      flows:
+        clientCredentials:
+          tokenUrl: https://api.soldo.com/oauth/authorize
+          refreshUrl: https://api.soldo.com/oauth/refresh
+          scopes:
+            address_read: Can read address details.
+            address_write: Can update address details.
+            card_read: Can read card details.
+            card_write: Can change card details.
+            company_read: Can read company details.
+            company_write: Can change company details.
+            contact_read: Can read contact details.
+            contact_write: Can change contact details.
+            employee_read: Can read employee details.
+            employee_write: Can change employee details.
+            expense_category_read: Can read expense category details.
+            expense_category_write: Can change expense category details.
+            expense_report_read: Can read expense report details.
+            expense_report_write: Can change expense report details.
+            expense_review_read: Can read expense review status.
+            expense_review_write: Can change expense review status.
+            group_read: Can read group details.
+            group_write: Can change groups details.
+            online_ads_read: Can read online ads details.
+            online_ads_write: Can change online ads details.
+            payment_read: Can read payment details.
+            payment_write: Can change payment details.
+            purchase_read: Can read purchase details.
+            purchase_write: Can change purchase details.
+            refueling_read: Can read refueling details.
+            refueling_write: Can change refueling details.
+            resource_set_read: Can read resource set details.
+            resource_set_write: Can change resource set details.
+            role_read: Can read role details.
+            statement_read: Can read statement details.
+            subscription_read: Can read subscription details.
+            subscription_write: Can change subscription details.
+            tag_read: Can read tags.
+            tag_write: can change tags.
+            tax_rate_read: Can read vat rate details.
+            tax_rate_write: Can change vat rate details.
+            transaction_read: Can read transaction details.
+            transaction_write: Can change transaction details.
+            vehicle_read: Can read vehicle details.
+            vehicle_write: Can change vehicle details.
+            wallet_read: Can read wallet details.
+            wallet_write: Can change wallet details.
+            webhook_subscription_read: Can read webhook subscription details.
+            webhook_subscription_write: Can change webhook subscription details.
+x-readme:
+  hidden: false

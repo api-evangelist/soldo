@@ -1,0 +1,153 @@
+openapi: 3.1.0
+info:
+  title: Soldo Business API v2.0 Accounting Classification Authentication API
+  description: Soldo Business API v2.0 OpenAPI specification
+  version: 5.56.0
+servers:
+- url: https://api.soldo.com
+  description: Production server (using live data)
+- url: https://api-demo.soldocloud.net
+  description: Sandbox server (using test data)
+tags:
+- name: Authentication
+paths:
+  /oauth/authorize:
+    post:
+      tags:
+      - Authentication
+      summary: Authenticate
+      description: Grant access to the API getting an `OAuth2Token`.
+      operationId: authorize
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                client_id:
+                  type: string
+                  description: The client ID issued while [Setting up the API](doc:api-set-up), this works as a username.
+                  example: '{{client_id}}'
+                client_secret:
+                  type: string
+                  description: The client secret issued while [Setting up the API](doc:api-set-up), this works as a password.
+                  example: '{{client_secret}}'
+              required:
+              - client_id
+              - client_secret
+      responses:
+        '200':
+          description: The `OAuth2Token`.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OAuth2Token'
+        '400':
+          description: Your request has missing arguments or is malformed.
+        '403':
+          description: The access token you are using is not granted with the necessary permissions or is expired. Check client scopes and fingerprint requirements.
+  /business/v2/ping/whoami:
+    get:
+      tags:
+      - Authentication
+      summary: Get who am I
+      description: Endpoint to get information about the owner of the access token.
+      operationId: who-am-i
+      responses:
+        '200':
+          description: The returned resource is a minimal representation of a `User`.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WhoAmI'
+      security:
+      - standardAuth:
+        - company_read
+components:
+  schemas:
+    WhoAmI:
+      properties:
+        company_name:
+          type: string
+          description: The company name of the user.
+          example: Example Inc.
+        scopes:
+          type: array
+          description: The list of the scopes granted for the API Key.
+          example:
+          - ALL
+          items:
+            type: string
+    OAuth2Token:
+      properties:
+        refresh_token:
+          type: string
+          description: The token used to refresh the session (this operation is not currently supported).
+          example: '{{refresh_token}}'
+        token_type:
+          type: string
+          description: All requests must be always authenticated using the 'Bearer' scheme.
+          example: Bearer
+        access_token:
+          type: string
+          description: The bearer token to be included in all requests sent to our Business API as part of the `Authorization` header.
+          example: '{{access_token}}'
+        expires_in:
+          type: string
+          description: The `access_token` expiration, expressed in seconds. Once the `access_token` is expired your session will be invalidate, you will have to re-authenticate to get a fresh `access_token`.
+          example: 7200
+  securitySchemes:
+    standardAuth:
+      type: oauth2
+      description: This API uses OAuth 2 with the "Client Credentials" grant flow.
+      flows:
+        clientCredentials:
+          tokenUrl: https://api.soldo.com/oauth/authorize
+          refreshUrl: https://api.soldo.com/oauth/refresh
+          scopes:
+            address_read: Can read address details.
+            address_write: Can update address details.
+            card_read: Can read card details.
+            card_write: Can change card details.
+            company_read: Can read company details.
+            company_write: Can change company details.
+            contact_read: Can read contact details.
+            contact_write: Can change contact details.
+            employee_read: Can read employee details.
+            employee_write: Can change employee details.
+            expense_category_read: Can read expense category details.
+            expense_category_write: Can change expense category details.
+            expense_report_read: Can read expense report details.
+            expense_report_write: Can change expense report details.
+            expense_review_read: Can read expense review status.
+            expense_review_write: Can change expense review status.
+            group_read: Can read group details.
+            group_write: Can change groups details.
+            online_ads_read: Can read online ads details.
+            online_ads_write: Can change online ads details.
+            payment_read: Can read payment details.
+            payment_write: Can change payment details.
+            purchase_read: Can read purchase details.
+            purchase_write: Can change purchase details.
+            refueling_read: Can read refueling details.
+            refueling_write: Can change refueling details.
+            resource_set_read: Can read resource set details.
+            resource_set_write: Can change resource set details.
+            role_read: Can read role details.
+            statement_read: Can read statement details.
+            subscription_read: Can read subscription details.
+            subscription_write: Can change subscription details.
+            tag_read: Can read tags.
+            tag_write: can change tags.
+            tax_rate_read: Can read vat rate details.
+            tax_rate_write: Can change vat rate details.
+            transaction_read: Can read transaction details.
+            transaction_write: Can change transaction details.
+            vehicle_read: Can read vehicle details.
+            vehicle_write: Can change vehicle details.
+            wallet_read: Can read wallet details.
+            wallet_write: Can change wallet details.
+            webhook_subscription_read: Can read webhook subscription details.
+            webhook_subscription_write: Can change webhook subscription details.
+x-readme:
+  hidden: false

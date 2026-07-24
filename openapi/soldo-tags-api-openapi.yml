@@ -1,0 +1,550 @@
+openapi: 3.1.0
+info:
+  title: Soldo Business API v2.0 Accounting Classification Tags API
+  description: Soldo Business API v2.0 OpenAPI specification
+  version: 5.56.0
+servers:
+- url: https://api.soldo.com
+  description: Production server (using live data)
+- url: https://api-demo.soldocloud.net
+  description: Sandbox server (using test data)
+tags:
+- name: Tags
+paths:
+  /business/v2/dictionaries/{listId}/tags:
+    get:
+      tags:
+      - Tags
+      summary: Search Tags
+      description: Endpoint to search `Tags` in a given `List` using filtering parameters.
+      operationId: tag-search
+      parameters:
+      - name: listId
+        in: path
+        required: true
+        schema:
+          type: string
+          description: The `List` ID.
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+      - name: visible
+        in: query
+        schema:
+          type: boolean
+          description: It determines whether the `Tag` is visible in the `Transaction` detail.
+          example: true
+      - name: name
+        in: query
+        schema:
+          type: string
+          description: The name of the `Tag` to search.
+          example: something
+      - name: code
+        in: query
+        schema:
+          type: string
+          description: The code of the `Tag` to search.
+          example: something
+      - name: text
+        in: query
+        schema:
+          type: string
+          description: The text of the `Tag` to search by name or description.
+          example: something
+      - name: p
+        in: query
+        description: It indicates the specific page to display (the counter starts from zero).
+        schema:
+          type: integer
+          format: int32
+          default: 0
+          description: It indicates the specific page to display (the counter starts from zero).
+          example: 3
+        example: 3
+      - name: s
+        in: query
+        description: It indicates the number of items per page.
+        schema:
+          type: integer
+          format: int32
+          default: 0
+          description: It indicates the number of items per page.
+          example: 25
+          maximum: 50
+        example: 25
+      - name: d
+        in: query
+        description: It indicates how the pages are ordered.
+        schema:
+          $ref: '#/components/schemas/Direction'
+        example: DESC
+      - name: props
+        in: query
+        description: It indicates the sorting direction applied to the above parameters. To apply a sorting on multiple parameters, set as many times the `props` parameter in the request.
+        schema:
+          type: array
+          description: It indicates the sorting direction applied to the above parameters. To apply a sorting on multiple parameters, set as many times the `props` parameter in the request.
+          example: creationTime
+          items:
+            type: string
+            description: It indicates the sorting direction applied to the above parameters. To apply a sorting on multiple parameters, set as many times the `props` parameter in the request.
+            example: creationTime
+        example: creationTime
+      responses:
+        '200':
+          description: The result is an array containing `Tags`.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Tags'
+        '400':
+          description: Your request has missing arguments or is malformed.
+        '404':
+          description: One or more resource requested does not exist.
+      security:
+      - standardAuth:
+        - tag_read
+    post:
+      tags:
+      - Tags
+      summary: Add Tag to List
+      description: Endpoint to add a `Tag` into a `List`.
+      operationId: tag-add
+      parameters:
+      - name: listId
+        in: path
+        description: The `List` ID.
+        required: true
+        schema:
+          type: string
+          description: The `List` ID.
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+        example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                tag:
+                  type: string
+                  description: The name of the `Tag`.
+                  example: tx-label
+                description:
+                  type: string
+                  description: The description of the `Tag`. If needed to support special characters, provide the character encoding in the `Content-Type` header (e.g. `application/x-www-form-urlencoded ; charset=utf-8`).
+                  example: Label to mark transactions
+                code:
+                  type: string
+                  description: The code of the `Tag`. If needed to support special characters, provide the character encoding in the `Content-Type` header (e.g. `application/x-www-form-urlencoded ; charset=utf-8`).
+                  example: CODE tag
+      responses:
+        '200':
+          description: The returned resource is a single `Tag`.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Tag'
+        '400':
+          description: Your request has missing arguments or is malformed.
+        '404':
+          description: One or more resource requested does not exist.
+      security:
+      - standardAuth:
+        - tag_write
+  /business/v2/dictionaries/{listId}/tags/bulk:
+    put:
+      tags:
+      - Tags
+      summary: Update Tag bulk
+      description: Endpoint to update a `List` by modifying up to 1000 `Tag` IDs per request.
+      operationId: tags-update-bulk
+      parameters:
+      - name: listId
+        in: path
+        required: true
+        schema:
+          type: string
+          description: The `List` ID.
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateTagItem'
+      responses:
+        '200':
+          description: The returned resource is a list of `Tag`.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TagItems'
+        '400':
+          description: Your request has missing arguments or is malformed.
+        '404':
+          description: One or more resource requested does not exist.
+      security:
+      - standardAuth:
+        - tag_write
+    post:
+      tags:
+      - Tags
+      summary: Add Tag bulk to List
+      description: Endpoint to add a `List` by adding up to 1000 `Tag` IDs per request.
+      operationId: tags-add-bulk
+      parameters:
+      - name: listId
+        in: path
+        required: true
+        schema:
+          type: string
+          description: The `List` ID.
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewTagBulk'
+      responses:
+        '200':
+          description: The result is an array containing `Tags`.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TagItems'
+        '400':
+          description: Your request has missing arguments or is malformed.
+        '404':
+          description: One or more resource requested does not exist.
+      security:
+      - standardAuth:
+        - tag_write
+  /business/v2/dictionaries/{listId}/tags/{tagId}:
+    get:
+      tags:
+      - Tags
+      summary: Get Tag
+      description: Endpoint to get a specific `Tag` of a given `List` by ID.
+      operationId: tag-get
+      parameters:
+      - name: listId
+        in: path
+        required: true
+        schema:
+          type: string
+          description: The `List` ID.
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+      - name: tagId
+        in: path
+        required: true
+        schema:
+          type: string
+          description: The `Tag` ID.
+          example: 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
+      responses:
+        '200':
+          description: The returned resource is a single `Tag`.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Tag'
+        '404':
+          description: One or more resource requested does not exist.
+      security:
+      - standardAuth:
+        - tag_read
+    put:
+      tags:
+      - Tags
+      summary: Update Tag
+      description: Endpoint to update `Tag` data of a `List`.
+      operationId: tag-update
+      parameters:
+      - name: listId
+        in: path
+        description: The `List` ID.
+        required: true
+        schema:
+          type: string
+          description: The `List` ID.
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+        example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+      - name: tagId
+        in: path
+        description: The `Tag` ID.
+        required: true
+        schema:
+          type: string
+          description: The `Tag` ID.
+          example: 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
+        example: 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                tag:
+                  type: string
+                  description: The name of the `Tag`.
+                  example: tx-label
+                description:
+                  type: string
+                  description: The description of the `Tag`. If needed to support special characters, provide the character encoding in the `Content-Type` header (e.g. `application/x-www-form-urlencoded ; charset=utf-8`).
+                  example: Label to mark transactions
+                code:
+                  type: string
+                  description: The code of the `Tag`. If needed to support special characters, provide the character encoding in the `Content-Type` header (e.g. `application/x-www-form-urlencoded ; charset=utf-8`).
+                  example: CODE tag
+                  maxLength: 60
+                visible:
+                  type: boolean
+                  description: It determines whether the `Tag` is visible in the `Transaction` detail.
+                  example: true
+      responses:
+        '200':
+          description: The returned resource is a single `Tag`.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Tag'
+        '400':
+          description: Your request has missing arguments or is malformed.
+        '404':
+          description: One or more resource requested does not exist.
+      security:
+      - standardAuth:
+        - tag_write
+    delete:
+      tags:
+      - Tags
+      summary: Delete Tag from List
+      description: Endpoint to delete a `Tag` out of a `List`.
+      operationId: tag-delete
+      parameters:
+      - name: listId
+        in: path
+        required: true
+        schema:
+          type: string
+          description: The `List` ID.
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+      - name: tagId
+        in: path
+        required: true
+        schema:
+          type: string
+          description: The `Tag` ID.
+          example: 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
+      responses:
+        '204':
+          description: No content as result.
+        '400':
+          description: Your request has missing arguments or is malformed.
+        '404':
+          description: One or more resource requested does not exist.
+      security:
+      - standardAuth:
+        - tag_write
+components:
+  schemas:
+    UpdateTagItem:
+      description: Update `Tag` bulk JSON parameters.
+      properties:
+        tags:
+          type: array
+          description: The list of the `Tag` resources to update in bulk.
+          example:
+          - 7bf79328-a7ae-4222-aa54-091ff7f429a7
+          - 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
+          items:
+            $ref: '#/components/schemas/UpdateTagBulkItem'
+    NewTagBulkItem:
+      properties:
+        tag:
+          type: string
+          description: The name of the `Tag`.
+          example: tx-label
+        description:
+          type: string
+          description: The description of the `Tag`. If needed to support special characters, provide the character encoding in the `Content-Type` header (e.g. `application/x-www-form-urlencoded ; charset=utf-8`).
+          example: Label to mark transactions
+        code:
+          type: string
+          description: The code of the `Tag`. If needed to support special characters, provide the character encoding in the `Content-Type` header (e.g. `application/x-www-form-urlencoded ; charset=utf-8`).
+          example: CODE tag
+      required:
+      - tag
+    Tags:
+      properties:
+        total:
+          type: integer
+          format: int32
+          description: It represents the total number of available items in the list.
+          example: 168
+        pages:
+          type: integer
+          format: int32
+          description: It represents the total number of available pages.
+          example: 7
+        page_size:
+          type: integer
+          format: int32
+          description: It represents the number of items per page.
+          example: 25
+        current_page:
+          type: integer
+          format: int32
+          description: It indicates the current page (the counter starts from zero).
+          example: 0
+        results_size:
+          type: integer
+          format: int32
+          description: It indicates the size of the array results.
+          example: 25
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Tag'
+    NewTagBulk:
+      description: New `Tag` bulk JSON parameters.
+      properties:
+        tags:
+          type: array
+          description: The list of `Tag` resources to create in bulk.
+          example:
+          - 7bf79328-a7ae-4222-aa54-091ff7f429a7
+          - 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
+          items:
+            $ref: '#/components/schemas/NewTagBulkItem'
+    Direction:
+      type: string
+      description: It indicates how the pages are ordered.
+      enum:
+      - ASC
+      - DESC
+      example: DESC
+    UpdateTagBulkItem:
+      properties:
+        id:
+          type: string
+          description: The `Tag` ID.
+          example: 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
+        tag:
+          type: string
+          description: The name of the `Tag`.
+          example: tx-label
+        description:
+          type: string
+          description: The description of the `Tag`. If needed to support special characters, provide the character encoding in the `Content-Type` header (e.g. `application/x-www-form-urlencoded ; charset=utf-8`).
+          example: Label to mark transactions
+        code:
+          type: string
+          description: The code of the `Tag`. If needed to support special characters, provide the character encoding in the `Content-Type` header (e.g. `application/x-www-form-urlencoded ; charset=utf-8`).
+          example: CODE tag
+          maxLength: 60
+        visible:
+          type: boolean
+          description: It determines whether the `Tag` is visible in the `Transaction` detail.
+          example: true
+      required:
+      - id
+      - tag
+    TagItems:
+      properties:
+        tags:
+          type: array
+          description: The list of `Tag` resources.
+          example:
+          - 7bf79328-a7ae-4222-aa54-091ff7f429a7
+          - 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
+          items:
+            $ref: '#/components/schemas/Tag'
+    Tag:
+      properties:
+        id:
+          type: string
+          description: 'The `Tag` ID (sortable: no).'
+          example: 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
+        dictionary_id:
+          type: string
+          description: 'The `List` ID (sortable: no).'
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+        dictionary:
+          type: string
+          description: 'The name of the `List` where the `Tag` is listed (sortable: no).'
+          example: ExampleTagDictionary
+        tag:
+          type: string
+          description: 'The name of the `Tag` (sortable: yes).'
+          example: tx-label
+        description:
+          type: string
+          description: 'The description of the `Tag` (sortable: no).'
+          example: Label to mark transactions
+        visible:
+          type: boolean
+          description: 'It determines whether the `Tag` is visible in the `Transaction` detail (sortable: yes).'
+          example: true
+        code:
+          type: string
+          description: 'The code of the `Tag` (sortable: no).'
+        percentage:
+          type: number
+          format: double
+          deprecated: true
+          description: 'Percentage value: valid for TAX_RATE type only (sortable: no). Deprecated, only for backward compatibility.'
+  securitySchemes:
+    standardAuth:
+      type: oauth2
+      description: This API uses OAuth 2 with the "Client Credentials" grant flow.
+      flows:
+        clientCredentials:
+          tokenUrl: https://api.soldo.com/oauth/authorize
+          refreshUrl: https://api.soldo.com/oauth/refresh
+          scopes:
+            address_read: Can read address details.
+            address_write: Can update address details.
+            card_read: Can read card details.
+            card_write: Can change card details.
+            company_read: Can read company details.
+            company_write: Can change company details.
+            contact_read: Can read contact details.
+            contact_write: Can change contact details.
+            employee_read: Can read employee details.
+            employee_write: Can change employee details.
+            expense_category_read: Can read expense category details.
+            expense_category_write: Can change expense category details.
+            expense_report_read: Can read expense report details.
+            expense_report_write: Can change expense report details.
+            expense_review_read: Can read expense review status.
+            expense_review_write: Can change expense review status.
+            group_read: Can read group details.
+            group_write: Can change groups details.
+            online_ads_read: Can read online ads details.
+            online_ads_write: Can change online ads details.
+            payment_read: Can read payment details.
+            payment_write: Can change payment details.
+            purchase_read: Can read purchase details.
+            purchase_write: Can change purchase details.
+            refueling_read: Can read refueling details.
+            refueling_write: Can change refueling details.
+            resource_set_read: Can read resource set details.
+            resource_set_write: Can change resource set details.
+            role_read: Can read role details.
+            statement_read: Can read statement details.
+            subscription_read: Can read subscription details.
+            subscription_write: Can change subscription details.
+            tag_read: Can read tags.
+            tag_write: can change tags.
+            tax_rate_read: Can read vat rate details.
+            tax_rate_write: Can change vat rate details.
+            transaction_read: Can read transaction details.
+            transaction_write: Can change transaction details.
+            vehicle_read: Can read vehicle details.
+            vehicle_write: Can change vehicle details.
+            wallet_read: Can read wallet details.
+            wallet_write: Can change wallet details.
+            webhook_subscription_read: Can read webhook subscription details.
+            webhook_subscription_write: Can change webhook subscription details.
+x-readme:
+  hidden: false

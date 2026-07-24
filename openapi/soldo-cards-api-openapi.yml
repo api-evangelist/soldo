@@ -1,0 +1,968 @@
+openapi: 3.1.0
+info:
+  title: Soldo Business API v2.0 Accounting Classification Cards API
+  description: Soldo Business API v2.0 OpenAPI specification
+  version: 5.56.0
+servers:
+- url: https://api.soldo.com
+  description: Production server (using live data)
+- url: https://api-demo.soldocloud.net
+  description: Sandbox server (using test data)
+tags:
+- name: Cards
+paths:
+  /business/v2/cards:
+    get:
+      tags:
+      - Cards
+      summary: Search Cards
+      description: Endpoint to find `Cards` using filtering parameters.
+      operationId: card-search
+      parameters:
+      - name: type
+        in: query
+        description: The type of a resource the `Card` is attached to.
+        schema:
+          $ref: '#/components/schemas/CardAttachedResourceType'
+        example: wallet
+      - name: id
+        in: query
+        description: The ID of the `type` resource (it's not applicable for `company` resource; it's not required for `employees`).
+        schema:
+          type: string
+          description: The ID of the `type` resource (it's not applicable for `company` resource; it's not required for `employees`).
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+        example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+      - name: customreferenceId
+        in: query
+        description: The custom reference ID of the `type` resource.
+        schema:
+          type: string
+          description: The custom reference ID of the `type` resource.
+          example: 123456-user-1
+        example: 123456-user-1
+      - name: status
+        in: query
+        description: One among the available `Card` statuses of a `Card`.
+        schema:
+          $ref: '#/components/schemas/CardStatus'
+        example: Normal
+      - name: groupId
+        in: query
+        description: The ID of the `Group` the `Card` is related to.
+        schema:
+          type: string
+          description: The ID of the `Group` the `Card` is related to.
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+        example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+      - name: name
+        in: query
+        description: The name of the `Card`.
+        schema:
+          type: string
+          description: The name of the `Card`.
+          example: CardName
+        example: CardName
+      - name: label
+        in: query
+        description: The label of the `Card`.
+        schema:
+          type: string
+          description: The label of the `Card`.
+          example: CardLabel
+        example: CardLabel
+      - name: p
+        in: query
+        description: It indicates the specific page to display (the counter starts from zero).
+        schema:
+          type: integer
+          format: int32
+          default: 0
+          description: It indicates the specific page to display (the counter starts from zero).
+          example: 3
+        example: 3
+      - name: s
+        in: query
+        description: It indicates the number of items per page.
+        schema:
+          type: integer
+          format: int32
+          default: 0
+          description: It indicates the number of items per page.
+          example: 25
+          maximum: 50
+        example: 25
+      - name: d
+        in: query
+        description: It indicates how the pages are ordered.
+        schema:
+          $ref: '#/components/schemas/Direction'
+        example: DESC
+      - name: props
+        in: query
+        description: It indicates the sorting direction applied to the above parameters. To apply a sorting on multiple parameters, set as many times the `props` parameter in the request.
+        schema:
+          type: array
+          description: It indicates the sorting direction applied to the above parameters. To apply a sorting on multiple parameters, set as many times the `props` parameter in the request.
+          example: creationTime
+          items:
+            type: string
+            description: It indicates the sorting direction applied to the above parameters. To apply a sorting on multiple parameters, set as many times the `props` parameter in the request.
+            example: creationTime
+        example: creationTime
+      responses:
+        '200':
+          description: The result is an array containing `Cards`.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Cards'
+        '400':
+          description: Your request has missing arguments or is malformed.
+      security:
+      - standardAuth:
+        - card_read
+    post:
+      tags:
+      - Cards
+      summary: Add Card
+      description: Endpoint to add a new `Card`. The created `Card` has the same currency of the `Wallet` it belongs to.
+      operationId: card-add
+      parameters:
+      - name: X-Soldo-Fingerprint
+        in: header
+        required: true
+        schema:
+          type: string
+          default: '{{fingerprint}}'
+          description: '[Advanced authentication](ref:advanced-authentication): `SHA512SUM` of the fingerprint values listed in the fingerprint order for this endpoint.'
+          example: '{{fingerprint}}'
+      - name: X-Soldo-Fingerprint-Signature
+        in: header
+        required: true
+        schema:
+          type: string
+          default: '{{fingerprint_signature}}'
+          description: '[Advanced authentication](ref:advanced-authentication): Signature of the `X-Soldo-Fingerprint`.'
+          example: '{{fingerprint_signature}}'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddCardOrder'
+      responses:
+        '200':
+          description: The returned resource is a single `Order`.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Order'
+        '400':
+          description: Your request has missing arguments or is malformed.
+        '404':
+          description: One or more resource requested does not exist.
+      security:
+      - standardAuth:
+        - card_write
+      x-soldo:
+        fingerprint-order: request_timestamp, owner_type, owner_public_id, wallet_id, address_id, vehicle_id, preset_id, token
+  /business/v2/cards/{cardId}:
+    get:
+      tags:
+      - Cards
+      summary: Get Card
+      description: Endpoint to retrieve a specific `Card` by ID.
+      operationId: card-get
+      parameters:
+      - name: cardId
+        in: path
+        required: true
+        schema:
+          type: string
+          description: The `Card` ID.
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+      - name: showSensitiveData
+        in: query
+        schema:
+          type: boolean
+          description: It determines whether to show `Card` sensitive data.
+      responses:
+        '200':
+          description: The returned resource is a single `Card`.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Card'
+        '404':
+          description: One or more resource requested does not exist.
+      security:
+      - standardAuth:
+        - card_read
+    put:
+      tags:
+      - Cards
+      summary: Update Card
+      description: Endpoint to add and remove assignees for company `Cards`.
+      operationId: card-update
+      parameters:
+      - name: cardId
+        in: path
+        required: true
+        schema:
+          type: string
+          description: The `Card` ID.
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+      - name: X-Soldo-Fingerprint
+        in: header
+        required: true
+        schema:
+          type: string
+          default: '{{fingerprint}}'
+          description: '[Advanced authentication](ref:advanced-authentication): `SHA512SUM` of the fingerprint values listed in the fingerprint order for this endpoint.'
+          example: '{{fingerprint}}'
+      - name: X-Soldo-Fingerprint-Signature
+        in: header
+        required: true
+        schema:
+          type: string
+          default: '{{fingerprint_signature}}'
+          description: '[Advanced authentication](ref:advanced-authentication): Signature of the `X-Soldo-Fingerprint`.'
+          example: '{{fingerprint_signature}}'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateCard'
+      responses:
+        '200':
+          description: The returned resource is a single `Card`.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Card'
+        '400':
+          description: Your request has missing arguments or is malformed.
+        '404':
+          description: One or more resource requested does not exist.
+      security:
+      - standardAuth:
+        - card_write
+      x-soldo:
+        fingerprint-order: cardId, join(addCardAssignees), join(removeCardAssignees), label, vehicle_id, token
+    delete:
+      tags:
+      - Cards
+      summary: Delete Card
+      description: Endpoint to delete a `Card`.
+      operationId: card-delete
+      parameters:
+      - name: cardId
+        in: path
+        required: true
+        schema:
+          type: string
+          description: The `Card` ID.
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+      responses:
+        '204':
+          description: No content as result.
+        '400':
+          description: Your request has missing arguments or is malformed.
+        '404':
+          description: One or more resource requested does not exist.
+      security:
+      - standardAuth:
+        - card_write
+  /business/v2/cards/{cardId}/move/{newWalletId}:
+    put:
+      tags:
+      - Cards
+      summary: Switch Card Wallet
+      description: Endpoint to switch the `Card` `Wallet`.
+      operationId: card-wallet-switch
+      parameters:
+      - name: cardId
+        in: path
+        required: true
+        schema:
+          type: string
+          description: The `Card` ID.
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+      - name: newWalletId
+        in: path
+        required: true
+        schema:
+          type: string
+          description: The new `Wallet` ID.
+          example: 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
+      - name: X-Soldo-Fingerprint
+        in: header
+        required: true
+        schema:
+          type: string
+          default: '{{fingerprint}}'
+          description: '[Advanced authentication](ref:advanced-authentication): `SHA512SUM` of the fingerprint values listed in the fingerprint order for this endpoint.'
+          example: '{{fingerprint}}'
+      - name: X-Soldo-Fingerprint-Signature
+        in: header
+        required: true
+        schema:
+          type: string
+          default: '{{fingerprint_signature}}'
+          description: '[Advanced authentication](ref:advanced-authentication): Signature of the `X-Soldo-Fingerprint`.'
+          example: '{{fingerprint_signature}}'
+      responses:
+        '200':
+          description: The returned resource is a single `Card`.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Card'
+        '400':
+          description: Your request has missing arguments or is malformed.
+        '404':
+          description: One or more resource requested does not exist.
+      security:
+      - standardAuth:
+        - card_write
+        - wallet_write
+      x-soldo:
+        fingerprint-order: cardId, newWalletId, token
+components:
+  schemas:
+    Card:
+      properties:
+        id:
+          type: string
+          description: 'The `Card` ID (sortable: yes).'
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+        name:
+          type: string
+          description: 'The name of the `Card` (sortable: yes).'
+          example: CardName
+        label:
+          type: string
+          description: 'The label of the `Card (sortable: no)`.'
+          example: CardLabel
+        masked_pan:
+          type: string
+          description: 'The masked PAN of the `Card` (sortable: yes).'
+          example: 123456******1234
+        card_holder:
+          type: string
+          description: 'The name and surname of the Cardholder of the `Card`, only available when `owner_type` is `employee` (sortable: yes).'
+          example: John Doe
+        expiration_date:
+          type: string
+          description: 'The expiration date and time of the `Card` (sortable: yes).'
+          example: '2026-05-07T23:59:59Z'
+        creation_time:
+          type: string
+          description: 'The date and time when the `Card` was created (sortable: yes).'
+          example: '2017-06-01T12:48:40Z'
+        last_update:
+          type: string
+          description: 'The date and time when the `Card` was last updated (sortable: yes).'
+          example: '2017-06-01T12:48:40Z'
+        type:
+          $ref: '#/components/schemas/CardType'
+          description: 'The type of `Card` (sortable: no).'
+          example: PLASTIC
+        status:
+          $ref: '#/components/schemas/CardStatus'
+          description: 'The status of the `Card` (sortable: yes).'
+          example: Normal
+        owner_type:
+          $ref: '#/components/schemas/CardOwnerType'
+          description: 'The owner type (sortable: no).'
+          example: employee
+        owner_public_id:
+          type: string
+          description: The ID of the Cardholder available when `owner_type` is `employee`.
+          example: XMPL1234-000001
+        custom_reference_id:
+          type: string
+          description: 'The custom reference ID of the Cardholder (sortable: no).'
+          example: 123456-user-1
+        wallet_id:
+          type: string
+          description: 'The ID of the `Wallet` the `Card` is linked to (sortable: no).'
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+        currency_code:
+          $ref: '#/components/schemas/ISO4217Currency'
+          description: 'The currency of the `Wallet` the `Card` is linked to ([ISO 4217](https://www.six-group.com/en/products-services/financial-information/data-standards.html#scrollTo=maintenance-agency) code) (sortable: no).'
+          example: EUR
+        emboss_line4:
+          type: string
+          description: 'The fourth line printed on the `Card` (sortable: no).'
+          example: Example Inc.
+        active:
+          type: boolean
+          description: 'It determines whether the `Card` is active (sortable: yes).'
+          example: true
+        group_id:
+          type: string
+          deprecated: true
+          description: 'The ID of the `Group` the `Card` is related to (sortable: no). In case of multiple groups associated this field contains the first one for backward compatibility.'
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+        groups:
+          type: array
+          description: 'The list of `Group` ID the `Card` is related to (sortable: no).'
+          example:
+          - 7bf79328-a7ae-4222-aa54-091ff7f429a7
+          - 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
+          items:
+            type: string
+        sensitive_data:
+          $ref: '#/components/schemas/CardSensitiveData'
+          description: 'The `Card` sensitive data (sortable: no).'
+        vehicle_id:
+          type: string
+          description: 'The ID of the `Vehicle` assigned to the card (sortable: no).'
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+        assignees:
+          type: array
+          description: 'List of `User` IDs currently assigned to the `Card`, when `owner_type` is `employee` there is only one assignee, when is `company` there could be none or more assignees (sortable: no).'
+          example:
+          - XMPL1234-000001
+          - XMPL1234-000002
+          - XMPL1234-000003
+          items:
+            type: string
+        payment_method:
+          $ref: '#/components/schemas/CardPaymentMethod'
+          description: 'The `Card` payment method (sortable: no).'
+          example: ONLINE_ADS
+        payment_method_id:
+          type: string
+          description: 'The payment method ID (sortable: no).'
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+        preset_id:
+          type: string
+          description: The `cardRulePreset` ID assigned to the `Card`.
+          example: c861cc24-6663-410f-8c78-73f886fff4ef
+        shipping_address_id:
+          type: string
+          description: The `shippingAddress` ID assigned to the `Card`.
+          example: c861cc24-6663-410f-8c78-73f886fff4ef
+        renewal_info:
+          $ref: '#/components/schemas/CardRenewalInfo'
+          description: Renewal details for the `Card`. Present only when a renewal process has been initiated for the `Card`, `null` otherwise.
+    OrderItem:
+      properties:
+        id:
+          type: string
+          description: The ID of a single item of a specific `Order`.
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+        item_type:
+          type: string
+          description: The type of the ordered item.
+          example: CARD
+        category:
+          type: string
+          description: The category of the ordered item.
+    ISO4217Currency:
+      type: string
+      enum:
+      - AED
+      - AFN
+      - ALL
+      - AMD
+      - ANG
+      - AOA
+      - ARS
+      - AUD
+      - AWG
+      - AZN
+      - BAM
+      - BBD
+      - BDT
+      - BGN
+      - BHD
+      - BIF
+      - BMD
+      - BND
+      - BOB
+      - BOV
+      - BRL
+      - BSD
+      - BTN
+      - BWP
+      - BYN
+      - BZD
+      - CAD
+      - CDF
+      - CHE
+      - CHF
+      - CHW
+      - CLF
+      - CLP
+      - CNY
+      - COP
+      - COU
+      - CRC
+      - CUC
+      - CUP
+      - CVE
+      - CZK
+      - DJF
+      - DKK
+      - DOP
+      - DZD
+      - EGP
+      - ERN
+      - ETB
+      - EUR
+      - FJD
+      - FKP
+      - GBP
+      - GEL
+      - GHS
+      - GIP
+      - GMD
+      - GNF
+      - GTQ
+      - GYD
+      - HKD
+      - HNL
+      - HRK
+      - HTG
+      - HUF
+      - IDR
+      - ILS
+      - INR
+      - IQD
+      - IRR
+      - ISK
+      - JMD
+      - JOD
+      - JPY
+      - KES
+      - KGS
+      - KHR
+      - KMF
+      - KPW
+      - KRW
+      - KWD
+      - KYD
+      - KZT
+      - LAK
+      - LBP
+      - LKR
+      - LRD
+      - LSL
+      - LYD
+      - MAD
+      - MDL
+      - MGA
+      - MKD
+      - MMK
+      - MNT
+      - MOP
+      - MRO
+      - MRU
+      - MUR
+      - MVR
+      - MWK
+      - MXN
+      - MXV
+      - MYR
+      - MZN
+      - NAD
+      - NGN
+      - NIO
+      - NOK
+      - NPR
+      - NZD
+      - OMR
+      - PAB
+      - PEN
+      - PGK
+      - PHP
+      - PKR
+      - PLN
+      - PYG
+      - QAR
+      - RON
+      - RSD
+      - RUB
+      - RWF
+      - SAR
+      - SBD
+      - SCR
+      - SDG
+      - SEK
+      - SGD
+      - SHP
+      - SLE
+      - SLL
+      - SOS
+      - SRD
+      - SSP
+      - STD
+      - STN
+      - SVC
+      - SYP
+      - SZL
+      - THB
+      - TJS
+      - TMT
+      - TND
+      - TOP
+      - TRY
+      - TTD
+      - TWD
+      - TZS
+      - UAH
+      - UGX
+      - USD
+      - USN
+      - UYI
+      - UYU
+      - UYW
+      - UZS
+      - VED
+      - VEF
+      - VES
+      - VND
+      - VUV
+      - WST
+      - XAF
+      - XAG
+      - XAU
+      - XBA
+      - XBB
+      - XBC
+      - XBD
+      - XCD
+      - XDR
+      - XOF
+      - XPD
+      - XPF
+      - XPT
+      - XSU
+      - XTS
+      - XUA
+      - XXX
+      - YER
+      - ZAR
+      - ZMW
+      - ZWL
+    Cards:
+      properties:
+        total:
+          type: integer
+          format: int32
+          description: It represents the total number of available items in the list.
+          example: 168
+        pages:
+          type: integer
+          format: int32
+          description: It represents the total number of available pages.
+          example: 7
+        page_size:
+          type: integer
+          format: int32
+          description: It represents the number of items per page.
+          example: 25
+        current_page:
+          type: integer
+          format: int32
+          description: It indicates the current page (the counter starts from zero).
+          example: 0
+        results_size:
+          type: integer
+          format: int32
+          description: It indicates the size of the array results.
+          example: 25
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Card'
+    OrderStatus:
+      type: string
+      enum:
+      - PENDING
+      - ERROR
+      - PLACED
+      - CANCELLED
+      - COMPLETED
+      - COMPLETED_WITH_CREDIT
+    AddCardType:
+      type: string
+      enum:
+      - PLASTIC
+      - VIRTUAL
+      - FUEL
+      - GOOGLE_CARD
+      - PLASTIC_CHARGE
+      - VIRTUAL_CHARGE
+    CardAttachedResourceType:
+      type: string
+      description: The type of a resource the `Card` is attached to.
+      enum:
+      - wallet
+      - company
+      - employee
+      - onlineAd
+      - subscription
+      - purchase
+      example: wallet
+    UpdateCard:
+      description: Update `Card` JSON parameters.
+      properties:
+        label:
+          type: string
+          description: The new label of the `Card` (max 60 characters).
+          example: CardLabel
+          maxLength: 60
+        vehicle_id:
+          type: string
+          description: The `Vehicle` ID to be assigned to the `Card` - only valid for PLASTIC or FUEL cards (To remove a `Vehicle` set the value to an empty string).
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+        shipping_address_id:
+          type: string
+          description: The shipping `Address` ID to be assigned to the `Card` .
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+        addCardAssignees:
+          type: array
+          description: The assignees to be added for the `Card`.
+          example:
+          - XMPL1234-000001
+          - XMPL1234-000002
+          - XMPL1234-000003
+          items:
+            type: string
+        removeCardAssignees:
+          type: array
+          description: The assignees to be remove for the `Card`.
+          example:
+          - XMPL1234-000001
+          - XMPL1234-000002
+          - XMPL1234-000003
+          items:
+            type: string
+    CardPaymentMethod:
+      type: string
+      enum:
+      - SUBSCRIPTION
+      - ONLINE_ADS
+      - PURCHASE
+    AddOrderCardOwnerType:
+      type: string
+      enum:
+      - company
+      - employee
+      - expensecentre
+    CardType:
+      type: string
+      enum:
+      - PLASTIC
+      - VIRTUAL
+      - FUEL
+      - GOOGLE_CARD
+    Direction:
+      type: string
+      description: It indicates how the pages are ordered.
+      enum:
+      - ASC
+      - DESC
+      example: DESC
+    Order:
+      properties:
+        id:
+          type: string
+          description: The `Order` ID.
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+        status:
+          $ref: '#/components/schemas/OrderStatus'
+          description: The status of the `Order`.
+          example: PENDING
+        creation_time:
+          type: string
+          description: The date and time when the `Order` was created.
+          example: '2017-06-01T12:48:40Z'
+        last_update_time:
+          type: string
+          description: The last update date of the `Order`.
+          example: '2017-06-01T12:48:40Z'
+        error_code:
+          type: string
+          description: In case is_valid is false, the error code of the `Order` is shown.
+        total_paid_amount:
+          type: number
+          description: The total amount of the `Order`.
+          example: 10.25
+        total_paid_currency:
+          $ref: '#/components/schemas/ISO4217Currency'
+          description: The currency for the total paid amount.
+          example: EUR
+        items:
+          type: array
+          description: The products associated with the `Order`.
+          items:
+            $ref: '#/components/schemas/OrderItem'
+        is_valid:
+          type: boolean
+          description: It states whether the `Order` is valid.
+          example: true
+    CardRenewalInfo:
+      properties:
+        expiring_soon:
+          type: boolean
+          description: Whether the `Card` is approaching its expiration date.
+          example: true
+        renewed_card_ready_for_activation:
+          type: boolean
+          description: Whether the renewed `Card` is ready to be activated.
+          example: true
+    CardStatus:
+      type: string
+      enum:
+      - Normal
+      - Do not honor
+      - Lost card
+      - Stolen card
+      - Expired card
+      - Restricted card
+      - Security Violation
+      - Cardholder to contact the issuer
+      - Card Destroyed
+    ISO4217SupportedCurrency:
+      type: string
+      description: The [ISO 4217](https://www.six-group.com/en/products-services/financial-information/data-standards.html#scrollTo=maintenance-agency) code of the currency of the `Statement` to search for.
+      enum:
+      - EUR
+      - GBP
+      - USD
+      example: EUR
+    AddCardOrder:
+      description: Add `Card` JSON parameters.
+      properties:
+        request_timestamp:
+          type: integer
+          format: int64
+          description: The epoch timestamp in millis. This is checked in Soldo. Requests with timestamp older than 5 seconds will be rejected.
+          example: 1576850500000
+        owner_type:
+          $ref: '#/components/schemas/AddOrderCardOwnerType'
+          description: The type of the resource the `Card` is created for.
+          example: employee
+        owner_public_id:
+          type: string
+          description: The `Card` owner ID, only applicable for `owner` type `employee` cards.
+          example: XMPL1234-000001
+        wallet_id:
+          type: string
+          description: The `Wallet` ID, if not specified a reserved `Wallet` will be created for the added `Card`.
+          example: c861cc24-6663-410f-8c78-73f886fff4ef
+        reserved_wallet_currency:
+          $ref: '#/components/schemas/ISO4217SupportedCurrency'
+          description: The reserved `Wallet` currency, only required when adding a dedicated card.
+          example: EUR
+        type:
+          $ref: '#/components/schemas/AddCardType'
+          description: The type of the `Card`.
+          example: PLASTIC
+        name:
+          type: string
+          description: The logical name of the `Card` for a `company` card, ignored in case of `employee` card (the cardholder full name is used instead).
+          example: CardName
+        card_label:
+          type: string
+          description: A label for the `Card` (max 60 characters).
+          example: CardLabel
+          maxLength: 60
+        emboss_line4:
+          type: string
+          description: The emboss line 4 of the `Card`.
+          example: Example Inc.
+        address_id:
+          type: string
+          description: The `Address` ID the `Card` has to be shipped to (if empty, the default shipping `Address` is used i.e. where `default_shipping` = `true`), only applicable for `PLASTIC` and `FUEL` cards.
+          example: c861cc24-6663-410f-8c78-73f886fff4ef
+        vehicle_id:
+          type: string
+          description: The `Vehicle` ID assigned to the `Card`, only valid for `FUEL` cards.
+          example: c861cc24-6663-410f-8c78-73f886fff4ef
+        preset_id:
+          type: string
+          description: The `cardRulePreset` ID assigned to the `Card`.
+          example: c861cc24-6663-410f-8c78-73f886fff4ef
+      required:
+      - name
+      - owner_public_id
+      - owner_type
+      - request_timestamp
+      - type
+    CardOwnerType:
+      type: string
+      enum:
+      - company
+      - employee
+    CardSensitiveData:
+      properties:
+        encrypted_full_pan:
+          type: string
+          description: The encrypted PAN of the card.
+        encrypted_cvv:
+          type: string
+          description: The encrypted cvv of the card.
+        encrypted_pin:
+          type: string
+          description: The encrypted pin of the card (only valid for PLASTIC or FUEL card type).
+  securitySchemes:
+    standardAuth:
+      type: oauth2
+      description: This API uses OAuth 2 with the "Client Credentials" grant flow.
+      flows:
+        clientCredentials:
+          tokenUrl: https://api.soldo.com/oauth/authorize
+          refreshUrl: https://api.soldo.com/oauth/refresh
+          scopes:
+            address_read: Can read address details.
+            address_write: Can update address details.
+            card_read: Can read card details.
+            card_write: Can change card details.
+            company_read: Can read company details.
+            company_write: Can change company details.
+            contact_read: Can read contact details.
+            contact_write: Can change contact details.
+            employee_read: Can read employee details.
+            employee_write: Can change employee details.
+            expense_category_read: Can read expense category details.
+            expense_category_write: Can change expense category details.
+            expense_report_read: Can read expense report details.
+            expense_report_write: Can change expense report details.
+            expense_review_read: Can read expense review status.
+            expense_review_write: Can change expense review status.
+            group_read: Can read group details.
+            group_write: Can change groups details.
+            online_ads_read: Can read online ads details.
+            online_ads_write: Can change online ads details.
+            payment_read: Can read payment details.
+            payment_write: Can change payment details.
+            purchase_read: Can read purchase details.
+            purchase_write: Can change purchase details.
+            refueling_read: Can read refueling details.
+            refueling_write: Can change refueling details.
+            resource_set_read: Can read resource set details.
+            resource_set_write: Can change resource set details.
+            role_read: Can read role details.
+            statement_read: Can read statement details.
+            subscription_read: Can read subscription details.
+            subscription_write: Can change subscription details.
+            tag_read: Can read tags.
+            tag_write: can change tags.
+            tax_rate_read: Can read vat rate details.
+            tax_rate_write: Can change vat rate details.
+            transaction_read: Can read transaction details.
+            transaction_write: Can change transaction details.
+            vehicle_read: Can read vehicle details.
+            vehicle_write: Can change vehicle details.
+            wallet_read: Can read wallet details.
+            wallet_write: Can change wallet details.
+            webhook_subscription_read: Can read webhook subscription details.
+            webhook_subscription_write: Can change webhook subscription details.
+x-readme:
+  hidden: false
