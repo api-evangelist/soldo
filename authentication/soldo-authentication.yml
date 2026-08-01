@@ -1,0 +1,18 @@
+generated: '2026-07-21'
+method: derived
+source: openapi/soldo-business-api-v20-openapi-original.json
+summary:
+  types:
+  - oauth2
+  oauth2_flows:
+  - clientCredentials
+schemes:
+- name: standardAuth
+  type: oauth2
+  flows:
+  - flow: clientCredentials
+    tokenUrl: https://api.soldo.com/oauth/authorize
+    scopes: 44
+  description: This API uses OAuth 2 with the "Client Credentials" grant flow.
+  sources:
+  - openapi/soldo-business-api-v20-openapi-original.json

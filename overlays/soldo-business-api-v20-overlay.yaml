@@ -1,0 +1,33 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for Soldo Business API v2.0
+  version: 1.0.0
+extends: openapi/soldo-business-api-v20-openapi-original.json
+actions:
+- target: $.info
+  update:
+    x-apievangelist-enriched: '2026-07-21'
+    x-apievangelist-provider: soldo
+    x-authentication: authentication/soldo-authentication.yml
+    x-oauth-scopes: scopes/soldo-scopes.yml
+    x-conventions: conventions/soldo-conventions.yml
+    x-error-catalog: errors/soldo-error-codes.yml
+    x-lifecycle: lifecycle/soldo-lifecycle.yml
+    x-sandbox: sandbox/soldo-sandbox.yml
+    x-webhooks-catalog: asyncapi/soldo-webhooks.yml
+    x-data-model: data-model/soldo-data-model.yml
+- target: $.info
+  update:
+    x-rate-limits:
+      requests_per_minute: 600
+      requests_per_second: 20
+      signal_headers:
+      - x-ratelimit-limit-minute
+      - x-ratelimit-remaining-minute
+      - x-ratelimit-limit-second
+      - x-ratelimit-remaining-second
+- target: $.servers
+  update:
+    x-environments:
+      production: https://api.soldo.com
+      sandbox: https://api-demo.soldocloud.net

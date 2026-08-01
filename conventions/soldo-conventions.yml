@@ -1,0 +1,82 @@
+generated: '2026-07-21'
+method: searched
+source: https://developer.soldo.com/docs/
+api: Soldo Business API v2.0
+base_url: https://api.soldo.com/business/v2
+authentication:
+  style: oauth2-client-credentials
+  token_url: https://api.soldo.com/oauth/authorize
+  refresh_url: https://api.soldo.com/oauth/refresh
+  header: 'Authorization: Bearer {access_token}'
+  token_ttl_seconds: 7200
+  levels:
+  - name: standard
+    description: >-
+      Client Credentials Grant. Required for all endpoints. client_id +
+      client_secret POSTed as application/x-www-form-urlencoded to the token
+      endpoint.
+  - name: advanced
+    description: >-
+      Additional request signing required for money movement and sensitive
+      changes. Adds two headers computed per-request.
+    headers:
+    - X-Soldo-Fingerprint          # SHA-512 hash (lowercase) of ordered field values + fingerprint token
+    - X-Soldo-Fingerprint-Signature # SHA512withRSA signature of the fingerprint, Base64
+    docs: https://developer.soldo.com/docs/advanced-authentication
+    key_requirement: 2048-bit RSA key pair (X.509 SubjectPublicKeyInfo PEM public key uploaded to Soldo)
+  docs: https://developer.soldo.com/docs/authentication
+idempotency:
+  supported: false
+  note: >-
+    Soldo does not document an idempotency-key header/parameter and the OpenAPI
+    declares none. No Idempotency pointer is emitted.
+pagination:
+  style: page-number
+  docs: https://developer.soldo.com/docs/pagination-and-sorting
+  request_params:
+  - {param: p, meaning: page index (zero-based), default: 0}
+  - {param: s, meaning: page size (max 50), default: 50}
+  - {param: d, meaning: sort direction (ASC|DESC)}
+  - {param: props, meaning: field(s) to sort on; repeatable}
+  response_fields:
+  - {field: total, meaning: total number of objects}
+  - {field: pages, meaning: total number of pages}
+  - {field: page_size, meaning: max objects per page}
+  - {field: current_page, meaning: current page (zero-based)}
+  - {field: results_size, meaning: objects in this page}
+  - {field: results, meaning: array of objects for the page}
+rate_limiting:
+  docs: https://developer.soldo.com/docs/rate-limits
+  limits:
+  - {window: minute, limit: 600}
+  - {window: second, limit: 20}
+  signal_headers:
+  - x-ratelimit-limit-minute
+  - x-ratelimit-limit-second
+  - x-ratelimit-remaining-minute
+  - x-ratelimit-remaining-second
+  exceeded_status: 429
+error_envelope:
+  format: custom-json
+  shape: '{ "error_code": string, "message": string }'
+  note: >-
+    Not RFC 9457 problem+json. Custom envelope with error_code + message.
+    OAuth token errors use { error, error_description }.
+  docs: https://developer.soldo.com/docs/errors
+  cross_ref: errors/soldo-error-codes.yml
+versioning:
+  scheme: uri-path
+  current: v2
+  path_segment: /business/v2
+  cross_ref: lifecycle/soldo-lifecycle.yml
+file_uploads:
+  pattern: pre-signed-url
+  note: >-
+    Documents/attachments are uploaded via a temporary pre-signed URL, then
+    confirmed with a follow-up API call.
+  docs: https://developer.soldo.com/docs/file-uploads
+cross_references:
+  authentication: authentication/soldo-authentication.yml
+  scopes: scopes/soldo-scopes.yml
+  errors: errors/soldo-error-codes.yml
+  lifecycle: lifecycle/soldo-lifecycle.yml

@@ -1,0 +1,3765 @@
+generated: '2026-07-21'
+method: generated
+source: openapi/soldo-business-api-v20-openapi-original.json
+description: Recommended x-agentic-access execution contracts, classified heuristically from
+  the OpenAPI. A governance starting point for exposing this API to AI agents — review and bind
+  audience per deployment. See research/curity/agentic-governance/.
+summary:
+  operations: 235
+  by_action_class:
+    acting: 152
+    connected: 83
+  by_consequence:
+    write: 138
+    read: 83
+    physical: 8
+    safety-critical: 6
+  human_in_the_loop_required: 6
+operations:
+- path: /oauth/authorize
+  method: post
+  operationId: authorize
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /business/v2/online-ads/{onlineAdId}
+  method: get
+  operationId: online-ads-get
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - online_ads_read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /business/v2/online-ads/{onlineAdId}
+  method: put
+  operationId: online-ads-update
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - online_ads_write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /business/v2/online-ads/{onlineAdId}
+  method: post
+  operationId: online-ads-activate
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - online_ads_write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /business/v2/online-ads/{onlineAdId}
+  method: delete
+  operationId: online-ads-delete
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - online_ads_write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /business/v2/subscriptions/{subscriptionId}
+  method: get
+  operationId: subscription-get
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - subscription_read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /business/v2/subscriptions/{subscriptionId}
+  method: put
+  operationId: subscription-update
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - subscription_write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /business/v2/subscriptions/{subscriptionId}
+  method: post
+  operationId: subscription-activate
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - subscription_write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /business/v2/subscriptions/{subscriptionId}
+  method: delete
+  operationId: subscription-delete
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - subscription_write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /business/v2/addresses
+  method: get
+  operationId: address-search
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - address_read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /business/v2/addresses
+  method: post
+  operationId: address-add
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - address_write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /business/v2/expense-policies/{expensePolicyId}/assignees
+  method: get
+  operationId: expense-policy-assignees-get
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - expense_policy_read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /business/v2/expense-policies/{expensePolicyId}/assignees
+  method: post
+  operationId: expense-policy-assignees-add
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - expense_policy_write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /business/v2/expense-policies/{expensePolicyId}/assignees
+  method: delete
+  operationId: expense-policy-assignees-remove
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - expense_policy_write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /business/v2/autotags
+  method: get
+  operationId: autotag-search
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - autotag_read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /business/v2/autotags
+  method: post
+  operationId: autotag-add
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - autotag_write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /business/v2/business-trips
+  method: get
+  operationId: business-trip-search
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - business_trip_read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /business/v2/business-trips
+  method: post
+  operationId: business-trip-add
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - business_trip_write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /business/v2/cards
+  method: get
+  operationId: card-search
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - card_read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /business/v2/cards
+  method: post
+  operationId: card-add
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - card_write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /business/v2/contacts
+  method: get
+  operationId: contact-search
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - contact_read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /business/v2/contacts
+  method: post
+  operationId: contact-add
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - contact_write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /business/v2/employees/out-of-office
+  method: get
+  operationId: out-of-office-search
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - out_of_office_delegation_read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /business/v2/employees/out-of-office
+  method: post
+  operationId: out-of-office-add
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - out_of_office_delegation_write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /business/v2/entities/expense-category
+  method: get
+  operationId: expense-category-search
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - expense_category_read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /business/v2/entities/expense-category
+  method: post
+  operationId: expense-category-add
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - expense_category_write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /business/v2/expense-review/processes
+  method: get
+  operationId: expense-review-processes-search
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - expense_review_read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /business/v2/expense-review/processes
+  method: post
+  operationId: expense-review-process-add
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - expense_review_write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /business/v2/expense-review/configuration
+  method: get
+  operationId: expense-review-configuration-get
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - expense_review_read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /business/v2/expense-review/configuration
+  method: put
+  operationId: expense-review-configuration-update
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - expense_review_write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /business/v2/expense-review/configuration
+  method: post
+  operationId: expense-review-configuration-add
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - expense_review_write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /business/v2/groups
+  method: get
+  operationId: group-search
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - group_read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /business/v2/groups
+  method: post
+  operationId: group-add
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - group_write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /business/v2/dictionaries
+  method: get
+  operationId: list-search
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - tag_read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /business/v2/dictionaries
+  method: post
+  operationId: list-add
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - tag_write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /business/v2/online-ads/{onlineAdId}/addAssignees
+  method: put
+  operationId: online-ads-assignees-add
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - online_ads_write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /business/v2/purchases
+  method: get
+  operationId: pre-approved-spend-search
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - purchase_read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /business/v2/purchases
+  method: post
+  operationId: pre-approved-spend-add
+  x-agentic-access:
+    action-class: acting
+    consequence: physical
+    subject: required
+    scope:
+    - purchase_write
+    audience: null
+    token:
+      max-ttl: 300
+      exchange: true
+      purpose-required: true
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /business/v2/requests
+  method: get
+  operationId: request-search
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - request_read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /business/v2/requests
+  method: post
+  operationId: request-add
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - request_write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /business/v2/resource-sets
+  method: get
+  operationId: resource-set-search
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - resource_set_read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /business/v2/resource-sets
+  method: post
+  operationId: resource-set-add
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - resource_set_write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /business/v2/groups/{groupId}/resource
+  method: post
+  operationId: group-resource-add
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - group_write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /business/v2/groups/{groupId}/resource
+  method: delete
+  operationId: group-resource-remove
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - group_write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /business/v2/subscriptions/{subscriptionId}/addAssignees
+  method: put
+  operationId: subscription-assignees-add
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - subscription_write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /business/v2/dictionaries/{listId}/tags
+  method: get
+  operationId: tag-search
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - tag_read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /business/v2/dictionaries/{listId}/tags
+  method: post
+  operationId: tag-add
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - tag_write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /business/v2/dictionaries/{listId}/tags/bulk
+  method: put
+  operationId: tags-update-bulk
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - tag_write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /business/v2/dictionaries/{listId}/tags/bulk
+  method: post
+  operationId: tags-add-bulk
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - tag_write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /business/v2/entities/tax-rate
+  method: get
+  operationId: vat-rate-search
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - tax_rate_read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /business/v2/entities/tax-rate
+  method: post
+  operationId: vat-rate-add
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - tax_rate_write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /business/v2/transactions/custom-exports/bulk-add
+  method: post
+  operationId: transaction-export-add
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - transaction_write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /business/v2/transactions/{transactionId}/metadata/{metadataId}
+  method: get
+  operationId: transaction-metadata-get
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - transaction_read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /business/v2/transactions/{transactionId}/metadata/{metadataId}
+  method: put
+  operationId: transaction-metadata-update
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - transaction_write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /business/v2/transactions/{transactionId}/metadata/{metadataId}
+  method: post
+  operationId: transaction-metadata-add
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - transaction_write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /business/v2/transactions/{transactionId}/metadata/{metadataId}
+  method: delete
+  operationId: transaction-metadata-delete
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - transaction_write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /business/v2/transactions/{transactionId}/tags/{tagId}
+  method: post
+  operationId: transaction-tag-add
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - transaction_write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /business/v2/transactions/{transactionId}/tags/{tagId}
+  method: delete
+  operationId: transaction-tag-remove
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - transaction_write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /business/v2/vehicles
+  method: get
+  operationId: vehicle-search
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - vehicle_read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /business/v2/vehicles
+  method: post
+  operationId: vehicle-add
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - vehicle_write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /business/v2/wallets
+  method: get
+  operationId: wallet-search
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - wallet_read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /business/v2/wallets
+  method: post
+  operationId: wallet-add
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - wallet_write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /business/v2/wallets/autotransfer-presets/{presetId}/relate-resource
+  method: put
+  operationId: wallet-auto-transfer-preset-set
+  x-agentic-access:
+    action-class: acting
+    consequence: safety-critical
+    subject: required
+    scope:
+    - wallet_write
+    audience: null
+    token:
+      max-ttl: 120
+      exchange: true
+      purpose-required: true
+      proof-of-possession: true
+    escalation:
+      human-in-the-loop: required
+    audit: required
+- path: /business/v2/webhooks/subscriptions
+  method: get
+  operationId: webhook-subscription-search
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - webhook_subscription_read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /business/v2/webhooks/subscriptions
+  method: post
+  operationId: webhook-subscription-add
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - webhook_subscription_write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /business/v2/workflows
+  method: get
+  operationId: workflow-search
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - workflow_read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /business/v2/workflows
+  method: post
+  operationId: workflow-add
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - workflow_write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /business/v2/requests/{requestId}/approve
+  method: put
+  operationId: request-approve
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - request_write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /business/v2/employees/{userId}/assignRole
+  method: post
+  operationId: user-role-set
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - employee_write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /business/v2/autotags/{autotagId}
+  method: get
+  operationId: autotag-get
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - autotag_read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /business/v2/autotags/{autotagId}
+  method: put
+  operationId: autotag-update
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - autotag_write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /business/v2/autotags/{autotagId}
+  method: delete
+  operationId: autotag-delete
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - autotag_write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /business/v2/roles
+  method: get
+  operationId: roles-list
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - role_read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /business/v2/business-trips/{businessTripId}
+  method: get
+  operationId: business-trip-get
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - business_trip_read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /business/v2/business-trips/{businessTripId}
+  method: delete
+  operationId: business-trip-delete
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - business_trip_write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /business/v2/cards/{cardId}
+  method: get
+  operationId: card-get
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - card_read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /business/v2/cards/{cardId}
+  method: put
+  operationId: card-update
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - card_write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /business/v2/cards/{cardId}
+  method: delete
+  operationId: card-delete
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - card_write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /business/v2/cards/{cardId}/rules/cashpoint
+  method: get
+  operationId: card-rule-cashpoint-get
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - card_read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /business/v2/cards/{cardId}/rules/countries
+  method: get
+  operationId: card-rule-countries-get
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - card_read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /business/v2/cards/{cardId}/rules/countries
+  method: post
+  operationId: card-rule-countries-set
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - card_write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /business/v2/cards/{cardId}/rules/merchantCategories
+  method: get
+  operationId: card-rule-merchant-categories-get
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - card_read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /business/v2/cards/{cardId}/rules/merchantCategories
+  method: post
+  operationId: card-rule-merchant-categories-set
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - card_write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /business/v2/cards/{cardId}/rules/spendingLimits
+  method: get
+  operationId: card-rule-spending-limits-get
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - card_read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /business/v2/cards/{cardId}/move/{newWalletId}
+  method: put
+  operationId: card-wallet-switch
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - card_write
+    - wallet_write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /business/v2/expense-review/processes/priority
+  method: post
+  operationId: expense-review-process-priority-change
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - expense_review_write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /business/v2/company
+  method: get
+  operationId: company-get
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - company_read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /business/v2/business-trips/{businessTripId}/complete-transfer
+  method: post
+  operationId: business-trip-complete-transfer
+  x-agentic-access:
+    action-class: acting
+    consequence: physical
+    subject: required
+    scope:
+    - business_trip_write
+    audience: null
+    token:
+      max-ttl: 300
+      exchange: true
+      purpose-required: true
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /business/v2/documents/confirm
+  method: post
+  operationId: document-upload-confirm
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - document_write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /business/v2/transactions/{transactionId}/attachments/{attachmentId}
+  method: get
+  operationId: transaction-attachment-get
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - transaction_read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /business/v2/transactions/{transactionId}/attachments/{attachmentId}
+  method: put
+  operationId: transaction-attachment-metadata-update
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - transaction_write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /business/v2/transactions/{transactionId}/attachments/{attachmentId}
+  method: post
+  operationId: transaction-attachment-upload-confirm
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - transaction_write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /business/v2/transactions/{transactionId}/attachments/{attachmentId}
+  method: delete
+  operationId: transaction-attachment-delete
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - transaction_write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /business/v2/contacts/{contactId}
+  method: get
+  operationId: contact-get
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - contact_write
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /business/v2/contacts/{contactId}
+  method: put
+  operationId: contact-update
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - contact_write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /business/v2/contacts/{contactId}
+  method: delete
+  operationId: contact-delete
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - contact_write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /business/v2/employees/create
+  method: post
+  operationId: user-create
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - employee_write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /business/v2/transactions/mileage-reimbursements
+  method: post
+  operationId: mileage-reimbursement-transaction-create
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - transaction_write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /business/v2/online-ads
+  method: get
+  operationId: online-ads-search
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - online_ads_read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /business/v2/online-ads
+  method: post
+  operationId: online-ads-add
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - online_ads_write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /business/v2/transactions/out-of-platform-transactions
+  method: post
+  operationId: out-of-platform-transaction-create
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - transaction_write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /business/v2/subscriptions
+  method: get
+  operationId: subscription-search
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - subscription_read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /business/v2/subscriptions
+  method: post
+  operationId: subscription-add
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - subscription_write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /business/v2/transactions/{transactionId}/split
+  method: put
+  operationId: transaction-split-update
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - transaction_write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /business/v2/transactions/{transactionId}/split
+  method: post
+  operationId: transaction-split-create
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - transaction_write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /business/v2/transactions/{transactionId}/split
+  method: delete
+  operationId: transaction-split-delete
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - transaction_write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /business/v2/wallets/create
+  method: post
+  operationId: wallet-create
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - wallet_write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /business/v2/requests/{requestId}/decline
+  method: put
+  operationId: request-decline
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - request_write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /business/v2/employees/out-of-office/{out_of_office_id}
+  method: get
+  operationId: out-of-office-get
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - out_of_office_delegation_read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /business/v2/employees/out-of-office/{out_of_office_id}
+  method: put
+  operationId: out-of-office-update
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - out_of_office_delegation_write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /business/v2/employees/out-of-office/{out_of_office_id}
+  method: delete
+  operationId: out-of-office-delete
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - out_of_office_delegation_write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /business/v2/addresses/{addressId}
+  method: get
+  operationId: address-get
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - address_read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /business/v2/addresses/{addressId}
+  method: put
+  operationId: address-update
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - address_write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /business/v2/addresses/{addressId}
+  method: delete
+  operationId: address-delete
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - address_write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /business/v2/cards/{cardId}/rules/cashpoint/{limitName}
+  method: post
+  operationId: card-rule-cashpoint-set
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - card_write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /business/v2/cards/{cardId}/rules/cashpoint/{limitName}
+  method: delete
+  operationId: card-rule-cashpoint-unset
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - card_write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /business/v2/cards/presets/{presetId}
+  method: get
+  operationId: card-rule-preset-get
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - card_read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /business/v2/cards/presets/{presetId}
+  method: delete
+  operationId: card-rule-preset-delete
+  x-agentic-access:
+    action-class: acting
+    consequence: safety-critical
+    subject: required
+    scope:
+    - card_write
+    audience: null
+    token:
+      max-ttl: 120
+      exchange: true
+      purpose-required: true
+      proof-of-possession: true
+    escalation:
+      human-in-the-loop: required
+    audit: required
+- path: /business/v2/cards/{cardId}/rules/spendingLimits/{limitName}
+  method: post
+  operationId: card-rule-spending-limits-set
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - card_write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /business/v2/cards/{cardId}/rules/spendingLimits/{limitName}
+  method: delete
+  operationId: card-rule-spending-limits-unset
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - card_read
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /business/v2/documents/{documentId}
+  method: get
+  operationId: document-get
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - document_read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /business/v2/documents/{documentId}
+  method: delete
+  operationId: document-delete
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - document_write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /business/v2/employees/{userId}
+  method: get
+  operationId: user-get
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - employee_read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /business/v2/employees/{userId}
+  method: put
+  operationId: user-update
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - employee_write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /business/v2/employees/{userId}
+  method: delete
+  operationId: user-delete
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - employee_write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /business/v2/entities/expense-category/{expenseCategoryId}
+  method: get
+  operationId: expense-category-get
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - expense_category_read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /business/v2/entities/expense-category/{expenseCategoryId}
+  method: put
+  operationId: expense-category-update
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - expense_category_write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /business/v2/entities/expense-category/{expenseCategoryId}
+  method: delete
+  operationId: expense-category-delete
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - expense_category_write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /business/v2/expense-reports/{expenseReportId}
+  method: get
+  operationId: expense-report-get
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - expense_report_read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /business/v2/expense-reports/{expenseReportId}
+  method: put
+  operationId: expense-report-update
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - expense_report_write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /business/v2/expense-reports/{expenseReportId}
+  method: delete
+  operationId: expense-report-delete
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - expense_report_write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /business/v2/expense-review/processes/{processId}
+  method: get
+  operationId: expense-review-process-get
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - expense_review_read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /business/v2/expense-review/processes/{processId}
+  method: put
+  operationId: expense-review-process-update
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - expense_review_write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /business/v2/expense-review/processes/{processId}
+  method: delete
+  operationId: expense-review-process-delete
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - expense_review_write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /business/v2/groups/{groupId}
+  method: get
+  operationId: group-get
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - group_read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /business/v2/groups/{groupId}
+  method: put
+  operationId: group-update
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - group_write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /business/v2/groups/{groupId}
+  method: delete
+  operationId: group-delete
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - group_write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /business/v2/dictionaries/{listId}
+  method: get
+  operationId: list-get
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - tag_read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /business/v2/dictionaries/{listId}
+  method: put
+  operationId: list-update
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - tag_write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /business/v2/dictionaries/{listId}
+  method: delete
+  operationId: list-delete
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - tag_write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /business/v2/transactions/mileage-reimbursements/{transactionId}
+  method: get
+  operationId: mileage-reimbursement-transaction-get
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - transaction_read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /business/v2/transactions/mileage-reimbursements/{transactionId}
+  method: put
+  operationId: mileage-reimbursement-transaction-update
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - transaction_write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /business/v2/transactions/mileage-reimbursements/{transactionId}
+  method: delete
+  operationId: mileage-reimbursement-transaction-delete
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - transaction_write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /business/v2/orders/{orderId}
+  method: get
+  operationId: order-get
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - order_read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /business/v2/orders/{orderId}
+  method: delete
+  operationId: order-delete
+  x-agentic-access:
+    action-class: acting
+    consequence: physical
+    subject: required
+    scope:
+    - company_write
+    audience: null
+    token:
+      max-ttl: 300
+      exchange: true
+      purpose-required: true
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /business/v2/transactions/out-of-platform-transactions/{transactionId}
+  method: get
+  operationId: out-of-platform-transaction-get
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - transaction_read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /business/v2/transactions/out-of-platform-transactions/{transactionId}
+  method: put
+  operationId: out-of-platform-transaction-update
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - transaction_write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /business/v2/transactions/out-of-platform-transactions/{transactionId}
+  method: delete
+  operationId: out-of-platform-transaction-delete
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - transaction_write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /business/v2/purchases/{purchaseId}
+  method: get
+  operationId: pre-approved-spend-get
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - purchase_read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /business/v2/purchases/{purchaseId}
+  method: put
+  operationId: pre-approved-spend-update
+  x-agentic-access:
+    action-class: acting
+    consequence: physical
+    subject: required
+    scope:
+    - purchase_write
+    audience: null
+    token:
+      max-ttl: 300
+      exchange: true
+      purpose-required: true
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /business/v2/purchases/{purchaseId}
+  method: delete
+  operationId: pre-approved-spend-delete
+  x-agentic-access:
+    action-class: acting
+    consequence: physical
+    subject: required
+    scope:
+    - purchase_write
+    audience: null
+    token:
+      max-ttl: 300
+      exchange: true
+      purpose-required: true
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /business/v2/requests/{requestId}
+  method: get
+  operationId: request-get
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - request_read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /business/v2/requests/{requestId}
+  method: put
+  operationId: request-update
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - request_write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /business/v2/requests/{requestId}
+  method: delete
+  operationId: request-delete
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - request_write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /business/v2/resource-sets/{id}
+  method: get
+  operationId: resource-set-get
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - resource_set_read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /business/v2/resource-sets/{id}
+  method: put
+  operationId: resource-set-update
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - resource_set_write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /business/v2/resource-sets/{id}
+  method: delete
+  operationId: resource-set-delete
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - resource_set_write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /business/v2/dictionaries/{listId}/tags/{tagId}
+  method: get
+  operationId: tag-get
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - tag_read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /business/v2/dictionaries/{listId}/tags/{tagId}
+  method: put
+  operationId: tag-update
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - tag_write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /business/v2/dictionaries/{listId}/tags/{tagId}
+  method: delete
+  operationId: tag-delete
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - tag_write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /business/v2/entities/tax-rate/{taxRateId}
+  method: get
+  operationId: vat-rate-get
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - tax_rate_read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /business/v2/entities/tax-rate/{taxRateId}
+  method: put
+  operationId: vat-rate-update
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - tax_rate_write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /business/v2/entities/tax-rate/{taxRateId}
+  method: delete
+  operationId: vat-rate-delete
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - tax_rate_write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /business/v2/vehicles/{vehicleId}
+  method: get
+  operationId: vehicle-get
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - vehicle_read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /business/v2/vehicles/{vehicleId}
+  method: put
+  operationId: vehicle-update
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - vehicle_write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /business/v2/vehicles/{vehicleId}
+  method: delete
+  operationId: vehicle-delete
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - vehicle_write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /business/v2/webhooks/subscriptions/{webhookSubscriptionId}
+  method: put
+  operationId: webhook-subscription-update
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - webhook_subscription_write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /business/v2/webhooks/subscriptions/{webhookSubscriptionId}
+  method: delete
+  operationId: webhook-subscription-delete
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - webhook_subscription_write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /business/v2/workflows/{workflowId}
+  method: get
+  operationId: workflow-get
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - workflow_read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /business/v2/workflows/{workflowId}
+  method: put
+  operationId: workflow-update
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - workflow_write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /business/v2/workflows/{workflowId}
+  method: delete
+  operationId: workflow-delete
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - workflow_write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /business/v2/documents/upload
+  method: post
+  operationId: document-upload
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - document_write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /business/v2/employees/{userId}/roles
+  method: get
+  operationId: user-role-get
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - employee_read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /business/v2/employees
+  method: get
+  operationId: user-search
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - employee_read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /business/v2/expense-reports/{expenseReportId}/download
+  method: get
+  operationId: expense-report-download
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - expense_report_read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /business/v2/expense-review/{userId}
+  method: get
+  operationId: expense-review-get
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - expense_review_read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /business/v2/expense-review/{userId}/reminder
+  method: post
+  operationId: expense-review-reminder
+  x-agentic-access:
+    action-class: acting
+    consequence: physical
+    subject: required
+    scope:
+    - expense_review_read
+    audience: null
+    token:
+      max-ttl: 300
+      exchange: true
+      purpose-required: true
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /business/v2/expense-review/export-expenses/{userId}
+  method: post
+  operationId: expense-review-export
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - expense_review_write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /business/v2/cards/{cardId}/rules
+  method: get
+  operationId: card-rules-get
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - card_read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /business/v2/cards/{cardId}/rules
+  method: put
+  operationId: card-rules-set
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - card_write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /business/v2/expense-policies/{expensePolicyId}
+  method: get
+  operationId: expense-policy-get
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - expense_policy_read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /business/v2/transactions/{transactionId}/metadata
+  method: get
+  operationId: transaction-metadata-search
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - transaction_read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /business/v2/wallets/autotransfer-presets/{presetId}
+  method: get
+  operationId: wallet-auto-transfer-preset-get
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - wallet_read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /business/v2/wallets/internalTransfer/{fromWalletId}/{toWalletId}
+  method: put
+  operationId: wallet-internal-transfer
+  x-agentic-access:
+    action-class: acting
+    consequence: physical
+    subject: required
+    scope:
+    - wallet_write
+    audience: null
+    token:
+      max-ttl: 300
+      exchange: true
+      purpose-required: true
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /business/v2/transactions/{transactionId}/attachments
+  method: get
+  operationId: transaction-attachment-search
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - transaction_read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /business/v2/transactions/{transactionId}/attachments
+  method: post
+  operationId: transaction-attachment-upload
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - transaction_write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /business/v2/orders
+  method: get
+  operationId: order-search
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - company_read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /business/v2/expense-review/processes/recalculate
+  method: post
+  operationId: expense-review-process-recalculate
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - expense_review_write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /business/v2/purchases/{purchaseId}/redeem
+  method: post
+  operationId: pre-approved-spend-redeem
+  x-agentic-access:
+    action-class: acting
+    consequence: physical
+    subject: required
+    scope:
+    - purchase_write
+    audience: null
+    token:
+      max-ttl: 300
+      exchange: true
+      purpose-required: true
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /business/v2/refueling/{refuelingId}
+  method: get
+  operationId: refueling-get
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - transaction_read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /business/v2/refueling/{refuelingId}
+  method: put
+  operationId: refueling-update
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - transaction_write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /business/v2/refueling
+  method: get
+  operationId: refueling-search
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - transaction_read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /business/v2/expense-policies/assignees
+  method: delete
+  operationId: expense-policy-assignees-remove-any
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - expense_policy_write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /business/v2/online-ads/{onlineAdId}/removeAssignees
+  method: put
+  operationId: online-ads-assignees-remove
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - online_ads_write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /business/v2/subscriptions/{subscriptionId}/removeAssignees
+  method: put
+  operationId: subscription-assignees-remove
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - subscription_write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /business/v2/transactions/custom-exports/bulk-remove
+  method: delete
+  operationId: transaction-export-remove
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - transaction_write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /business/v2/transactions/{transactionId}/expense-category
+  method: delete
+  operationId: transaction-expense-category-unset
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - transaction_write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /business/v2/transactions/{transactionId}/tax-rate
+  method: delete
+  operationId: transaction-tax-rate-unset
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - transaction_write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /business/v2/wallets/{walletId}
+  method: get
+  operationId: wallet-get
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - wallet_read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /business/v2/wallets/{walletId}
+  method: put
+  operationId: wallet-update
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - wallet_write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /business/v2/wallets/{walletId}
+  method: delete
+  operationId: wallet-delete
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - wallet_write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /business/v2/wallets/presets/{presetId}
+  method: delete
+  operationId: wallet-auto-transfer-preset-delete
+  x-agentic-access:
+    action-class: acting
+    consequence: safety-critical
+    subject: required
+    scope:
+    - wallet_write
+    audience: null
+    token:
+      max-ttl: 120
+      exchange: true
+      purpose-required: true
+      proof-of-possession: true
+    escalation:
+      human-in-the-loop: required
+    audit: required
+- path: /business/v2/transactions/custom-exports/bulk-retrieve
+  method: post
+  operationId: transaction-export-get
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - transaction_read
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /business/v2/employees/{userId}/access-modes
+  method: get
+  operationId: user-access-modes-get
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - employee_read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /business/v2/employees/{userId}/access-modes
+  method: put
+  operationId: user-access-modes-update
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - employee_write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /business/v2/cards/presets
+  method: get
+  operationId: card-rule-preset-search
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - card_write
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /business/v2/documents
+  method: get
+  operationId: document-search
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - document_read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /business/v2/expense-policies
+  method: get
+  operationId: expense-policy-search
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - expense_policy_read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /business/v2/expense-review
+  method: get
+  operationId: expense-review-search
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - expense_review_read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /business/v2/expense-reports
+  method: get
+  operationId: expense-report-search
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - expense_report_read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /business/v2/transactions/custom-exports/search
+  method: get
+  operationId: transaction-export-search
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - transaction_read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /business/v2/wallets/autotransfer-presets
+  method: get
+  operationId: wallet-auto-transfer-presets-search
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - wallet_read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /business/v2/cards/{cardId}/presets/{presetId}
+  method: put
+  operationId: card-rule-preset-set
+  x-agentic-access:
+    action-class: acting
+    consequence: safety-critical
+    subject: required
+    scope:
+    - card_write
+    audience: null
+    token:
+      max-ttl: 120
+      exchange: true
+      purpose-required: true
+      proof-of-possession: true
+    escalation:
+      human-in-the-loop: required
+    audit: required
+- path: /business/v2/cards/{cardId}/presets/{presetId}
+  method: delete
+  operationId: card-rule-preset-unset
+  x-agentic-access:
+    action-class: acting
+    consequence: safety-critical
+    subject: required
+    scope:
+    - card_write
+    audience: null
+    token:
+      max-ttl: 120
+      exchange: true
+      purpose-required: true
+      proof-of-possession: true
+    escalation:
+      human-in-the-loop: required
+    audit: required
+- path: /business/v2/transactions/{transactionId}/expense-category/{expenseCategoryId}
+  method: post
+  operationId: transaction-expense-category-set
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - transaction_write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /business/v2/transactions/{transactionId}/tax-rate/{taxRateId}
+  method: post
+  operationId: transaction-tax-rate-set
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - transaction_write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /business/v2/statements/download
+  method: post
+  operationId: statement-download
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - statement_read
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /business/v2/statements
+  method: get
+  operationId: statement-search
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - statement_read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /business/v2/transactions/{transactionId}
+  method: get
+  operationId: transaction-get
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - transaction_read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /business/v2/transactions/{transactionId}
+  method: put
+  operationId: transaction-update
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - transaction_write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /business/v2/transactions
+  method: get
+  operationId: transaction-search
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - transaction_read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /business/v2/employees/{userId}/unassignRole
+  method: post
+  operationId: user-role-unset
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - employee_write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /business/v2/wallets/autotransfer-presets/{presetId}/unrelate-resource
+  method: put
+  operationId: wallet-auto-transfer-preset-unset
+  x-agentic-access:
+    action-class: acting
+    consequence: safety-critical
+    subject: required
+    scope:
+    - wallet_write
+    audience: null
+    token:
+      max-ttl: 120
+      exchange: true
+      purpose-required: true
+      proof-of-possession: true
+    escalation:
+      human-in-the-loop: required
+    audit: required
+- path: /business/v2/business-trips/{businessTripId}/details
+  method: put
+  operationId: business-trip-update-details
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - business_trip_write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /business/v2/business-trips/{businessTripId}/expense-allocation
+  method: put
+  operationId: business-trip-update-expenses
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - business_trip_write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /business/v2/business-trips/{businessTripId}/post-actions
+  method: put
+  operationId: business-trip-update-post-actions
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - business_trip_write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /business/v2/business-trips/{businessTripId}/tags
+  method: put
+  operationId: business-trip-update-tags
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - business_trip_write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /business/v2/transactions/{transactionId}/expense-review/change-type
+  method: put
+  operationId: expense-review-update-type
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - expense_review_write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /business/v2/expense-review/processes/{processId}/status
+  method: put
+  operationId: expense-review-process-status-update
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - expense_review_write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /business/v2/transactions/{transactionId}/expense-review/request-info
+  method: put
+  operationId: expense-review-request-info
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - expense_review_write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /business/v2/transactions/{transactionId}/expense-review/update-status
+  method: put
+  operationId: expense-review-update-status
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - expense_review_write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /business/v2/employees/{userId}/status
+  method: put
+  operationId: user-status-update
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - employee_write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /business/v2/workflows/{workflowId}/status
+  method: put
+  operationId: workflow-status-update
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - workflow_write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /business/v2/webhooks/subscriptions/{webhookSubscriptionsId}
+  method: get
+  operationId: webhook-subscription-get
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - webhook_subscription_read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /business/v2/ping/whoami
+  method: get
+  operationId: who-am-i
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - company_read
+    token:
+      max-ttl: 3600
+    audit: none

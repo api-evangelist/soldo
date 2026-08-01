@@ -1,0 +1,44 @@
+generated: '2026-07-21'
+method: derived
+source: openapi/soldo-business-api-v20-openapi-original.json + https://developer.soldo.com/docs/
+standards:
+- id: openapi-3.1
+  conforms: true
+  evidence: OpenAPI 3.1.0 document published (soldo-business-api-v20.json), 136 paths, 235 operations, 492 schemas.
+- id: oauth2
+  conforms: true
+  evidence: securitySchemes standardAuth type oauth2, clientCredentials flow with 44 declared scopes.
+- id: oauth2-client-credentials
+  conforms: true
+  evidence: RFC 6749 section 4.4 Client Credentials Grant used for machine-to-machine auth.
+- id: oidc
+  conforms: false
+  evidence: No OpenID Connect discovery or id_token issuance documented.
+- id: rfc9457-problem-details
+  conforms: false
+  evidence: Errors use a custom { error_code, message } envelope, not application/problem+json.
+- id: rfc8594-sunset-header
+  conforms: false
+  evidence: No Sunset/Deprecation header support documented.
+- id: pagination
+  conforms: true
+  evidence: Consistent page-number pagination (p/s/d/props -> total/pages/page_size/current_page/results).
+- id: idempotency
+  conforms: false
+  evidence: No idempotency-key mechanism documented or present in the spec.
+- id: request-signing
+  conforms: true
+  evidence: Advanced auth requires SHA512withRSA request signing (X-Soldo-Fingerprint + X-Soldo-Fingerprint-Signature) for sensitive operations.
+- id: webhooks
+  conforms: true
+  evidence: 81 webhook definitions in the OpenAPI webhooks object; signed with the same fingerprint scheme.
+- id: psd2
+  conforms: true
+  evidence: Soldo operates a separate PSD2 / Open Banking API surface at https://psd2.soldo.com/ (distinct from the Business API).
+compliance_program:
+  published_certifications: false
+  note: >-
+    Soldo is a regulated electronic money institution, but no machine-verifiable
+    trust center or named certification list (SOC 2 / ISO 27001 / PCI DSS) was
+    found on a probed trust/security page. No Compliance pointer is emitted to
+    avoid asserting an unverified compliance program.

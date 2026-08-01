@@ -1,0 +1,320 @@
+generated: '2026-07-21'
+method: derived
+source: openapi/soldo-business-api-v20-openapi-original.json
+schemes:
+- name: standardAuth
+  source: openapi/soldo-business-api-v20-openapi-original.json
+  flows:
+  - flow: clientCredentials
+    tokenUrl: https://api.soldo.com/oauth/authorize
+  description: This API uses OAuth 2 with the "Client Credentials" grant flow.
+scopes:
+- scope: address_read
+  description: Can read address details.
+  flows:
+  - clientCredentials
+  sources:
+  - openapi/soldo-business-api-v20-openapi-original.json
+- scope: address_write
+  description: Can update address details.
+  flows:
+  - clientCredentials
+  sources:
+  - openapi/soldo-business-api-v20-openapi-original.json
+- scope: autotag_read
+  sources:
+  - openapi/soldo-business-api-v20-openapi-original.json
+- scope: autotag_write
+  sources:
+  - openapi/soldo-business-api-v20-openapi-original.json
+- scope: business_trip_read
+  sources:
+  - openapi/soldo-business-api-v20-openapi-original.json
+- scope: business_trip_write
+  sources:
+  - openapi/soldo-business-api-v20-openapi-original.json
+- scope: card_read
+  description: Can read card details.
+  flows:
+  - clientCredentials
+  sources:
+  - openapi/soldo-business-api-v20-openapi-original.json
+- scope: card_write
+  description: Can change card details.
+  flows:
+  - clientCredentials
+  sources:
+  - openapi/soldo-business-api-v20-openapi-original.json
+- scope: company_read
+  description: Can read company details.
+  flows:
+  - clientCredentials
+  sources:
+  - openapi/soldo-business-api-v20-openapi-original.json
+- scope: company_write
+  description: Can change company details.
+  flows:
+  - clientCredentials
+  sources:
+  - openapi/soldo-business-api-v20-openapi-original.json
+- scope: contact_read
+  description: Can read contact details.
+  flows:
+  - clientCredentials
+  sources:
+  - openapi/soldo-business-api-v20-openapi-original.json
+- scope: contact_write
+  description: Can change contact details.
+  flows:
+  - clientCredentials
+  sources:
+  - openapi/soldo-business-api-v20-openapi-original.json
+- scope: document_read
+  sources:
+  - openapi/soldo-business-api-v20-openapi-original.json
+- scope: document_write
+  sources:
+  - openapi/soldo-business-api-v20-openapi-original.json
+- scope: employee_read
+  description: Can read employee details.
+  flows:
+  - clientCredentials
+  sources:
+  - openapi/soldo-business-api-v20-openapi-original.json
+- scope: employee_write
+  description: Can change employee details.
+  flows:
+  - clientCredentials
+  sources:
+  - openapi/soldo-business-api-v20-openapi-original.json
+- scope: expense_category_read
+  description: Can read expense category details.
+  flows:
+  - clientCredentials
+  sources:
+  - openapi/soldo-business-api-v20-openapi-original.json
+- scope: expense_category_write
+  description: Can change expense category details.
+  flows:
+  - clientCredentials
+  sources:
+  - openapi/soldo-business-api-v20-openapi-original.json
+- scope: expense_policy_read
+  sources:
+  - openapi/soldo-business-api-v20-openapi-original.json
+- scope: expense_policy_write
+  sources:
+  - openapi/soldo-business-api-v20-openapi-original.json
+- scope: expense_report_read
+  description: Can read expense report details.
+  flows:
+  - clientCredentials
+  sources:
+  - openapi/soldo-business-api-v20-openapi-original.json
+- scope: expense_report_write
+  description: Can change expense report details.
+  flows:
+  - clientCredentials
+  sources:
+  - openapi/soldo-business-api-v20-openapi-original.json
+- scope: expense_review_read
+  description: Can read expense review status.
+  flows:
+  - clientCredentials
+  sources:
+  - openapi/soldo-business-api-v20-openapi-original.json
+- scope: expense_review_write
+  description: Can change expense review status.
+  flows:
+  - clientCredentials
+  sources:
+  - openapi/soldo-business-api-v20-openapi-original.json
+- scope: group_read
+  description: Can read group details.
+  flows:
+  - clientCredentials
+  sources:
+  - openapi/soldo-business-api-v20-openapi-original.json
+- scope: group_write
+  description: Can change groups details.
+  flows:
+  - clientCredentials
+  sources:
+  - openapi/soldo-business-api-v20-openapi-original.json
+- scope: online_ads_read
+  description: Can read online ads details.
+  flows:
+  - clientCredentials
+  sources:
+  - openapi/soldo-business-api-v20-openapi-original.json
+- scope: online_ads_write
+  description: Can change online ads details.
+  flows:
+  - clientCredentials
+  sources:
+  - openapi/soldo-business-api-v20-openapi-original.json
+- scope: order_read
+  sources:
+  - openapi/soldo-business-api-v20-openapi-original.json
+- scope: out_of_office_delegation_read
+  sources:
+  - openapi/soldo-business-api-v20-openapi-original.json
+- scope: out_of_office_delegation_write
+  sources:
+  - openapi/soldo-business-api-v20-openapi-original.json
+- scope: payment_read
+  description: Can read payment details.
+  flows:
+  - clientCredentials
+  sources:
+  - openapi/soldo-business-api-v20-openapi-original.json
+- scope: payment_write
+  description: Can change payment details.
+  flows:
+  - clientCredentials
+  sources:
+  - openapi/soldo-business-api-v20-openapi-original.json
+- scope: purchase_read
+  description: Can read purchase details.
+  flows:
+  - clientCredentials
+  sources:
+  - openapi/soldo-business-api-v20-openapi-original.json
+- scope: purchase_write
+  description: Can change purchase details.
+  flows:
+  - clientCredentials
+  sources:
+  - openapi/soldo-business-api-v20-openapi-original.json
+- scope: refueling_read
+  description: Can read refueling details.
+  flows:
+  - clientCredentials
+  sources:
+  - openapi/soldo-business-api-v20-openapi-original.json
+- scope: refueling_write
+  description: Can change refueling details.
+  flows:
+  - clientCredentials
+  sources:
+  - openapi/soldo-business-api-v20-openapi-original.json
+- scope: request_read
+  sources:
+  - openapi/soldo-business-api-v20-openapi-original.json
+- scope: request_write
+  sources:
+  - openapi/soldo-business-api-v20-openapi-original.json
+- scope: resource_set_read
+  description: Can read resource set details.
+  flows:
+  - clientCredentials
+  sources:
+  - openapi/soldo-business-api-v20-openapi-original.json
+- scope: resource_set_write
+  description: Can change resource set details.
+  flows:
+  - clientCredentials
+  sources:
+  - openapi/soldo-business-api-v20-openapi-original.json
+- scope: role_read
+  description: Can read role details.
+  flows:
+  - clientCredentials
+  sources:
+  - openapi/soldo-business-api-v20-openapi-original.json
+- scope: statement_read
+  description: Can read statement details.
+  flows:
+  - clientCredentials
+  sources:
+  - openapi/soldo-business-api-v20-openapi-original.json
+- scope: subscription_read
+  description: Can read subscription details.
+  flows:
+  - clientCredentials
+  sources:
+  - openapi/soldo-business-api-v20-openapi-original.json
+- scope: subscription_write
+  description: Can change subscription details.
+  flows:
+  - clientCredentials
+  sources:
+  - openapi/soldo-business-api-v20-openapi-original.json
+- scope: tag_read
+  description: Can read tags.
+  flows:
+  - clientCredentials
+  sources:
+  - openapi/soldo-business-api-v20-openapi-original.json
+- scope: tag_write
+  description: can change tags.
+  flows:
+  - clientCredentials
+  sources:
+  - openapi/soldo-business-api-v20-openapi-original.json
+- scope: tax_rate_read
+  description: Can read vat rate details.
+  flows:
+  - clientCredentials
+  sources:
+  - openapi/soldo-business-api-v20-openapi-original.json
+- scope: tax_rate_write
+  description: Can change vat rate details.
+  flows:
+  - clientCredentials
+  sources:
+  - openapi/soldo-business-api-v20-openapi-original.json
+- scope: transaction_read
+  description: Can read transaction details.
+  flows:
+  - clientCredentials
+  sources:
+  - openapi/soldo-business-api-v20-openapi-original.json
+- scope: transaction_write
+  description: Can change transaction details.
+  flows:
+  - clientCredentials
+  sources:
+  - openapi/soldo-business-api-v20-openapi-original.json
+- scope: vehicle_read
+  description: Can read vehicle details.
+  flows:
+  - clientCredentials
+  sources:
+  - openapi/soldo-business-api-v20-openapi-original.json
+- scope: vehicle_write
+  description: Can change vehicle details.
+  flows:
+  - clientCredentials
+  sources:
+  - openapi/soldo-business-api-v20-openapi-original.json
+- scope: wallet_read
+  description: Can read wallet details.
+  flows:
+  - clientCredentials
+  sources:
+  - openapi/soldo-business-api-v20-openapi-original.json
+- scope: wallet_write
+  description: Can change wallet details.
+  flows:
+  - clientCredentials
+  sources:
+  - openapi/soldo-business-api-v20-openapi-original.json
+- scope: webhook_subscription_read
+  description: Can read webhook subscription details.
+  flows:
+  - clientCredentials
+  sources:
+  - openapi/soldo-business-api-v20-openapi-original.json
+- scope: webhook_subscription_write
+  description: Can change webhook subscription details.
+  flows:
+  - clientCredentials
+  sources:
+  - openapi/soldo-business-api-v20-openapi-original.json
+- scope: workflow_read
+  sources:
+  - openapi/soldo-business-api-v20-openapi-original.json
+- scope: workflow_write
+  sources:
+  - openapi/soldo-business-api-v20-openapi-original.json

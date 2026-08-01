@@ -1,7 +1,16 @@
 aid: soldo
 name: Soldo
-description: 'Soldo is a company surfaced as a portfolio company of accel and added to the API Evangelist
-  network as a stub for enrichment. Sector: consumer. This profile is a lead awaiting the enrichment pipeline.'
+description: >-
+  Soldo is a pan-European spend management and prepaid business card platform
+  that pairs Mastercard company cards with software for budgeting, expense
+  tracking, and accounting reconciliation. The Soldo Business API (v2.0, OpenAPI
+  3.1) lets businesses programmatically issue and control cards, manage wallets
+  and internal transfers, read and reconcile transactions, run expense reports
+  and reviews, manage users, groups and roles, handle documents and receipts,
+  and subscribe to 81 webhook event types. Authentication is OAuth 2.0 Client
+  Credentials, with request-signed "advanced authentication" (SHA512withRSA
+  fingerprints) layered on top for money movement and sensitive changes. Soldo
+  also operates a separate PSD2 / Open Banking API.
 url: https://raw.githubusercontent.com/api-evangelist/soldo/refs/heads/main/apis.yml
 x-type: company
 x-source: vc-portfolio
@@ -9,18 +18,1023 @@ x-backed-by:
 - accel
 x-tier: stub
 x-tier-reason: portfolio-lead
+accessModel:
+  pricing: unknown
+  onboarding: self-serve
+  trial: false
+  try_now: false
+  public: false
+  label: Self-serve signup
+  confidence: medium
+  source:
+  - authentication
+  generated: '2026-07-22'
+  method: derived
 specificationVersion: '0.20'
 created: '2026-07-17'
-modified: '2026-07-17'
+modified: '2026-07-21'
 tags:
 - Company
 - Consumer
-apis: []
+- Fintech
+- Financial Services
+- Spend Management
+- Expense Management
+- Business Cards
+- Prepaid Cards
+- Payments
+- Banking
+image: https://www.soldo.com/wp-content/uploads/2023/11/home-page-soldo-hero-small.webp
+apis:
+- aid: soldo:soldo-accounting-classification-api
+  name: Soldo Accounting Classification API
+  description: >-
+    The Accounting Classification API from Soldo — 1 operation(s) for accounting classification.
+  humanURL: https://developer.soldo.com/
+  baseURL: https://api.soldo.com/business/v2
+  tags:
+  - Accounting Classification
+  properties:
+  - type: OpenAPI
+    url: openapi/soldo-accounting-classification-api-openapi.yml
+  - type: Documentation
+    url: https://developer.soldo.com/docs/discover
+  - type: APIReference
+    url: https://developer.soldo.com/reference/introduction
+  - type: GettingStarted
+    url: https://developer.soldo.com/docs/api-set-up
+  - type: Authentication
+    url: https://developer.soldo.com/docs/authentication
+  - type: Webhooks
+    url: asyncapi/soldo-webhooks.yml
+- aid: soldo:soldo-addresses-api
+  name: Soldo Addresses API
+  description: The Addresses API from Soldo — 2 operation(s) for addresses.
+  humanURL: https://developer.soldo.com/
+  baseURL: https://api.soldo.com/business/v2
+  tags:
+  - Addresses
+  properties:
+  - type: OpenAPI
+    url: openapi/soldo-addresses-api-openapi.yml
+  - type: Documentation
+    url: https://developer.soldo.com/docs/discover
+  - type: APIReference
+    url: https://developer.soldo.com/reference/introduction
+  - type: GettingStarted
+    url: https://developer.soldo.com/docs/api-set-up
+  - type: Authentication
+    url: https://developer.soldo.com/docs/authentication
+  - type: Webhooks
+    url: asyncapi/soldo-webhooks.yml
+- aid: soldo:soldo-authentication-api
+  name: Soldo Authentication API
+  description: The Authentication API from Soldo — 2 operation(s) for authentication.
+  humanURL: https://developer.soldo.com/
+  baseURL: https://api.soldo.com/business/v2
+  tags:
+  - Authentication
+  properties:
+  - type: OpenAPI
+    url: openapi/soldo-authentication-api-openapi.yml
+  - type: Documentation
+    url: https://developer.soldo.com/docs/discover
+  - type: APIReference
+    url: https://developer.soldo.com/reference/introduction
+  - type: GettingStarted
+    url: https://developer.soldo.com/docs/api-set-up
+  - type: Authentication
+    url: https://developer.soldo.com/docs/authentication
+  - type: Webhooks
+    url: asyncapi/soldo-webhooks.yml
+- aid: soldo:soldo-auto-transfer-presets-api
+  name: Soldo Auto-Transfer Presets API
+  description: The Auto-Transfer Presets API from Soldo — 5 operation(s) for auto-transfer presets.
+  humanURL: https://developer.soldo.com/
+  baseURL: https://api.soldo.com/business/v2
+  tags:
+  - Auto-Transfer Presets
+  properties:
+  - type: OpenAPI
+    url: openapi/soldo-auto-transfer-presets-api-openapi.yml
+  - type: Documentation
+    url: https://developer.soldo.com/docs/discover
+  - type: APIReference
+    url: https://developer.soldo.com/reference/introduction
+  - type: GettingStarted
+    url: https://developer.soldo.com/docs/api-set-up
+  - type: Authentication
+    url: https://developer.soldo.com/docs/authentication
+  - type: Webhooks
+    url: asyncapi/soldo-webhooks.yml
+- aid: soldo:soldo-autotags-api
+  name: Soldo Autotags API
+  description: The Autotags API from Soldo — 2 operation(s) for autotags.
+  humanURL: https://developer.soldo.com/
+  baseURL: https://api.soldo.com/business/v2
+  tags:
+  - Autotags
+  properties:
+  - type: OpenAPI
+    url: openapi/soldo-autotags-api-openapi.yml
+  - type: Documentation
+    url: https://developer.soldo.com/docs/discover
+  - type: APIReference
+    url: https://developer.soldo.com/reference/introduction
+  - type: GettingStarted
+    url: https://developer.soldo.com/docs/api-set-up
+  - type: Authentication
+    url: https://developer.soldo.com/docs/authentication
+  - type: Webhooks
+    url: asyncapi/soldo-webhooks.yml
+- aid: soldo:soldo-business-trips-api
+  name: Soldo Business Trips API
+  description: The Business Trips API from Soldo — 7 operation(s) for business trips.
+  humanURL: https://developer.soldo.com/
+  baseURL: https://api.soldo.com/business/v2
+  tags:
+  - Business Trips
+  properties:
+  - type: OpenAPI
+    url: openapi/soldo-business-trips-api-openapi.yml
+  - type: Documentation
+    url: https://developer.soldo.com/docs/discover
+  - type: APIReference
+    url: https://developer.soldo.com/reference/introduction
+  - type: GettingStarted
+    url: https://developer.soldo.com/docs/api-set-up
+  - type: Authentication
+    url: https://developer.soldo.com/docs/authentication
+  - type: Webhooks
+    url: asyncapi/soldo-webhooks.yml
+- aid: soldo:soldo-card-rules-api
+  name: Soldo Card Rules API
+  description: The Card Rules API from Soldo — 7 operation(s) for card rules.
+  humanURL: https://developer.soldo.com/
+  baseURL: https://api.soldo.com/business/v2
+  tags:
+  - Card Rules
+  properties:
+  - type: OpenAPI
+    url: openapi/soldo-card-rules-api-openapi.yml
+  - type: Documentation
+    url: https://developer.soldo.com/docs/discover
+  - type: APIReference
+    url: https://developer.soldo.com/reference/introduction
+  - type: GettingStarted
+    url: https://developer.soldo.com/docs/api-set-up
+  - type: Authentication
+    url: https://developer.soldo.com/docs/authentication
+  - type: Webhooks
+    url: asyncapi/soldo-webhooks.yml
+- aid: soldo:soldo-card-rules-presets-api
+  name: Soldo Card Rules Presets API
+  description: The Card Rules Presets API from Soldo — 3 operation(s) for card rules presets.
+  humanURL: https://developer.soldo.com/
+  baseURL: https://api.soldo.com/business/v2
+  tags:
+  - Card Rules Presets
+  properties:
+  - type: OpenAPI
+    url: openapi/soldo-card-rules-presets-api-openapi.yml
+  - type: Documentation
+    url: https://developer.soldo.com/docs/discover
+  - type: APIReference
+    url: https://developer.soldo.com/reference/introduction
+  - type: GettingStarted
+    url: https://developer.soldo.com/docs/api-set-up
+  - type: Authentication
+    url: https://developer.soldo.com/docs/authentication
+  - type: Webhooks
+    url: asyncapi/soldo-webhooks.yml
+- aid: soldo:soldo-cards-api
+  name: Soldo Cards API
+  description: The Cards API from Soldo — 3 operation(s) for cards.
+  humanURL: https://developer.soldo.com/
+  baseURL: https://api.soldo.com/business/v2
+  tags:
+  - Cards
+  properties:
+  - type: OpenAPI
+    url: openapi/soldo-cards-api-openapi.yml
+  - type: Documentation
+    url: https://developer.soldo.com/docs/discover
+  - type: APIReference
+    url: https://developer.soldo.com/reference/introduction
+  - type: GettingStarted
+    url: https://developer.soldo.com/docs/api-set-up
+  - type: Authentication
+    url: https://developer.soldo.com/docs/authentication
+  - type: Webhooks
+    url: asyncapi/soldo-webhooks.yml
+- aid: soldo:soldo-company-api
+  name: Soldo Company API
+  description: The Company API from Soldo — 1 operation(s) for company.
+  humanURL: https://developer.soldo.com/
+  baseURL: https://api.soldo.com/business/v2
+  tags:
+  - Company
+  properties:
+  - type: OpenAPI
+    url: openapi/soldo-company-api-openapi.yml
+  - type: Documentation
+    url: https://developer.soldo.com/docs/discover
+  - type: APIReference
+    url: https://developer.soldo.com/reference/introduction
+  - type: GettingStarted
+    url: https://developer.soldo.com/docs/api-set-up
+  - type: Authentication
+    url: https://developer.soldo.com/docs/authentication
+  - type: Webhooks
+    url: asyncapi/soldo-webhooks.yml
+- aid: soldo:soldo-contacts-api
+  name: Soldo Contacts API
+  description: The Contacts API from Soldo — 2 operation(s) for contacts.
+  humanURL: https://developer.soldo.com/
+  baseURL: https://api.soldo.com/business/v2
+  tags:
+  - Contacts
+  properties:
+  - type: OpenAPI
+    url: openapi/soldo-contacts-api-openapi.yml
+  - type: Documentation
+    url: https://developer.soldo.com/docs/discover
+  - type: APIReference
+    url: https://developer.soldo.com/reference/introduction
+  - type: GettingStarted
+    url: https://developer.soldo.com/docs/api-set-up
+  - type: Authentication
+    url: https://developer.soldo.com/docs/authentication
+  - type: Webhooks
+    url: asyncapi/soldo-webhooks.yml
+- aid: soldo:soldo-documents-api
+  name: Soldo Documents API
+  description: The Documents API from Soldo — 4 operation(s) for documents.
+  humanURL: https://developer.soldo.com/
+  baseURL: https://api.soldo.com/business/v2
+  tags:
+  - Documents
+  properties:
+  - type: OpenAPI
+    url: openapi/soldo-documents-api-openapi.yml
+  - type: Documentation
+    url: https://developer.soldo.com/docs/discover
+  - type: APIReference
+    url: https://developer.soldo.com/reference/introduction
+  - type: GettingStarted
+    url: https://developer.soldo.com/docs/api-set-up
+  - type: Authentication
+    url: https://developer.soldo.com/docs/authentication
+  - type: Webhooks
+    url: asyncapi/soldo-webhooks.yml
+- aid: soldo:soldo-expense-categories-api
+  name: Soldo Expense Categories API
+  description: The Expense Categories API from Soldo — 2 operation(s) for expense categories.
+  humanURL: https://developer.soldo.com/
+  baseURL: https://api.soldo.com/business/v2
+  tags:
+  - Expense Categories
+  properties:
+  - type: OpenAPI
+    url: openapi/soldo-expense-categories-api-openapi.yml
+  - type: Documentation
+    url: https://developer.soldo.com/docs/discover
+  - type: APIReference
+    url: https://developer.soldo.com/reference/introduction
+  - type: GettingStarted
+    url: https://developer.soldo.com/docs/api-set-up
+  - type: Authentication
+    url: https://developer.soldo.com/docs/authentication
+  - type: Webhooks
+    url: asyncapi/soldo-webhooks.yml
+- aid: soldo:soldo-expense-policies-api
+  name: Soldo Expense Policies API
+  description: The Expense Policies API from Soldo — 4 operation(s) for expense policies.
+  humanURL: https://developer.soldo.com/
+  baseURL: https://api.soldo.com/business/v2
+  tags:
+  - Expense Policies
+  properties:
+  - type: OpenAPI
+    url: openapi/soldo-expense-policies-api-openapi.yml
+  - type: Documentation
+    url: https://developer.soldo.com/docs/discover
+  - type: APIReference
+    url: https://developer.soldo.com/reference/introduction
+  - type: GettingStarted
+    url: https://developer.soldo.com/docs/api-set-up
+  - type: Authentication
+    url: https://developer.soldo.com/docs/authentication
+  - type: Webhooks
+    url: asyncapi/soldo-webhooks.yml
+- aid: soldo:soldo-expense-reports-api
+  name: Soldo Expense Reports API
+  description: The Expense Reports API from Soldo — 3 operation(s) for expense reports.
+  humanURL: https://developer.soldo.com/
+  baseURL: https://api.soldo.com/business/v2
+  tags:
+  - Expense Reports
+  properties:
+  - type: OpenAPI
+    url: openapi/soldo-expense-reports-api-openapi.yml
+  - type: Documentation
+    url: https://developer.soldo.com/docs/discover
+  - type: APIReference
+    url: https://developer.soldo.com/reference/introduction
+  - type: GettingStarted
+    url: https://developer.soldo.com/docs/api-set-up
+  - type: Authentication
+    url: https://developer.soldo.com/docs/authentication
+  - type: Webhooks
+    url: asyncapi/soldo-webhooks.yml
+- aid: soldo:soldo-expense-review-configuration-api
+  name: Soldo Expense Review Configuration API
+  description: >-
+    The Expense Review Configuration API from Soldo — 1 operation(s) for expense review configuration.
+  humanURL: https://developer.soldo.com/
+  baseURL: https://api.soldo.com/business/v2
+  tags:
+  - Expense Review Configuration
+  properties:
+  - type: OpenAPI
+    url: openapi/soldo-expense-review-configuration-api-openapi.yml
+  - type: Documentation
+    url: https://developer.soldo.com/docs/discover
+  - type: APIReference
+    url: https://developer.soldo.com/reference/introduction
+  - type: GettingStarted
+    url: https://developer.soldo.com/docs/api-set-up
+  - type: Authentication
+    url: https://developer.soldo.com/docs/authentication
+  - type: Webhooks
+    url: asyncapi/soldo-webhooks.yml
+- aid: soldo:soldo-expense-review-processes-api
+  name: Soldo Expense Review Processes API
+  description: >-
+    The Expense Review Processes API from Soldo — 5 operation(s) for expense review processes.
+  humanURL: https://developer.soldo.com/
+  baseURL: https://api.soldo.com/business/v2
+  tags:
+  - Expense Review Processes
+  properties:
+  - type: OpenAPI
+    url: openapi/soldo-expense-review-processes-api-openapi.yml
+  - type: Documentation
+    url: https://developer.soldo.com/docs/discover
+  - type: APIReference
+    url: https://developer.soldo.com/reference/introduction
+  - type: GettingStarted
+    url: https://developer.soldo.com/docs/api-set-up
+  - type: Authentication
+    url: https://developer.soldo.com/docs/authentication
+  - type: Webhooks
+    url: asyncapi/soldo-webhooks.yml
+- aid: soldo:soldo-expense-reviews-api
+  name: Soldo Expense Reviews API
+  description: The Expense Reviews API from Soldo — 7 operation(s) for expense reviews.
+  humanURL: https://developer.soldo.com/
+  baseURL: https://api.soldo.com/business/v2
+  tags:
+  - Expense Reviews
+  properties:
+  - type: OpenAPI
+    url: openapi/soldo-expense-reviews-api-openapi.yml
+  - type: Documentation
+    url: https://developer.soldo.com/docs/discover
+  - type: APIReference
+    url: https://developer.soldo.com/reference/introduction
+  - type: GettingStarted
+    url: https://developer.soldo.com/docs/api-set-up
+  - type: Authentication
+    url: https://developer.soldo.com/docs/authentication
+  - type: Webhooks
+    url: asyncapi/soldo-webhooks.yml
+- aid: soldo:soldo-groups-api
+  name: Soldo Groups API
+  description: The Groups API from Soldo — 3 operation(s) for groups.
+  humanURL: https://developer.soldo.com/
+  baseURL: https://api.soldo.com/business/v2
+  tags:
+  - Groups
+  properties:
+  - type: OpenAPI
+    url: openapi/soldo-groups-api-openapi.yml
+  - type: Documentation
+    url: https://developer.soldo.com/docs/discover
+  - type: APIReference
+    url: https://developer.soldo.com/reference/introduction
+  - type: GettingStarted
+    url: https://developer.soldo.com/docs/api-set-up
+  - type: Authentication
+    url: https://developer.soldo.com/docs/authentication
+  - type: Webhooks
+    url: asyncapi/soldo-webhooks.yml
+- aid: soldo:soldo-lists-api
+  name: Soldo Lists API
+  description: The Lists API from Soldo — 2 operation(s) for lists.
+  humanURL: https://developer.soldo.com/
+  baseURL: https://api.soldo.com/business/v2
+  tags:
+  - Lists
+  properties:
+  - type: OpenAPI
+    url: openapi/soldo-lists-api-openapi.yml
+  - type: Documentation
+    url: https://developer.soldo.com/docs/discover
+  - type: APIReference
+    url: https://developer.soldo.com/reference/introduction
+  - type: GettingStarted
+    url: https://developer.soldo.com/docs/api-set-up
+  - type: Authentication
+    url: https://developer.soldo.com/docs/authentication
+  - type: Webhooks
+    url: asyncapi/soldo-webhooks.yml
+- aid: soldo:soldo-online-ads-api
+  name: Soldo Online Ads API
+  description: The Online Ads API from Soldo — 4 operation(s) for online ads.
+  humanURL: https://developer.soldo.com/
+  baseURL: https://api.soldo.com/business/v2
+  tags:
+  - Online Ads
+  properties:
+  - type: OpenAPI
+    url: openapi/soldo-online-ads-api-openapi.yml
+  - type: Documentation
+    url: https://developer.soldo.com/docs/discover
+  - type: APIReference
+    url: https://developer.soldo.com/reference/introduction
+  - type: GettingStarted
+    url: https://developer.soldo.com/docs/api-set-up
+  - type: Authentication
+    url: https://developer.soldo.com/docs/authentication
+  - type: Webhooks
+    url: asyncapi/soldo-webhooks.yml
+- aid: soldo:soldo-orders-api
+  name: Soldo Orders API
+  description: The Orders API from Soldo — 2 operation(s) for orders.
+  humanURL: https://developer.soldo.com/
+  baseURL: https://api.soldo.com/business/v2
+  tags:
+  - Orders
+  properties:
+  - type: OpenAPI
+    url: openapi/soldo-orders-api-openapi.yml
+  - type: Documentation
+    url: https://developer.soldo.com/docs/discover
+  - type: APIReference
+    url: https://developer.soldo.com/reference/introduction
+  - type: GettingStarted
+    url: https://developer.soldo.com/docs/api-set-up
+  - type: Authentication
+    url: https://developer.soldo.com/docs/authentication
+  - type: Webhooks
+    url: asyncapi/soldo-webhooks.yml
+- aid: soldo:soldo-out-of-office-api
+  name: Soldo Out of Office API
+  description: The Out of Office API from Soldo — 2 operation(s) for out of office.
+  humanURL: https://developer.soldo.com/
+  baseURL: https://api.soldo.com/business/v2
+  tags:
+  - Out of Office
+  properties:
+  - type: OpenAPI
+    url: openapi/soldo-out-of-office-api-openapi.yml
+  - type: Documentation
+    url: https://developer.soldo.com/docs/discover
+  - type: APIReference
+    url: https://developer.soldo.com/reference/introduction
+  - type: GettingStarted
+    url: https://developer.soldo.com/docs/api-set-up
+  - type: Authentication
+    url: https://developer.soldo.com/docs/authentication
+  - type: Webhooks
+    url: asyncapi/soldo-webhooks.yml
+- aid: soldo:soldo-permissions-api
+  name: Soldo Permissions API
+  description: The Permissions API from Soldo — 1 operation(s) for permissions.
+  humanURL: https://developer.soldo.com/
+  baseURL: https://api.soldo.com/business/v2
+  tags:
+  - Permissions
+  properties:
+  - type: OpenAPI
+    url: openapi/soldo-permissions-api-openapi.yml
+  - type: Documentation
+    url: https://developer.soldo.com/docs/discover
+  - type: APIReference
+    url: https://developer.soldo.com/reference/introduction
+  - type: GettingStarted
+    url: https://developer.soldo.com/docs/api-set-up
+  - type: Authentication
+    url: https://developer.soldo.com/docs/authentication
+  - type: Webhooks
+    url: asyncapi/soldo-webhooks.yml
+- aid: soldo:soldo-pre-approved-spend-api
+  name: Soldo Pre-approved Spend API
+  description: The Pre-approved Spend API from Soldo — 3 operation(s) for pre-approved spend.
+  humanURL: https://developer.soldo.com/
+  baseURL: https://api.soldo.com/business/v2
+  tags:
+  - Pre-approved Spend
+  properties:
+  - type: OpenAPI
+    url: openapi/soldo-pre-approved-spend-api-openapi.yml
+  - type: Documentation
+    url: https://developer.soldo.com/docs/discover
+  - type: APIReference
+    url: https://developer.soldo.com/reference/introduction
+  - type: GettingStarted
+    url: https://developer.soldo.com/docs/api-set-up
+  - type: Authentication
+    url: https://developer.soldo.com/docs/authentication
+  - type: Webhooks
+    url: asyncapi/soldo-webhooks.yml
+- aid: soldo:soldo-refueling-transactions-api
+  name: Soldo Refueling Transactions API
+  description: The Refueling Transactions API from Soldo — 2 operation(s) for refueling transactions.
+  humanURL: https://developer.soldo.com/
+  baseURL: https://api.soldo.com/business/v2
+  tags:
+  - Refueling Transactions
+  properties:
+  - type: OpenAPI
+    url: openapi/soldo-refueling-transactions-api-openapi.yml
+  - type: Documentation
+    url: https://developer.soldo.com/docs/discover
+  - type: APIReference
+    url: https://developer.soldo.com/reference/introduction
+  - type: GettingStarted
+    url: https://developer.soldo.com/docs/api-set-up
+  - type: Authentication
+    url: https://developer.soldo.com/docs/authentication
+  - type: Webhooks
+    url: asyncapi/soldo-webhooks.yml
+- aid: soldo:soldo-requests-api
+  name: Soldo Requests API
+  description: The Requests API from Soldo — 4 operation(s) for requests.
+  humanURL: https://developer.soldo.com/
+  baseURL: https://api.soldo.com/business/v2
+  tags:
+  - Requests
+  properties:
+  - type: OpenAPI
+    url: openapi/soldo-requests-api-openapi.yml
+  - type: Documentation
+    url: https://developer.soldo.com/docs/discover
+  - type: APIReference
+    url: https://developer.soldo.com/reference/introduction
+  - type: GettingStarted
+    url: https://developer.soldo.com/docs/api-set-up
+  - type: Authentication
+    url: https://developer.soldo.com/docs/authentication
+  - type: Webhooks
+    url: asyncapi/soldo-webhooks.yml
+- aid: soldo:soldo-resource-sets-api
+  name: Soldo Resource Sets API
+  description: The Resource Sets API from Soldo — 2 operation(s) for resource sets.
+  humanURL: https://developer.soldo.com/
+  baseURL: https://api.soldo.com/business/v2
+  tags:
+  - Resource Sets
+  properties:
+  - type: OpenAPI
+    url: openapi/soldo-resource-sets-api-openapi.yml
+  - type: Documentation
+    url: https://developer.soldo.com/docs/discover
+  - type: APIReference
+    url: https://developer.soldo.com/reference/introduction
+  - type: GettingStarted
+    url: https://developer.soldo.com/docs/api-set-up
+  - type: Authentication
+    url: https://developer.soldo.com/docs/authentication
+  - type: Webhooks
+    url: asyncapi/soldo-webhooks.yml
+- aid: soldo:soldo-statements-api
+  name: Soldo Statements API
+  description: The Statements API from Soldo — 2 operation(s) for statements.
+  humanURL: https://developer.soldo.com/
+  baseURL: https://api.soldo.com/business/v2
+  tags:
+  - Statements
+  properties:
+  - type: OpenAPI
+    url: openapi/soldo-statements-api-openapi.yml
+  - type: Documentation
+    url: https://developer.soldo.com/docs/discover
+  - type: APIReference
+    url: https://developer.soldo.com/reference/introduction
+  - type: GettingStarted
+    url: https://developer.soldo.com/docs/api-set-up
+  - type: Authentication
+    url: https://developer.soldo.com/docs/authentication
+  - type: Webhooks
+    url: asyncapi/soldo-webhooks.yml
+- aid: soldo:soldo-subscriptions-api
+  name: Soldo Subscriptions API
+  description: The Subscriptions API from Soldo — 4 operation(s) for subscriptions.
+  humanURL: https://developer.soldo.com/
+  baseURL: https://api.soldo.com/business/v2
+  tags:
+  - Subscriptions
+  properties:
+  - type: OpenAPI
+    url: openapi/soldo-subscriptions-api-openapi.yml
+  - type: Documentation
+    url: https://developer.soldo.com/docs/discover
+  - type: APIReference
+    url: https://developer.soldo.com/reference/introduction
+  - type: GettingStarted
+    url: https://developer.soldo.com/docs/api-set-up
+  - type: Authentication
+    url: https://developer.soldo.com/docs/authentication
+  - type: Webhooks
+    url: asyncapi/soldo-webhooks.yml
+- aid: soldo:soldo-tags-api
+  name: Soldo Tags API
+  description: The Tags API from Soldo — 3 operation(s) for tags.
+  humanURL: https://developer.soldo.com/
+  baseURL: https://api.soldo.com/business/v2
+  tags:
+  - Tags
+  properties:
+  - type: OpenAPI
+    url: openapi/soldo-tags-api-openapi.yml
+  - type: Documentation
+    url: https://developer.soldo.com/docs/discover
+  - type: APIReference
+    url: https://developer.soldo.com/reference/introduction
+  - type: GettingStarted
+    url: https://developer.soldo.com/docs/api-set-up
+  - type: Authentication
+    url: https://developer.soldo.com/docs/authentication
+  - type: Webhooks
+    url: asyncapi/soldo-webhooks.yml
+- aid: soldo:soldo-transaction-attachments-api
+  name: Soldo Transaction Attachments API
+  description: The Transaction Attachments API from Soldo — 2 operation(s) for transaction attachments.
+  humanURL: https://developer.soldo.com/
+  baseURL: https://api.soldo.com/business/v2
+  tags:
+  - Transaction Attachments
+  properties:
+  - type: OpenAPI
+    url: openapi/soldo-transaction-attachments-api-openapi.yml
+  - type: Documentation
+    url: https://developer.soldo.com/docs/discover
+  - type: APIReference
+    url: https://developer.soldo.com/reference/introduction
+  - type: GettingStarted
+    url: https://developer.soldo.com/docs/api-set-up
+  - type: Authentication
+    url: https://developer.soldo.com/docs/authentication
+  - type: Webhooks
+    url: asyncapi/soldo-webhooks.yml
+- aid: soldo:soldo-transaction-custom-export-api
+  name: Soldo Transaction Custom Export API
+  description: >-
+    The Transaction Custom Export API from Soldo — 4 operation(s) for transaction custom export.
+  humanURL: https://developer.soldo.com/
+  baseURL: https://api.soldo.com/business/v2
+  tags:
+  - Transaction Custom Export
+  properties:
+  - type: OpenAPI
+    url: openapi/soldo-transaction-custom-export-api-openapi.yml
+  - type: Documentation
+    url: https://developer.soldo.com/docs/discover
+  - type: APIReference
+    url: https://developer.soldo.com/reference/introduction
+  - type: GettingStarted
+    url: https://developer.soldo.com/docs/api-set-up
+  - type: Authentication
+    url: https://developer.soldo.com/docs/authentication
+  - type: Webhooks
+    url: asyncapi/soldo-webhooks.yml
+- aid: soldo:soldo-transaction-expense-category-api
+  name: Soldo Transaction Expense Category API
+  description: >-
+    The Transaction Expense Category API from Soldo — 2 operation(s) for transaction expense category.
+  humanURL: https://developer.soldo.com/
+  baseURL: https://api.soldo.com/business/v2
+  tags:
+  - Transaction Expense Category
+  properties:
+  - type: OpenAPI
+    url: openapi/soldo-transaction-expense-category-api-openapi.yml
+  - type: Documentation
+    url: https://developer.soldo.com/docs/discover
+  - type: APIReference
+    url: https://developer.soldo.com/reference/introduction
+  - type: GettingStarted
+    url: https://developer.soldo.com/docs/api-set-up
+  - type: Authentication
+    url: https://developer.soldo.com/docs/authentication
+  - type: Webhooks
+    url: asyncapi/soldo-webhooks.yml
+- aid: soldo:soldo-transaction-metadata-api
+  name: Soldo Transaction Metadata API
+  description: The Transaction Metadata API from Soldo — 2 operation(s) for transaction metadata.
+  humanURL: https://developer.soldo.com/
+  baseURL: https://api.soldo.com/business/v2
+  tags:
+  - Transaction Metadata
+  properties:
+  - type: OpenAPI
+    url: openapi/soldo-transaction-metadata-api-openapi.yml
+  - type: Documentation
+    url: https://developer.soldo.com/docs/discover
+  - type: APIReference
+    url: https://developer.soldo.com/reference/introduction
+  - type: GettingStarted
+    url: https://developer.soldo.com/docs/api-set-up
+  - type: Authentication
+    url: https://developer.soldo.com/docs/authentication
+  - type: Webhooks
+    url: asyncapi/soldo-webhooks.yml
+- aid: soldo:soldo-transaction-split-api
+  name: Soldo Transaction Split API
+  description: The Transaction Split API from Soldo — 1 operation(s) for transaction split.
+  humanURL: https://developer.soldo.com/
+  baseURL: https://api.soldo.com/business/v2
+  tags:
+  - Transaction Split
+  properties:
+  - type: OpenAPI
+    url: openapi/soldo-transaction-split-api-openapi.yml
+  - type: Documentation
+    url: https://developer.soldo.com/docs/discover
+  - type: APIReference
+    url: https://developer.soldo.com/reference/introduction
+  - type: GettingStarted
+    url: https://developer.soldo.com/docs/api-set-up
+  - type: Authentication
+    url: https://developer.soldo.com/docs/authentication
+  - type: Webhooks
+    url: asyncapi/soldo-webhooks.yml
+- aid: soldo:soldo-transaction-tags-api
+  name: Soldo Transaction Tags API
+  description: The Transaction Tags API from Soldo — 1 operation(s) for transaction tags.
+  humanURL: https://developer.soldo.com/
+  baseURL: https://api.soldo.com/business/v2
+  tags:
+  - Transaction Tags
+  properties:
+  - type: OpenAPI
+    url: openapi/soldo-transaction-tags-api-openapi.yml
+  - type: Documentation
+    url: https://developer.soldo.com/docs/discover
+  - type: APIReference
+    url: https://developer.soldo.com/reference/introduction
+  - type: GettingStarted
+    url: https://developer.soldo.com/docs/api-set-up
+  - type: Authentication
+    url: https://developer.soldo.com/docs/authentication
+  - type: Webhooks
+    url: asyncapi/soldo-webhooks.yml
+- aid: soldo:soldo-transaction-vat-rate-api
+  name: Soldo Transaction VAT Rate API
+  description: The Transaction VAT Rate API from Soldo — 1 operation(s) for transaction vat rate.
+  humanURL: https://developer.soldo.com/
+  baseURL: https://api.soldo.com/business/v2
+  tags:
+  - Transaction VAT Rate
+  properties:
+  - type: OpenAPI
+    url: openapi/soldo-transaction-vat-rate-api-openapi.yml
+  - type: Documentation
+    url: https://developer.soldo.com/docs/discover
+  - type: APIReference
+    url: https://developer.soldo.com/reference/introduction
+  - type: GettingStarted
+    url: https://developer.soldo.com/docs/api-set-up
+  - type: Authentication
+    url: https://developer.soldo.com/docs/authentication
+  - type: Webhooks
+    url: asyncapi/soldo-webhooks.yml
+- aid: soldo:soldo-transactions-api
+  name: Soldo Transactions API
+  description: The Transactions API from Soldo — 7 operation(s) for transactions.
+  humanURL: https://developer.soldo.com/
+  baseURL: https://api.soldo.com/business/v2
+  tags:
+  - Transactions
+  properties:
+  - type: OpenAPI
+    url: openapi/soldo-transactions-api-openapi.yml
+  - type: Documentation
+    url: https://developer.soldo.com/docs/discover
+  - type: APIReference
+    url: https://developer.soldo.com/reference/introduction
+  - type: GettingStarted
+    url: https://developer.soldo.com/docs/api-set-up
+  - type: Authentication
+    url: https://developer.soldo.com/docs/authentication
+  - type: Webhooks
+    url: asyncapi/soldo-webhooks.yml
+- aid: soldo:soldo-user-roles-api
+  name: Soldo User Roles API
+  description: The User Roles API from Soldo — 3 operation(s) for user roles.
+  humanURL: https://developer.soldo.com/
+  baseURL: https://api.soldo.com/business/v2
+  tags:
+  - User Roles
+  properties:
+  - type: OpenAPI
+    url: openapi/soldo-user-roles-api-openapi.yml
+  - type: Documentation
+    url: https://developer.soldo.com/docs/discover
+  - type: APIReference
+    url: https://developer.soldo.com/reference/introduction
+  - type: GettingStarted
+    url: https://developer.soldo.com/docs/api-set-up
+  - type: Authentication
+    url: https://developer.soldo.com/docs/authentication
+  - type: Webhooks
+    url: asyncapi/soldo-webhooks.yml
+- aid: soldo:soldo-users-api
+  name: Soldo Users API
+  description: The Users API from Soldo — 5 operation(s) for users.
+  humanURL: https://developer.soldo.com/
+  baseURL: https://api.soldo.com/business/v2
+  tags:
+  - Users
+  properties:
+  - type: OpenAPI
+    url: openapi/soldo-users-api-openapi.yml
+  - type: Documentation
+    url: https://developer.soldo.com/docs/discover
+  - type: APIReference
+    url: https://developer.soldo.com/reference/introduction
+  - type: GettingStarted
+    url: https://developer.soldo.com/docs/api-set-up
+  - type: Authentication
+    url: https://developer.soldo.com/docs/authentication
+  - type: Webhooks
+    url: asyncapi/soldo-webhooks.yml
+- aid: soldo:soldo-vat-rates-api
+  name: Soldo VAT Rates API
+  description: The VAT Rates API from Soldo — 2 operation(s) for vat rates.
+  humanURL: https://developer.soldo.com/
+  baseURL: https://api.soldo.com/business/v2
+  tags:
+  - VAT Rates
+  properties:
+  - type: OpenAPI
+    url: openapi/soldo-vat-rates-api-openapi.yml
+  - type: Documentation
+    url: https://developer.soldo.com/docs/discover
+  - type: APIReference
+    url: https://developer.soldo.com/reference/introduction
+  - type: GettingStarted
+    url: https://developer.soldo.com/docs/api-set-up
+  - type: Authentication
+    url: https://developer.soldo.com/docs/authentication
+  - type: Webhooks
+    url: asyncapi/soldo-webhooks.yml
+- aid: soldo:soldo-vehicles-api
+  name: Soldo Vehicles API
+  description: The Vehicles API from Soldo — 2 operation(s) for vehicles.
+  humanURL: https://developer.soldo.com/
+  baseURL: https://api.soldo.com/business/v2
+  tags:
+  - Vehicles
+  properties:
+  - type: OpenAPI
+    url: openapi/soldo-vehicles-api-openapi.yml
+  - type: Documentation
+    url: https://developer.soldo.com/docs/discover
+  - type: APIReference
+    url: https://developer.soldo.com/reference/introduction
+  - type: GettingStarted
+    url: https://developer.soldo.com/docs/api-set-up
+  - type: Authentication
+    url: https://developer.soldo.com/docs/authentication
+  - type: Webhooks
+    url: asyncapi/soldo-webhooks.yml
+- aid: soldo:soldo-wallets-api
+  name: Soldo Wallets API
+  description: The Wallets API from Soldo — 4 operation(s) for wallets.
+  humanURL: https://developer.soldo.com/
+  baseURL: https://api.soldo.com/business/v2
+  tags:
+  - Wallets
+  properties:
+  - type: OpenAPI
+    url: openapi/soldo-wallets-api-openapi.yml
+  - type: Documentation
+    url: https://developer.soldo.com/docs/discover
+  - type: APIReference
+    url: https://developer.soldo.com/reference/introduction
+  - type: GettingStarted
+    url: https://developer.soldo.com/docs/api-set-up
+  - type: Authentication
+    url: https://developer.soldo.com/docs/authentication
+  - type: Webhooks
+    url: asyncapi/soldo-webhooks.yml
+- aid: soldo:soldo-webhook-subscriptions-api
+  name: Soldo Webhook Subscriptions API
+  description: The Webhook Subscriptions API from Soldo — 3 operation(s) for webhook subscriptions.
+  humanURL: https://developer.soldo.com/
+  baseURL: https://api.soldo.com/business/v2
+  tags:
+  - Webhook Subscriptions
+  properties:
+  - type: OpenAPI
+    url: openapi/soldo-webhook-subscriptions-api-openapi.yml
+  - type: Documentation
+    url: https://developer.soldo.com/docs/discover
+  - type: APIReference
+    url: https://developer.soldo.com/reference/introduction
+  - type: GettingStarted
+    url: https://developer.soldo.com/docs/api-set-up
+  - type: Authentication
+    url: https://developer.soldo.com/docs/authentication
+  - type: Webhooks
+    url: asyncapi/soldo-webhooks.yml
+- aid: soldo:soldo-workflows-api
+  name: Soldo Workflows API
+  description: The Workflows API from Soldo — 3 operation(s) for workflows.
+  humanURL: https://developer.soldo.com/
+  baseURL: https://api.soldo.com/business/v2
+  tags:
+  - Workflows
+  properties:
+  - type: OpenAPI
+    url: openapi/soldo-workflows-api-openapi.yml
+  - type: Documentation
+    url: https://developer.soldo.com/docs/discover
+  - type: APIReference
+    url: https://developer.soldo.com/reference/introduction
+  - type: GettingStarted
+    url: https://developer.soldo.com/docs/api-set-up
+  - type: Authentication
+    url: https://developer.soldo.com/docs/authentication
+  - type: Webhooks
+    url: asyncapi/soldo-webhooks.yml
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
 common:
+- type: DeveloperPortal
+  url: https://developer.soldo.com/
+- type: Documentation
+  url: https://developer.soldo.com/docs/discover
+- type: APIReference
+  url: https://developer.soldo.com/reference/introduction
+- type: GettingStarted
+  url: https://developer.soldo.com/docs/api-set-up
+- type: Authentication
+  url: authentication/soldo-authentication.yml
+- type: OAuthScopes
+  url: scopes/soldo-scopes.yml
+- type: Conventions
+  url: conventions/soldo-conventions.yml
+- type: ErrorCatalog
+  url: errors/soldo-error-codes.yml
+- type: Lifecycle
+  url: lifecycle/soldo-lifecycle.yml
+- type: StatusPage
+  url: https://soldo.statuspage.io
+- type: Sandbox
+  url: sandbox/soldo-sandbox.yml
+- type: ChangeLog
+  url: changelog/soldo-changelog.yml
+- type: ChangeLog
+  url: https://developer.soldo.com/changelog
+- type: Conformance
+  url: conformance/soldo-conformance.yml
+- type: DataModel
+  url: data-model/soldo-data-model.yml
+- type: Webhooks
+  url: asyncapi/soldo-webhooks.yml
+- type: AgentSkill
+  url: skills/_index.yml
+- type: AgenticAccess
+  url: agentic-access/soldo-agentic-access.yml
+- type: DomainSecurity
+  url: security/soldo-domain-security.yml
+- type: MCPServer
+  url: mcp/soldo-mcp.yml
+- type: Overlay
+  url: overlays/soldo-business-api-v20-overlay.yaml
+- type: LLMsTxt
+  url: llms/soldo-llms.txt
+- type: HelpCenter
+  url: https://support.soldo.com/
+- type: Blog
+  url: https://www.soldo.com/en-gb/blog/
+- type: Pricing
+  url: https://www.soldo.com/en-gb/pricing/
+- type: TermsOfService
+  url: https://www.soldo.com/en-gb/terms-conditions/
+- type: PrivacyPolicy
+  url: https://www.soldo.com/en-gb/privacy-policies/
 - type: Website
-  url: http://www.soldo.com
+  url: https://www.soldo.com
+x-enrichment:
+  date: '2026-07-21'
+  status: enriched
+  artifacts_added: 23
+  pass: local-v1

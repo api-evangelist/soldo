@@ -1,0 +1,26 @@
+generated: '2026-07-21'
+method: searched
+source: openapi/soldo-business-api-v20-openapi-original.json (servers[]) + https://developer.soldo.com/
+api: Soldo Business API v2.0
+environments:
+- name: production
+  base_url: https://api.soldo.com
+  description: Production server (live data)
+- name: sandbox
+  base_url: https://api-demo.soldocloud.net
+  description: Sandbox server (test data)
+separation:
+  model: separate-host
+  note: >-
+    Test and live are separated by host, not by key prefix. The same OAuth
+    client-credentials flow is used; credentials are issued per environment in
+    the Soldo web app. Point the base URL at api-demo.soldocloud.net to run
+    against test data.
+test_values:
+  note: >-
+    Soldo does not publish a fixed set of magic test card numbers, test IBANs,
+    or hosted test tokens in its public developer docs. Test data is seeded per
+    demo account rather than via published fixtures. No test values are invented
+    here.
+advanced_auth_in_sandbox: true
+docs: https://developer.soldo.com/docs/api-set-up

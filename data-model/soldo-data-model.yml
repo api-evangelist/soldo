@@ -1,0 +1,90 @@
+generated: '2026-07-21'
+method: derived
+source: openapi/soldo-business-api-v20-openapi-original.json + https://developer.soldo.com/reference/
+api: Soldo Business API v2.0
+note: >-
+  Entity-relationship graph derived from the OpenAPI resource operations, object
+  schemas, and documented id-reference fields. Relationships are grounded in the
+  spec (e.g. a Card is created with the currency of the Wallet it belongs to; a
+  Transaction carries reimbursement_expense_report_id linking it to an
+  ExpenseReport). IDs are UUID strings.
+entities:
+- name: Company
+  operations: [company-get]
+  relationships:
+  - {kind: has_many, target: Wallet}
+  - {kind: has_many, target: User}
+  - {kind: has_many, target: Card}
+  - {kind: has_many, target: Group}
+- name: Wallet
+  operations: [wallet-search, wallet-get, wallet-add, wallet-delete]
+  relationships:
+  - {kind: belongs_to, target: Company}
+  - {kind: has_many, target: Card, via: wallet_id}
+- name: Card
+  operations: [card-search, card-get, card-add, card-update, card-delete, card-wallet-switch, card-rules-get, card-rules-set]
+  relationships:
+  - {kind: belongs_to, target: Wallet, via: wallet_id}
+  - {kind: has_many, target: User, via: assignees}
+  - {kind: has_one, target: CardRules}
+- name: User
+  operations: [user-search, user-get, user-add, user-update, user-role-set]
+  relationships:
+  - {kind: belongs_to, target: Company}
+  - {kind: has_many, target: Card, via: assignee}
+  - {kind: has_one, target: ExpensePolicy}
+- name: Group
+  operations: [group-search, group-get, group-add, group-update, group-delete, group-resource-add]
+  relationships:
+  - {kind: belongs_to, target: Company}
+  - {kind: has_many, target: Card}
+  - {kind: has_many, target: Wallet}
+  - {kind: has_many, target: User}
+- name: Transaction
+  operations: [transaction-search, transaction-get]
+  relationships:
+  - {kind: belongs_to, target: Wallet}
+  - {kind: belongs_to, target: Card}
+  - {kind: belongs_to, target: BusinessTrip, via: business_trip_id}
+  - {kind: has_one, target: ExpenseReport, via: reimbursement_expense_report_id}
+  - {kind: has_many, target: Document, via: attachments}
+- name: ExpenseReport
+  operations: [expense-report-search, expense-report-get, expense-report-download]
+  relationships:
+  - {kind: has_one, target: Transaction, via: reimbursement_transaction_id}
+- name: ExpensePolicy
+  operations: [expense-policy-search, expense-policy-get, expense-policy-assignees-get, expense-policy-assignees-add]
+  relationships:
+  - {kind: has_many, target: User, via: assignees}
+- name: BusinessTrip
+  operations: [business-trip-search, business-trip-get, business-trip-add]
+  relationships:
+  - {kind: has_many, target: Transaction}
+  - {kind: has_many, target: Tag}
+- name: Contact
+  operations: [contact-search, contact-get, contact-add, contact-update, contact-delete]
+  relationships:
+  - {kind: belongs_to, target: Company}
+- name: Address
+  operations: [address-search, address-get, address-add, address-update, address-delete]
+  relationships:
+  - {kind: belongs_to, target: Company}
+- name: Tag
+  operations: [tag-search, autotag-search]
+  relationships:
+  - {kind: belongs_to, target: Company}
+- name: Vehicle
+  operations: [vehicle-search, vehicle-get, vehicle-add, vehicle-delete]
+  relationships:
+  - {kind: has_many, target: Transaction, via: refueling}
+- name: Document
+  operations: [document-search, document-get, document-upload, document-upload-confirm, document-delete]
+  relationships:
+  - {kind: belongs_to, target: Transaction}
+- name: WebhookSubscription
+  operations: [webhook-subscription-search, webhook-subscription-add, webhook-subscription-delete]
+  relationships:
+  - {kind: belongs_to, target: Company}
+id_conventions:
+  format: UUID
+  example: 8a358051-19ba-11e7-b7cf-06f210f068eb

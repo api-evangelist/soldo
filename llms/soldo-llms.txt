@@ -1,0 +1,351 @@
+# Business API Portal - Soldo Documentation
+
+> Soldo's developer portal offers API documentation to easily integrate Soldo's capabilities into applications and workflows, providing detailed information, resources, and examples to maximise the use of Soldo's API.
+
+## Guides
+- [Discover Soldo](https://developer.soldo.com/docs/discover.md): Learn more about the Soldo product and how its capabilities can work for you.
+- [Use cases](https://developer.soldo.com/docs/standard-policies.md): Check out some of the things you can do with the Soldo Business API.
+- [Setting up the API](https://developer.soldo.com/docs/api-set-up.md): Learn the basics quickly and get up and running without delay.
+- [Authentication](https://developer.soldo.com/docs/authentication.md): Learn how to complete standard and advanced authentication to interact with our Soldo Business API.
+- [Standard authentication](https://developer.soldo.com/docs/standard-authentication.md)
+- [Advanced authentication](https://developer.soldo.com/docs/advanced-authentication.md)
+- [Uploading files](https://developer.soldo.com/docs/file-uploads.md): Learn how to upload documents and attach files to transactions using the pre-signed URL pattern.
+- [Data types](https://developer.soldo.com/docs/data-types.md)
+- [Errors](https://developer.soldo.com/docs/errors.md)
+- [Pagination and sorting](https://developer.soldo.com/docs/pagination-and-sorting.md)
+- [Rate limits](https://developer.soldo.com/docs/rate-limits.md)
+- [Italian](https://developer.soldo.com/docs/terms-conditions-ita-1.md): TERMINI DI UTILIZZO API - Ver. 1.0 – 07/06/2023
+
+## API Reference
+- [OpenAPI specification](https://developer.soldo.com/reference/openapispecification.md): Download the Soldo Business API OpenAPI specification.
+- [Introduction](https://developer.soldo.com/reference/introduction.md)
+- [Java](https://developer.soldo.com/reference/java.md)
+- [PHP](https://developer.soldo.com/reference/php.md)
+- [Python](https://developer.soldo.com/reference/python.md)
+- [Commons](https://developer.soldo.com/reference/commons.md)
+- [Merchant Categories](https://developer.soldo.com/reference/merchant-categories.md)
+- [Authenticate](https://developer.soldo.com/reference/authorize.md): Grant access to the API getting an `OAuth2Token`.
+- [Get who am I](https://developer.soldo.com/reference/who-am-i.md): Endpoint to get information about the owner of the access token.
+- [Search Expense Categories](https://developer.soldo.com/reference/expense-category-search.md): Endpoint to find `ExpenseCategories` using filtering parameters.
+- [Get Expense Category](https://developer.soldo.com/reference/expense-category-get.md): Endpoint to get a specific `ExpenseCategory` by ID.
+- [Add Expense Category](https://developer.soldo.com/reference/expense-category-add.md): Endpoint to add a new `ExpenseCategory`.
+- [Update Expense Category](https://developer.soldo.com/reference/expense-category-update.md): Endpoint to update a specific `ExpenseCategory`.
+- [Delete Expense Category](https://developer.soldo.com/reference/expense-category-delete.md): Endpoint to delete a specific `ExpenseCategory`.
+- [Search VAT Rates](https://developer.soldo.com/reference/vat-rate-search.md): Endpoint to find `VatRate` using filtering parameters.
+- [Get VAT Rate](https://developer.soldo.com/reference/vat-rate-get.md): Endpoint to retrieve a specific `VatRate` by ID.
+- [Add VAT Rate](https://developer.soldo.com/reference/vat-rate-add.md): Endpoint to add a new `VatRate`.
+- [Update VAT Rate](https://developer.soldo.com/reference/vat-rate-update.md): Endpoint to update `VATRate`.
+- [Delete VAT Rate](https://developer.soldo.com/reference/vat-rate-delete.md): Endpoint to delete a `VatRate`.
+- [Search Addresses](https://developer.soldo.com/reference/address-search.md): Endpoint to search `Addresses`.
+- [Get Address](https://developer.soldo.com/reference/address-get.md): Endpoint to get an `Address` by ID.
+- [Add Address](https://developer.soldo.com/reference/address-add.md): Endpoint to create an `Address`.
+- [Update Address](https://developer.soldo.com/reference/address-update.md): Endpoint to update an `Address` by ID.
+- [Delete Address](https://developer.soldo.com/reference/address-delete.md): Endpoint to remove an `Address`.
+- [Search Autotags](https://developer.soldo.com/reference/autotag-search.md): Endpoint to find `Autotags` using filtering parameters.
+- [Get Autotag](https://developer.soldo.com/reference/autotag-get.md): Endpoint to get a specific `Autotag` by ID.
+- [Add Autotag](https://developer.soldo.com/reference/autotag-add.md): Endpoint to add a new `Autotag`.
+- [Update Autotag](https://developer.soldo.com/reference/autotag-update.md): Endpoint to update the settings of a specific `Autotag`.
+- [Delete Autotag](https://developer.soldo.com/reference/autotag-delete.md): Endpoint to delete a specific `Autotag`.
+- [Search BusinessTrips](https://developer.soldo.com/reference/business-trip-search.md): Endpoint to find `BusinessTrips` using filtering parameters.
+- [Get BusinessTrip](https://developer.soldo.com/reference/business-trip-get.md): Endpoint to get a specific `BusinessTrip` by ID.
+- [Add Business Trip](https://developer.soldo.com/reference/business-trip-add.md): Endpoint to add a new `BusinessTrip`.
+- [Complete Business Trip Transfer](https://developer.soldo.com/reference/business-trip-complete-transfer.md): Endpoint to complete the funds transfer for a `BusinessTrip`.
+- [Update BusinessTrip Details](https://developer.soldo.com/reference/business-trip-update-details.md): Endpoint to update the general details `BusinessTrip`.
+- [Update BusinessTrip Expense Allocation](https://developer.soldo.com/reference/business-trip-update-expenses.md): Endpoint to update allocation of expenses associated to a `BusinessTrip`.
+- [Update BusinessTrip Post Actions](https://developer.soldo.com/reference/business-trip-update-post-actions.md): Endpoint to update actions to be executed after a `BusinessTrip`.
+- [Update BusinessTrip Tags](https://developer.soldo.com/reference/business-trip-update-tags.md): Endpoint to update tags associated to a `BusinessTrip`.
+- [Delete BusinessTrip](https://developer.soldo.com/reference/business-trip-delete.md): Endpoint to delete a `BusinessTrip`.
+- [Search Cards](https://developer.soldo.com/reference/card-search.md): Endpoint to find `Cards` using filtering parameters.
+- [Get Card](https://developer.soldo.com/reference/card-get.md): Endpoint to retrieve a specific `Card` by ID.
+- [Add Card](https://developer.soldo.com/reference/card-add.md): Endpoint to add a new `Card`. The created `Card` has the same currency of the `Wallet` it belongs to.
+- [Update Card](https://developer.soldo.com/reference/card-update.md): Endpoint to add and remove assignees for company `Cards`.
+- [Switch Card Wallet](https://developer.soldo.com/reference/card-wallet-switch.md): Endpoint to switch the `Card` `Wallet`.
+- [Delete Card](https://developer.soldo.com/reference/card-delete.md): Endpoint to delete a `Card`.
+- [Get Card Rules](https://developer.soldo.com/reference/card-rules-get.md): Endpoint to get the `CardRules` of the `Card`.
+- [Set Card Rules](https://developer.soldo.com/reference/card-rules-set.md): Endpoint to set the `CardRules`.
+- [Get Spending Limits Rules](https://developer.soldo.com/reference/card-rule-spending-limits-get.md): Endpoint to get the `CardRuleSpendingLimitsRules` of the `Card`.
+- [Set Spending Limits Rules](https://developer.soldo.com/reference/card-rule-spending-limits-set.md): Endpoint to set the `CardRuleSpendingLimitsRules` of the `Card`.
+- [Unset Spending Limits Rules](https://developer.soldo.com/reference/card-rule-spending-limits-unset.md): Endpoint to unset the `CardRuleSpendingLimitsRule`  of the `Card`.
+- [Get Countries Rules](https://developer.soldo.com/reference/card-rule-countries-get.md): Endpoint to get the `CardRuleCountries` of the `Card`.
+- [Set Countries Rules](https://developer.soldo.com/reference/card-rule-countries-set.md): Endpoint to set the `CardRuleCountries` of the `Card`.
+- [Get Merchant Categories Rules](https://developer.soldo.com/reference/card-rule-merchant-categories-get.md): Endpoint to get the `CardRuleMerchantCategories` of the `Card`.
+- [Set Merchant Categories Rules](https://developer.soldo.com/reference/card-rule-merchant-categories-set.md): Endpoint to set the `CardRuleMerchantCategories` of the `Card`.
+- [Get CashPoint Rules](https://developer.soldo.com/reference/card-rule-cashpoint-get.md): Endpoint to get the `CardRuleCashPointRules` of the `Card`.
+- [Set CashPoint Rules](https://developer.soldo.com/reference/card-rule-cashpoint-set.md): Endpoint to set a `CardRuleCashPointRule` of the `Card`.
+- [Unset CashPoint Rules](https://developer.soldo.com/reference/card-rule-cashpoint-unset.md): Endpoint to unset a `CardRuleCashPointRule` of the `Card`.
+- [Search Presets](https://developer.soldo.com/reference/card-rule-preset-search.md): Endpoint to find `CardRulePresets` using filtering parameters.
+- [Get Preset](https://developer.soldo.com/reference/card-rule-preset-get.md): Endpoint to get a `CardRulePreset` by ID.
+- [Add Preset to Card](https://developer.soldo.com/reference/card-rule-preset-set.md): Endpoint to add a `CardRulePreset` to a `Card`.
+- [Remove Preset from Card](https://developer.soldo.com/reference/card-rule-preset-unset.md): Endpoint to remove a `CardRulePreset` from a `Card`.
+- [Delete Preset](https://developer.soldo.com/reference/card-rule-preset-delete.md): Endpoint to delete a `CardRulePreset` by ID.
+- [Get Company](https://developer.soldo.com/reference/company-get.md): Endpoint to retrieve one's own `Company` info.
+- [Search Contacts](https://developer.soldo.com/reference/contact-search.md): Endpoint to search `Contacts` using filtering parameters.
+- [Get Contact](https://developer.soldo.com/reference/contact-get.md): Endpoint to get specific `Contact` by ID.
+- [Add Contact](https://developer.soldo.com/reference/contact-add.md): Endpoint to add a new `Contact`.
+- [Update Contact](https://developer.soldo.com/reference/contact-update.md): Endpoint to update `Contact`.
+- [Delete Contact](https://developer.soldo.com/reference/contact-delete.md): Endpoint to delete a specific `Contact`.
+- [Search Documents](https://developer.soldo.com/reference/document-search.md): Endpoint to search `Documents` stored in the repository.
+- [Get Document](https://developer.soldo.com/reference/document-get.md): Endpoint to get a specific `Document` by ID.
+- [Delete Document](https://developer.soldo.com/reference/document-delete.md): Endpoint to delete a specific `Document` by ID.
+- [Confirm Document Upload](https://developer.soldo.com/reference/document-upload-confirm.md): After you got the temporary file URL of type `UPLOAD_URL` and the file is uploaded, the upload of file must be confirmed.
+- [Upload Document](https://developer.soldo.com/reference/document-upload.md): Endpoint to upload a `Document`.The first step is to get a temporary URL where to upload the file.
+- [Search Expense Policies](https://developer.soldo.com/reference/expense-policy-search.md): Endpoint to search `ExpensePolicy` resources using filtering parameters.
+- [Get Expense Policy](https://developer.soldo.com/reference/expense-policy-get.md): Endpoint to get a specific `ExpensePolicy` by ID.
+- [Get Expense Policy Assignees](https://developer.soldo.com/reference/expense-policy-assignees-get.md): Endpoint to get all `User` resources currently assigned to a specific `ExpensePolicy`.
+- [Assign Expense Policy to Users](https://developer.soldo.com/reference/expense-policy-assignees-add.md): Endpoint to assign a specific `ExpensePolicy` to one or more `User` resources. Since a `User` can hold at most one `ExpensePolicy`, any existing assignment is replaced.
+- [Unassign Expense Policy from Users](https://developer.soldo.com/reference/expense-policy-assignees-remove.md): Endpoint to unassign a specific `ExpensePolicy` from one or more `User` resources.
+- [Unassign any Expense Policy from Users](https://developer.soldo.com/reference/expense-policy-assignees-remove-any.md): Endpoint to unassign the currently assigned `ExpensePolicy` from one or more `User` resources. No-op silently for a `User` with no `ExpensePolicy` assigned.
+- [Search Expense Reports](https://developer.soldo.com/reference/expense-report-search.md): Endpoint to search `ExpenseReport` using filtering parameters.
+- [Get Expense Report](https://developer.soldo.com/reference/expense-report-get.md): Endpoint to get a specific  `ExpenseReport` by ID.
+- [Download Expense Report](https://developer.soldo.com/reference/expense-report-download.md): Endpoint to download `ExpenseReport` by ID.
+- [Update Expense Report](https://developer.soldo.com/reference/expense-report-update.md): Endpoint to update a specific `ExpenseReport`.
+- [Delete Expense Report](https://developer.soldo.com/reference/expense-report-delete.md): Endpoint to delete a specific `ExpenseReport`.
+- [Search Expense Reviews](https://developer.soldo.com/reference/expense-review-search.md): Endpoint to find users with `ExpenseReview` using filtering parameters.
+- [Get Expense Review](https://developer.soldo.com/reference/expense-review-get.md): Endpoint to get the `ExpenseReview` of a specific `User`.
+- [Export Expense Review](https://developer.soldo.com/reference/expense-review-export.md): Endpoint to export the `ExpenseReview` of a single `User`.
+- [Send Expense Review Reminder](https://developer.soldo.com/reference/expense-review-reminder.md): Endpoint to send a reminder of `ExpenseReview` to a specific `User`.
+- [Update Expense Review Status](https://developer.soldo.com/reference/expense-review-update-status.md): Endpoint to update the status of an `ExpenseReview`.
+- [Update Expense Review Type](https://developer.soldo.com/reference/expense-review-update-type.md): Endpoint to update the type of an `ExpenseReview`.
+- [Request Expense Review Info](https://developer.soldo.com/reference/expense-review-request-info.md): Endpoint to request info to an `User` about an `ExpenseReview`.
+- [Expense Review Configuration](https://developer.soldo.com/reference/expense-review-configuration.md): Manage the settings and rules for the expense review process.
+- [Get Expense Review Configuration](https://developer.soldo.com/reference/expense-review-configuration-get.md): Endpoint to get `ExpenseReview` configuration
+- [Add Expense Review Configuration](https://developer.soldo.com/reference/expense-review-configuration-add.md): Endpoint to add an `ExpenseReview` configuration.
+- [Update Expense Review Configuration](https://developer.soldo.com/reference/expense-review-configuration-update.md): Endpoint to update a specific `ExpenseReview` Configuration.
+- [Search Expense Review Processes](https://developer.soldo.com/reference/expense-review-processes-search.md): Endpoint to search `ExpenseReviewProcesses`.
+- [Get Expense Review Process](https://developer.soldo.com/reference/expense-review-process-get.md): Endpoint to get the `ExpenseReviewProcess`.
+- [Add Expense Review Process](https://developer.soldo.com/reference/expense-review-process-add.md): Endpoint to add an `ExpenseReviewProcess`.
+- [Update Expense Review Process](https://developer.soldo.com/reference/expense-review-process-update.md): Be aware that any change made on the steps of an `ExpenseReviewProcess` configuration is not applied to already existing transactions. If you need to apply the changes to already existing transactions, you can use the [Recalculate Expense Review Processes](ref:expense-review-process-recalculate) endpoint. Also, the object returned upon update might have a different ID.
+- [Update Expense Review Process Status](https://developer.soldo.com/reference/expense-review-process-status-update.md): Endpoint to update a specific `ExpenseReviewProcess` status.
+- [Change Expense Review Processes Priority](https://developer.soldo.com/reference/expense-review-process-priority-change.md): Endpoint to change the `ExpenseReviewProcess` order of priority.
+- [Recalculate Expense Review Process](https://developer.soldo.com/reference/expense-review-process-recalculate.md): Endpoint to recalculate the `ExpenseReviewProcess` a transaction is included into. This is particularly useful in case a change made on an `ExpenseReviewProcess` configuration should be applied to already existing transactions. In case a recalculated transaction is included into the same `ExpenseReviewProcess`, the transaction will remain assigned to the same approval step. This endpoint supports up to 100 transactions per single request.
+- [Delete Expense Review Process](https://developer.soldo.com/reference/expense-review-process-delete.md): Endpoint to delete a `ExpenseReviewProcess`.
+- [Search Groups](https://developer.soldo.com/reference/group-search.md): Endpoint to search `Groups`
+- [Get Group](https://developer.soldo.com/reference/group-get.md): Endpoint to get an `Group` by ID.
+- [Add Group](https://developer.soldo.com/reference/group-add.md): Endpoint to add a new `Group`.
+- [Update Group](https://developer.soldo.com/reference/group-update.md): Endpoint to update an `Group` by ID.
+- [Add Resource To Group](https://developer.soldo.com/reference/group-resource-add.md): Endpoint to add a new resource to a Group.
+- [Remove resource from Group](https://developer.soldo.com/reference/group-resource-remove.md): Endpoint to remove a resource from a `Group`.
+- [Delete Group](https://developer.soldo.com/reference/group-delete.md): Endpoint to remove an `Group`.
+- [Search Lists](https://developer.soldo.com/reference/list-search.md): Endpoint to search `Lists` using filtering parameters.
+- [Get List](https://developer.soldo.com/reference/list-get.md): Endpoint to get a specific `List` by ID.
+- [Add List](https://developer.soldo.com/reference/list-add.md): Endpoint to add a new `List`.
+- [Update List](https://developer.soldo.com/reference/list-update.md): Endpoint to update the configuration of a `List`.
+- [Delete List](https://developer.soldo.com/reference/list-delete.md): Endpoint to delete a `List`.
+- [Search Tags](https://developer.soldo.com/reference/tag-search.md): Endpoint to search `Tags` in a given `List` using filtering parameters.
+- [Get Tag](https://developer.soldo.com/reference/tag-get.md): Endpoint to get a specific `Tag` of a given `List` by ID.
+- [Add Tag to List](https://developer.soldo.com/reference/tag-add.md): Endpoint to add a `Tag` into a `List`.
+- [Update Tag](https://developer.soldo.com/reference/tag-update.md): Endpoint to update `Tag` data of a `List`.
+- [Delete Tag from List](https://developer.soldo.com/reference/tag-delete.md): Endpoint to delete a `Tag` out of a `List`.
+- [Add Tag bulk to List](https://developer.soldo.com/reference/tags-add-bulk.md): Endpoint to add a `List` by adding up to 1000 `Tag` IDs per request.
+- [Update Tag bulk](https://developer.soldo.com/reference/tags-update-bulk.md): Endpoint to update a `List` by modifying up to 1000 `Tag` IDs per request.
+- [Search Online Ads](https://developer.soldo.com/reference/online-ads-search.md): Endpoint to search `OnlineAds` using filtering parameters.
+- [Get Online Ads](https://developer.soldo.com/reference/online-ads-get.md): Endpoint to get a specific `OnlineAd` by ID.
+- [Add Online Ads](https://developer.soldo.com/reference/online-ads-add.md): Endpoint to add a new `OnlineAd`.
+- [Update Online Ads](https://developer.soldo.com/reference/online-ads-update.md): Endpoint to update a specific `OnlineAd`.
+- [Activate Online Ads](https://developer.soldo.com/reference/online-ads-activate.md): Endpoint to activate a specific `OnlineAd`.
+- [Add assignees to Online Ads](https://developer.soldo.com/reference/online-ads-assignees-add.md): Endpoint to add assignees to an `OnlineAd`.
+- [Remove assignees from Online Ads](https://developer.soldo.com/reference/online-ads-assignees-remove.md): Endpoint to remove assignees from an `OnlineAd`.
+- [Delete Online Ads](https://developer.soldo.com/reference/online-ads-delete.md): Endpoint to delete a specific `OnlineAd`.
+- [Search Orders](https://developer.soldo.com/reference/order-search.md): Endpoint to retrieve your `Orders`.
+- [Get Order](https://developer.soldo.com/reference/order-get.md): Endpoint to retrieve a specific `Order`.
+- [Delete Order](https://developer.soldo.com/reference/order-delete.md): Endpoint to delete a specific `Order`. Only resource in ERROR or PLACED status can be deleted.
+- [Search Out of Office](https://developer.soldo.com/reference/out-of-office-search.md): Endpoint to search `out_of_office` using filtering parameters.
+- [Get Out of Office](https://developer.soldo.com/reference/out-of-office-get.md): Endpoint to get a specific `out_of_office` by ID.
+- [Add Out of Office](https://developer.soldo.com/reference/out-of-office-add.md): Endpoint to add an `out_of_office`.
+- [Update Out of Office](https://developer.soldo.com/reference/out-of-office-update.md): Endpoint to update a specific `out_of_office`.
+- [Delete Out of Office](https://developer.soldo.com/reference/out-of-office-delete.md): Endpoint to delete a specific `out_of_office`.
+- [Get Roles](https://developer.soldo.com/reference/roles-list.md): Endpoint to retrieve all `User` `Roles`.
+- [Get User Roles](https://developer.soldo.com/reference/user-role-get.md): Endpoint to retrieve roles by `User` ID.
+- [Add roles to User](https://developer.soldo.com/reference/user-role-set.md): Endpoint to assign a `Role` to an `User`.
+- [Remove roles from User](https://developer.soldo.com/reference/user-role-unset.md): Endpoint to remove a `Role` from an `User`.
+- [Search Resource Sets](https://developer.soldo.com/reference/resource-set-search.md): Endpoint to search `ResourceSet` using filtering parameters.
+- [Get Resource Set](https://developer.soldo.com/reference/resource-set-get.md): Endpoint to get a specific `ResourceSet` by ID.
+- [Add Resource Set](https://developer.soldo.com/reference/resource-set-add.md): Endpoint to add a new `ResourceSet`.
+- [Update Resource Set](https://developer.soldo.com/reference/resource-set-update.md): Endpoint to update a `ResourceSet`.
+- [Delete Resource Set](https://developer.soldo.com/reference/resource-set-delete.md): Endpoint to delete a specific `ResourceSet` by ID.
+- [Search Purchases](https://developer.soldo.com/reference/pre-approved-spend-search.md): Endpoint to find `Purchases` using filtering parameters.
+- [Get Purchases](https://developer.soldo.com/reference/pre-approved-spend-get.md): Endpoint to get a specific `Purchase` by ID.
+- [Add Purchase](https://developer.soldo.com/reference/pre-approved-spend-add.md): Endpoint to add a new `Purchase`.
+- [Update Purchase](https://developer.soldo.com/reference/pre-approved-spend-update.md): Endpoint to update a specific `Purchase`.
+- [Delete Purchase](https://developer.soldo.com/reference/pre-approved-spend-delete.md): Endpoint to delete a specific `Purchase`.
+- [Redeem Purchase](https://developer.soldo.com/reference/pre-approved-spend-redeem.md): Endpoint to redeem a `Purchase`.
+- [Search Refueling Transactions](https://developer.soldo.com/reference/refueling-search.md): Endpoint to search `Refuelings` using filtering parameters.
+- [Get Refueling Transaction](https://developer.soldo.com/reference/refueling-get.md): Endpoint to get a specific `Refueling` by ID.
+- [Update Refueling Transaction](https://developer.soldo.com/reference/refueling-update.md): Endpoint to update a specific `Refueling` by ID.
+- [Search Requests](https://developer.soldo.com/reference/request-search.md): Endpoint to search `Requests`.
+- [Get Request](https://developer.soldo.com/reference/request-get.md): Endpoint to get an `Request` by ID.nThere are 3 types of request:GOODS_OR_SERVICES, FUNDS,TRIP.
+- [Add request](https://developer.soldo.com/reference/request-add.md): Endpoint to create an `Request`. There are 3 types of request:GOODS_OR_SERVICES, FUNDS,TRIP.
+- [Update Request](https://developer.soldo.com/reference/request-update.md): Endpoint to update an `Request`. There are 3 types of request:GOODS_OR_SERVICES, FUNDS, TRIP.
+- [Approve Request](https://developer.soldo.com/reference/request-approve.md): Endpoint to approve an `Request` by ID. Payload depends on the request type (GOODS_OR_SERVICES, FUNDS, TRIP).
+- [Decline Request](https://developer.soldo.com/reference/request-decline.md): Endpoint to decline an `Request` by ID.
+- [Delete Request](https://developer.soldo.com/reference/request-delete.md): Endpoint to remove an `Request`.
+- [Search Statements](https://developer.soldo.com/reference/statement-search.md): Endpoint to find `Statements` available for download using filtering parameters.
+- [Download Statement](https://developer.soldo.com/reference/statement-download.md): Endpoint to retrieve the presigned url to download a `Statement`.
+- [Search Subscriptions](https://developer.soldo.com/reference/subscription-search.md): Endpoint to find `Subscriptions` using filtering parameters.
+- [Get Subscription](https://developer.soldo.com/reference/subscription-get.md)
+- [Add Subscription](https://developer.soldo.com/reference/subscription-add.md): Endpoint to add a new `Subscription`.
+- [Update Subscription](https://developer.soldo.com/reference/subscription-update.md): Endpoint to update a specific `Subscription`.
+- [Activate Subscription](https://developer.soldo.com/reference/subscription-activate.md): Endpoint to activate a specific `Subscription`.
+- [Add assignees to Subscription](https://developer.soldo.com/reference/subscription-assignees-add.md): Endpoint to add assignees to a `Subscription`.
+- [Remove assignees from Subscription](https://developer.soldo.com/reference/subscription-assignees-remove.md): Endpoint to remove assignees from a `Subscription`.
+- [Delete Subscription](https://developer.soldo.com/reference/subscription-delete.md): Endpoint to delete a specific `Subscription`.
+- [Search Transactions](https://developer.soldo.com/reference/transaction-search.md): Endpoint to find `Transactions` using filtering parameters.
+- [Get Transaction](https://developer.soldo.com/reference/transaction-get.md): Endpoint to get a specific `Transaction` by ID.
+- [Update Transaction](https://developer.soldo.com/reference/transaction-update.md): Endpoint to update the assignee of a specific `Transaction` by ID. This method is only available for `Company` `Card` transactions and the `trx_owner_id` must be one of the `Card` assignees.
+- [Search Transaction Attachments](https://developer.soldo.com/reference/transaction-attachment-search.md): Endpoint to get the list of `TransactionAttachments` of a `Transaction`.
+- [Get Transaction Attachment](https://developer.soldo.com/reference/transaction-attachment-get.md): Endpoint to get a specific `TransactionAttachment` by ID.
+- [Upload Transaction Attachment](https://developer.soldo.com/reference/transaction-attachment-upload.md): Endpoint to upload a `TransactionAttachment` to a `Transaction`.nThe first step is to get a temporary URL where to upload the attachment file.
+- [Confirm Transaction Attachment Upload](https://developer.soldo.com/reference/transaction-attachment-upload-confirm.md): After you got the temporary file URL of type `UPLOAD_URL` and the attachment file is uploaded, the upload of the `TransactionAttachment` must be confirmed.
+- [Update Transaction Attachment Metadata](https://developer.soldo.com/reference/transaction-attachment-metadata-update.md): Endpoint to update the `TransactionAttachment` Metadata of by ID.
+- [Delete Transaction Attachment](https://developer.soldo.com/reference/transaction-attachment-delete.md): Endpoint to delete a `TransactionAttachment` by ID.
+- [Add Expense Category to Transaction](https://developer.soldo.com/reference/transaction-expense-category-set.md): Endpoint to assign an `ExpenseCategory` to a `Transaction`.
+- [Remove Expense Category from Transaction](https://developer.soldo.com/reference/transaction-expense-category-unset.md): Endpoint to remove the `Transaction`'s `ExpenseCategory`
+- [Search Transaction Metadata](https://developer.soldo.com/reference/transaction-metadata-search.md): Endpoint to get the list of metadata of a `Transaction`.
+- [Get Transaction Metadata](https://developer.soldo.com/reference/transaction-metadata-get.md): Endpoint to get the metadata of a `Transaction` by ID.
+- [Add Transaction Metadata](https://developer.soldo.com/reference/transaction-metadata-add.md): Endpoint to add metadata to a `Transaction`.
+- [Update Transaction Metadata](https://developer.soldo.com/reference/transaction-metadata-update.md): Endpoint to update metadata of a `Transaction`.
+- [Delete Transaction Metadata](https://developer.soldo.com/reference/transaction-metadata-delete.md): Endpoint to delete metadata of a `Transaction`.
+- [Create Transaction Split](https://developer.soldo.com/reference/transaction-split-create.md): Endpoint to split a `Transaction`.
+- [Update Transaction Split](https://developer.soldo.com/reference/transaction-split-update.md): Endpoint to update the split of a `Transaction`.
+- [Delete Transaction Split](https://developer.soldo.com/reference/transaction-split-delete.md): Endpoint to delete the split of a `Transaction`.
+- [Add Tag to Transaction](https://developer.soldo.com/reference/transaction-tag-add.md): Endpoint to assign a `Tag` to a `Transaction`.
+- [Remove Tag from Transaction](https://developer.soldo.com/reference/transaction-tag-remove.md): Endpoint to remove a `Tag` from a `Transaction`.
+- [Add VAT Rate to Transaction](https://developer.soldo.com/reference/transaction-tax-rate-set.md): Endpoint to assign a `VatRate` to a `Transaction`.
+- [Remove VAT Rate from Transaction](https://developer.soldo.com/reference/transaction-tax-rate-unset.md): Endpoint to remove the `Transaction`'s `VatRate`
+- [Search TransactionCustomExport](https://developer.soldo.com/reference/transaction-export-search.md): Endpoint to get the list of a `TransactionCustomExport`.
+- [Retrieve Bulk TransactionCustomExport](https://developer.soldo.com/reference/transaction-export-get.md): Endpoint retrieve a list of `TransactionCustomExport` by TransactionIds.
+- [Add Bulk TransactionCustomExport](https://developer.soldo.com/reference/transaction-export-add.md): Endpoint bulk to add a new `TransactionCustomExport`.
+- [Remove Bulk TransactionCustomExport](https://developer.soldo.com/reference/transaction-export-remove.md): Endpoint bulk to remove a list of `TransactionCustomExport` by TransactionIds.
+- [Get Mileage Reimbursement Transaction](https://developer.soldo.com/reference/mileage-reimbursement-transaction-get.md): Endpoint to get a specific `MileageReimbursement` `Transaction`.
+- [Create Mileage Reimbursement Transaction](https://developer.soldo.com/reference/mileage-reimbursement-transaction-create.md): Endpoint to create a `MileageReimbursement` `Transaction`.
+- [Update Mileage Reimbursement Transaction](https://developer.soldo.com/reference/mileage-reimbursement-transaction-update.md): Endpoint to update a `MileageReimbursement` `Transaction`. The entire resource representation must be included in the request body.
+- [Delete Mileage Reimbursement Transaction](https://developer.soldo.com/reference/mileage-reimbursement-transaction-delete.md): Endpoint to delete a specific `MileageReimbursement` `Transaction`.
+- [Get Out-Of-Platform Transaction](https://developer.soldo.com/reference/out-of-platform-transaction-get.md): Endpoint to get a specific Out-Of-Platform `Transaction`.
+- [Create Out-Of-Platform Transaction](https://developer.soldo.com/reference/out-of-platform-transaction-create.md): Endpoint to create an Out-Of-Platform `Transaction` (not automatically tracked by Soldo).
+- [Update Out-Of-Platform Transaction](https://developer.soldo.com/reference/out-of-platform-transaction-update.md): Endpoint to update an Out-Of-Platform `Transaction`. The entire resource representation must be included in the request body.
+- [Delete Out-Of-Platform Transaction](https://developer.soldo.com/reference/out-of-platform-transaction-delete.md): Endpoint to delete a specific Out-Of-Platform `Transaction`.
+- [Search Users](https://developer.soldo.com/reference/user-search.md): Endpoint to find `Users` using filtering parameters.
+- [Get User](https://developer.soldo.com/reference/user-get.md): Endpoint to retrieve a specific `User` by ID.
+- [Retrieve User Access Modes](https://developer.soldo.com/reference/user-access-modes-get.md): Endpoint to retrieve the `User` access modes.
+- [Create User](https://developer.soldo.com/reference/user-create.md): Endpoint to create a new `User`.
+- [Update User](https://developer.soldo.com/reference/user-update.md): Endpoint to update an `User`.
+- [Update User Status](https://developer.soldo.com/reference/user-status-update.md): Endpoint to update an `User` status.
+- [Update User Access Modes](https://developer.soldo.com/reference/user-access-modes-update.md): Endpoint to update the `User` access modes.
+- [Delete User](https://developer.soldo.com/reference/user-delete.md): Endpoint to delete an `User`.
+- [Search Vehicle](https://developer.soldo.com/reference/vehicle-search.md): Endpoint to find Vehicles using filtering parameters.
+- [Get Vehicle](https://developer.soldo.com/reference/vehicle-get.md): Endpoint to get a specific `Vehicle` by ID.
+- [Add Vehicle](https://developer.soldo.com/reference/vehicle-add.md): Endpoint to add a new `Vehicle`.
+- [Update Vehicle](https://developer.soldo.com/reference/vehicle-update.md): Endpoint to update a specific Vehicle
+- [Delete Vehicle](https://developer.soldo.com/reference/vehicle-delete.md): Endpoint to delete a specific `Vehicle`.
+- [Search Wallets](https://developer.soldo.com/reference/wallet-search.md): Endpoint to search `Wallets` using filtering parameters.
+- [Get Wallet](https://developer.soldo.com/reference/wallet-get.md): Endpoint to retrieve a specific `Wallet` by ID.
+- [Create Wallet](https://developer.soldo.com/reference/wallet-create.md): Endpoint to add a new `Wallet`. Only company wallets can be created, a user dedicated wallet for each currency supported by your account is automatically created by the Soldo platform.
+- [wallet-add](https://developer.soldo.com/reference/wallet-add.md)
+- [Update Wallet](https://developer.soldo.com/reference/wallet-update.md): Endpoint to update a `Wallet`. Only company wallets can be updated, a `User` dedicated wallet for each currency supported by your account is automatically created by the Soldo platform when a `User` gets created.
+- [Make Internal Transfer](https://developer.soldo.com/reference/wallet-internal-transfer.md): Endpoint to transfer money between two `Wallets` within the same business account.
+- [Delete Wallet](https://developer.soldo.com/reference/wallet-delete.md): Endpoint to delete the `Wallet`
+- [Search Auto-transfer Presets](https://developer.soldo.com/reference/wallet-auto-transfer-presets-search.md): Endpoint to find `AutoTransferPreset` using filtering parameters.
+- [Get Auto-transfer Preset](https://developer.soldo.com/reference/wallet-auto-transfer-preset-get.md): Endpoint to get `AutoTransferPreset` by ID.
+- [Add wallets to Auto-transfer Preset](https://developer.soldo.com/reference/wallet-auto-transfer-preset-set.md): Endpoint to add a `Wallets` to `AutoTransferPreset`.
+- [Remove Wallets from Auto-transfer Preset](https://developer.soldo.com/reference/wallet-auto-transfer-preset-unset.md): Endpoint to remove a `Wallets` from a `AutoTransferPreset`.
+- [Delete Auto-transfer Preset](https://developer.soldo.com/reference/wallet-auto-transfer-preset-delete.md): Endpoint to delete a `AutoTransferPreset` by ID.
+- [Search Webhook Subscriptions](https://developer.soldo.com/reference/webhook-subscription-search.md): Endpoint to search `WebhookSubscriptions` using filtering parameters.
+- [Get Webhook Subscription](https://developer.soldo.com/reference/webhook-subscription-get.md): Endpoint to retrieve a specific `WebhookSubscription` by ID.
+- [Add Webhook Subscription](https://developer.soldo.com/reference/webhook-subscription-add.md): Endpoint to add a new `WebhookSubscription`.
+- [Update Webhook Subscription](https://developer.soldo.com/reference/webhook-subscription-update.md): Endpoint to update a specific `WebhookSubscription`.
+- [Delete Webhook Subscription](https://developer.soldo.com/reference/webhook-subscription-delete.md): Endpoint to delete a specific `WebhookSubscription`.
+- [Card - Card Activated](https://developer.soldo.com/reference/webhook-card-card-activated.md): A `Card` has been activated.
+- [Card - Card Change Status](https://developer.soldo.com/reference/webhook-card-card-change_status.md): A `Card` changed status.
+- [Card - Card Creation](https://developer.soldo.com/reference/webhook-card-card-creation.md): A new `Card` has been created.
+- [Card - Card Destroyed](https://developer.soldo.com/reference/webhook-card-card-destroyed.md): A `Card` has been destroyed.
+- [Card - Card Lost](https://developer.soldo.com/reference/webhook-card-card-lost.md): A `Card` has been reported as lost.
+- [Card - Card Replaced](https://developer.soldo.com/reference/webhook-card-card-replaced.md): A `Card` has been replaced.
+- [Card - Card Stolen](https://developer.soldo.com/reference/webhook-card-card-stolen.md): A `Card` has been reported as stolen.
+- [Expense Review - Change Expense Type](https://developer.soldo.com/reference/webhook-expensereview-change-expense-type.md): A `Transaction` expense type has been changed.
+- [Expense Review - Transaction Import Completed](https://developer.soldo.com/reference/webhook-expensereview-completed-transactions-import.md): A `Transaction` import has been completed.
+- [Expense Review - Configuration Created](https://developer.soldo.com/reference/webhook-expensereview-created-expense-configuration.md): An `ExpenseReview` configuration has been created`.
+- [Expense Review - Configuration Disabled](https://developer.soldo.com/reference/webhook-expensereview-disabled-expense-configuration.md): An `ExpenseReview` configuration has been disabled.
+- [Expense Review - Configuration Enabled](https://developer.soldo.com/reference/webhook-expensereview-enabled-expense-configuration.md): An `ExpenseReview` configuration has been enabled.
+- [Expense Review - Updated Expense Configuration](https://developer.soldo.com/reference/webhook-expensereview-updated-expense-configuration.md): An `ExpenseReview` configuration is updated.
+- [Expense Review - Updated Transaction](https://developer.soldo.com/reference/webhook-expensereview-updated-transaction.md): A `Transaction` has been update.
+- [Group - Add Resources Card](https://developer.soldo.com/reference/webhook-group-add-resources-card.md): A `Card` has been added to a `Group`.
+- [Group - Add Resources Member](https://developer.soldo.com/reference/webhook-group-add-resources-member.md): An `User` has been added to a `Group`.
+- [Group - Add Resources Wallet](https://developer.soldo.com/reference/webhook-group-add-resources-wallet.md): A `Wallet` has been added to a `Group`.
+- [Group - Group Created](https://developer.soldo.com/reference/webhook-group-create-group.md): A new `Group` has been created.
+- [Group - Group Deleted](https://developer.soldo.com/reference/webhook-group-delete-group.md): A`Group` has been deleted.
+- [Group - Move Resources Card](https://developer.soldo.com/reference/webhook-group-move-resources-card.md): A `Card` has been moved to another `Group`.
+- [Group - Move Resources Member](https://developer.soldo.com/reference/webhook-group-move-resources-member.md): An `User` is moved to another `Group`.
+- [Group - Move Resources Wallet](https://developer.soldo.com/reference/webhook-group-move-resources-wallet.md): A `Wallet` is moved to another `Group`.
+- [Group - Remove Resources Card](https://developer.soldo.com/reference/webhook-group-remove-resources-card.md): A `Card` has been removed from a `Group`.
+- [Group - Remove Resources Member](https://developer.soldo.com/reference/webhook-group-remove-resources-member.md): An `User` has been removed from a `Group`.
+- [Group - Remove Resources Wallet](https://developer.soldo.com/reference/webhook-group-remove-resources-wallet.md): A `Wallet` is removed from a `Group`.
+- [Group - Update Group](https://developer.soldo.com/reference/webhook-group-update-group.md): A `Group` has been updated.
+- [OnlineAds - OnlineAds Activated](https://developer.soldo.com/reference/webhook-onlineads-online-ads-activated.md): An `OnlineAds` has been activated.
+- [OnlineAds - OnlineAds Assignee Added](https://developer.soldo.com/reference/webhook-onlineads-online-ads-assignee-added.md): An `OnlineAds` assignee has been added.
+- [OnlineAds - OnlineAds Assignee Removed](https://developer.soldo.com/reference/webhook-onlineads-online-ads-assignee-removed.md): An `OnlineAds` assignee has been removed.
+- [OnlineAds - OnlineAds Created](https://developer.soldo.com/reference/webhook-onlineads-online-ads-created.md): An `OnlineAds` has been created.
+- [OnlineAds - OnlineAds Deleted](https://developer.soldo.com/reference/webhook-onlineads-online-ads-deleted.md): An `OnlineAds` has been deleted.
+- [OnlineAds - OnlineAds Updated](https://developer.soldo.com/reference/webhook-onlineads-online-ads-updated.md): An `OnlineAds` has been updated.
+- [Order - Store Order Completed](https://developer.soldo.com/reference/webhook-order-store-order-completed.md): An `Order` has been completed.
+- [Order - Store Order Placed](https://developer.soldo.com/reference/webhook-order-store-order-placed.md): An `Order` has been placed.
+- [Pre-Approved Spend - Purchase Create](https://developer.soldo.com/reference/webhook-preapprovedspend-purchase-create.md): A `Purchase` has been created.
+- [Pre-Approved Spend - Purchase Delete](https://developer.soldo.com/reference/webhook-preapprovedspend-purchase-delete.md): A `Purchase` has been deleted.
+- [Pre-Approved Spend - Purchase Redeem Card](https://developer.soldo.com/reference/webhook-preapprovedspend-purchase-redeem-card.md): A `Card` of purchase has been redeemed.
+- [Pre-Approved Spend - Purchase Update](https://developer.soldo.com/reference/webhook-preapprovedspend-purchase-update.md): A `Purchase` has been updated.
+- [Subscription - Subscription Activated](https://developer.soldo.com/reference/webhook-subscription-subscription-activated.md): A `Subscription` has been activated.
+- [Subscription - Subscription Assignee Added](https://developer.soldo.com/reference/webhook-subscription-subscription-assignee-added.md): A `Subscription` assignee is added.
+- [Subscription - Subscription Assignee Removed](https://developer.soldo.com/reference/webhook-subscription-subscription-assignee-removed.md): A `Subscription` assignee is removed.
+- [Subscription - Subscription Created](https://developer.soldo.com/reference/webhook-subscription-subscription-created.md): A `Subscription` has been created.
+- [Subscription - Subscription Deleted](https://developer.soldo.com/reference/webhook-subscription-subscription-deleted.md): A `Subscription` has been deleted.
+- [Subscription - Subscription Updated](https://developer.soldo.com/reference/webhook-subscription-subscription-updated.md): A `Subscription` has been updated.
+- [Transaction - Balanced Transfer](https://developer.soldo.com/reference/webhook-transaction-balanced-transfer.md): Failed balanced internal transfer to top-up a `Wallet`.
+- [Transaction - Billing](https://developer.soldo.com/reference/webhook-transaction-billing.md): Billing related to `Card` purchase.
+- [Transaction - Card Authorization](https://developer.soldo.com/reference/webhook-transaction-card-authorization.md): A `Transaction` authorisation has been requested.
+- [Transaction - Conversion](https://developer.soldo.com/reference/webhook-transaction-conversion.md): A transfer between `Wallets` with different currencies.
+- [Transaction - Customer Care Deposit](https://developer.soldo.com/reference/webhook-transaction-customer-care-deposit.md): A `Deposit` has been performed by customer care support.
+- [Transaction - Customer Care Withdraw](https://developer.soldo.com/reference/webhook-transaction-customer-care-withdraw.md): A `Withdrawal` has been performed by customer care support
+- [Transaction - Tag Edited](https://developer.soldo.com/reference/webhook-transaction-edit-tag.md): A `Tag` has been added or removed from a `Transaction`.
+- [Transaction - Inbound Payment](https://developer.soldo.com/reference/webhook-transaction-inbound-payment.md): Inbound payment from Faster Payment
+- [Transaction - Inbound Payment Reversal](https://developer.soldo.com/reference/webhook-transaction-inbound-payment-reversal.md): Reversal of an inbound payment from Faster Payment
+- [Transaction - Internal Transfer](https://developer.soldo.com/reference/webhook-transaction-internal-transfer.md): A Transfer between `Wallets` with the same currency
+- [Transaction - Joule Feed](https://developer.soldo.com/reference/webhook-transaction-joule-feed.md): A `Transaction` has been settled/reversed.
+- [Transaction - Load Failed](https://developer.soldo.com/reference/webhook-transaction-load-failed.md): A money load for company `Wallet` failed.
+- [Transaction - Load Money](https://developer.soldo.com/reference/webhook-transaction-load-money.md): A money load on company `Wallet` succeeded.
+- [Transaction - Recurring Billing](https://developer.soldo.com/reference/webhook-transaction-recurring-billing.md): Monthly billing.
+- [Transaction - Scheduled Transfer](https://developer.soldo.com/reference/webhook-transaction-scheduled-transfer.md): Failed scheduled internal transfer to top-up a `Wallet`.
+- [Transaction - Transaction Adjustment](https://developer.soldo.com/reference/webhook-transaction-transaction-adjustment.md): A `Transaction` has been adjusted.
+- [Transaction - Transaction Modified](https://developer.soldo.com/reference/webhook-transaction-transaction-modified.md): A `Transaction` has been modified, e.g. moved to another `Wallet` or changed in other describing attributes.
+- [Transaction - Unload Money](https://developer.soldo.com/reference/webhook-transaction-unload-money.md): Unload money from a company `Wallet`.
+- [Transaction - Wiretransfer](https://developer.soldo.com/reference/webhook-transaction-wiretransfer.md): Deposit in.
+- [Transaction Attachment - Attachment Delete](https://developer.soldo.com/reference/webhook-transactionattachment-attachment-delete.md): An attachment has been deleted from a `Transaction`.
+- [Transaction Attachment - Upload Completed](https://developer.soldo.com/reference/webhook-transactionattachment-upload-completed.md): An attachment is uploaded to a `Transaction`.
+- [User - New User](https://developer.soldo.com/reference/webhook-user-new-user.md): A new `User` has been created.
+- [User - User Status Changed](https://developer.soldo.com/reference/webhook-user-user-status-changed.md): The status of a `User` changed.
+- [User - User Updated](https://developer.soldo.com/reference/webhook-user-user-updated.md): An `User` has been updated.
+- [Vehicle - Vehicle Create](https://developer.soldo.com/reference/webhook-vehicle-vehicle-create.md): A `Vehicle` has been created.
+- [Vehicle - Vehicle Delete](https://developer.soldo.com/reference/webhook-vehicle-vehicle-delete.md): A `Vehicle` has been deleted.
+- [Vehicle - Vehicle Update](https://developer.soldo.com/reference/webhook-vehicle-vehicle-update.md): A `Vehicle` has been updated.
+- [Wallet - Wallet Created](https://developer.soldo.com/reference/webhook-wallet-wallet-created.md): A new `Wallet` has been created.
+- [Wallet - Wallet Deleted](https://developer.soldo.com/reference/webhook-wallet-wallet-deleted.md): A `Wallet` has been deleted.
+- [Card - Card Update Label](https://developer.soldo.com/reference/webhook-card-card_label_updated.md): A label `Card` has been updated label.
+- [Card - Card Update Assignee](https://developer.soldo.com/reference/webhook-card-card_assignee_updated.md): A label `Card` has been updated assignee.
+- [Contact - Contact Deleted](https://developer.soldo.com/reference/webhook-contact-contact-deleted.md): A `Contact` has been deleted.
+- [Contact - Contact Updated](https://developer.soldo.com/reference/webhook-contact-contact-updated.md): A `Contact` has been updated.
+- [Contact - Contact Created](https://developer.soldo.com/reference/webhook-contact-contact-created.md): A `Contact` has been created.
+- [Transaction - Transaction Business Trip Unlinked](https://developer.soldo.com/reference/webhook-transaction-transaction-business-trip-unlinked.md): A `Transaction` has been unlinked from a `BusinessTrip`.
+- [Transaction - Transaction Business Trip Linked](https://developer.soldo.com/reference/webhook-transaction-transaction-business-trip-linked.md): A `Transaction` has been linked to a `BusinessTrip`.
+- [Transaction - Transaction Deleted](https://developer.soldo.com/reference/webhook-transaction-transaction-deleted.md): A `Transaction` has been deleted. This may happen only for `OUT_OF_PLATFORM_COMPANY` or `OUT_OF_PLATFORM_PERSONAL` transactions.
+- [Search Workflows](https://developer.soldo.com/reference/workflow-search.md): Endpoint to search `Workflows`.
+- [Get Workflow](https://developer.soldo.com/reference/workflow-get.md): Endpoint to get a specific `Workflow` by ID.
+- [Add Workflow](https://developer.soldo.com/reference/workflow-add.md): Endpoint to add a new `Workflow`.
+- [Update Workflow](https://developer.soldo.com/reference/workflow-update.md): Endpoint to update an existing `Workflow`,for some types, this might generate a new ID.
+- [Update Workflow Status](https://developer.soldo.com/reference/workflow-status-update.md): Endpoint to update a specific `Workflow` status (ACTIVE, DEACTIVATED, DELETED).
+- [Delete Workflow](https://developer.soldo.com/reference/workflow-delete.md): Endpoint to delete a `Workflow`.
+- [wallet-add](https://developer.soldo.com/reference/wallet-add.md)
+
+## Changelog
+- [January 20th, 2025](https://developer.soldo.com/changelog/january-20th-2025.md)
+- [December 9th, 2024](https://developer.soldo.com/changelog/december-9th-2024.md)
+- [July 31, 2024](https://developer.soldo.com/changelog/july-31-2024.md)
+- [June 27, 2024](https://developer.soldo.com/changelog/june-27-2024.md)
+- [May 27, 2024](https://developer.soldo.com/changelog/may-27-2024.md)

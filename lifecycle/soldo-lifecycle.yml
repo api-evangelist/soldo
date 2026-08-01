@@ -1,0 +1,35 @@
+generated: '2026-07-21'
+method: searched
+source: https://developer.soldo.com/
+api: Soldo Business API v2.0
+versioning:
+  scheme: uri-path
+  current: v2
+  path_segment: /business/v2
+  spec_version: 5.56.0
+  docs: https://developer.soldo.com/reference/introduction
+deprecation:
+  policy_url: null
+  sunset_header: false
+  note: >-
+    No formal deprecation policy or RFC 8594 Sunset/Deprecation header support
+    is documented, and the OpenAPI marks no operations deprecated. No Deprecation
+    pointer is emitted.
+status_page:
+  url: https://soldo.statuspage.io
+  provider: Atlassian Statuspage
+  monitors_business_api: true
+  components_sample:
+  - Business API
+  - Soldo Platform Services
+  - Payments by Card
+  - Web Console Login
+  - UK Bank Transfer (Faster Payments)
+changelog:
+  url: https://developer.soldo.com/changelog
+  rss: https://developer.soldo.com/changelog/rss-feed
+  cross_ref: changelog/soldo-changelog.yml
+sla:
+  url: null
+  note: No public SLA / uptime target document found.
+deprecated_operations: []

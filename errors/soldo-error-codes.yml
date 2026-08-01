@@ -1,0 +1,53 @@
+generated: '2026-07-21'
+method: searched
+source: https://developer.soldo.com/docs/errors
+format: custom-json
+envelope:
+  shape: '{ "error_code": string, "message": string }'
+  oauth_shape: '{ "error": string, "error_description": string }'
+  note: >-
+    The Soldo Business API returns conventional HTTP status codes plus a custom
+    error object. Business errors carry error_code + message; OAuth token errors
+    carry error/error_description. This is NOT RFC 9457 problem+json.
+http_codes:
+- {status: 400, name: Bad Request, meaning: 'Missing/invalid arguments; also invalid fingerprint or fingerprint signature.'}
+- {status: 401, name: Unauthorized, meaning: 'Request not authenticated (bad credentials or expired/invalid token).'}
+- {status: 403, name: Forbidden, meaning: 'API credentials lack the scope required for this request.'}
+- {status: 404, name: Not Found, meaning: 'The requested endpoint or resource does not exist.'}
+- {status: 405, name: Method Not Allowed, meaning: 'Wrong HTTP method for the endpoint.'}
+- {status: 429, name: Too Many Requests, meaning: 'Rate limit exceeded (600/min or 20/sec).'}
+- {status: 500, name: Internal Server Error, meaning: 'Server-side failure; contact business support.'}
+error_codes:
+- code: UNAUTHORIZED
+  status: 401
+  message: user not authorized
+  cause: Invalid client_id or client_secret at authentication.
+  remediation: Verify credentials or regenerate them in the Soldo web app.
+- code: invalid_token
+  status: 401
+  message: The access token is invalid or has expired
+  cause: Expired or malformed access_token (tokens expire after 7200s).
+  remediation: Re-authenticate to obtain a fresh access_token.
+- code: INVALID_FINGERPRINT
+  status: 400
+  message: invalid fingerprint
+  cause: X-Soldo-Fingerprint header missing or incorrectly computed for an advanced-auth request.
+  remediation: Recompute the SHA-512 (lowercase) hash of the ordered field values + fingerprint token per the endpoint's fingerprint order.
+- code: INVALID_FINGERPRINT_SIGNATURE
+  status: 400
+  message: invalid fingerprint signature
+  cause: X-Soldo-Fingerprint-Signature missing or not a valid SHA512withRSA/Base64 signature of the fingerprint.
+  remediation: Sign the fingerprint with the private key matching the uploaded public key; Base64-encode.
+- code: WALLET_BALANCE_GREATER_THAN_ZERO
+  status: 400
+  message: Unable to delete, wallet has a balance greater than zero.
+  cause: Attempt to delete a Wallet that still holds funds.
+  remediation: Transfer all funds to another wallet before deleting.
+notes: >-
+  The published docs error reference documents the HTTP-code table and the
+  authentication error codes. Individual endpoint reference pages document
+  additional per-operation error_code values (e.g. WALLET_BALANCE_GREATER_THAN_ZERO);
+  captured examples above. The OpenAPI declares 400/403/404/default responses on
+  operations but does not attach per-code error schemas.
+cross_ref:
+  conventions: conventions/soldo-conventions.yml

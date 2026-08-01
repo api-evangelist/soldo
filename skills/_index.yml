@@ -1,0 +1,25 @@
+generated: '2026-07-21'
+method: generated
+source: openapi/soldo-business-api-v20-openapi-original.json + https://developer.soldo.com/docs/
+api: Soldo Business API v2.0
+skills:
+- file: soldo-authenticate.md
+  name: Authenticate with the Soldo Business API
+  api: openapi/soldo-business-api-v20-openapi-original.json
+  operations: [authorize, who-am-i]
+- file: soldo-issue-and-control-card.md
+  name: Issue and control a Soldo card
+  api: openapi/soldo-business-api-v20-openapi-original.json
+  operations: [wallet-search, card-add, card-rules-set, card-update]
+- file: soldo-reconcile-transactions.md
+  name: Reconcile Soldo transactions and attach receipts
+  api: openapi/soldo-business-api-v20-openapi-original.json
+  operations: [transaction-search, transaction-get, document-upload, document-upload-confirm]
+- file: soldo-fund-wallet-transfer.md
+  name: Move funds between Soldo wallets
+  api: openapi/soldo-business-api-v20-openapi-original.json
+  operations: [wallet-search, wallet-get, wallet-internal-transfer]
+- file: soldo-manage-webhooks.md
+  name: Manage Soldo webhook subscriptions
+  api: openapi/soldo-business-api-v20-openapi-original.json
+  operations: [webhook-subscription-search, webhook-subscription-add, webhook-subscription-delete]
