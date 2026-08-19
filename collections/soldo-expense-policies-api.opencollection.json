@@ -1,0 +1,240 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Soldo Business API v2.0 Accounting Classification Expense Policies API",
+    "version": "5.56.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Expense Policies",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Expense Policy Assignees",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.soldo.com/business/v2/expense-policies/:expensePolicyId/assignees",
+            "params": [
+              {
+                "name": "expensePolicyId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "p",
+                "value": "3",
+                "type": "query",
+                "description": "It indicates the specific page to display (the counter starts from zero)."
+              },
+              {
+                "name": "s",
+                "value": "25",
+                "type": "query",
+                "description": "It indicates the number of items per page."
+              },
+              {
+                "name": "d",
+                "value": "DESC",
+                "type": "query",
+                "description": "It indicates how the pages are ordered."
+              },
+              {
+                "name": "props",
+                "value": "creationTime",
+                "type": "query",
+                "description": "It indicates the sorting direction applied to the above parameters. To apply a sorting on multiple parameters, set as many times the `props` parameter in the request."
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.soldo.com/oauth/authorize",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Endpoint to get all `User` resources currently assigned to a specific `ExpensePolicy`."
+        },
+        {
+          "info": {
+            "name": "Assign Expense Policy to Users",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.soldo.com/business/v2/expense-policies/:expensePolicyId/assignees",
+            "params": [
+              {
+                "name": "expensePolicyId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.soldo.com/oauth/authorize",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Endpoint to assign a specific `ExpensePolicy` to one or more `User` resources. Since a `User` can hold at most one `ExpensePolicy`, any existing assignment is replaced."
+        },
+        {
+          "info": {
+            "name": "Unassign Expense Policy from Users",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.soldo.com/business/v2/expense-policies/:expensePolicyId/assignees",
+            "params": [
+              {
+                "name": "expensePolicyId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.soldo.com/oauth/authorize",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Endpoint to unassign a specific `ExpensePolicy` from one or more `User` resources."
+        },
+        {
+          "info": {
+            "name": "Get Expense Policy",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.soldo.com/business/v2/expense-policies/:expensePolicyId",
+            "params": [
+              {
+                "name": "expensePolicyId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.soldo.com/oauth/authorize",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Endpoint to get a specific `ExpensePolicy` by ID."
+        },
+        {
+          "info": {
+            "name": "Unassign any Expense Policy from Users",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.soldo.com/business/v2/expense-policies/assignees",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.soldo.com/oauth/authorize",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Endpoint to unassign the currently assigned `ExpensePolicy` from one or more `User` resources. No-op silently for a `User` with no `ExpensePolicy` assigned."
+        },
+        {
+          "info": {
+            "name": "Search Expense Policies",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.soldo.com/business/v2/expense-policies",
+            "params": [
+              {
+                "name": "text",
+                "value": "",
+                "type": "query",
+                "description": "A simple text to search in the `ExpensePolicy` (`name` or `description`)."
+              },
+              {
+                "name": "statuses",
+                "value": "",
+                "type": "query",
+                "description": "The list of `ExpensePolicy` statuses to search by."
+              },
+              {
+                "name": "p",
+                "value": "3",
+                "type": "query",
+                "description": "It indicates the specific page to display (the counter starts from zero)."
+              },
+              {
+                "name": "s",
+                "value": "25",
+                "type": "query",
+                "description": "It indicates the number of items per page."
+              },
+              {
+                "name": "d",
+                "value": "DESC",
+                "type": "query",
+                "description": "It indicates how the pages are ordered."
+              },
+              {
+                "name": "props",
+                "value": "creationTime",
+                "type": "query",
+                "description": "It indicates the sorting direction applied to the above parameters. To apply a sorting on multiple parameters, set as many times the `props` parameter in the request."
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.soldo.com/oauth/authorize",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Endpoint to search `ExpensePolicy` resources using filtering parameters."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

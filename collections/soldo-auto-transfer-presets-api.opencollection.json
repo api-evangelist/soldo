@@ -1,0 +1,211 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Soldo Business API v2.0 Accounting Classification Auto-Transfer Presets API",
+    "version": "5.56.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Auto-Transfer Presets",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Add wallets to Auto-transfer Preset",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.soldo.com/business/v2/wallets/autotransfer-presets/:presetId/relate-resource",
+            "headers": [
+              {
+                "name": "X-Soldo-Fingerprint",
+                "value": ""
+              },
+              {
+                "name": "X-Soldo-Fingerprint-Signature",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "presetId",
+                "value": "2d65bd5e-3fdf-4002-b166-bde7fb8863fa",
+                "type": "path",
+                "description": "The `AutoTransferPreset` ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.soldo.com/oauth/authorize",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Endpoint to add a `Wallets` to `AutoTransferPreset`."
+        },
+        {
+          "info": {
+            "name": "Get Auto-transfer Preset",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.soldo.com/business/v2/wallets/autotransfer-presets/:presetId",
+            "params": [
+              {
+                "name": "presetId",
+                "value": "2d65bd5e-3fdf-4002-b166-bde7fb8863fa",
+                "type": "path",
+                "description": "The `AutoTransferPreset` ID"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.soldo.com/oauth/authorize",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Endpoint to get `AutoTransferPreset` by ID."
+        },
+        {
+          "info": {
+            "name": "Delete Auto-transfer Preset",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.soldo.com/business/v2/wallets/presets/:presetId",
+            "params": [
+              {
+                "name": "presetId",
+                "value": "2d65bd5e-3fdf-4002-b166-bde7fb8863fa",
+                "type": "path",
+                "description": "The `AutoTransferPreset` ID."
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.soldo.com/oauth/authorize",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Endpoint to delete a `AutoTransferPreset` by ID."
+        },
+        {
+          "info": {
+            "name": "Search Auto-transfer Presets",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.soldo.com/business/v2/wallets/autotransfer-presets",
+            "params": [
+              {
+                "name": "type",
+                "value": "WHEN_BALANCE_IS",
+                "type": "query",
+                "description": "The type of `AutoTransferPreset`."
+              },
+              {
+                "name": "currency",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "text",
+                "value": "John Doe",
+                "type": "query",
+                "description": "The full or partial name of the `AutoTransferPreset`."
+              },
+              {
+                "name": "p",
+                "value": "3",
+                "type": "query",
+                "description": "It indicates the specific page to display (the counter starts from zero)."
+              },
+              {
+                "name": "s",
+                "value": "25",
+                "type": "query",
+                "description": "It indicates the number of items per page."
+              },
+              {
+                "name": "d",
+                "value": "DESC",
+                "type": "query",
+                "description": "It indicates how the pages are ordered."
+              },
+              {
+                "name": "props",
+                "value": "creationTime",
+                "type": "query",
+                "description": "It indicates the sorting direction applied to the above parameters. To apply a sorting on multiple parameters, set as many times the `props` parameter in the request."
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.soldo.com/oauth/authorize",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Endpoint to find `AutoTransferPreset` using filtering parameters."
+        },
+        {
+          "info": {
+            "name": "Remove Wallets from Auto-transfer Preset",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.soldo.com/business/v2/wallets/autotransfer-presets/:presetId/unrelate-resource",
+            "params": [
+              {
+                "name": "presetId",
+                "value": "2d65bd5e-3fdf-4002-b166-bde7fb8863fa",
+                "type": "path",
+                "description": "The `AutoTransferPreset` ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.soldo.com/oauth/authorize",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Endpoint to remove a `Wallets` from a `AutoTransferPreset`."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,3275 @@
+{
+  "item": [
+    {
+      "id": "d2cdac17-8c53-4b9b-a1c1-85026f7fc5ec",
+      "name": "Transactions",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "78d74f2b-4c5c-42d4-a66c-291b915eae6a",
+          "name": "Create Mileage Reimbursement Transaction",
+          "request": {
+            "name": "Create Mileage Reimbursement Transaction",
+            "description": {
+              "content": "Endpoint to create a `MileageReimbursement` `Transaction`.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "business",
+                "v2",
+                "transactions",
+                "mileage-reimbursements"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) ",
+                "key": "X-Soldo-Fingerprint",
+                "value": "{{fingerprint}}"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) ",
+                "key": "X-Soldo-Fingerprint-Signature",
+                "value": "{{fingerprint_signature}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "address_read address_write card_read card_write company_read company_write contact_read contact_write employee_read employee_write expense_category_read expense_category_write expense_report_read expense_report_write expense_review_read expense_review_write group_read group_write online_ads_read online_ads_write payment_read payment_write purchase_read purchase_write refueling_read refueling_write resource_set_read resource_set_write role_read statement_read subscription_read subscription_write tag_read tag_write tax_rate_read tax_rate_write transaction_read transaction_write vehicle_read vehicle_write wallet_read wallet_write webhook_subscription_read webhook_subscription_write"
+                },
+                {
+                  "key": "redirect_uri",
+                  "value": "https://api.soldo.com/oauth/refresh"
+                },
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://api.soldo.com/oauth/authorize"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"date\": \"<string>\",\n  \"mileage\": {\n    \"description\": \"<string>\",\n    \"distance\": \"<number>\",\n    \"round_trip\": \"<boolean>\",\n    \"vehicle_id\": \"<string>\",\n    \"reimbursement_rate\": \"<number>\",\n    \"starting_point\": \"<string>\",\n    \"arrival_point\": \"<string>\",\n    \"multi_stops\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  },\n  \"owner_id\": \"<string>\",\n  \"request_timestamp\": \"<long>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "9fe308e3-512b-4223-8f0e-3bfc9bb66ceb",
+              "name": "The returned resource is a single `MileageReimbursement`.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "business",
+                    "v2",
+                    "transactions",
+                    "mileage-reimbursements"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "X-Soldo-Fingerprint",
+                    "value": "{{fingerprint}}"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "X-Soldo-Fingerprint-Signature",
+                    "value": "{{fingerprint_signature}}"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"date\": \"2017-06-01T12:48:40Z\",\n  \"mileage\": {\n    \"description\": \"Business trip: Rome - Florence - Turin - Milan\",\n    \"distance\": 875.4,\n    \"round_trip\": true,\n    \"vehicle_id\": \"2d65bd5e-3fdf-4002-b166-bde7fb8863fa\",\n    \"reimbursement_rate\": 0.45,\n    \"starting_point\": \"Rome, Metropolitan City of Rome Capital, Italy\",\n    \"arrival_point\": \"Milan, Metropolitan City of Milan, Italy\",\n    \"multi_stops\": [\n      \"Florence, Metropolitan City of Florence, Italy\",\n      \"Turin, Metropolitan City of Turin, Italy\"\n    ]\n  },\n  \"owner_id\": \"XMPL1234-000002\",\n  \"request_timestamp\": 1576850500000\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"transaction_id\": \"7bf79328-a7ae-4222-aa54-091ff7f429a7\",\n  \"date\": \"2017-06-01T12:48:40Z\",\n  \"owner_id\": \"XMPL1234-000002\",\n  \"amount\": 10.25,\n  \"amount_currency\": \"EUR\",\n  \"mileage\": {\n    \"vehicle_id\": \"2d65bd5e-3fdf-4002-b166-bde7fb8863fa\",\n    \"reimbursement_rate\": 0.45,\n    \"description\": \"Business trip: Rome - Florence - Turin - Milan\",\n    \"starting_point\": \"Rome, Metropolitan City of Rome Capital, Italy\",\n    \"arrival_point\": \"Milan, Metropolitan City of Milan, Italy\",\n    \"multi_stops\": [\n      \"Florence, Metropolitan City of Florence, Italy\",\n      \"Turin, Metropolitan City of Turin, Italy\"\n    ],\n    \"distance\": 875.4,\n    \"round_trip\": true\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1593bdca-bc0f-4022-b9e5-5a94afa0a899",
+              "name": "Your request has missing arguments or is malformed.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "business",
+                    "v2",
+                    "transactions",
+                    "mileage-reimbursements"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "X-Soldo-Fingerprint",
+                    "value": "{{fingerprint}}"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "X-Soldo-Fingerprint-Signature",
+                    "value": "{{fingerprint_signature}}"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"date\": \"2017-06-01T12:48:40Z\",\n  \"mileage\": {\n    \"description\": \"Business trip: Rome - Florence - Turin - Milan\",\n    \"distance\": 875.4,\n    \"round_trip\": true,\n    \"vehicle_id\": \"2d65bd5e-3fdf-4002-b166-bde7fb8863fa\",\n    \"reimbursement_rate\": 0.45,\n    \"starting_point\": \"Rome, Metropolitan City of Rome Capital, Italy\",\n    \"arrival_point\": \"Milan, Metropolitan City of Milan, Italy\",\n    \"multi_stops\": [\n      \"Florence, Metropolitan City of Florence, Italy\",\n      \"Turin, Metropolitan City of Turin, Italy\"\n    ]\n  },\n  \"owner_id\": \"XMPL1234-000002\",\n  \"request_timestamp\": 1576850500000\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "49647ad2-4f6a-4ad6-a5b5-7425c7e0fc51",
+              "name": "One or more resource requested does not exist.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "business",
+                    "v2",
+                    "transactions",
+                    "mileage-reimbursements"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "X-Soldo-Fingerprint",
+                    "value": "{{fingerprint}}"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "X-Soldo-Fingerprint-Signature",
+                    "value": "{{fingerprint_signature}}"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"date\": \"2017-06-01T12:48:40Z\",\n  \"mileage\": {\n    \"description\": \"Business trip: Rome - Florence - Turin - Milan\",\n    \"distance\": 875.4,\n    \"round_trip\": true,\n    \"vehicle_id\": \"2d65bd5e-3fdf-4002-b166-bde7fb8863fa\",\n    \"reimbursement_rate\": 0.45,\n    \"starting_point\": \"Rome, Metropolitan City of Rome Capital, Italy\",\n    \"arrival_point\": \"Milan, Metropolitan City of Milan, Italy\",\n    \"multi_stops\": [\n      \"Florence, Metropolitan City of Florence, Italy\",\n      \"Turin, Metropolitan City of Turin, Italy\"\n    ]\n  },\n  \"owner_id\": \"XMPL1234-000002\",\n  \"request_timestamp\": 1576850500000\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "bcf20427-e727-465f-8daa-bb86df287c02",
+          "name": "Create Out-Of-Platform Transaction",
+          "request": {
+            "name": "Create Out-Of-Platform Transaction",
+            "description": {
+              "content": "Endpoint to create an Out-Of-Platform `Transaction` (not automatically tracked by Soldo).",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "business",
+                "v2",
+                "transactions",
+                "out-of-platform-transactions"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) ",
+                "key": "X-Soldo-Fingerprint",
+                "value": "{{fingerprint}}"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) ",
+                "key": "X-Soldo-Fingerprint-Signature",
+                "value": "{{fingerprint_signature}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "address_read address_write card_read card_write company_read company_write contact_read contact_write employee_read employee_write expense_category_read expense_category_write expense_report_read expense_report_write expense_review_read expense_review_write group_read group_write online_ads_read online_ads_write payment_read payment_write purchase_read purchase_write refueling_read refueling_write resource_set_read resource_set_write role_read statement_read subscription_read subscription_write tag_read tag_write tax_rate_read tax_rate_write transaction_read transaction_write vehicle_read vehicle_write wallet_read wallet_write webhook_subscription_read webhook_subscription_write"
+                },
+                {
+                  "key": "redirect_uri",
+                  "value": "https://api.soldo.com/oauth/refresh"
+                },
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://api.soldo.com/oauth/authorize"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"date\": \"<string>\",\n  \"merchant_name\": \"<string>\",\n  \"owner_id\": \"<string>\",\n  \"payment_method\": \"<string>\",\n  \"request_timestamp\": \"<long>\",\n  \"tx_amount\": \"<number>\",\n  \"tx_amount_currency\": \"<string>\",\n  \"exchange_rate\": \"<number>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "a5578852-4f2b-41c1-a74f-144b37b912cd",
+              "name": "The returned resource is a single Out-Of-Platform `Transaction`.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "business",
+                    "v2",
+                    "transactions",
+                    "out-of-platform-transactions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "X-Soldo-Fingerprint",
+                    "value": "{{fingerprint}}"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "X-Soldo-Fingerprint-Signature",
+                    "value": "{{fingerprint_signature}}"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"date\": \"2017-06-01T12:48:40Z\",\n  \"merchant_name\": \"SHH HOTEL LONDON\",\n  \"owner_id\": \"XMPL1234-000002\",\n  \"payment_method\": \"OUT_OF_PLATFORM_PERSONAL\",\n  \"request_timestamp\": 1576850500000,\n  \"tx_amount\": 10.25,\n  \"tx_amount_currency\": \"EUR\",\n  \"exchange_rate\": 1\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"transaction_id\": \"7bf79328-a7ae-4222-aa54-091ff7f429a7\",\n  \"date\": \"2017-06-01T12:48:40Z\",\n  \"owner_id\": \"XMPL1234-000002\",\n  \"merchant_name\": \"SHH HOTEL LONDON\",\n  \"tx_amount\": 10.25,\n  \"tx_amount_currency\": \"EUR\",\n  \"amount\": 10.25,\n  \"amount_currency\": \"EUR\",\n  \"exchange_rate\": 1,\n  \"payment_method\": \"OUT_OF_PLATFORM_PERSONAL\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9a8f15f1-369f-4e8a-877e-57913206a232",
+              "name": "Your request has missing arguments or is malformed.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "business",
+                    "v2",
+                    "transactions",
+                    "out-of-platform-transactions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "X-Soldo-Fingerprint",
+                    "value": "{{fingerprint}}"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "X-Soldo-Fingerprint-Signature",
+                    "value": "{{fingerprint_signature}}"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"date\": \"2017-06-01T12:48:40Z\",\n  \"merchant_name\": \"SHH HOTEL LONDON\",\n  \"owner_id\": \"XMPL1234-000002\",\n  \"payment_method\": \"OUT_OF_PLATFORM_PERSONAL\",\n  \"request_timestamp\": 1576850500000,\n  \"tx_amount\": 10.25,\n  \"tx_amount_currency\": \"EUR\",\n  \"exchange_rate\": 1\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "7e090561-efc3-4ee9-8529-9351ad10eba3",
+              "name": "One or more resource requested does not exist.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "business",
+                    "v2",
+                    "transactions",
+                    "out-of-platform-transactions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "X-Soldo-Fingerprint",
+                    "value": "{{fingerprint}}"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "X-Soldo-Fingerprint-Signature",
+                    "value": "{{fingerprint_signature}}"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"date\": \"2017-06-01T12:48:40Z\",\n  \"merchant_name\": \"SHH HOTEL LONDON\",\n  \"owner_id\": \"XMPL1234-000002\",\n  \"payment_method\": \"OUT_OF_PLATFORM_PERSONAL\",\n  \"request_timestamp\": 1576850500000,\n  \"tx_amount\": 10.25,\n  \"tx_amount_currency\": \"EUR\",\n  \"exchange_rate\": 1\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "780431f3-14ed-4f07-a968-24893f29ed0c",
+          "name": "Get Mileage Reimbursement Transaction",
+          "request": {
+            "name": "Get Mileage Reimbursement Transaction",
+            "description": {
+              "content": "Endpoint to get a specific `MileageReimbursement` `Transaction`.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "business",
+                "v2",
+                "transactions",
+                "mileage-reimbursements",
+                ":transactionId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "transactionId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) ",
+                "key": "X-Soldo-Fingerprint",
+                "value": "{{fingerprint}}"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) ",
+                "key": "X-Soldo-Fingerprint-Signature",
+                "value": "{{fingerprint_signature}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "address_read address_write card_read card_write company_read company_write contact_read contact_write employee_read employee_write expense_category_read expense_category_write expense_report_read expense_report_write expense_review_read expense_review_write group_read group_write online_ads_read online_ads_write payment_read payment_write purchase_read purchase_write refueling_read refueling_write resource_set_read resource_set_write role_read statement_read subscription_read subscription_write tag_read tag_write tax_rate_read tax_rate_write transaction_read transaction_write vehicle_read vehicle_write wallet_read wallet_write webhook_subscription_read webhook_subscription_write"
+                },
+                {
+                  "key": "redirect_uri",
+                  "value": "https://api.soldo.com/oauth/refresh"
+                },
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://api.soldo.com/oauth/authorize"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "ccf4f1b9-1491-489c-8ab7-00aacbd3562b",
+              "name": "The returned resource is a single `MileageReimbursement`.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "business",
+                    "v2",
+                    "transactions",
+                    "mileage-reimbursements",
+                    ":transactionId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "transactionId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "X-Soldo-Fingerprint",
+                    "value": "{{fingerprint}}"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "X-Soldo-Fingerprint-Signature",
+                    "value": "{{fingerprint_signature}}"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"transaction_id\": \"7bf79328-a7ae-4222-aa54-091ff7f429a7\",\n  \"date\": \"2017-06-01T12:48:40Z\",\n  \"owner_id\": \"XMPL1234-000002\",\n  \"amount\": 10.25,\n  \"amount_currency\": \"EUR\",\n  \"mileage\": {\n    \"vehicle_id\": \"2d65bd5e-3fdf-4002-b166-bde7fb8863fa\",\n    \"reimbursement_rate\": 0.45,\n    \"description\": \"Business trip: Rome - Florence - Turin - Milan\",\n    \"starting_point\": \"Rome, Metropolitan City of Rome Capital, Italy\",\n    \"arrival_point\": \"Milan, Metropolitan City of Milan, Italy\",\n    \"multi_stops\": [\n      \"Florence, Metropolitan City of Florence, Italy\",\n      \"Turin, Metropolitan City of Turin, Italy\"\n    ],\n    \"distance\": 875.4,\n    \"round_trip\": true\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d6677815-c273-4735-8fe5-093c3b56e133",
+              "name": "One or more resource requested does not exist.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "business",
+                    "v2",
+                    "transactions",
+                    "mileage-reimbursements",
+                    ":transactionId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "transactionId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "X-Soldo-Fingerprint",
+                    "value": "{{fingerprint}}"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "X-Soldo-Fingerprint-Signature",
+                    "value": "{{fingerprint_signature}}"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "4721a972-e1b2-48ca-ace9-e7aacce12158",
+          "name": "Update Mileage Reimbursement Transaction",
+          "request": {
+            "name": "Update Mileage Reimbursement Transaction",
+            "description": {
+              "content": "Endpoint to update a `MileageReimbursement` `Transaction`. The entire resource representation must be included in the request body.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "business",
+                "v2",
+                "transactions",
+                "mileage-reimbursements",
+                ":transactionId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "transactionId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) ",
+                "key": "X-Soldo-Fingerprint",
+                "value": "{{fingerprint}}"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) ",
+                "key": "X-Soldo-Fingerprint-Signature",
+                "value": "{{fingerprint_signature}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "address_read address_write card_read card_write company_read company_write contact_read contact_write employee_read employee_write expense_category_read expense_category_write expense_report_read expense_report_write expense_review_read expense_review_write group_read group_write online_ads_read online_ads_write payment_read payment_write purchase_read purchase_write refueling_read refueling_write resource_set_read resource_set_write role_read statement_read subscription_read subscription_write tag_read tag_write tax_rate_read tax_rate_write transaction_read transaction_write vehicle_read vehicle_write wallet_read wallet_write webhook_subscription_read webhook_subscription_write"
+                },
+                {
+                  "key": "redirect_uri",
+                  "value": "https://api.soldo.com/oauth/refresh"
+                },
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://api.soldo.com/oauth/authorize"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"date\": \"<string>\",\n  \"mileage\": {\n    \"description\": \"<string>\",\n    \"distance\": \"<number>\",\n    \"round_trip\": \"<boolean>\",\n    \"vehicle_id\": \"<string>\",\n    \"reimbursement_rate\": \"<number>\",\n    \"starting_point\": \"<string>\",\n    \"arrival_point\": \"<string>\",\n    \"multi_stops\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  },\n  \"request_timestamp\": \"<long>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "e5738a48-5fa1-4a5e-a72d-6e5c6c2466c6",
+              "name": "The returned resource is a single `MileageReimbursement`.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "business",
+                    "v2",
+                    "transactions",
+                    "mileage-reimbursements",
+                    ":transactionId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "transactionId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "X-Soldo-Fingerprint",
+                    "value": "{{fingerprint}}"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "X-Soldo-Fingerprint-Signature",
+                    "value": "{{fingerprint_signature}}"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"date\": \"2017-06-01T12:48:40Z\",\n  \"mileage\": {\n    \"description\": \"Business trip: Rome - Florence - Turin - Milan\",\n    \"distance\": 875.4,\n    \"round_trip\": true,\n    \"vehicle_id\": \"2d65bd5e-3fdf-4002-b166-bde7fb8863fa\",\n    \"reimbursement_rate\": 0.45,\n    \"starting_point\": \"Rome, Metropolitan City of Rome Capital, Italy\",\n    \"arrival_point\": \"Milan, Metropolitan City of Milan, Italy\",\n    \"multi_stops\": [\n      \"Florence, Metropolitan City of Florence, Italy\",\n      \"Turin, Metropolitan City of Turin, Italy\"\n    ]\n  },\n  \"request_timestamp\": 1576850500000\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"transaction_id\": \"7bf79328-a7ae-4222-aa54-091ff7f429a7\",\n  \"date\": \"2017-06-01T12:48:40Z\",\n  \"owner_id\": \"XMPL1234-000002\",\n  \"amount\": 10.25,\n  \"amount_currency\": \"EUR\",\n  \"mileage\": {\n    \"vehicle_id\": \"2d65bd5e-3fdf-4002-b166-bde7fb8863fa\",\n    \"reimbursement_rate\": 0.45,\n    \"description\": \"Business trip: Rome - Florence - Turin - Milan\",\n    \"starting_point\": \"Rome, Metropolitan City of Rome Capital, Italy\",\n    \"arrival_point\": \"Milan, Metropolitan City of Milan, Italy\",\n    \"multi_stops\": [\n      \"Florence, Metropolitan City of Florence, Italy\",\n      \"Turin, Metropolitan City of Turin, Italy\"\n    ],\n    \"distance\": 875.4,\n    \"round_trip\": true\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c9dee55a-4313-42c3-8c0c-727adec5dc5c",
+              "name": "Your request has missing arguments or is malformed.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "business",
+                    "v2",
+                    "transactions",
+                    "mileage-reimbursements",
+                    ":transactionId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "transactionId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "X-Soldo-Fingerprint",
+                    "value": "{{fingerprint}}"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "X-Soldo-Fingerprint-Signature",
+                    "value": "{{fingerprint_signature}}"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"date\": \"2017-06-01T12:48:40Z\",\n  \"mileage\": {\n    \"description\": \"Business trip: Rome - Florence - Turin - Milan\",\n    \"distance\": 875.4,\n    \"round_trip\": true,\n    \"vehicle_id\": \"2d65bd5e-3fdf-4002-b166-bde7fb8863fa\",\n    \"reimbursement_rate\": 0.45,\n    \"starting_point\": \"Rome, Metropolitan City of Rome Capital, Italy\",\n    \"arrival_point\": \"Milan, Metropolitan City of Milan, Italy\",\n    \"multi_stops\": [\n      \"Florence, Metropolitan City of Florence, Italy\",\n      \"Turin, Metropolitan City of Turin, Italy\"\n    ]\n  },\n  \"request_timestamp\": 1576850500000\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "49431ff9-69d8-4b7f-8018-f556f53d1fdc",
+              "name": "One or more resource requested does not exist.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "business",
+                    "v2",
+                    "transactions",
+                    "mileage-reimbursements",
+                    ":transactionId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "transactionId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "X-Soldo-Fingerprint",
+                    "value": "{{fingerprint}}"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "X-Soldo-Fingerprint-Signature",
+                    "value": "{{fingerprint_signature}}"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"date\": \"2017-06-01T12:48:40Z\",\n  \"mileage\": {\n    \"description\": \"Business trip: Rome - Florence - Turin - Milan\",\n    \"distance\": 875.4,\n    \"round_trip\": true,\n    \"vehicle_id\": \"2d65bd5e-3fdf-4002-b166-bde7fb8863fa\",\n    \"reimbursement_rate\": 0.45,\n    \"starting_point\": \"Rome, Metropolitan City of Rome Capital, Italy\",\n    \"arrival_point\": \"Milan, Metropolitan City of Milan, Italy\",\n    \"multi_stops\": [\n      \"Florence, Metropolitan City of Florence, Italy\",\n      \"Turin, Metropolitan City of Turin, Italy\"\n    ]\n  },\n  \"request_timestamp\": 1576850500000\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "53d6e405-181b-41e2-a49d-11885878d6ea",
+          "name": "Delete Mileage Reimbursement Transaction",
+          "request": {
+            "name": "Delete Mileage Reimbursement Transaction",
+            "description": {
+              "content": "Endpoint to delete a specific `MileageReimbursement` `Transaction`.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "business",
+                "v2",
+                "transactions",
+                "mileage-reimbursements",
+                ":transactionId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "transactionId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) ",
+                "key": "X-Soldo-Fingerprint",
+                "value": "{{fingerprint}}"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) ",
+                "key": "X-Soldo-Fingerprint-Signature",
+                "value": "{{fingerprint_signature}}"
+              }
+            ],
+            "method": "DELETE",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "address_read address_write card_read card_write company_read company_write contact_read contact_write employee_read employee_write expense_category_read expense_category_write expense_report_read expense_report_write expense_review_read expense_review_write group_read group_write online_ads_read online_ads_write payment_read payment_write purchase_read purchase_write refueling_read refueling_write resource_set_read resource_set_write role_read statement_read subscription_read subscription_write tag_read tag_write tax_rate_read tax_rate_write transaction_read transaction_write vehicle_read vehicle_write wallet_read wallet_write webhook_subscription_read webhook_subscription_write"
+                },
+                {
+                  "key": "redirect_uri",
+                  "value": "https://api.soldo.com/oauth/refresh"
+                },
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://api.soldo.com/oauth/authorize"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "55d2d6a6-562a-4bd7-a3c5-d663535e7e6a",
+              "name": "No content as result.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "business",
+                    "v2",
+                    "transactions",
+                    "mileage-reimbursements",
+                    ":transactionId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "transactionId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "X-Soldo-Fingerprint",
+                    "value": "{{fingerprint}}"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "X-Soldo-Fingerprint-Signature",
+                    "value": "{{fingerprint_signature}}"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ee11f5e6-1c1f-4982-9f9b-44d9bc52e3b3",
+          "name": "Get Out-Of-Platform Transaction",
+          "request": {
+            "name": "Get Out-Of-Platform Transaction",
+            "description": {
+              "content": "Endpoint to get a specific Out-Of-Platform `Transaction`.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "business",
+                "v2",
+                "transactions",
+                "out-of-platform-transactions",
+                ":transactionId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "transactionId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) ",
+                "key": "X-Soldo-Fingerprint",
+                "value": "{{fingerprint}}"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) ",
+                "key": "X-Soldo-Fingerprint-Signature",
+                "value": "{{fingerprint_signature}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "address_read address_write card_read card_write company_read company_write contact_read contact_write employee_read employee_write expense_category_read expense_category_write expense_report_read expense_report_write expense_review_read expense_review_write group_read group_write online_ads_read online_ads_write payment_read payment_write purchase_read purchase_write refueling_read refueling_write resource_set_read resource_set_write role_read statement_read subscription_read subscription_write tag_read tag_write tax_rate_read tax_rate_write transaction_read transaction_write vehicle_read vehicle_write wallet_read wallet_write webhook_subscription_read webhook_subscription_write"
+                },
+                {
+                  "key": "redirect_uri",
+                  "value": "https://api.soldo.com/oauth/refresh"
+                },
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://api.soldo.com/oauth/authorize"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "31d8dce3-6ce1-4b34-80a1-323f2f259d1b",
+              "name": "The returned resource is a single Out-Of-Platform `Transaction`.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "business",
+                    "v2",
+                    "transactions",
+                    "out-of-platform-transactions",
+                    ":transactionId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "transactionId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "X-Soldo-Fingerprint",
+                    "value": "{{fingerprint}}"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "X-Soldo-Fingerprint-Signature",
+                    "value": "{{fingerprint_signature}}"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"transaction_id\": \"7bf79328-a7ae-4222-aa54-091ff7f429a7\",\n  \"date\": \"2017-06-01T12:48:40Z\",\n  \"owner_id\": \"XMPL1234-000002\",\n  \"merchant_name\": \"SHH HOTEL LONDON\",\n  \"tx_amount\": 10.25,\n  \"tx_amount_currency\": \"EUR\",\n  \"amount\": 10.25,\n  \"amount_currency\": \"EUR\",\n  \"exchange_rate\": 1,\n  \"payment_method\": \"OUT_OF_PLATFORM_PERSONAL\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ac022aeb-ae15-44d8-bc48-fbdbe42da7ce",
+              "name": "One or more resource requested does not exist.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "business",
+                    "v2",
+                    "transactions",
+                    "out-of-platform-transactions",
+                    ":transactionId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "transactionId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "X-Soldo-Fingerprint",
+                    "value": "{{fingerprint}}"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "X-Soldo-Fingerprint-Signature",
+                    "value": "{{fingerprint_signature}}"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "460fefa7-dfcb-453d-9623-cf057cbd0dce",
+          "name": "Update Out-Of-Platform Transaction",
+          "request": {
+            "name": "Update Out-Of-Platform Transaction",
+            "description": {
+              "content": "Endpoint to update an Out-Of-Platform `Transaction`. The entire resource representation must be included in the request body.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "business",
+                "v2",
+                "transactions",
+                "out-of-platform-transactions",
+                ":transactionId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "transactionId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) ",
+                "key": "X-Soldo-Fingerprint",
+                "value": "{{fingerprint}}"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) ",
+                "key": "X-Soldo-Fingerprint-Signature",
+                "value": "{{fingerprint_signature}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "address_read address_write card_read card_write company_read company_write contact_read contact_write employee_read employee_write expense_category_read expense_category_write expense_report_read expense_report_write expense_review_read expense_review_write group_read group_write online_ads_read online_ads_write payment_read payment_write purchase_read purchase_write refueling_read refueling_write resource_set_read resource_set_write role_read statement_read subscription_read subscription_write tag_read tag_write tax_rate_read tax_rate_write transaction_read transaction_write vehicle_read vehicle_write wallet_read wallet_write webhook_subscription_read webhook_subscription_write"
+                },
+                {
+                  "key": "redirect_uri",
+                  "value": "https://api.soldo.com/oauth/refresh"
+                },
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://api.soldo.com/oauth/authorize"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"date\": \"<string>\",\n  \"merchant_name\": \"<string>\",\n  \"payment_method\": \"<string>\",\n  \"request_timestamp\": \"<long>\",\n  \"tx_amount\": \"<number>\",\n  \"tx_amount_currency\": \"<string>\",\n  \"exchange_rate\": \"<number>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "5a52dea0-0455-488c-9e53-ef0fe8ade16e",
+              "name": "The returned resource is a single Out-Of-Platform `Transaction`.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "business",
+                    "v2",
+                    "transactions",
+                    "out-of-platform-transactions",
+                    ":transactionId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "transactionId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "X-Soldo-Fingerprint",
+                    "value": "{{fingerprint}}"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "X-Soldo-Fingerprint-Signature",
+                    "value": "{{fingerprint_signature}}"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"date\": \"2017-06-01T12:48:40Z\",\n  \"merchant_name\": \"SHH HOTEL LONDON\",\n  \"payment_method\": \"OUT_OF_PLATFORM_PERSONAL\",\n  \"request_timestamp\": 1576850500000,\n  \"tx_amount\": 10.25,\n  \"tx_amount_currency\": \"EUR\",\n  \"exchange_rate\": 1\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"transaction_id\": \"7bf79328-a7ae-4222-aa54-091ff7f429a7\",\n  \"date\": \"2017-06-01T12:48:40Z\",\n  \"owner_id\": \"XMPL1234-000002\",\n  \"merchant_name\": \"SHH HOTEL LONDON\",\n  \"tx_amount\": 10.25,\n  \"tx_amount_currency\": \"EUR\",\n  \"amount\": 10.25,\n  \"amount_currency\": \"EUR\",\n  \"exchange_rate\": 1,\n  \"payment_method\": \"OUT_OF_PLATFORM_PERSONAL\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "72c1cfc4-7a9e-43cf-ab96-26e903d9bf36",
+              "name": "Your request has missing arguments or is malformed.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "business",
+                    "v2",
+                    "transactions",
+                    "out-of-platform-transactions",
+                    ":transactionId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "transactionId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "X-Soldo-Fingerprint",
+                    "value": "{{fingerprint}}"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "X-Soldo-Fingerprint-Signature",
+                    "value": "{{fingerprint_signature}}"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"date\": \"2017-06-01T12:48:40Z\",\n  \"merchant_name\": \"SHH HOTEL LONDON\",\n  \"payment_method\": \"OUT_OF_PLATFORM_PERSONAL\",\n  \"request_timestamp\": 1576850500000,\n  \"tx_amount\": 10.25,\n  \"tx_amount_currency\": \"EUR\",\n  \"exchange_rate\": 1\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "a5c69c2b-a4e3-4630-bc42-980390496c6e",
+              "name": "One or more resource requested does not exist.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "business",
+                    "v2",
+                    "transactions",
+                    "out-of-platform-transactions",
+                    ":transactionId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "transactionId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "X-Soldo-Fingerprint",
+                    "value": "{{fingerprint}}"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "X-Soldo-Fingerprint-Signature",
+                    "value": "{{fingerprint_signature}}"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"date\": \"2017-06-01T12:48:40Z\",\n  \"merchant_name\": \"SHH HOTEL LONDON\",\n  \"payment_method\": \"OUT_OF_PLATFORM_PERSONAL\",\n  \"request_timestamp\": 1576850500000,\n  \"tx_amount\": 10.25,\n  \"tx_amount_currency\": \"EUR\",\n  \"exchange_rate\": 1\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "f558b752-a13a-4e88-9935-0fcd735368e1",
+          "name": "Delete Out-Of-Platform Transaction",
+          "request": {
+            "name": "Delete Out-Of-Platform Transaction",
+            "description": {
+              "content": "Endpoint to delete a specific Out-Of-Platform `Transaction`.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "business",
+                "v2",
+                "transactions",
+                "out-of-platform-transactions",
+                ":transactionId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "transactionId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) ",
+                "key": "X-Soldo-Fingerprint",
+                "value": "{{fingerprint}}"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) ",
+                "key": "X-Soldo-Fingerprint-Signature",
+                "value": "{{fingerprint_signature}}"
+              }
+            ],
+            "method": "DELETE",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "address_read address_write card_read card_write company_read company_write contact_read contact_write employee_read employee_write expense_category_read expense_category_write expense_report_read expense_report_write expense_review_read expense_review_write group_read group_write online_ads_read online_ads_write payment_read payment_write purchase_read purchase_write refueling_read refueling_write resource_set_read resource_set_write role_read statement_read subscription_read subscription_write tag_read tag_write tax_rate_read tax_rate_write transaction_read transaction_write vehicle_read vehicle_write wallet_read wallet_write webhook_subscription_read webhook_subscription_write"
+                },
+                {
+                  "key": "redirect_uri",
+                  "value": "https://api.soldo.com/oauth/refresh"
+                },
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://api.soldo.com/oauth/authorize"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "b5101357-1162-4e8f-ad57-f29df8a91031",
+              "name": "No content as result.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "business",
+                    "v2",
+                    "transactions",
+                    "out-of-platform-transactions",
+                    ":transactionId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "transactionId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "X-Soldo-Fingerprint",
+                    "value": "{{fingerprint}}"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "X-Soldo-Fingerprint-Signature",
+                    "value": "{{fingerprint_signature}}"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "5edd3a7c-5b98-4b5d-8d75-1cb095b2269b",
+          "name": "Add VAT Rate to Transaction ",
+          "request": {
+            "name": "Add VAT Rate to Transaction ",
+            "description": {
+              "content": "Endpoint to assign a `VatRate` to a `Transaction`.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "business",
+                "v2",
+                "transactions",
+                ":transactionId",
+                "tax-rate",
+                ":taxRateId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "transactionId",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "taxRateId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "method": "POST",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "address_read address_write card_read card_write company_read company_write contact_read contact_write employee_read employee_write expense_category_read expense_category_write expense_report_read expense_report_write expense_review_read expense_review_write group_read group_write online_ads_read online_ads_write payment_read payment_write purchase_read purchase_write refueling_read refueling_write resource_set_read resource_set_write role_read statement_read subscription_read subscription_write tag_read tag_write tax_rate_read tax_rate_write transaction_read transaction_write vehicle_read vehicle_write wallet_read wallet_write webhook_subscription_read webhook_subscription_write"
+                },
+                {
+                  "key": "redirect_uri",
+                  "value": "https://api.soldo.com/oauth/refresh"
+                },
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://api.soldo.com/oauth/authorize"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "f2b59707-3cac-4682-8f89-b6e9e98de6ea",
+              "name": "No content as result.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "business",
+                    "v2",
+                    "transactions",
+                    ":transactionId",
+                    "tax-rate",
+                    ":taxRateId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "transactionId",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "taxRateId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "2e2b1dce-ea24-4ede-868c-71f134412dc3",
+              "name": "One or more resource requested does not exist.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "business",
+                    "v2",
+                    "transactions",
+                    ":transactionId",
+                    "tax-rate",
+                    ":taxRateId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "transactionId",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "taxRateId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "91794656-0b83-4713-82a9-6fb714eb00f0",
+          "name": "Get Transaction",
+          "request": {
+            "name": "Get Transaction",
+            "description": {
+              "content": "Endpoint to get a specific `Transaction` by ID.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "business",
+                "v2",
+                "transactions",
+                ":transactionId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "showDetails",
+                  "value": "<boolean>",
+                  "description": "It determines whether to show further Details of the `Transaction`."
+                },
+                {
+                  "disabled": false,
+                  "key": "showFuelDetails",
+                  "value": "<boolean>",
+                  "description": "It determines whether to show further Fuel Details of the `Transaction`."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "transactionId",
+                  "description": "(Required) The `Transaction` ID."
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) ",
+                "key": "X-Soldo-Fingerprint",
+                "value": "{{fingerprint}}"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) ",
+                "key": "X-Soldo-Fingerprint-Signature",
+                "value": "{{fingerprint_signature}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "address_read address_write card_read card_write company_read company_write contact_read contact_write employee_read employee_write expense_category_read expense_category_write expense_report_read expense_report_write expense_review_read expense_review_write group_read group_write online_ads_read online_ads_write payment_read payment_write purchase_read purchase_write refueling_read refueling_write resource_set_read resource_set_write role_read statement_read subscription_read subscription_write tag_read tag_write tax_rate_read tax_rate_write transaction_read transaction_write vehicle_read vehicle_write wallet_read wallet_write webhook_subscription_read webhook_subscription_write"
+                },
+                {
+                  "key": "redirect_uri",
+                  "value": "https://api.soldo.com/oauth/refresh"
+                },
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://api.soldo.com/oauth/authorize"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "724403d1-7d7f-494a-8e97-4f7eb777ef34",
+              "name": "The returned resource is a single `Transaction`.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "business",
+                    "v2",
+                    "transactions",
+                    ":transactionId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "showDetails",
+                      "value": "false"
+                    },
+                    {
+                      "key": "showFuelDetails",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "transactionId",
+                      "description": "(Required) The `Transaction` ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "X-Soldo-Fingerprint",
+                    "value": "{{fingerprint}}"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "X-Soldo-Fingerprint-Signature",
+                    "value": "{{fingerprint_signature}}"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"7bf79328-a7ae-4222-aa54-091ff7f429a7\",\n  \"wallet_id\": \"6853e657-c797-4985-8d6b-5425d4e51df8\",\n  \"wallet_name\": \"John Doe\",\n  \"status\": \"Settled\",\n  \"category\": \"Payment\",\n  \"transaction_sign\": \"Negative\",\n  \"purchase_id\": \"6853e657-c797-4985-8d6b-5425d4e51df8\",\n  \"amount\": 10.25,\n  \"amount_currency\": \"EUR\",\n  \"tx_amount\": 10.25,\n  \"tx_amount_currency\": \"EUR\",\n  \"fee_amount\": 10.25,\n  \"fee_currency\": \"EUR\",\n  \"exchange_rate\": 1,\n  \"auth_exchange_rate\": 1,\n  \"expense_status\": \"APPROVED\",\n  \"expense_type\": \"TRAVEL_AND_ENTERTAINMENT\",\n  \"expense_date\": \"2017-06-01T12:48:40Z\",\n  \"expense_reviewer\": \"XMPL1234-000001\",\n  \"expense_approved_amount\": 10.25,\n  \"expense_report_id\": \"c861cc24-6663-410f-8c78-73f886fff4ef\",\n  \"date\": \"2017-06-01T12:48:40Z\",\n  \"settlement_date\": \"2017-06-01T12:48:40Z\",\n  \"update_time\": \"2017-06-01T12:48:40Z\",\n  \"merchant\": {\n    \"id\": \"string\",\n    \"name\": \"SHH HOTEL LONDON\",\n    \"raw_name\": \"SHERLOCK HOLMES HOTEL  LONDON        GBR\",\n    \"code\": \"string\",\n    \"address\": \"string\"\n  },\n  \"merchant_category\": {\n    \"description\": \"Travel\",\n    \"mcc\": \"string\",\n    \"mcc_description\": \"Lodging - Hotels, Motels, Resorts - not elsewhere classified\",\n    \"code\": \"Lodging - Hotels, Motels, Resorts - not elsewhere classified\",\n    \"sub_category\": \"Hotels\"\n  },\n  \"tags\": [\n    {\n      \"id\": \"2d65bd5e-3fdf-4002-b166-bde7fb8863fa\",\n      \"dictionary_id\": \"7bf79328-a7ae-4222-aa54-091ff7f429a7\",\n      \"dictionary\": \"ExampleTagDictionary\",\n      \"tag\": \"tx-label\",\n      \"code\": \"CODE tag\",\n      \"visible\": true,\n      \"description\": \"Label to mark transactions\"\n    },\n    {\n      \"id\": \"2d65bd5e-3fdf-4002-b166-bde7fb8863fa\",\n      \"dictionary_id\": \"7bf79328-a7ae-4222-aa54-091ff7f429a7\",\n      \"dictionary\": \"ExampleTagDictionary\",\n      \"tag\": \"tx-label\",\n      \"code\": \"CODE tag\",\n      \"visible\": true,\n      \"description\": \"Label to mark transactions\"\n    }\n  ],\n  \"card_id\": \"6853e657-c797-4985-8d6b-5425d4e51df8\",\n  \"masked_pan\": \"123456******1234\",\n  \"owner_name\": \"John\",\n  \"owner_surname\": \"Smith\",\n  \"owner_type\": \"company\",\n  \"owner_id\": \"XMPL1234-000003\",\n  \"custom_reference_id\": \"123456-user-1\",\n  \"group_id\": \"2d65bd5e-3fdf-4002-b166-bde7fb8863fa\",\n  \"has_attachments\": false,\n  \"trx_owner_id\": \"XMPL1234-000003\",\n  \"metadata_ids\": [\n    \"express\"\n  ],\n  \"fuel_details\": {\n    \"plate\": \"AA000BB\",\n    \"vehicle_fuel_type\": \"PETROL\",\n    \"vat_deductibility_percentage\": \"40%\",\n    \"mileage\": 125000,\n    \"quantity\": 80,\n    \"unit_price\": 1.41,\n    \"tx_fuel_type\": \"PETROL\",\n    \"to_be_ignored\": false,\n    \"invoice_id\": 4421109,\n    \"invoice_number\": \"NVC112200987\",\n    \"invoice_date\": \"2017-06-01T12:48:40Z\",\n    \"invoice_total_amount\": 10.25,\n    \"invoice_row\": 4,\n    \"invoice_row_amount\": 10.25,\n    \"supplier_vat_id\": \"string\",\n    \"dri\": \"DRI00099881\",\n    \"vehicle_id\": \"6853e657-c797-4985-8d6b-5425d4e51df8\"\n  },\n  \"vat_percentage\": 15,\n  \"vat_amount\": 10.25,\n  \"vat_currency\": \"EUR\",\n  \"user_notes\": \"string\",\n  \"notes\": \"string\",\n  \"direct_url\": \"string\",\n  \"flags\": [\n    \"forUser\"\n  ],\n  \"payment_method\": \"ONLINE_ADS\",\n  \"payment_method_id\": \"6853e657-c797-4985-8d6b-5425d4e51df8\",\n  \"expense_category\": {\n    \"id\": \"7bf79328-a7ae-4222-aa54-091ff7f429a7\",\n    \"code\": \"string\",\n    \"name\": \"category-one\",\n    \"description\": \"An expense category\",\n    \"tax_rate_id\": \"c861cc24-6663-410f-8c78-73f886fff4ef\",\n    \"enabled\": false,\n    \"merchant_categories\": [\n      \"Transport_Public_Transportation\",\n      \"Services_Cleaning\"\n    ],\n    \"expense_type\": \"TRAVEL_AND_ENTERTAINMENT\",\n    \"integration\": \"Netsuite\",\n    \"creation_time\": \"2017-06-01T12:48:40Z\",\n    \"last_update_time\": \"2017-06-01T12:48:40Z\"\n  },\n  \"tax_rate\": {\n    \"id\": \"7bf79328-a7ae-4222-aa54-091ff7f429a7\",\n    \"code\": \"code-vat-11\",\n    \"name\": \"Tax 11\",\n    \"description\": \"Number 11 of Tax code\",\n    \"percentage\": 15,\n    \"enabled\": true,\n    \"integration\": \"something\",\n    \"creation_time\": \"2017-06-01T12:48:40Z\",\n    \"last_update_time\": \"2017-06-01T12:48:40Z\"\n  },\n  \"split\": false,\n  \"tx_id\": \"5-857211147-150603333585014265\",\n  \"payment_trn_code\": \"1234567890123456789012345678IT\",\n  \"carbon_emissions\": {\n    \"value\": 1422.5794396075498,\n    \"unit\": \"string\"\n  },\n  \"required_information\": \"COMPLETE\",\n  \"reimbursement_expense_report_id\": \"string\",\n  \"invoice\": {\n    \"number\": \"INV-2023-001\",\n    \"date\": \"2023-01-23\",\n    \"po_number\": \"PO-2023-001\",\n    \"supplier_vat_number\": \"92G\"\n  },\n  \"source\": {\n    \"name\": \"J. Doe\",\n    \"type\": \"BANK_TRANSFER\",\n    \"destination_wallet_id\": \"de29bffb-7da2-40f1-934a-241170762d3e\",\n    \"destination_wallet_name\": \"EURO VIBAN\"\n  },\n  \"custom_export\": [\n    {\n      \"product\": \"SAP\",\n      \"export_date\": \"2017-06-01T12:48:40Z\"\n    },\n    {\n      \"product\": \"SAP\",\n      \"export_date\": \"2017-06-01T12:48:40Z\"\n    }\n  ],\n  \"out_spending_policy\": {\n    \"approved_amount\": {\n      \"amount\": 10.25,\n      \"currency\": \"EUR\"\n    },\n    \"rejected_amount\": {\n      \"amount\": 10.25,\n      \"currency\": \"EUR\"\n    }\n  },\n  \"business_trip_id\": \"string\",\n  \"card_name\": \"CardName\",\n  \"details\": {\n    \"de022\": \"string\",\n    \"de061\": \"string\",\n    \"tx_country\": \"GBR\",\n    \"denied_info_type\": \"string\",\n    \"denied_info_description\": \"string\",\n    \"is_card_present\": false,\n    \"is_atm_transaction\": false\n  },\n  \"split_transactions\": [\n    {\n      \"amount\": {\n        \"amount\": 10.25,\n        \"currency\": \"EUR\"\n      },\n      \"vat_amount\": {\n        \"amount\": 10.25,\n        \"currency\": \"EUR\"\n      },\n      \"expense_type\": \"TRAVEL_AND_ENTERTAINMENT\",\n      \"line_number\": 1,\n      \"tags\": [\n        {\n          \"id\": \"2d65bd5e-3fdf-4002-b166-bde7fb8863fa\",\n          \"dictionary_id\": \"7bf79328-a7ae-4222-aa54-091ff7f429a7\",\n          \"dictionary\": \"ExampleTagDictionary\",\n          \"tag\": \"tx-label\",\n          \"code\": \"CODE tag\",\n          \"visible\": true,\n          \"description\": \"Label to mark transactions\"\n        },\n        {\n          \"id\": \"2d65bd5e-3fdf-4002-b166-bde7fb8863fa\",\n          \"dictionary_id\": \"7bf79328-a7ae-4222-aa54-091ff7f429a7\",\n          \"dictionary\": \"ExampleTagDictionary\",\n          \"tag\": \"tx-label\",\n          \"code\": \"CODE tag\",\n          \"visible\": true,\n          \"description\": \"Label to mark transactions\"\n        }\n      ],\n      \"employee\": {\n        \"id\": \"XMPL1234-000001\",\n        \"name\": \"John\",\n        \"surname\": \"Smith\",\n        \"middlename\": \"John\",\n        \"dob\": \"1970-10-21\",\n        \"job_title\": \"Business Strategist\",\n        \"department\": \"Research & Development\",\n        \"email\": \"jdoe@fake.soldo.com\",\n        \"mobile\": \"+44123323232\",\n        \"mobile_prefix\": \"+44\",\n        \"custom_reference_id\": \"123456-user-1\",\n        \"status\": \"ACTIVE\",\n        \"visible\": true,\n        \"mobile_access\": true,\n        \"web_access\": true,\n        \"groups\": [\n          \"7bf79328-a7ae-4222-aa54-091ff7f429a7\",\n          \"2d65bd5e-3fdf-4002-b166-bde7fb8863fa\"\n        ],\n        \"shipping_address\": {\n          \"id\": \"7bf79328-a7ae-4222-aa54-091ff7f429a7\",\n          \"recipient\": \"JohnSmith\",\n          \"name\": \"Foo Street 75\",\n          \"line1\": \"Bar Street 64\",\n          \"line2\": \"Other street 31\",\n          \"country\": \"GB\",\n          \"county\": \"LD\",\n          \"city\": \"London\",\n          \"post_code\": \"00000\",\n          \"delivery_phone_number\": \"+441234567890\",\n          \"default_shipping\": false,\n          \"type\": \"SHIPPING\",\n          \"category\": \"COMPANY\",\n          \"user_id\": \"string\",\n          \"creation_time\": \"2017-06-01T12:48:40Z\",\n          \"last_update\": \"2017-06-01T12:48:40Z\"\n        },\n        \"reports_to\": \"XMPL1234-000001\",\n        \"roles\": [\n          {\n            \"id\": \"superAdmin\",\n            \"name\": \"superAdmin\",\n            \"description\": \"The SuperAdmin role\",\n            \"scope\": \"ALL\"\n          },\n          {\n            \"id\": \"superAdmin\",\n            \"name\": \"superAdmin\",\n            \"description\": \"The SuperAdmin role\",\n            \"scope\": \"ALL\"\n          }\n        ],\n        \"contact_id\": \"135fdb6c-2e77-4fc0-a79f-2453fde75ef7\",\n        \"creation_time\": \"2017-06-01T12:48:40Z\",\n        \"last_update\": \"2017-06-01T12:48:40Z\",\n        \"work_status\": \"OUT_OF_OFFICE\"\n      },\n      \"expense_category\": {\n        \"id\": \"7bf79328-a7ae-4222-aa54-091ff7f429a7\",\n        \"code\": \"string\",\n        \"name\": \"category-one\",\n        \"description\": \"An expense category\",\n        \"tax_rate_id\": \"c861cc24-6663-410f-8c78-73f886fff4ef\",\n        \"enabled\": false,\n        \"merchant_categories\": [\n          \"Shopping_Accessories\",\n          \"Shopping_Clothes\"\n        ],\n        \"expense_type\": \"TRAVEL_AND_ENTERTAINMENT\",\n        \"integration\": \"Netsuite\",\n        \"creation_time\": \"2017-06-01T12:48:40Z\",\n        \"last_update_time\": \"2017-06-01T12:48:40Z\"\n      },\n      \"tax_rate\": {\n        \"id\": \"7bf79328-a7ae-4222-aa54-091ff7f429a7\",\n        \"code\": \"code-vat-11\",\n        \"name\": \"Tax 11\",\n        \"description\": \"Number 11 of Tax code\",\n        \"percentage\": 15,\n        \"enabled\": true,\n        \"integration\": \"something\",\n        \"creation_time\": \"2017-06-01T12:48:40Z\",\n        \"last_update_time\": \"2017-06-01T12:48:40Z\"\n      },\n      \"approved_amount\": {\n        \"amount\": 10.25,\n        \"currency\": \"EUR\"\n      },\n      \"rejected_amount\": {\n        \"amount\": 10.25,\n        \"currency\": \"EUR\"\n      }\n    },\n    {\n      \"amount\": {\n        \"amount\": 10.25,\n        \"currency\": \"EUR\"\n      },\n      \"vat_amount\": {\n        \"amount\": 10.25,\n        \"currency\": \"EUR\"\n      },\n      \"expense_type\": \"TRAVEL_AND_ENTERTAINMENT\",\n      \"line_number\": 1,\n      \"tags\": [\n        {\n          \"id\": \"2d65bd5e-3fdf-4002-b166-bde7fb8863fa\",\n          \"dictionary_id\": \"7bf79328-a7ae-4222-aa54-091ff7f429a7\",\n          \"dictionary\": \"ExampleTagDictionary\",\n          \"tag\": \"tx-label\",\n          \"code\": \"CODE tag\",\n          \"visible\": true,\n          \"description\": \"Label to mark transactions\"\n        },\n        {\n          \"id\": \"2d65bd5e-3fdf-4002-b166-bde7fb8863fa\",\n          \"dictionary_id\": \"7bf79328-a7ae-4222-aa54-091ff7f429a7\",\n          \"dictionary\": \"ExampleTagDictionary\",\n          \"tag\": \"tx-label\",\n          \"code\": \"CODE tag\",\n          \"visible\": true,\n          \"description\": \"Label to mark transactions\"\n        }\n      ],\n      \"employee\": {\n        \"id\": \"XMPL1234-000001\",\n        \"name\": \"John\",\n        \"surname\": \"Smith\",\n        \"middlename\": \"John\",\n        \"dob\": \"1970-10-21\",\n        \"job_title\": \"Business Strategist\",\n        \"department\": \"Research & Development\",\n        \"email\": \"jdoe@fake.soldo.com\",\n        \"mobile\": \"+44123323232\",\n        \"mobile_prefix\": \"+44\",\n        \"custom_reference_id\": \"123456-user-1\",\n        \"status\": \"ACTIVE\",\n        \"visible\": true,\n        \"mobile_access\": true,\n        \"web_access\": true,\n        \"groups\": [\n          \"7bf79328-a7ae-4222-aa54-091ff7f429a7\",\n          \"2d65bd5e-3fdf-4002-b166-bde7fb8863fa\"\n        ],\n        \"shipping_address\": {\n          \"id\": \"7bf79328-a7ae-4222-aa54-091ff7f429a7\",\n          \"recipient\": \"JohnSmith\",\n          \"name\": \"Foo Street 75\",\n          \"line1\": \"Bar Street 64\",\n          \"line2\": \"Other street 31\",\n          \"country\": \"GB\",\n          \"county\": \"LD\",\n          \"city\": \"London\",\n          \"post_code\": \"00000\",\n          \"delivery_phone_number\": \"+441234567890\",\n          \"default_shipping\": false,\n          \"type\": \"SHIPPING\",\n          \"category\": \"COMPANY\",\n          \"user_id\": \"string\",\n          \"creation_time\": \"2017-06-01T12:48:40Z\",\n          \"last_update\": \"2017-06-01T12:48:40Z\"\n        },\n        \"reports_to\": \"XMPL1234-000001\",\n        \"roles\": [\n          {\n            \"id\": \"superAdmin\",\n            \"name\": \"superAdmin\",\n            \"description\": \"The SuperAdmin role\",\n            \"scope\": \"ALL\"\n          },\n          {\n            \"id\": \"superAdmin\",\n            \"name\": \"superAdmin\",\n            \"description\": \"The SuperAdmin role\",\n            \"scope\": \"ALL\"\n          }\n        ],\n        \"contact_id\": \"135fdb6c-2e77-4fc0-a79f-2453fde75ef7\",\n        \"creation_time\": \"2017-06-01T12:48:40Z\",\n        \"last_update\": \"2017-06-01T12:48:40Z\",\n        \"work_status\": \"OUT_OF_OFFICE\"\n      },\n      \"expense_category\": {\n        \"id\": \"7bf79328-a7ae-4222-aa54-091ff7f429a7\",\n        \"code\": \"string\",\n        \"name\": \"category-one\",\n        \"description\": \"An expense category\",\n        \"tax_rate_id\": \"c861cc24-6663-410f-8c78-73f886fff4ef\",\n        \"enabled\": false,\n        \"merchant_categories\": [\n          \"Services_Educational\",\n          \"Shopping_Direct_Marketing\"\n        ],\n        \"expense_type\": \"TRAVEL_AND_ENTERTAINMENT\",\n        \"integration\": \"Netsuite\",\n        \"creation_time\": \"2017-06-01T12:48:40Z\",\n        \"last_update_time\": \"2017-06-01T12:48:40Z\"\n      },\n      \"tax_rate\": {\n        \"id\": \"7bf79328-a7ae-4222-aa54-091ff7f429a7\",\n        \"code\": \"code-vat-11\",\n        \"name\": \"Tax 11\",\n        \"description\": \"Number 11 of Tax code\",\n        \"percentage\": 15,\n        \"enabled\": true,\n        \"integration\": \"something\",\n        \"creation_time\": \"2017-06-01T12:48:40Z\",\n        \"last_update_time\": \"2017-06-01T12:48:40Z\"\n      },\n      \"approved_amount\": {\n        \"amount\": 10.25,\n        \"currency\": \"EUR\"\n      },\n      \"rejected_amount\": {\n        \"amount\": 10.25,\n        \"currency\": \"EUR\"\n      }\n    }\n  ],\n  \"timeline\": [\n    {\n      \"created_at\": \"2017-06-01T12:48:40Z\",\n      \"status\": \"Settled\",\n      \"amount\": 10.25,\n      \"balance_after\": {\n        \"available_amount\": 10.25,\n        \"pending_amount\": 10.25,\n        \"ledger_amount\": 10.25\n      },\n      \"balance_before\": {\n        \"available_amount\": 10.25,\n        \"pending_amount\": 10.25,\n        \"ledger_amount\": 10.25\n      },\n      \"is_fee\": true\n    },\n    {\n      \"created_at\": \"2017-06-01T12:48:40Z\",\n      \"status\": \"Settled\",\n      \"amount\": 10.25,\n      \"balance_after\": {\n        \"available_amount\": 10.25,\n        \"pending_amount\": 10.25,\n        \"ledger_amount\": 10.25\n      },\n      \"balance_before\": {\n        \"available_amount\": 10.25,\n        \"pending_amount\": 10.25,\n        \"ledger_amount\": 10.25\n      },\n      \"is_fee\": true\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "161310a6-f3f0-4f87-bfda-f155d52dfb66",
+              "name": "One or more resource requested does not exist.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "business",
+                    "v2",
+                    "transactions",
+                    ":transactionId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "showDetails",
+                      "value": "false"
+                    },
+                    {
+                      "key": "showFuelDetails",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "transactionId",
+                      "description": "(Required) The `Transaction` ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "X-Soldo-Fingerprint",
+                    "value": "{{fingerprint}}"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "X-Soldo-Fingerprint-Signature",
+                    "value": "{{fingerprint_signature}}"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "77474339-3313-43a8-962b-98297aa33e64",
+          "name": "Update Transaction",
+          "request": {
+            "name": "Update Transaction",
+            "description": {
+              "content": "Endpoint to update the assignee of a specific `Transaction` by ID. This method is only available for `Company` `Card` transactions and the `trx_owner_id` must be one of the `Card` assignees.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "business",
+                "v2",
+                "transactions",
+                ":transactionId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "transactionId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) ",
+                "key": "X-Soldo-Fingerprint",
+                "value": "{{fingerprint}}"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) ",
+                "key": "X-Soldo-Fingerprint-Signature",
+                "value": "{{fingerprint_signature}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "address_read address_write card_read card_write company_read company_write contact_read contact_write employee_read employee_write expense_category_read expense_category_write expense_report_read expense_report_write expense_review_read expense_review_write group_read group_write online_ads_read online_ads_write payment_read payment_write purchase_read purchase_write refueling_read refueling_write resource_set_read resource_set_write role_read statement_read subscription_read subscription_write tag_read tag_write tax_rate_read tax_rate_write transaction_read transaction_write vehicle_read vehicle_write wallet_read wallet_write webhook_subscription_read webhook_subscription_write"
+                },
+                {
+                  "key": "redirect_uri",
+                  "value": "https://api.soldo.com/oauth/refresh"
+                },
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://api.soldo.com/oauth/authorize"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"trx_owner_id\": \"<string>\",\n  \"user_notes\": \"<string>\",\n  \"invoice\": {\n    \"number\": \"<string>\",\n    \"date\": \"<string>\",\n    \"po_number\": \"<string>\",\n    \"supplier_vat_number\": \"<string>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "329aaada-6e81-4cea-95c4-2ecdb30b3e9d",
+              "name": "The returned resource is a single `Transaction`.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "business",
+                    "v2",
+                    "transactions",
+                    ":transactionId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "transactionId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "X-Soldo-Fingerprint",
+                    "value": "{{fingerprint}}"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "X-Soldo-Fingerprint-Signature",
+                    "value": "{{fingerprint_signature}}"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"trx_owner_id\": \"XMPL1234-000001\",\n  \"user_notes\": \"something\",\n  \"invoice\": {\n    \"number\": \"INV-2023-001\",\n    \"date\": \"2023-01-23\",\n    \"po_number\": \"PO-2023-001\",\n    \"supplier_vat_number\": \"JqbPwWm4\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"7bf79328-a7ae-4222-aa54-091ff7f429a7\",\n  \"wallet_id\": \"6853e657-c797-4985-8d6b-5425d4e51df8\",\n  \"wallet_name\": \"John Doe\",\n  \"status\": \"Settled\",\n  \"category\": \"Payment\",\n  \"transaction_sign\": \"Negative\",\n  \"purchase_id\": \"6853e657-c797-4985-8d6b-5425d4e51df8\",\n  \"amount\": 10.25,\n  \"amount_currency\": \"EUR\",\n  \"tx_amount\": 10.25,\n  \"tx_amount_currency\": \"EUR\",\n  \"fee_amount\": 10.25,\n  \"fee_currency\": \"EUR\",\n  \"exchange_rate\": 1,\n  \"auth_exchange_rate\": 1,\n  \"expense_status\": \"APPROVED\",\n  \"expense_type\": \"TRAVEL_AND_ENTERTAINMENT\",\n  \"expense_date\": \"2017-06-01T12:48:40Z\",\n  \"expense_reviewer\": \"XMPL1234-000001\",\n  \"expense_approved_amount\": 10.25,\n  \"expense_report_id\": \"c861cc24-6663-410f-8c78-73f886fff4ef\",\n  \"date\": \"2017-06-01T12:48:40Z\",\n  \"settlement_date\": \"2017-06-01T12:48:40Z\",\n  \"update_time\": \"2017-06-01T12:48:40Z\",\n  \"merchant\": {\n    \"id\": \"string\",\n    \"name\": \"SHH HOTEL LONDON\",\n    \"raw_name\": \"SHERLOCK HOLMES HOTEL  LONDON        GBR\",\n    \"code\": \"string\",\n    \"address\": \"string\"\n  },\n  \"merchant_category\": {\n    \"description\": \"Travel\",\n    \"mcc\": \"string\",\n    \"mcc_description\": \"Lodging - Hotels, Motels, Resorts - not elsewhere classified\",\n    \"code\": \"Lodging - Hotels, Motels, Resorts - not elsewhere classified\",\n    \"sub_category\": \"Hotels\"\n  },\n  \"tags\": [\n    {\n      \"id\": \"2d65bd5e-3fdf-4002-b166-bde7fb8863fa\",\n      \"dictionary_id\": \"7bf79328-a7ae-4222-aa54-091ff7f429a7\",\n      \"dictionary\": \"ExampleTagDictionary\",\n      \"tag\": \"tx-label\",\n      \"code\": \"CODE tag\",\n      \"visible\": true,\n      \"description\": \"Label to mark transactions\"\n    },\n    {\n      \"id\": \"2d65bd5e-3fdf-4002-b166-bde7fb8863fa\",\n      \"dictionary_id\": \"7bf79328-a7ae-4222-aa54-091ff7f429a7\",\n      \"dictionary\": \"ExampleTagDictionary\",\n      \"tag\": \"tx-label\",\n      \"code\": \"CODE tag\",\n      \"visible\": true,\n      \"description\": \"Label to mark transactions\"\n    }\n  ],\n  \"card_id\": \"6853e657-c797-4985-8d6b-5425d4e51df8\",\n  \"masked_pan\": \"123456******1234\",\n  \"owner_name\": \"John\",\n  \"owner_surname\": \"Smith\",\n  \"owner_type\": \"company\",\n  \"owner_id\": \"XMPL1234-000003\",\n  \"custom_reference_id\": \"123456-user-1\",\n  \"group_id\": \"2d65bd5e-3fdf-4002-b166-bde7fb8863fa\",\n  \"has_attachments\": false,\n  \"trx_owner_id\": \"XMPL1234-000003\",\n  \"metadata_ids\": [\n    \"express\"\n  ],\n  \"fuel_details\": {\n    \"plate\": \"AA000BB\",\n    \"vehicle_fuel_type\": \"PETROL\",\n    \"vat_deductibility_percentage\": \"40%\",\n    \"mileage\": 125000,\n    \"quantity\": 80,\n    \"unit_price\": 1.41,\n    \"tx_fuel_type\": \"PETROL\",\n    \"to_be_ignored\": false,\n    \"invoice_id\": 4421109,\n    \"invoice_number\": \"NVC112200987\",\n    \"invoice_date\": \"2017-06-01T12:48:40Z\",\n    \"invoice_total_amount\": 10.25,\n    \"invoice_row\": 4,\n    \"invoice_row_amount\": 10.25,\n    \"supplier_vat_id\": \"string\",\n    \"dri\": \"DRI00099881\",\n    \"vehicle_id\": \"6853e657-c797-4985-8d6b-5425d4e51df8\"\n  },\n  \"vat_percentage\": 15,\n  \"vat_amount\": 10.25,\n  \"vat_currency\": \"EUR\",\n  \"user_notes\": \"string\",\n  \"notes\": \"string\",\n  \"direct_url\": \"string\",\n  \"flags\": [\n    \"forUser\"\n  ],\n  \"payment_method\": \"ONLINE_ADS\",\n  \"payment_method_id\": \"6853e657-c797-4985-8d6b-5425d4e51df8\",\n  \"expense_category\": {\n    \"id\": \"7bf79328-a7ae-4222-aa54-091ff7f429a7\",\n    \"code\": \"string\",\n    \"name\": \"category-one\",\n    \"description\": \"An expense category\",\n    \"tax_rate_id\": \"c861cc24-6663-410f-8c78-73f886fff4ef\",\n    \"enabled\": false,\n    \"merchant_categories\": [\n      \"Transport_Public_Transportation\",\n      \"Services_Cleaning\"\n    ],\n    \"expense_type\": \"TRAVEL_AND_ENTERTAINMENT\",\n    \"integration\": \"Netsuite\",\n    \"creation_time\": \"2017-06-01T12:48:40Z\",\n    \"last_update_time\": \"2017-06-01T12:48:40Z\"\n  },\n  \"tax_rate\": {\n    \"id\": \"7bf79328-a7ae-4222-aa54-091ff7f429a7\",\n    \"code\": \"code-vat-11\",\n    \"name\": \"Tax 11\",\n    \"description\": \"Number 11 of Tax code\",\n    \"percentage\": 15,\n    \"enabled\": true,\n    \"integration\": \"something\",\n    \"creation_time\": \"2017-06-01T12:48:40Z\",\n    \"last_update_time\": \"2017-06-01T12:48:40Z\"\n  },\n  \"split\": false,\n  \"tx_id\": \"5-857211147-150603333585014265\",\n  \"payment_trn_code\": \"1234567890123456789012345678IT\",\n  \"carbon_emissions\": {\n    \"value\": 1422.5794396075498,\n    \"unit\": \"string\"\n  },\n  \"required_information\": \"COMPLETE\",\n  \"reimbursement_expense_report_id\": \"string\",\n  \"invoice\": {\n    \"number\": \"INV-2023-001\",\n    \"date\": \"2023-01-23\",\n    \"po_number\": \"PO-2023-001\",\n    \"supplier_vat_number\": \"92G\"\n  },\n  \"source\": {\n    \"name\": \"J. Doe\",\n    \"type\": \"BANK_TRANSFER\",\n    \"destination_wallet_id\": \"de29bffb-7da2-40f1-934a-241170762d3e\",\n    \"destination_wallet_name\": \"EURO VIBAN\"\n  },\n  \"custom_export\": [\n    {\n      \"product\": \"SAP\",\n      \"export_date\": \"2017-06-01T12:48:40Z\"\n    },\n    {\n      \"product\": \"SAP\",\n      \"export_date\": \"2017-06-01T12:48:40Z\"\n    }\n  ],\n  \"out_spending_policy\": {\n    \"approved_amount\": {\n      \"amount\": 10.25,\n      \"currency\": \"EUR\"\n    },\n    \"rejected_amount\": {\n      \"amount\": 10.25,\n      \"currency\": \"EUR\"\n    }\n  },\n  \"business_trip_id\": \"string\",\n  \"card_name\": \"CardName\",\n  \"details\": {\n    \"de022\": \"string\",\n    \"de061\": \"string\",\n    \"tx_country\": \"GBR\",\n    \"denied_info_type\": \"string\",\n    \"denied_info_description\": \"string\",\n    \"is_card_present\": false,\n    \"is_atm_transaction\": false\n  },\n  \"split_transactions\": [\n    {\n      \"amount\": {\n        \"amount\": 10.25,\n        \"currency\": \"EUR\"\n      },\n      \"vat_amount\": {\n        \"amount\": 10.25,\n        \"currency\": \"EUR\"\n      },\n      \"expense_type\": \"TRAVEL_AND_ENTERTAINMENT\",\n      \"line_number\": 1,\n      \"tags\": [\n        {\n          \"id\": \"2d65bd5e-3fdf-4002-b166-bde7fb8863fa\",\n          \"dictionary_id\": \"7bf79328-a7ae-4222-aa54-091ff7f429a7\",\n          \"dictionary\": \"ExampleTagDictionary\",\n          \"tag\": \"tx-label\",\n          \"code\": \"CODE tag\",\n          \"visible\": true,\n          \"description\": \"Label to mark transactions\"\n        },\n        {\n          \"id\": \"2d65bd5e-3fdf-4002-b166-bde7fb8863fa\",\n          \"dictionary_id\": \"7bf79328-a7ae-4222-aa54-091ff7f429a7\",\n          \"dictionary\": \"ExampleTagDictionary\",\n          \"tag\": \"tx-label\",\n          \"code\": \"CODE tag\",\n          \"visible\": true,\n          \"description\": \"Label to mark transactions\"\n        }\n      ],\n      \"employee\": {\n        \"id\": \"XMPL1234-000001\",\n        \"name\": \"John\",\n        \"surname\": \"Smith\",\n        \"middlename\": \"John\",\n        \"dob\": \"1970-10-21\",\n        \"job_title\": \"Business Strategist\",\n        \"department\": \"Research & Development\",\n        \"email\": \"jdoe@fake.soldo.com\",\n        \"mobile\": \"+44123323232\",\n        \"mobile_prefix\": \"+44\",\n        \"custom_reference_id\": \"123456-user-1\",\n        \"status\": \"ACTIVE\",\n        \"visible\": true,\n        \"mobile_access\": true,\n        \"web_access\": true,\n        \"groups\": [\n          \"7bf79328-a7ae-4222-aa54-091ff7f429a7\",\n          \"2d65bd5e-3fdf-4002-b166-bde7fb8863fa\"\n        ],\n        \"shipping_address\": {\n          \"id\": \"7bf79328-a7ae-4222-aa54-091ff7f429a7\",\n          \"recipient\": \"JohnSmith\",\n          \"name\": \"Foo Street 75\",\n          \"line1\": \"Bar Street 64\",\n          \"line2\": \"Other street 31\",\n          \"country\": \"GB\",\n          \"county\": \"LD\",\n          \"city\": \"London\",\n          \"post_code\": \"00000\",\n          \"delivery_phone_number\": \"+441234567890\",\n          \"default_shipping\": false,\n          \"type\": \"SHIPPING\",\n          \"category\": \"COMPANY\",\n          \"user_id\": \"string\",\n          \"creation_time\": \"2017-06-01T12:48:40Z\",\n          \"last_update\": \"2017-06-01T12:48:40Z\"\n        },\n        \"reports_to\": \"XMPL1234-000001\",\n        \"roles\": [\n          {\n            \"id\": \"superAdmin\",\n            \"name\": \"superAdmin\",\n            \"description\": \"The SuperAdmin role\",\n            \"scope\": \"ALL\"\n          },\n          {\n            \"id\": \"superAdmin\",\n            \"name\": \"superAdmin\",\n            \"description\": \"The SuperAdmin role\",\n            \"scope\": \"ALL\"\n          }\n        ],\n        \"contact_id\": \"135fdb6c-2e77-4fc0-a79f-2453fde75ef7\",\n        \"creation_time\": \"2017-06-01T12:48:40Z\",\n        \"last_update\": \"2017-06-01T12:48:40Z\",\n        \"work_status\": \"OUT_OF_OFFICE\"\n      },\n      \"expense_category\": {\n        \"id\": \"7bf79328-a7ae-4222-aa54-091ff7f429a7\",\n        \"code\": \"string\",\n        \"name\": \"category-one\",\n        \"description\": \"An expense category\",\n        \"tax_rate_id\": \"c861cc24-6663-410f-8c78-73f886fff4ef\",\n        \"enabled\": false,\n        \"merchant_categories\": [\n          \"Shopping_Accessories\",\n          \"Shopping_Clothes\"\n        ],\n        \"expense_type\": \"TRAVEL_AND_ENTERTAINMENT\",\n        \"integration\": \"Netsuite\",\n        \"creation_time\": \"2017-06-01T12:48:40Z\",\n        \"last_update_time\": \"2017-06-01T12:48:40Z\"\n      },\n      \"tax_rate\": {\n        \"id\": \"7bf79328-a7ae-4222-aa54-091ff7f429a7\",\n        \"code\": \"code-vat-11\",\n        \"name\": \"Tax 11\",\n        \"description\": \"Number 11 of Tax code\",\n        \"percentage\": 15,\n        \"enabled\": true,\n        \"integration\": \"something\",\n        \"creation_time\": \"2017-06-01T12:48:40Z\",\n        \"last_update_time\": \"2017-06-01T12:48:40Z\"\n      },\n      \"approved_amount\": {\n        \"amount\": 10.25,\n        \"currency\": \"EUR\"\n      },\n      \"rejected_amount\": {\n        \"amount\": 10.25,\n        \"currency\": \"EUR\"\n      }\n    },\n    {\n      \"amount\": {\n        \"amount\": 10.25,\n        \"currency\": \"EUR\"\n      },\n      \"vat_amount\": {\n        \"amount\": 10.25,\n        \"currency\": \"EUR\"\n      },\n      \"expense_type\": \"TRAVEL_AND_ENTERTAINMENT\",\n      \"line_number\": 1,\n      \"tags\": [\n        {\n          \"id\": \"2d65bd5e-3fdf-4002-b166-bde7fb8863fa\",\n          \"dictionary_id\": \"7bf79328-a7ae-4222-aa54-091ff7f429a7\",\n          \"dictionary\": \"ExampleTagDictionary\",\n          \"tag\": \"tx-label\",\n          \"code\": \"CODE tag\",\n          \"visible\": true,\n          \"description\": \"Label to mark transactions\"\n        },\n        {\n          \"id\": \"2d65bd5e-3fdf-4002-b166-bde7fb8863fa\",\n          \"dictionary_id\": \"7bf79328-a7ae-4222-aa54-091ff7f429a7\",\n          \"dictionary\": \"ExampleTagDictionary\",\n          \"tag\": \"tx-label\",\n          \"code\": \"CODE tag\",\n          \"visible\": true,\n          \"description\": \"Label to mark transactions\"\n        }\n      ],\n      \"employee\": {\n        \"id\": \"XMPL1234-000001\",\n        \"name\": \"John\",\n        \"surname\": \"Smith\",\n        \"middlename\": \"John\",\n        \"dob\": \"1970-10-21\",\n        \"job_title\": \"Business Strategist\",\n        \"department\": \"Research & Development\",\n        \"email\": \"jdoe@fake.soldo.com\",\n        \"mobile\": \"+44123323232\",\n        \"mobile_prefix\": \"+44\",\n        \"custom_reference_id\": \"123456-user-1\",\n        \"status\": \"ACTIVE\",\n        \"visible\": true,\n        \"mobile_access\": true,\n        \"web_access\": true,\n        \"groups\": [\n          \"7bf79328-a7ae-4222-aa54-091ff7f429a7\",\n          \"2d65bd5e-3fdf-4002-b166-bde7fb8863fa\"\n        ],\n        \"shipping_address\": {\n          \"id\": \"7bf79328-a7ae-4222-aa54-091ff7f429a7\",\n          \"recipient\": \"JohnSmith\",\n          \"name\": \"Foo Street 75\",\n          \"line1\": \"Bar Street 64\",\n          \"line2\": \"Other street 31\",\n          \"country\": \"GB\",\n          \"county\": \"LD\",\n          \"city\": \"London\",\n          \"post_code\": \"00000\",\n          \"delivery_phone_number\": \"+441234567890\",\n          \"default_shipping\": false,\n          \"type\": \"SHIPPING\",\n          \"category\": \"COMPANY\",\n          \"user_id\": \"string\",\n          \"creation_time\": \"2017-06-01T12:48:40Z\",\n          \"last_update\": \"2017-06-01T12:48:40Z\"\n        },\n        \"reports_to\": \"XMPL1234-000001\",\n        \"roles\": [\n          {\n            \"id\": \"superAdmin\",\n            \"name\": \"superAdmin\",\n            \"description\": \"The SuperAdmin role\",\n            \"scope\": \"ALL\"\n          },\n          {\n            \"id\": \"superAdmin\",\n            \"name\": \"superAdmin\",\n            \"description\": \"The SuperAdmin role\",\n            \"scope\": \"ALL\"\n          }\n        ],\n        \"contact_id\": \"135fdb6c-2e77-4fc0-a79f-2453fde75ef7\",\n        \"creation_time\": \"2017-06-01T12:48:40Z\",\n        \"last_update\": \"2017-06-01T12:48:40Z\",\n        \"work_status\": \"OUT_OF_OFFICE\"\n      },\n      \"expense_category\": {\n        \"id\": \"7bf79328-a7ae-4222-aa54-091ff7f429a7\",\n        \"code\": \"string\",\n        \"name\": \"category-one\",\n        \"description\": \"An expense category\",\n        \"tax_rate_id\": \"c861cc24-6663-410f-8c78-73f886fff4ef\",\n        \"enabled\": false,\n        \"merchant_categories\": [\n          \"Services_Educational\",\n          \"Shopping_Direct_Marketing\"\n        ],\n        \"expense_type\": \"TRAVEL_AND_ENTERTAINMENT\",\n        \"integration\": \"Netsuite\",\n        \"creation_time\": \"2017-06-01T12:48:40Z\",\n        \"last_update_time\": \"2017-06-01T12:48:40Z\"\n      },\n      \"tax_rate\": {\n        \"id\": \"7bf79328-a7ae-4222-aa54-091ff7f429a7\",\n        \"code\": \"code-vat-11\",\n        \"name\": \"Tax 11\",\n        \"description\": \"Number 11 of Tax code\",\n        \"percentage\": 15,\n        \"enabled\": true,\n        \"integration\": \"something\",\n        \"creation_time\": \"2017-06-01T12:48:40Z\",\n        \"last_update_time\": \"2017-06-01T12:48:40Z\"\n      },\n      \"approved_amount\": {\n        \"amount\": 10.25,\n        \"currency\": \"EUR\"\n      },\n      \"rejected_amount\": {\n        \"amount\": 10.25,\n        \"currency\": \"EUR\"\n      }\n    }\n  ],\n  \"timeline\": [\n    {\n      \"created_at\": \"2017-06-01T12:48:40Z\",\n      \"status\": \"Settled\",\n      \"amount\": 10.25,\n      \"balance_after\": {\n        \"available_amount\": 10.25,\n        \"pending_amount\": 10.25,\n        \"ledger_amount\": 10.25\n      },\n      \"balance_before\": {\n        \"available_amount\": 10.25,\n        \"pending_amount\": 10.25,\n        \"ledger_amount\": 10.25\n      },\n      \"is_fee\": true\n    },\n    {\n      \"created_at\": \"2017-06-01T12:48:40Z\",\n      \"status\": \"Settled\",\n      \"amount\": 10.25,\n      \"balance_after\": {\n        \"available_amount\": 10.25,\n        \"pending_amount\": 10.25,\n        \"ledger_amount\": 10.25\n      },\n      \"balance_before\": {\n        \"available_amount\": 10.25,\n        \"pending_amount\": 10.25,\n        \"ledger_amount\": 10.25\n      },\n      \"is_fee\": true\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6563a0cd-b472-4e26-9d16-c53fa891f965",
+              "name": "Your request has missing arguments or is malformed.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "business",
+                    "v2",
+                    "transactions",
+                    ":transactionId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "transactionId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "X-Soldo-Fingerprint",
+                    "value": "{{fingerprint}}"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "X-Soldo-Fingerprint-Signature",
+                    "value": "{{fingerprint_signature}}"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"trx_owner_id\": \"XMPL1234-000001\",\n  \"user_notes\": \"something\",\n  \"invoice\": {\n    \"number\": \"INV-2023-001\",\n    \"date\": \"2023-01-23\",\n    \"po_number\": \"PO-2023-001\",\n    \"supplier_vat_number\": \"JqbPwWm4\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "81cebcdd-ef9b-4cfc-a7f2-9827b90cce1d",
+              "name": "One or more resource requested does not exist.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "business",
+                    "v2",
+                    "transactions",
+                    ":transactionId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "transactionId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "X-Soldo-Fingerprint",
+                    "value": "{{fingerprint}}"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "X-Soldo-Fingerprint-Signature",
+                    "value": "{{fingerprint_signature}}"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"trx_owner_id\": \"XMPL1234-000001\",\n  \"user_notes\": \"something\",\n  \"invoice\": {\n    \"number\": \"INV-2023-001\",\n    \"date\": \"2023-01-23\",\n    \"po_number\": \"PO-2023-001\",\n    \"supplier_vat_number\": \"JqbPwWm4\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "43e57496-c70c-4fc5-bbef-7b8c53534233",
+          "name": "Search Transactions",
+          "request": {
+            "name": "Search Transactions",
+            "description": {
+              "content": "Endpoint to find `Transactions` using filtering parameters.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "business",
+                "v2",
+                "transactions"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "type",
+                  "value": "<string>",
+                  "description": "The resource `type` to be used together with id."
+                },
+                {
+                  "disabled": false,
+                  "key": "hasAttachment",
+                  "value": "<boolean>",
+                  "description": "Looks whether or not a `TransactionAttachment` is present."
+                },
+                {
+                  "disabled": false,
+                  "key": "publicId",
+                  "value": "<string>",
+                  "description": "The ID of the `type` resource."
+                },
+                {
+                  "disabled": false,
+                  "key": "customreferenceId",
+                  "value": "<string>",
+                  "description": "The custom reference ID of the cardholder."
+                },
+                {
+                  "disabled": false,
+                  "key": "dateType",
+                  "value": "TRANSACTION",
+                  "description": "It determines the date to be considered for `fromDate` and `toDate` parameters."
+                },
+                {
+                  "disabled": false,
+                  "key": "groupId",
+                  "value": "<string>",
+                  "description": "The ID of the `Group` of the transactions."
+                },
+                {
+                  "disabled": false,
+                  "key": "category",
+                  "value": "<string>",
+                  "description": "It determines the filter by category of the transaction, multiple categories can be included."
+                },
+                {
+                  "disabled": false,
+                  "key": "category",
+                  "value": "<string>",
+                  "description": "It determines the filter by category of the transaction, multiple categories can be included."
+                },
+                {
+                  "disabled": false,
+                  "key": "status",
+                  "value": "<string>",
+                  "description": "It determines the filter by status of the transaction, multiple statuses can be included."
+                },
+                {
+                  "disabled": false,
+                  "key": "status",
+                  "value": "<string>",
+                  "description": "It determines the filter by status of the transaction, multiple statuses can be included."
+                },
+                {
+                  "disabled": false,
+                  "key": "paymentMethod",
+                  "value": "<string>",
+                  "description": "It determines the filter by payment method of the transaction, multiple payment methods can be included. `OUT_OF_PLATFORM_COMPANY` and `OUT_OF_PLATFORM_PERSONAL` are not included by default."
+                },
+                {
+                  "disabled": false,
+                  "key": "paymentMethod",
+                  "value": "<string>",
+                  "description": "It determines the filter by payment method of the transaction, multiple payment methods can be included. `OUT_OF_PLATFORM_COMPANY` and `OUT_OF_PLATFORM_PERSONAL` are not included by default."
+                },
+                {
+                  "disabled": false,
+                  "key": "tagId",
+                  "value": "<string>",
+                  "description": "The ID of the `Tag` of the transaction."
+                },
+                {
+                  "disabled": false,
+                  "key": "metadataId",
+                  "value": "<string>",
+                  "description": "The ID of the custom generated `Metadata` of the `Transaction`."
+                },
+                {
+                  "disabled": false,
+                  "key": "text",
+                  "value": "<string>",
+                  "description": "A simple text to search in the transaction data (merchant, merchant category, user notes, tag, list, masked pan, card name, tx amount, vehicle plate, vehicle description)."
+                },
+                {
+                  "disabled": false,
+                  "key": "expenseType",
+                  "value": "<string>",
+                  "description": "The type of the expense."
+                },
+                {
+                  "disabled": false,
+                  "key": "expenseType",
+                  "value": "<string>",
+                  "description": "The type of the expense."
+                },
+                {
+                  "disabled": false,
+                  "key": "expenseStatus",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "expenseStatus",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "expenseCategoryId",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "expenseCategoryId",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "expenseReportId",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "expenseReportId",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "exportStatus",
+                  "value": "<string>",
+                  "description": "The export status of the expense."
+                },
+                {
+                  "disabled": false,
+                  "key": "taxRateId",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "taxRateId",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "requiredInformation",
+                  "value": "<string>",
+                  "description": "To search transactions with (or without) required information. A transaction is `COMPLETE` when all details marked as mandatory in the `Reminders` section have been filled in for the transaction."
+                },
+                {
+                  "disabled": false,
+                  "key": "isSplit",
+                  "value": "<boolean>",
+                  "description": "Looks whether or not a transaction is split."
+                },
+                {
+                  "disabled": false,
+                  "key": "customExportedProduct",
+                  "value": "<string>",
+                  "description": "A product that exported list of `Transaction`"
+                },
+                {
+                  "disabled": false,
+                  "key": "customExported",
+                  "value": "<boolean>",
+                  "description": "Looks whether or not a `TransactionCustomExport` is present."
+                },
+                {
+                  "disabled": false,
+                  "key": "p",
+                  "value": "0",
+                  "description": "It indicates the specific page to display (the counter starts from zero)."
+                },
+                {
+                  "disabled": false,
+                  "key": "s",
+                  "value": "0",
+                  "description": "It indicates the number of items per page."
+                },
+                {
+                  "disabled": false,
+                  "key": "d",
+                  "value": "<string>",
+                  "description": "It indicates how the pages are ordered."
+                },
+                {
+                  "disabled": false,
+                  "key": "props",
+                  "value": "<string>",
+                  "description": "It indicates the sorting direction applied to the above parameters. To apply a sorting on multiple parameters, set as many times the `props` parameter in the request."
+                },
+                {
+                  "disabled": false,
+                  "key": "props",
+                  "value": "<string>",
+                  "description": "It indicates the sorting direction applied to the above parameters. To apply a sorting on multiple parameters, set as many times the `props` parameter in the request."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) ",
+                "key": "X-Soldo-Fingerprint",
+                "value": "{{fingerprint}}"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) ",
+                "key": "X-Soldo-Fingerprint-Signature",
+                "value": "{{fingerprint_signature}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "address_read address_write card_read card_write company_read company_write contact_read contact_write employee_read employee_write expense_category_read expense_category_write expense_report_read expense_report_write expense_review_read expense_review_write group_read group_write online_ads_read online_ads_write payment_read payment_write purchase_read purchase_write refueling_read refueling_write resource_set_read resource_set_write role_read statement_read subscription_read subscription_write tag_read tag_write tax_rate_read tax_rate_write transaction_read transaction_write vehicle_read vehicle_write wallet_read wallet_write webhook_subscription_read webhook_subscription_write"
+                },
+                {
+                  "key": "redirect_uri",
+                  "value": "https://api.soldo.com/oauth/refresh"
+                },
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://api.soldo.com/oauth/authorize"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "5310eb5a-21f1-4922-8287-414ce5eb1555",
+              "name": "The result array contains `Transactions`.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "business",
+                    "v2",
+                    "transactions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "type",
+                      "value": "card"
+                    },
+                    {
+                      "key": "hasAttachment",
+                      "value": "true"
+                    },
+                    {
+                      "key": "publicId",
+                      "value": "7bf79328-a7ae-4222-aa54-091ff7f429a7"
+                    },
+                    {
+                      "key": "customreferenceId",
+                      "value": "2d65bd5e-3fdf-4002-b166-bde7fb8863fa"
+                    },
+                    {
+                      "key": "dateType",
+                      "value": "TRANSACTION"
+                    },
+                    {
+                      "key": "groupId",
+                      "value": "c861cc24-6663-410f-8c78-73f886fff4ef"
+                    },
+                    {
+                      "key": "category",
+                      "value": "FeeReversal"
+                    },
+                    {
+                      "key": "category",
+                      "value": "InterAccountTransferWithdrawalRecurringBilling"
+                    },
+                    {
+                      "key": "status",
+                      "value": "Settled"
+                    },
+                    {
+                      "key": "status",
+                      "value": "DisputeFailed"
+                    },
+                    {
+                      "key": "paymentMethod",
+                      "value": "COMPANY"
+                    },
+                    {
+                      "key": "paymentMethod",
+                      "value": "ONLINE_ADS"
+                    },
+                    {
+                      "key": "tagId",
+                      "value": "6853e657-c797-4985-8d6b-5425d4e51df8"
+                    },
+                    {
+                      "key": "metadataId",
+                      "value": "express"
+                    },
+                    {
+                      "key": "text",
+                      "value": "Amazon"
+                    },
+                    {
+                      "key": "expenseType",
+                      "value": "TRAVEL_AND_ENTERTAINMENT"
+                    },
+                    {
+                      "key": "expenseType",
+                      "value": "TRAVEL_AND_ENTERTAINMENT"
+                    },
+                    {
+                      "key": "expenseStatus",
+                      "value": "TO_REVIEW"
+                    },
+                    {
+                      "key": "expenseStatus",
+                      "value": "DENIED"
+                    },
+                    {
+                      "key": "expenseCategoryId",
+                      "value": "2d65bd5e-3fdf-4002-b166-bde7fb8863fa"
+                    },
+                    {
+                      "key": "expenseReportId",
+                      "value": "c861cc24-6663-410f-8c78-73f886fff4ef"
+                    },
+                    {
+                      "key": "expenseReportId",
+                      "value": "c861cc24-6663-410f-8c78-73f886fff4ef"
+                    },
+                    {
+                      "key": "exportStatus",
+                      "value": "EXPORTED"
+                    },
+                    {
+                      "key": "taxRateId",
+                      "value": "7bf79328-a7ae-4222-aa54-091ff7f429a7"
+                    },
+                    {
+                      "key": "taxRateId",
+                      "value": "7bf79328-a7ae-4222-aa54-091ff7f429a7"
+                    },
+                    {
+                      "key": "requiredInformation",
+                      "value": "COMPLETE"
+                    },
+                    {
+                      "key": "isSplit",
+                      "value": "true"
+                    },
+                    {
+                      "key": "customExportedProduct",
+                      "value": "SAP"
+                    },
+                    {
+                      "key": "customExported",
+                      "value": "true"
+                    },
+                    {
+                      "key": "p",
+                      "value": "3"
+                    },
+                    {
+                      "key": "s",
+                      "value": "25"
+                    },
+                    {
+                      "key": "d",
+                      "value": "DESC"
+                    },
+                    {
+                      "key": "props",
+                      "value": "creationTime"
+                    },
+                    {
+                      "key": "props",
+                      "value": "creationTime"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "X-Soldo-Fingerprint",
+                    "value": "{{fingerprint}}"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "X-Soldo-Fingerprint-Signature",
+                    "value": "{{fingerprint_signature}}"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"total\": 168,\n  \"pages\": 7,\n  \"page_size\": 25,\n  \"current_page\": 0,\n  \"results_size\": 25,\n  \"results\": [\n    {\n      \"id\": \"7bf79328-a7ae-4222-aa54-091ff7f429a7\",\n      \"wallet_id\": \"6853e657-c797-4985-8d6b-5425d4e51df8\",\n      \"wallet_name\": \"John Doe\",\n      \"status\": \"Settled\",\n      \"category\": \"Payment\",\n      \"transaction_sign\": \"Negative\",\n      \"purchase_id\": \"6853e657-c797-4985-8d6b-5425d4e51df8\",\n      \"amount\": 10.25,\n      \"amount_currency\": \"EUR\",\n      \"tx_amount\": 10.25,\n      \"tx_amount_currency\": \"EUR\",\n      \"fee_amount\": 10.25,\n      \"fee_currency\": \"EUR\",\n      \"exchange_rate\": 1,\n      \"auth_exchange_rate\": 1,\n      \"expense_status\": \"APPROVED\",\n      \"expense_type\": \"TRAVEL_AND_ENTERTAINMENT\",\n      \"expense_date\": \"2017-06-01T12:48:40Z\",\n      \"expense_reviewer\": \"XMPL1234-000001\",\n      \"expense_approved_amount\": 10.25,\n      \"expense_report_id\": \"c861cc24-6663-410f-8c78-73f886fff4ef\",\n      \"date\": \"2017-06-01T12:48:40Z\",\n      \"settlement_date\": \"2017-06-01T12:48:40Z\",\n      \"update_time\": \"2017-06-01T12:48:40Z\",\n      \"merchant\": {\n        \"id\": \"string\",\n        \"name\": \"SHH HOTEL LONDON\",\n        \"raw_name\": \"SHERLOCK HOLMES HOTEL  LONDON        GBR\",\n        \"code\": \"string\",\n        \"address\": \"string\"\n      },\n      \"merchant_category\": {\n        \"description\": \"Travel\",\n        \"mcc\": \"string\",\n        \"mcc_description\": \"Lodging - Hotels, Motels, Resorts - not elsewhere classified\",\n        \"code\": \"Lodging - Hotels, Motels, Resorts - not elsewhere classified\",\n        \"sub_category\": \"Hotels\"\n      },\n      \"tags\": [\n        {\n          \"id\": \"2d65bd5e-3fdf-4002-b166-bde7fb8863fa\",\n          \"dictionary_id\": \"7bf79328-a7ae-4222-aa54-091ff7f429a7\",\n          \"dictionary\": \"ExampleTagDictionary\",\n          \"tag\": \"tx-label\",\n          \"code\": \"CODE tag\",\n          \"visible\": true,\n          \"description\": \"Label to mark transactions\"\n        },\n        {\n          \"id\": \"2d65bd5e-3fdf-4002-b166-bde7fb8863fa\",\n          \"dictionary_id\": \"7bf79328-a7ae-4222-aa54-091ff7f429a7\",\n          \"dictionary\": \"ExampleTagDictionary\",\n          \"tag\": \"tx-label\",\n          \"code\": \"CODE tag\",\n          \"visible\": true,\n          \"description\": \"Label to mark transactions\"\n        }\n      ],\n      \"card_id\": \"6853e657-c797-4985-8d6b-5425d4e51df8\",\n      \"masked_pan\": \"123456******1234\",\n      \"owner_name\": \"John\",\n      \"owner_surname\": \"Smith\",\n      \"owner_type\": \"company\",\n      \"owner_id\": \"XMPL1234-000003\",\n      \"custom_reference_id\": \"123456-user-1\",\n      \"group_id\": \"2d65bd5e-3fdf-4002-b166-bde7fb8863fa\",\n      \"has_attachments\": false,\n      \"trx_owner_id\": \"XMPL1234-000003\",\n      \"metadata_ids\": [\n        \"express\"\n      ],\n      \"fuel_details\": {\n        \"plate\": \"AA000BB\",\n        \"vehicle_fuel_type\": \"PETROL\",\n        \"vat_deductibility_percentage\": \"40%\",\n        \"mileage\": 125000,\n        \"quantity\": 80,\n        \"unit_price\": 1.41,\n        \"tx_fuel_type\": \"PETROL\",\n        \"to_be_ignored\": false,\n        \"invoice_id\": 4421109,\n        \"invoice_number\": \"NVC112200987\",\n        \"invoice_date\": \"2017-06-01T12:48:40Z\",\n        \"invoice_total_amount\": 10.25,\n        \"invoice_row\": 4,\n        \"invoice_row_amount\": 10.25,\n        \"supplier_vat_id\": \"string\",\n        \"dri\": \"DRI00099881\",\n        \"vehicle_id\": \"6853e657-c797-4985-8d6b-5425d4e51df8\"\n      },\n      \"vat_percentage\": 15,\n      \"vat_amount\": 10.25,\n      \"vat_currency\": \"EUR\",\n      \"user_notes\": \"string\",\n      \"notes\": \"string\",\n      \"direct_url\": \"string\",\n      \"flags\": [\n        \"forUser\"\n      ],\n      \"payment_method\": \"ONLINE_ADS\",\n      \"payment_method_id\": \"6853e657-c797-4985-8d6b-5425d4e51df8\",\n      \"expense_category\": {\n        \"id\": \"7bf79328-a7ae-4222-aa54-091ff7f429a7\",\n        \"code\": \"string\",\n        \"name\": \"category-one\",\n        \"description\": \"An expense category\",\n        \"tax_rate_id\": \"c861cc24-6663-410f-8c78-73f886fff4ef\",\n        \"enabled\": false,\n        \"merchant_categories\": [\n          \"Shopping_Automotive\",\n          \"Advertising\"\n        ],\n        \"expense_type\": \"TRAVEL_AND_ENTERTAINMENT\",\n        \"integration\": \"Netsuite\",\n        \"creation_time\": \"2017-06-01T12:48:40Z\",\n        \"last_update_time\": \"2017-06-01T12:48:40Z\"\n      },\n      \"tax_rate\": {\n        \"id\": \"7bf79328-a7ae-4222-aa54-091ff7f429a7\",\n        \"code\": \"code-vat-11\",\n        \"name\": \"Tax 11\",\n        \"description\": \"Number 11 of Tax code\",\n        \"percentage\": 15,\n        \"enabled\": true,\n        \"integration\": \"something\",\n        \"creation_time\": \"2017-06-01T12:48:40Z\",\n        \"last_update_time\": \"2017-06-01T12:48:40Z\"\n      },\n      \"split\": false,\n      \"tx_id\": \"5-857211147-150603333585014265\",\n      \"payment_trn_code\": \"1234567890123456789012345678IT\",\n      \"carbon_emissions\": {\n        \"value\": 7058.385145600418,\n        \"unit\": \"string\"\n      },\n      \"required_information\": \"COMPLETE\",\n      \"reimbursement_expense_report_id\": \"string\",\n      \"invoice\": {\n        \"number\": \"INV-2023-001\",\n        \"date\": \"2023-01-23\",\n        \"po_number\": \"PO-2023-001\",\n        \"supplier_vat_number\": \"ZYhg1vj\"\n      },\n      \"source\": {\n        \"name\": \"J. Doe\",\n        \"type\": \"BANK_TRANSFER\",\n        \"destination_wallet_id\": \"de29bffb-7da2-40f1-934a-241170762d3e\",\n        \"destination_wallet_name\": \"EURO VIBAN\"\n      },\n      \"custom_export\": [\n        {\n          \"product\": \"SAP\",\n          \"export_date\": \"2017-06-01T12:48:40Z\"\n        },\n        {\n          \"product\": \"SAP\",\n          \"export_date\": \"2017-06-01T12:48:40Z\"\n        }\n      ],\n      \"out_spending_policy\": {\n        \"approved_amount\": {\n          \"amount\": 10.25,\n          \"currency\": \"EUR\"\n        },\n        \"rejected_amount\": {\n          \"amount\": 10.25,\n          \"currency\": \"EUR\"\n        }\n      },\n      \"business_trip_id\": \"string\",\n      \"details\": {\n        \"tx_country\": \"GBR\"\n      },\n      \"split_transactions\": [\n        {\n          \"line_number\": 1,\n          \"amount\": {\n            \"amount\": 10.25,\n            \"currency\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"vat_amount\": {\n            \"amount\": 10.25,\n            \"currency\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"expense_type\": \"TRAVEL_AND_ENTERTAINMENT\",\n          \"employee\": {\n            \"id\": \"6853e657-c797-4985-8d6b-5425d4e51df8\"\n          },\n          \"expense_category\": {\n            \"id\": \"6853e657-c797-4985-8d6b-5425d4e51df8\"\n          },\n          \"tax_rate\": {\n            \"id\": \"6853e657-c797-4985-8d6b-5425d4e51df8\"\n          },\n          \"tags\": [\n            {\n              \"id\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"dictionary_id\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"dictionary\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"tag\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"code\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"visible\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"description\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            {\n              \"id\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"dictionary_id\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"dictionary\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"tag\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"code\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"visible\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"description\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          ],\n          \"approved_amount\": {\n            \"amount\": 10.25,\n            \"currency\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"rejected_amount\": {\n            \"amount\": 10.25,\n            \"currency\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        },\n        {\n          \"line_number\": 1,\n          \"amount\": {\n            \"amount\": 10.25,\n            \"currency\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"vat_amount\": {\n            \"amount\": 10.25,\n            \"currency\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"expense_type\": \"TRAVEL_AND_ENTERTAINMENT\",\n          \"employee\": {\n            \"id\": \"6853e657-c797-4985-8d6b-5425d4e51df8\"\n          },\n          \"expense_category\": {\n            \"id\": \"6853e657-c797-4985-8d6b-5425d4e51df8\"\n          },\n          \"tax_rate\": {\n            \"id\": \"6853e657-c797-4985-8d6b-5425d4e51df8\"\n          },\n          \"tags\": [\n            {\n              \"id\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"dictionary_id\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"dictionary\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"tag\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"code\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"visible\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"description\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            {\n              \"id\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"dictionary_id\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"dictionary\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"tag\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"code\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"visible\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"description\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          ],\n          \"approved_amount\": {\n            \"amount\": 10.25,\n            \"currency\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"rejected_amount\": {\n            \"amount\": 10.25,\n            \"currency\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        }\n      ]\n    },\n    {\n      \"id\": \"7bf79328-a7ae-4222-aa54-091ff7f429a7\",\n      \"wallet_id\": \"6853e657-c797-4985-8d6b-5425d4e51df8\",\n      \"wallet_name\": \"John Doe\",\n      \"status\": \"Settled\",\n      \"category\": \"Payment\",\n      \"transaction_sign\": \"Negative\",\n      \"purchase_id\": \"6853e657-c797-4985-8d6b-5425d4e51df8\",\n      \"amount\": 10.25,\n      \"amount_currency\": \"EUR\",\n      \"tx_amount\": 10.25,\n      \"tx_amount_currency\": \"EUR\",\n      \"fee_amount\": 10.25,\n      \"fee_currency\": \"EUR\",\n      \"exchange_rate\": 1,\n      \"auth_exchange_rate\": 1,\n      \"expense_status\": \"APPROVED\",\n      \"expense_type\": \"TRAVEL_AND_ENTERTAINMENT\",\n      \"expense_date\": \"2017-06-01T12:48:40Z\",\n      \"expense_reviewer\": \"XMPL1234-000001\",\n      \"expense_approved_amount\": 10.25,\n      \"expense_report_id\": \"c861cc24-6663-410f-8c78-73f886fff4ef\",\n      \"date\": \"2017-06-01T12:48:40Z\",\n      \"settlement_date\": \"2017-06-01T12:48:40Z\",\n      \"update_time\": \"2017-06-01T12:48:40Z\",\n      \"merchant\": {\n        \"id\": \"string\",\n        \"name\": \"SHH HOTEL LONDON\",\n        \"raw_name\": \"SHERLOCK HOLMES HOTEL  LONDON        GBR\",\n        \"code\": \"string\",\n        \"address\": \"string\"\n      },\n      \"merchant_category\": {\n        \"description\": \"Travel\",\n        \"mcc\": \"string\",\n        \"mcc_description\": \"Lodging - Hotels, Motels, Resorts - not elsewhere classified\",\n        \"code\": \"Lodging - Hotels, Motels, Resorts - not elsewhere classified\",\n        \"sub_category\": \"Hotels\"\n      },\n      \"tags\": [\n        {\n          \"id\": \"2d65bd5e-3fdf-4002-b166-bde7fb8863fa\",\n          \"dictionary_id\": \"7bf79328-a7ae-4222-aa54-091ff7f429a7\",\n          \"dictionary\": \"ExampleTagDictionary\",\n          \"tag\": \"tx-label\",\n          \"code\": \"CODE tag\",\n          \"visible\": true,\n          \"description\": \"Label to mark transactions\"\n        },\n        {\n          \"id\": \"2d65bd5e-3fdf-4002-b166-bde7fb8863fa\",\n          \"dictionary_id\": \"7bf79328-a7ae-4222-aa54-091ff7f429a7\",\n          \"dictionary\": \"ExampleTagDictionary\",\n          \"tag\": \"tx-label\",\n          \"code\": \"CODE tag\",\n          \"visible\": true,\n          \"description\": \"Label to mark transactions\"\n        }\n      ],\n      \"card_id\": \"6853e657-c797-4985-8d6b-5425d4e51df8\",\n      \"masked_pan\": \"123456******1234\",\n      \"owner_name\": \"John\",\n      \"owner_surname\": \"Smith\",\n      \"owner_type\": \"company\",\n      \"owner_id\": \"XMPL1234-000003\",\n      \"custom_reference_id\": \"123456-user-1\",\n      \"group_id\": \"2d65bd5e-3fdf-4002-b166-bde7fb8863fa\",\n      \"has_attachments\": false,\n      \"trx_owner_id\": \"XMPL1234-000003\",\n      \"metadata_ids\": [\n        \"express\"\n      ],\n      \"fuel_details\": {\n        \"plate\": \"AA000BB\",\n        \"vehicle_fuel_type\": \"PETROL\",\n        \"vat_deductibility_percentage\": \"40%\",\n        \"mileage\": 125000,\n        \"quantity\": 80,\n        \"unit_price\": 1.41,\n        \"tx_fuel_type\": \"PETROL\",\n        \"to_be_ignored\": false,\n        \"invoice_id\": 4421109,\n        \"invoice_number\": \"NVC112200987\",\n        \"invoice_date\": \"2017-06-01T12:48:40Z\",\n        \"invoice_total_amount\": 10.25,\n        \"invoice_row\": 4,\n        \"invoice_row_amount\": 10.25,\n        \"supplier_vat_id\": \"string\",\n        \"dri\": \"DRI00099881\",\n        \"vehicle_id\": \"6853e657-c797-4985-8d6b-5425d4e51df8\"\n      },\n      \"vat_percentage\": 15,\n      \"vat_amount\": 10.25,\n      \"vat_currency\": \"EUR\",\n      \"user_notes\": \"string\",\n      \"notes\": \"string\",\n      \"direct_url\": \"string\",\n      \"flags\": [\n        \"forUser\"\n      ],\n      \"payment_method\": \"ONLINE_ADS\",\n      \"payment_method_id\": \"6853e657-c797-4985-8d6b-5425d4e51df8\",\n      \"expense_category\": {\n        \"id\": \"7bf79328-a7ae-4222-aa54-091ff7f429a7\",\n        \"code\": \"string\",\n        \"name\": \"category-one\",\n        \"description\": \"An expense category\",\n        \"tax_rate_id\": \"c861cc24-6663-410f-8c78-73f886fff4ef\",\n        \"enabled\": false,\n        \"merchant_categories\": [\n          \"Services_Wholesale\",\n          \"Services_Educational\"\n        ],\n        \"expense_type\": \"TRAVEL_AND_ENTERTAINMENT\",\n        \"integration\": \"Netsuite\",\n        \"creation_time\": \"2017-06-01T12:48:40Z\",\n        \"last_update_time\": \"2017-06-01T12:48:40Z\"\n      },\n      \"tax_rate\": {\n        \"id\": \"7bf79328-a7ae-4222-aa54-091ff7f429a7\",\n        \"code\": \"code-vat-11\",\n        \"name\": \"Tax 11\",\n        \"description\": \"Number 11 of Tax code\",\n        \"percentage\": 15,\n        \"enabled\": true,\n        \"integration\": \"something\",\n        \"creation_time\": \"2017-06-01T12:48:40Z\",\n        \"last_update_time\": \"2017-06-01T12:48:40Z\"\n      },\n      \"split\": false,\n      \"tx_id\": \"5-857211147-150603333585014265\",\n      \"payment_trn_code\": \"1234567890123456789012345678IT\",\n      \"carbon_emissions\": {\n        \"value\": 1964.647687628126,\n        \"unit\": \"string\"\n      },\n      \"required_information\": \"COMPLETE\",\n      \"reimbursement_expense_report_id\": \"string\",\n      \"invoice\": {\n        \"number\": \"INV-2023-001\",\n        \"date\": \"2023-01-23\",\n        \"po_number\": \"PO-2023-001\",\n        \"supplier_vat_number\": \"y\"\n      },\n      \"source\": {\n        \"name\": \"J. Doe\",\n        \"type\": \"BANK_TRANSFER\",\n        \"destination_wallet_id\": \"de29bffb-7da2-40f1-934a-241170762d3e\",\n        \"destination_wallet_name\": \"EURO VIBAN\"\n      },\n      \"custom_export\": [\n        {\n          \"product\": \"SAP\",\n          \"export_date\": \"2017-06-01T12:48:40Z\"\n        },\n        {\n          \"product\": \"SAP\",\n          \"export_date\": \"2017-06-01T12:48:40Z\"\n        }\n      ],\n      \"out_spending_policy\": {\n        \"approved_amount\": {\n          \"amount\": 10.25,\n          \"currency\": \"EUR\"\n        },\n        \"rejected_amount\": {\n          \"amount\": 10.25,\n          \"currency\": \"EUR\"\n        }\n      },\n      \"business_trip_id\": \"string\",\n      \"details\": {\n        \"tx_country\": \"GBR\"\n      },\n      \"split_transactions\": [\n        {\n          \"line_number\": 1,\n          \"amount\": {\n            \"amount\": 10.25,\n            \"currency\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"vat_amount\": {\n            \"amount\": 10.25,\n            \"currency\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"expense_type\": \"TRAVEL_AND_ENTERTAINMENT\",\n          \"employee\": {\n            \"id\": \"6853e657-c797-4985-8d6b-5425d4e51df8\"\n          },\n          \"expense_category\": {\n            \"id\": \"6853e657-c797-4985-8d6b-5425d4e51df8\"\n          },\n          \"tax_rate\": {\n            \"id\": \"6853e657-c797-4985-8d6b-5425d4e51df8\"\n          },\n          \"tags\": [\n            {\n              \"id\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"dictionary_id\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"dictionary\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"tag\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"code\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"visible\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"description\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            {\n              \"id\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"dictionary_id\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"dictionary\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"tag\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"code\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"visible\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"description\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          ],\n          \"approved_amount\": {\n            \"amount\": 10.25,\n            \"currency\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"rejected_amount\": {\n            \"amount\": 10.25,\n            \"currency\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        },\n        {\n          \"line_number\": 1,\n          \"amount\": {\n            \"amount\": 10.25,\n            \"currency\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"vat_amount\": {\n            \"amount\": 10.25,\n            \"currency\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"expense_type\": \"TRAVEL_AND_ENTERTAINMENT\",\n          \"employee\": {\n            \"id\": \"6853e657-c797-4985-8d6b-5425d4e51df8\"\n          },\n          \"expense_category\": {\n            \"id\": \"6853e657-c797-4985-8d6b-5425d4e51df8\"\n          },\n          \"tax_rate\": {\n            \"id\": \"6853e657-c797-4985-8d6b-5425d4e51df8\"\n          },\n          \"tags\": [\n            {\n              \"id\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"dictionary_id\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"dictionary\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"tag\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"code\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"visible\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"description\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            {\n              \"id\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"dictionary_id\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"dictionary\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"tag\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"code\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"visible\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"description\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          ],\n          \"approved_amount\": {\n            \"amount\": 10.25,\n            \"currency\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"rejected_amount\": {\n            \"amount\": 10.25,\n            \"currency\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        }\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2dbd5eea-00da-420b-94f7-4eabfbe6554d",
+              "name": "Your request has missing arguments or is malformed.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "business",
+                    "v2",
+                    "transactions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "type",
+                      "value": "card"
+                    },
+                    {
+                      "key": "hasAttachment",
+                      "value": "true"
+                    },
+                    {
+                      "key": "publicId",
+                      "value": "7bf79328-a7ae-4222-aa54-091ff7f429a7"
+                    },
+                    {
+                      "key": "customreferenceId",
+                      "value": "2d65bd5e-3fdf-4002-b166-bde7fb8863fa"
+                    },
+                    {
+                      "key": "dateType",
+                      "value": "TRANSACTION"
+                    },
+                    {
+                      "key": "groupId",
+                      "value": "c861cc24-6663-410f-8c78-73f886fff4ef"
+                    },
+                    {
+                      "key": "category",
+                      "value": "FeeReversal"
+                    },
+                    {
+                      "key": "category",
+                      "value": "InterAccountTransferWithdrawalRecurringBilling"
+                    },
+                    {
+                      "key": "status",
+                      "value": "Settled"
+                    },
+                    {
+                      "key": "status",
+                      "value": "DisputeFailed"
+                    },
+                    {
+                      "key": "paymentMethod",
+                      "value": "COMPANY"
+                    },
+                    {
+                      "key": "paymentMethod",
+                      "value": "ONLINE_ADS"
+                    },
+                    {
+                      "key": "tagId",
+                      "value": "6853e657-c797-4985-8d6b-5425d4e51df8"
+                    },
+                    {
+                      "key": "metadataId",
+                      "value": "express"
+                    },
+                    {
+                      "key": "text",
+                      "value": "Amazon"
+                    },
+                    {
+                      "key": "expenseType",
+                      "value": "TRAVEL_AND_ENTERTAINMENT"
+                    },
+                    {
+                      "key": "expenseType",
+                      "value": "TRAVEL_AND_ENTERTAINMENT"
+                    },
+                    {
+                      "key": "expenseStatus",
+                      "value": "TO_REVIEW"
+                    },
+                    {
+                      "key": "expenseStatus",
+                      "value": "DENIED"
+                    },
+                    {
+                      "key": "expenseCategoryId",
+                      "value": "2d65bd5e-3fdf-4002-b166-bde7fb8863fa"
+                    },
+                    {
+                      "key": "expenseReportId",
+                      "value": "c861cc24-6663-410f-8c78-73f886fff4ef"
+                    },
+                    {
+                      "key": "expenseReportId",
+                      "value": "c861cc24-6663-410f-8c78-73f886fff4ef"
+                    },
+                    {
+                      "key": "exportStatus",
+                      "value": "EXPORTED"
+                    },
+                    {
+                      "key": "taxRateId",
+                      "value": "7bf79328-a7ae-4222-aa54-091ff7f429a7"
+                    },
+                    {
+                      "key": "taxRateId",
+                      "value": "7bf79328-a7ae-4222-aa54-091ff7f429a7"
+                    },
+                    {
+                      "key": "requiredInformation",
+                      "value": "COMPLETE"
+                    },
+                    {
+                      "key": "isSplit",
+                      "value": "true"
+                    },
+                    {
+                      "key": "customExportedProduct",
+                      "value": "SAP"
+                    },
+                    {
+                      "key": "customExported",
+                      "value": "true"
+                    },
+                    {
+                      "key": "p",
+                      "value": "3"
+                    },
+                    {
+                      "key": "s",
+                      "value": "25"
+                    },
+                    {
+                      "key": "d",
+                      "value": "DESC"
+                    },
+                    {
+                      "key": "props",
+                      "value": "creationTime"
+                    },
+                    {
+                      "key": "props",
+                      "value": "creationTime"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "X-Soldo-Fingerprint",
+                    "value": "{{fingerprint}}"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "X-Soldo-Fingerprint-Signature",
+                    "value": "{{fingerprint_signature}}"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.soldo.com",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "c22d4343-8e5e-49fb-a527-fefa02a8241b",
+    "name": "Soldo Business API v2.0 Accounting Classification Transactions API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Soldo Business API v2.0 OpenAPI specification",
+      "type": "text/plain"
+    }
+  }
+}

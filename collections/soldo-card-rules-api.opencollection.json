@@ -1,0 +1,448 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Soldo Business API v2.0 Accounting Classification Card Rules API",
+    "version": "5.56.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Card Rules",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get CashPoint Rules",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.soldo.com/business/v2/cards/:cardId/rules/cashpoint",
+            "params": [
+              {
+                "name": "cardId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.soldo.com/oauth/authorize",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Endpoint to get the `CardRuleCashPointRules` of the `Card`."
+        },
+        {
+          "info": {
+            "name": "Get Countries Rules",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.soldo.com/business/v2/cards/:cardId/rules/countries",
+            "params": [
+              {
+                "name": "cardId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.soldo.com/oauth/authorize",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Endpoint to get the `CardRuleCountries` of the `Card`."
+        },
+        {
+          "info": {
+            "name": "Set Countries Rules",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.soldo.com/business/v2/cards/:cardId/rules/countries",
+            "headers": [
+              {
+                "name": "X-Soldo-Fingerprint",
+                "value": ""
+              },
+              {
+                "name": "X-Soldo-Fingerprint-Signature",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "cardId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.soldo.com/oauth/authorize",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Endpoint to set the `CardRuleCountries` of the `Card`."
+        },
+        {
+          "info": {
+            "name": "Get Merchant Categories Rules",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.soldo.com/business/v2/cards/:cardId/rules/merchantCategories",
+            "params": [
+              {
+                "name": "cardId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.soldo.com/oauth/authorize",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Endpoint to get the `CardRuleMerchantCategories` of the `Card`."
+        },
+        {
+          "info": {
+            "name": "Set Merchant Categories Rules",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.soldo.com/business/v2/cards/:cardId/rules/merchantCategories",
+            "headers": [
+              {
+                "name": "X-Soldo-Fingerprint",
+                "value": ""
+              },
+              {
+                "name": "X-Soldo-Fingerprint-Signature",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "cardId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.soldo.com/oauth/authorize",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Endpoint to set the `CardRuleMerchantCategories` of the `Card`."
+        },
+        {
+          "info": {
+            "name": "Get Spending Limits Rules",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.soldo.com/business/v2/cards/:cardId/rules/spendingLimits",
+            "params": [
+              {
+                "name": "cardId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.soldo.com/oauth/authorize",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Endpoint to get the `CardRuleSpendingLimitsRules` of the `Card`."
+        },
+        {
+          "info": {
+            "name": "Set CashPoint Rules",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.soldo.com/business/v2/cards/:cardId/rules/cashpoint/:limitName",
+            "headers": [
+              {
+                "name": "X-Soldo-Fingerprint",
+                "value": ""
+              },
+              {
+                "name": "X-Soldo-Fingerprint-Signature",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "cardId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "limitName",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.soldo.com/oauth/authorize",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Endpoint to set a `CardRuleCashPointRule` of the `Card`."
+        },
+        {
+          "info": {
+            "name": "Unset CashPoint Rules",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.soldo.com/business/v2/cards/:cardId/rules/cashpoint/:limitName",
+            "headers": [
+              {
+                "name": "X-Soldo-Fingerprint",
+                "value": ""
+              },
+              {
+                "name": "X-Soldo-Fingerprint-Signature",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "cardId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "limitName",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.soldo.com/oauth/authorize",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Endpoint to unset a `CardRuleCashPointRule` of the `Card`."
+        },
+        {
+          "info": {
+            "name": "Set Spending Limits Rules",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.soldo.com/business/v2/cards/:cardId/rules/spendingLimits/:limitName",
+            "headers": [
+              {
+                "name": "X-Soldo-Fingerprint",
+                "value": ""
+              },
+              {
+                "name": "X-Soldo-Fingerprint-Signature",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "cardId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "limitName",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.soldo.com/oauth/authorize",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Endpoint to set the `CardRuleSpendingLimitsRules` of the `Card`."
+        },
+        {
+          "info": {
+            "name": "Unset Spending Limits Rules",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.soldo.com/business/v2/cards/:cardId/rules/spendingLimits/:limitName",
+            "headers": [
+              {
+                "name": "X-Soldo-Fingerprint",
+                "value": ""
+              },
+              {
+                "name": "X-Soldo-Fingerprint-Signature",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "cardId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "limitName",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.soldo.com/oauth/authorize",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Endpoint to unset the `CardRuleSpendingLimitsRule`  of the `Card`."
+        },
+        {
+          "info": {
+            "name": "Get Card Rules",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.soldo.com/business/v2/cards/:cardId/rules",
+            "params": [
+              {
+                "name": "cardId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.soldo.com/oauth/authorize",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Endpoint to get the `CardRules` of the `Card`."
+        },
+        {
+          "info": {
+            "name": "Set Card Rules",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.soldo.com/business/v2/cards/:cardId/rules",
+            "headers": [
+              {
+                "name": "X-Soldo-Fingerprint",
+                "value": ""
+              },
+              {
+                "name": "X-Soldo-Fingerprint-Signature",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "cardId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.soldo.com/oauth/authorize",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Endpoint to set the `CardRules`."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

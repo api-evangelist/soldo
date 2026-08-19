@@ -1,0 +1,107 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Soldo Business API v2.0 Accounting Classification Transaction Split API",
+    "version": "5.56.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Transaction Split",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create Transaction Split",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.soldo.com/business/v2/transactions/:transactionId/split",
+            "params": [
+              {
+                "name": "transactionId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.soldo.com/oauth/authorize",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Endpoint to split a `Transaction`."
+        },
+        {
+          "info": {
+            "name": "Update Transaction Split",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.soldo.com/business/v2/transactions/:transactionId/split",
+            "params": [
+              {
+                "name": "transactionId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.soldo.com/oauth/authorize",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Endpoint to update the split of a `Transaction`."
+        },
+        {
+          "info": {
+            "name": "Delete Transaction Split",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.soldo.com/business/v2/transactions/:transactionId/split",
+            "params": [
+              {
+                "name": "transactionId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.soldo.com/oauth/authorize",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Endpoint to delete the split of a `Transaction`."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

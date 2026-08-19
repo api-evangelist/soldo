@@ -1,0 +1,185 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Soldo Business API v2.0 Accounting Classification Vehicles API",
+    "version": "5.56.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Vehicles",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Search Vehicle",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.soldo.com/business/v2/vehicles",
+            "params": [
+              {
+                "name": "text",
+                "value": "something",
+                "type": "query",
+                "description": "A text to be searched on the number plate and description field."
+              },
+              {
+                "name": "ids",
+                "value": "776f5018-07e5-426b-a426-8b23fa1e985d",
+                "type": "query",
+                "description": "The IDs of the vehicles to search."
+              },
+              {
+                "name": "p",
+                "value": "3",
+                "type": "query",
+                "description": "It indicates the specific page to display (the counter starts from zero)."
+              },
+              {
+                "name": "s",
+                "value": "25",
+                "type": "query",
+                "description": "It indicates the number of items per page."
+              },
+              {
+                "name": "d",
+                "value": "DESC",
+                "type": "query",
+                "description": "It indicates how the pages are ordered."
+              },
+              {
+                "name": "props",
+                "value": "creationTime",
+                "type": "query",
+                "description": "It indicates the sorting direction applied to the above parameters. To apply a sorting on multiple parameters, set as many times the `props` parameter in the request."
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.soldo.com/oauth/authorize",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Endpoint to find Vehicles using filtering parameters."
+        },
+        {
+          "info": {
+            "name": "Add Vehicle",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.soldo.com/business/v2/vehicles",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.soldo.com/oauth/authorize",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Endpoint to add a new `Vehicle`."
+        },
+        {
+          "info": {
+            "name": "Get Vehicle",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.soldo.com/business/v2/vehicles/:vehicleId",
+            "params": [
+              {
+                "name": "vehicleId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.soldo.com/oauth/authorize",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Endpoint to get a specific `Vehicle` by ID."
+        },
+        {
+          "info": {
+            "name": "Update Vehicle",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.soldo.com/business/v2/vehicles/:vehicleId",
+            "params": [
+              {
+                "name": "vehicleId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.soldo.com/oauth/authorize",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Endpoint to update a specific Vehicle"
+        },
+        {
+          "info": {
+            "name": "Delete Vehicle",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.soldo.com/business/v2/vehicles/:vehicleId",
+            "params": [
+              {
+                "name": "vehicleId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.soldo.com/oauth/authorize",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Endpoint to delete a specific `Vehicle`."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

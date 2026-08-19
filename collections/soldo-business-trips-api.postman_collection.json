@@ -1,0 +1,2329 @@
+{
+  "item": [
+    {
+      "id": "a9f410c9-e77b-423f-b0d2-2da895a18f55",
+      "name": "Business Trips",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "836b1700-5e63-4efd-bde4-669139d13188",
+          "name": "Search BusinessTrips",
+          "request": {
+            "name": "Search BusinessTrips",
+            "description": {
+              "content": "Endpoint to find `BusinessTrips` using filtering parameters.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "business",
+                "v2",
+                "business-trips"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "status",
+                  "value": "<string>",
+                  "description": "The status of the `BusinessTrip`."
+                },
+                {
+                  "disabled": false,
+                  "key": "status",
+                  "value": "<string>",
+                  "description": "The status of the `BusinessTrip`."
+                },
+                {
+                  "disabled": false,
+                  "key": "dateType",
+                  "value": "<string>",
+                  "description": "It determines the date to be considered for `fromDate` and `toDate` parameters."
+                },
+                {
+                  "disabled": false,
+                  "key": "travellerUserId",
+                  "value": "<string>",
+                  "description": "The ID of the `User` that is travelling with the `BusinessTrip`."
+                },
+                {
+                  "disabled": false,
+                  "key": "travellerUserId",
+                  "value": "<string>",
+                  "description": "The ID of the `User` that is travelling with the `BusinessTrip`."
+                },
+                {
+                  "disabled": false,
+                  "key": "text",
+                  "value": "<string>",
+                  "description": "A simple text to search in the `BusinessTrip` data."
+                },
+                {
+                  "disabled": false,
+                  "key": "p",
+                  "value": "0",
+                  "description": "It indicates the specific page to display (the counter starts from zero)."
+                },
+                {
+                  "disabled": false,
+                  "key": "s",
+                  "value": "0",
+                  "description": "It indicates the number of items per page."
+                },
+                {
+                  "disabled": false,
+                  "key": "d",
+                  "value": "<string>",
+                  "description": "It indicates how the pages are ordered."
+                },
+                {
+                  "disabled": false,
+                  "key": "props",
+                  "value": "<string>",
+                  "description": "It indicates the sorting direction applied to the above parameters. To apply a sorting on multiple parameters, set as many times the `props` parameter in the request."
+                },
+                {
+                  "disabled": false,
+                  "key": "props",
+                  "value": "<string>",
+                  "description": "It indicates the sorting direction applied to the above parameters. To apply a sorting on multiple parameters, set as many times the `props` parameter in the request."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "address_read address_write card_read card_write company_read company_write contact_read contact_write employee_read employee_write expense_category_read expense_category_write expense_report_read expense_report_write expense_review_read expense_review_write group_read group_write online_ads_read online_ads_write payment_read payment_write purchase_read purchase_write refueling_read refueling_write resource_set_read resource_set_write role_read statement_read subscription_read subscription_write tag_read tag_write tax_rate_read tax_rate_write transaction_read transaction_write vehicle_read vehicle_write wallet_read wallet_write webhook_subscription_read webhook_subscription_write"
+                },
+                {
+                  "key": "redirect_uri",
+                  "value": "https://api.soldo.com/oauth/refresh"
+                },
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://api.soldo.com/oauth/authorize"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "26aa32fa-482b-4e68-9035-e6fa4f6a9e2e",
+              "name": "The result is an array containing `BusinessTrips`.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "business",
+                    "v2",
+                    "business-trips"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "status",
+                      "value": "ACTIVE"
+                    },
+                    {
+                      "key": "status",
+                      "value": "EXPIRED"
+                    },
+                    {
+                      "key": "dateType",
+                      "value": "COMPLETED_TIME"
+                    },
+                    {
+                      "key": "travellerUserId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "travellerUserId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "text",
+                      "value": "something"
+                    },
+                    {
+                      "key": "p",
+                      "value": "3"
+                    },
+                    {
+                      "key": "s",
+                      "value": "25"
+                    },
+                    {
+                      "key": "d",
+                      "value": "DESC"
+                    },
+                    {
+                      "key": "props",
+                      "value": "creationTime"
+                    },
+                    {
+                      "key": "props",
+                      "value": "creationTime"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"total\": 168,\n  \"pages\": 7,\n  \"page_size\": 25,\n  \"current_page\": 0,\n  \"results_size\": 25,\n  \"results\": [\n    {\n      \"id\": \"7bf79328-a7ae-4222-aa54-091ff7f429a7\",\n      \"name\": \"There and back again\",\n      \"description\": \"EXAMPLE BUSINESS TRIP DESCRIPTION\",\n      \"destination\": \"string\",\n      \"date_from\": \"string\",\n      \"date_to\": \"string\",\n      \"author_user_id\": \"XMPL1234-000001\",\n      \"approver_user_id\": \"XMPL1234-000003\",\n      \"traveller_user_id\": \"XMPL1234-000003\",\n      \"traveller_card_id\": \"2d65bd5e-3fdf-4002-b166-bde7fb8863fa\",\n      \"money_transfer_mode\": \"SPLIT\",\n      \"status\": \"ONGOING\",\n      \"purchase_state\": \"ACTIVE\",\n      \"total_amount\": 10.25,\n      \"total_amount_currency\": \"EUR\",\n      \"received_amount\": 1282.1441997480742,\n      \"received_amount_currency\": \"EUR\",\n      \"scheduled_amount\": 8435.221434738896,\n      \"scheduled_amount_currency\": \"EUR\",\n      \"pre_action\": {\n        \"requested_action\": [\n          \"UNLOCK_COUNTRIES_ON_CARD\",\n          \"CARD_ACTIVATE\"\n        ]\n      },\n      \"post_action\": {\n        \"unused_funds\": \"REMOVE\",\n        \"card_handling\": \"BLOCK\"\n      },\n      \"wallet_id\": \"2d65bd5e-3fdf-4002-b166-bde7fb8863fa\",\n      \"creation_time\": \"2017-06-01T12:48:40Z\",\n      \"last_update_time\": \"2017-06-01T12:48:40Z\"\n    },\n    {\n      \"id\": \"7bf79328-a7ae-4222-aa54-091ff7f429a7\",\n      \"name\": \"There and back again\",\n      \"description\": \"EXAMPLE BUSINESS TRIP DESCRIPTION\",\n      \"destination\": \"string\",\n      \"date_from\": \"string\",\n      \"date_to\": \"string\",\n      \"author_user_id\": \"XMPL1234-000001\",\n      \"approver_user_id\": \"XMPL1234-000003\",\n      \"traveller_user_id\": \"XMPL1234-000003\",\n      \"traveller_card_id\": \"2d65bd5e-3fdf-4002-b166-bde7fb8863fa\",\n      \"money_transfer_mode\": \"SPLIT\",\n      \"status\": \"ONGOING\",\n      \"purchase_state\": \"ACTIVE\",\n      \"total_amount\": 10.25,\n      \"total_amount_currency\": \"EUR\",\n      \"received_amount\": 1315.6981143435887,\n      \"received_amount_currency\": \"EUR\",\n      \"scheduled_amount\": 6726.741558455461,\n      \"scheduled_amount_currency\": \"EUR\",\n      \"pre_action\": {\n        \"requested_action\": [\n          \"FUNDS_TRANSFER_ON_WALLET\",\n          \"CARD_KEEP_BLOCKED\"\n        ]\n      },\n      \"post_action\": {\n        \"unused_funds\": \"LEAVE\",\n        \"card_handling\": \"KEEP_ACTIVE\"\n      },\n      \"wallet_id\": \"2d65bd5e-3fdf-4002-b166-bde7fb8863fa\",\n      \"creation_time\": \"2017-06-01T12:48:40Z\",\n      \"last_update_time\": \"2017-06-01T12:48:40Z\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fdbeb1bb-697a-4bbf-a717-1ac913028d2e",
+              "name": "Your request has missing arguments or is malformed.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "business",
+                    "v2",
+                    "business-trips"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "status",
+                      "value": "ACTIVE"
+                    },
+                    {
+                      "key": "status",
+                      "value": "EXPIRED"
+                    },
+                    {
+                      "key": "dateType",
+                      "value": "COMPLETED_TIME"
+                    },
+                    {
+                      "key": "travellerUserId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "travellerUserId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "text",
+                      "value": "something"
+                    },
+                    {
+                      "key": "p",
+                      "value": "3"
+                    },
+                    {
+                      "key": "s",
+                      "value": "25"
+                    },
+                    {
+                      "key": "d",
+                      "value": "DESC"
+                    },
+                    {
+                      "key": "props",
+                      "value": "creationTime"
+                    },
+                    {
+                      "key": "props",
+                      "value": "creationTime"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "af1652a3-3554-4b90-98a0-8876b1fd2686",
+          "name": "Add Business Trip",
+          "request": {
+            "name": "Add Business Trip",
+            "description": {
+              "content": "Endpoint to add a new `BusinessTrip`.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "business",
+                "v2",
+                "business-trips"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) ",
+                "key": "X-Soldo-Fingerprint",
+                "value": "{{fingerprint}}"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) ",
+                "key": "X-Soldo-Fingerprint-Signature",
+                "value": "{{fingerprint_signature}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "address_read address_write card_read card_write company_read company_write contact_read contact_write employee_read employee_write expense_category_read expense_category_write expense_report_read expense_report_write expense_review_read expense_review_write group_read group_write online_ads_read online_ads_write payment_read payment_write purchase_read purchase_write refueling_read refueling_write resource_set_read resource_set_write role_read statement_read subscription_read subscription_write tag_read tag_write tax_rate_read tax_rate_write transaction_read transaction_write vehicle_read vehicle_write wallet_read wallet_write webhook_subscription_read webhook_subscription_write"
+                },
+                {
+                  "key": "redirect_uri",
+                  "value": "https://api.soldo.com/oauth/refresh"
+                },
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://api.soldo.com/oauth/authorize"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"description\": \"<string>\",\n  \"destination\": \"<string>\",\n  \"from_date\": \"<string>\",\n  \"money_transfer_mode\": \"<string>\",\n  \"name\": \"<string>\",\n  \"post_action\": {\n    \"unused_funds\": \"<string>\",\n    \"card_handling\": \"<string>\"\n  },\n  \"request_timestamp\": \"<long>\",\n  \"to_date\": \"<string>\",\n  \"traveller_card_id\": \"<string>\",\n  \"traveller_user_id\": \"<string>\",\n  \"wallet_id\": \"<string>\",\n  \"tags\": [\n    {\n      \"tag_id\": \"<string>\",\n      \"dictionary_id\": \"<string>\"\n    },\n    {\n      \"tag_id\": \"<string>\",\n      \"dictionary_id\": \"<string>\"\n    }\n  ],\n  \"pre_action\": {\n    \"requested_action\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  },\n  \"expense_allocation\": [\n    {\n      \"amount\": \"<number>\",\n      \"amount_currency\": \"<string>\",\n      \"spend_period\": \"<string>\",\n      \"expense_category_id\": \"<string>\",\n      \"description\": \"<string>\"\n    },\n    {\n      \"amount\": \"<number>\",\n      \"amount_currency\": \"<string>\",\n      \"spend_period\": \"<string>\",\n      \"expense_category_id\": \"<string>\",\n      \"description\": \"<string>\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "efd81dc0-1541-4d8b-bbab-1e1a286bc07f",
+              "name": "The returned resource is a single `BusinessTrip`.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "business",
+                    "v2",
+                    "business-trips"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "X-Soldo-Fingerprint",
+                    "value": "{{fingerprint}}"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "X-Soldo-Fingerprint-Signature",
+                    "value": "{{fingerprint_signature}}"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"description\": \"EXAMPLE BUSINESS TRIP DESCRIPTION\",\n  \"destination\": \"monte fato\",\n  \"from_date\": \"2017-06-01T12:48:40Z\",\n  \"money_transfer_mode\": \"SPLIT\",\n  \"name\": \"EXAMPLE BUSINESS TRIP\",\n  \"post_action\": {\n    \"unused_funds\": \"REMOVE\",\n    \"card_handling\": \"BLOCK\"\n  },\n  \"request_timestamp\": 1576850500000,\n  \"to_date\": \"2017-06-01T12:48:40Z\",\n  \"traveller_card_id\": \"7bf79328-a7ae-4222-aa54-091ff7f429a7\",\n  \"traveller_user_id\": \"XMPL1234-000001\",\n  \"wallet_id\": \"7bf79328-a7ae-4222-aa54-091ff7f429a7\",\n  \"tags\": [\n    {\n      \"tag_id\": \"2d65bd5e-3fdf-4002-b166-bde7fb8863fa\",\n      \"dictionary_id\": \"2d65bd5e-3fdf-4002-b166-bde7fb8863fa\"\n    },\n    {\n      \"tag_id\": \"2d65bd5e-3fdf-4002-b166-bde7fb8863fa\",\n      \"dictionary_id\": \"2d65bd5e-3fdf-4002-b166-bde7fb8863fa\"\n    }\n  ],\n  \"pre_action\": {\n    \"requested_action\": [\n      \"CARD_KEEP_BLOCKED\",\n      \"CARD_ACTIVATE\"\n    ]\n  },\n  \"expense_allocation\": [\n    {\n      \"amount\": 10.25,\n      \"amount_currency\": \"EUR\",\n      \"spend_period\": \"BEFORE_TRIP\",\n      \"expense_category_id\": \"7bf79328-a7ae-4222-aa54-091ff7f429a7\",\n      \"description\": \"CUSTOM_EXPENSE\"\n    },\n    {\n      \"amount\": 10.25,\n      \"amount_currency\": \"EUR\",\n      \"spend_period\": \"BEFORE_TRIP\",\n      \"expense_category_id\": \"7bf79328-a7ae-4222-aa54-091ff7f429a7\",\n      \"description\": \"CUSTOM_EXPENSE\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"7bf79328-a7ae-4222-aa54-091ff7f429a7\",\n  \"name\": \"There and back again\",\n  \"description\": \"EXAMPLE BUSINESS TRIP DESCRIPTION\",\n  \"destination\": \"string\",\n  \"date_from\": \"string\",\n  \"date_to\": \"string\",\n  \"author_user_id\": \"XMPL1234-000001\",\n  \"approver_user_id\": \"XMPL1234-000003\",\n  \"traveller_user_id\": \"XMPL1234-000003\",\n  \"traveller_card_id\": \"2d65bd5e-3fdf-4002-b166-bde7fb8863fa\",\n  \"money_transfer_mode\": \"SPLIT\",\n  \"status\": \"ONGOING\",\n  \"purchase_state\": \"ACTIVE\",\n  \"total_amount\": 10.25,\n  \"total_amount_currency\": \"EUR\",\n  \"received_amount\": 9972.820857250646,\n  \"received_amount_currency\": \"EUR\",\n  \"scheduled_amount\": 5940.359929510319,\n  \"scheduled_amount_currency\": \"EUR\",\n  \"pre_action\": {\n    \"requested_action\": [\n      \"UNLOCK_COUNTRIES_ON_CARD\",\n      \"CARD_ACTIVATE\"\n    ]\n  },\n  \"post_action\": {\n    \"unused_funds\": \"LEAVE\",\n    \"card_handling\": \"BLOCK\"\n  },\n  \"wallet_id\": \"2d65bd5e-3fdf-4002-b166-bde7fb8863fa\",\n  \"creation_time\": \"2017-06-01T12:48:40Z\",\n  \"last_update_time\": \"2017-06-01T12:48:40Z\",\n  \"expense_allocation\": [\n    {\n      \"amount\": 10.25,\n      \"amount_currency\": \"EUR\",\n      \"spend_period\": \"BEFORE_TRIP\",\n      \"expense_category_id\": \"7bf79328-a7ae-4222-aa54-091ff7f429a7\",\n      \"description\": \"CUSTOM_EXPENSE\"\n    },\n    {\n      \"amount\": 10.25,\n      \"amount_currency\": \"EUR\",\n      \"spend_period\": \"BEFORE_TRIP\",\n      \"expense_category_id\": \"7bf79328-a7ae-4222-aa54-091ff7f429a7\",\n      \"description\": \"CUSTOM_EXPENSE\"\n    }\n  ],\n  \"tags\": [\n    {\n      \"tag_id\": \"2d65bd5e-3fdf-4002-b166-bde7fb8863fa\",\n      \"dictionary_id\": \"2d65bd5e-3fdf-4002-b166-bde7fb8863fa\"\n    },\n    {\n      \"tag_id\": \"2d65bd5e-3fdf-4002-b166-bde7fb8863fa\",\n      \"dictionary_id\": \"2d65bd5e-3fdf-4002-b166-bde7fb8863fa\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "87aac297-4b62-4226-9624-34a1a76a21f2",
+              "name": "Your request has missing arguments or is malformed.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "business",
+                    "v2",
+                    "business-trips"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "X-Soldo-Fingerprint",
+                    "value": "{{fingerprint}}"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "X-Soldo-Fingerprint-Signature",
+                    "value": "{{fingerprint_signature}}"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"description\": \"EXAMPLE BUSINESS TRIP DESCRIPTION\",\n  \"destination\": \"monte fato\",\n  \"from_date\": \"2017-06-01T12:48:40Z\",\n  \"money_transfer_mode\": \"SPLIT\",\n  \"name\": \"EXAMPLE BUSINESS TRIP\",\n  \"post_action\": {\n    \"unused_funds\": \"REMOVE\",\n    \"card_handling\": \"BLOCK\"\n  },\n  \"request_timestamp\": 1576850500000,\n  \"to_date\": \"2017-06-01T12:48:40Z\",\n  \"traveller_card_id\": \"7bf79328-a7ae-4222-aa54-091ff7f429a7\",\n  \"traveller_user_id\": \"XMPL1234-000001\",\n  \"wallet_id\": \"7bf79328-a7ae-4222-aa54-091ff7f429a7\",\n  \"tags\": [\n    {\n      \"tag_id\": \"2d65bd5e-3fdf-4002-b166-bde7fb8863fa\",\n      \"dictionary_id\": \"2d65bd5e-3fdf-4002-b166-bde7fb8863fa\"\n    },\n    {\n      \"tag_id\": \"2d65bd5e-3fdf-4002-b166-bde7fb8863fa\",\n      \"dictionary_id\": \"2d65bd5e-3fdf-4002-b166-bde7fb8863fa\"\n    }\n  ],\n  \"pre_action\": {\n    \"requested_action\": [\n      \"CARD_KEEP_BLOCKED\",\n      \"CARD_ACTIVATE\"\n    ]\n  },\n  \"expense_allocation\": [\n    {\n      \"amount\": 10.25,\n      \"amount_currency\": \"EUR\",\n      \"spend_period\": \"BEFORE_TRIP\",\n      \"expense_category_id\": \"7bf79328-a7ae-4222-aa54-091ff7f429a7\",\n      \"description\": \"CUSTOM_EXPENSE\"\n    },\n    {\n      \"amount\": 10.25,\n      \"amount_currency\": \"EUR\",\n      \"spend_period\": \"BEFORE_TRIP\",\n      \"expense_category_id\": \"7bf79328-a7ae-4222-aa54-091ff7f429a7\",\n      \"description\": \"CUSTOM_EXPENSE\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "54b7c454-f54c-4d35-99fb-9fc99270aa1f",
+          "name": "Get BusinessTrip",
+          "request": {
+            "name": "Get BusinessTrip",
+            "description": {
+              "content": "Endpoint to get a specific `BusinessTrip` by ID.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "business",
+                "v2",
+                "business-trips",
+                ":businessTripId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "businessTripId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "address_read address_write card_read card_write company_read company_write contact_read contact_write employee_read employee_write expense_category_read expense_category_write expense_report_read expense_report_write expense_review_read expense_review_write group_read group_write online_ads_read online_ads_write payment_read payment_write purchase_read purchase_write refueling_read refueling_write resource_set_read resource_set_write role_read statement_read subscription_read subscription_write tag_read tag_write tax_rate_read tax_rate_write transaction_read transaction_write vehicle_read vehicle_write wallet_read wallet_write webhook_subscription_read webhook_subscription_write"
+                },
+                {
+                  "key": "redirect_uri",
+                  "value": "https://api.soldo.com/oauth/refresh"
+                },
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://api.soldo.com/oauth/authorize"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "7bbfa60e-7be4-4430-ac2a-5e0f0eaccbe2",
+              "name": "The returned resource is a single `BusinessTrip`.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "business",
+                    "v2",
+                    "business-trips",
+                    ":businessTripId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "businessTripId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"7bf79328-a7ae-4222-aa54-091ff7f429a7\",\n  \"name\": \"There and back again\",\n  \"description\": \"EXAMPLE BUSINESS TRIP DESCRIPTION\",\n  \"destination\": \"string\",\n  \"date_from\": \"string\",\n  \"date_to\": \"string\",\n  \"author_user_id\": \"XMPL1234-000001\",\n  \"approver_user_id\": \"XMPL1234-000003\",\n  \"traveller_user_id\": \"XMPL1234-000003\",\n  \"traveller_card_id\": \"2d65bd5e-3fdf-4002-b166-bde7fb8863fa\",\n  \"money_transfer_mode\": \"SPLIT\",\n  \"status\": \"ONGOING\",\n  \"purchase_state\": \"ACTIVE\",\n  \"total_amount\": 10.25,\n  \"total_amount_currency\": \"EUR\",\n  \"received_amount\": 9972.820857250646,\n  \"received_amount_currency\": \"EUR\",\n  \"scheduled_amount\": 5940.359929510319,\n  \"scheduled_amount_currency\": \"EUR\",\n  \"pre_action\": {\n    \"requested_action\": [\n      \"UNLOCK_COUNTRIES_ON_CARD\",\n      \"CARD_ACTIVATE\"\n    ]\n  },\n  \"post_action\": {\n    \"unused_funds\": \"LEAVE\",\n    \"card_handling\": \"BLOCK\"\n  },\n  \"wallet_id\": \"2d65bd5e-3fdf-4002-b166-bde7fb8863fa\",\n  \"creation_time\": \"2017-06-01T12:48:40Z\",\n  \"last_update_time\": \"2017-06-01T12:48:40Z\",\n  \"expense_allocation\": [\n    {\n      \"amount\": 10.25,\n      \"amount_currency\": \"EUR\",\n      \"spend_period\": \"BEFORE_TRIP\",\n      \"expense_category_id\": \"7bf79328-a7ae-4222-aa54-091ff7f429a7\",\n      \"description\": \"CUSTOM_EXPENSE\"\n    },\n    {\n      \"amount\": 10.25,\n      \"amount_currency\": \"EUR\",\n      \"spend_period\": \"BEFORE_TRIP\",\n      \"expense_category_id\": \"7bf79328-a7ae-4222-aa54-091ff7f429a7\",\n      \"description\": \"CUSTOM_EXPENSE\"\n    }\n  ],\n  \"tags\": [\n    {\n      \"tag_id\": \"2d65bd5e-3fdf-4002-b166-bde7fb8863fa\",\n      \"dictionary_id\": \"2d65bd5e-3fdf-4002-b166-bde7fb8863fa\"\n    },\n    {\n      \"tag_id\": \"2d65bd5e-3fdf-4002-b166-bde7fb8863fa\",\n      \"dictionary_id\": \"2d65bd5e-3fdf-4002-b166-bde7fb8863fa\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1dcb9eae-4c1a-4d3e-8336-8ffd8d26f11a",
+              "name": "One or more resource requested does not exist.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "business",
+                    "v2",
+                    "business-trips",
+                    ":businessTripId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "businessTripId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "00369cfa-0057-4b90-a549-a1e174e24624",
+          "name": "Delete BusinessTrip",
+          "request": {
+            "name": "Delete BusinessTrip",
+            "description": {
+              "content": "Endpoint to delete a `BusinessTrip`.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "business",
+                "v2",
+                "business-trips",
+                ":businessTripId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "businessTripId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "method": "DELETE",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "address_read address_write card_read card_write company_read company_write contact_read contact_write employee_read employee_write expense_category_read expense_category_write expense_report_read expense_report_write expense_review_read expense_review_write group_read group_write online_ads_read online_ads_write payment_read payment_write purchase_read purchase_write refueling_read refueling_write resource_set_read resource_set_write role_read statement_read subscription_read subscription_write tag_read tag_write tax_rate_read tax_rate_write transaction_read transaction_write vehicle_read vehicle_write wallet_read wallet_write webhook_subscription_read webhook_subscription_write"
+                },
+                {
+                  "key": "redirect_uri",
+                  "value": "https://api.soldo.com/oauth/refresh"
+                },
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://api.soldo.com/oauth/authorize"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "a0dc90db-5cc9-4d65-baf7-7166eff62fd5",
+              "name": "No content as result.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "business",
+                    "v2",
+                    "business-trips",
+                    ":businessTripId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "businessTripId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "3c2f6b77-a2d1-481d-8da6-9f2ef63b6a73",
+              "name": "Your request has missing arguments or is malformed.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "business",
+                    "v2",
+                    "business-trips",
+                    ":businessTripId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "businessTripId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "9f65150a-37b9-4caa-84a4-ec5958405c51",
+              "name": "One or more resource requested does not exist.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "business",
+                    "v2",
+                    "business-trips",
+                    ":businessTripId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "businessTripId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c596f010-6a28-490f-bf97-81dde43361ad",
+          "name": "Complete Business Trip Transfer",
+          "request": {
+            "name": "Complete Business Trip Transfer",
+            "description": {
+              "content": "Endpoint to complete the funds transfer for a `BusinessTrip`.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "business",
+                "v2",
+                "business-trips",
+                ":businessTripId",
+                "complete-transfer"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "businessTripId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) ",
+                "key": "X-Soldo-Fingerprint",
+                "value": "{{fingerprint}}"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) ",
+                "key": "X-Soldo-Fingerprint-Signature",
+                "value": "{{fingerprint_signature}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "address_read address_write card_read card_write company_read company_write contact_read contact_write employee_read employee_write expense_category_read expense_category_write expense_report_read expense_report_write expense_review_read expense_review_write group_read group_write online_ads_read online_ads_write payment_read payment_write purchase_read purchase_write refueling_read refueling_write resource_set_read resource_set_write role_read statement_read subscription_read subscription_write tag_read tag_write tax_rate_read tax_rate_write transaction_read transaction_write vehicle_read vehicle_write wallet_read wallet_write webhook_subscription_read webhook_subscription_write"
+                },
+                {
+                  "key": "redirect_uri",
+                  "value": "https://api.soldo.com/oauth/refresh"
+                },
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://api.soldo.com/oauth/authorize"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"request_timestamp\": \"<long>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "fd90ce1a-37bc-4834-a48d-dc20886b9eb8",
+              "name": "No content as result.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "business",
+                    "v2",
+                    "business-trips",
+                    ":businessTripId",
+                    "complete-transfer"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "businessTripId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "X-Soldo-Fingerprint",
+                    "value": "{{fingerprint}}"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "X-Soldo-Fingerprint-Signature",
+                    "value": "{{fingerprint_signature}}"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"request_timestamp\": 1576850500000\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "6e46fbe6-98dd-4a74-a0d4-d323d930110b",
+              "name": "Your request has missing arguments or is malformed.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "business",
+                    "v2",
+                    "business-trips",
+                    ":businessTripId",
+                    "complete-transfer"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "businessTripId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "X-Soldo-Fingerprint",
+                    "value": "{{fingerprint}}"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "X-Soldo-Fingerprint-Signature",
+                    "value": "{{fingerprint_signature}}"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"request_timestamp\": 1576850500000\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "ed541d4b-de0c-4c31-a98d-3db07df1f662",
+              "name": "One or more resource requested does not exist.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "business",
+                    "v2",
+                    "business-trips",
+                    ":businessTripId",
+                    "complete-transfer"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "businessTripId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "X-Soldo-Fingerprint",
+                    "value": "{{fingerprint}}"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "X-Soldo-Fingerprint-Signature",
+                    "value": "{{fingerprint_signature}}"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"request_timestamp\": 1576850500000\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "618c1e84-29cc-4c92-8b2c-7a50a138d7bc",
+          "name": "Update BusinessTrip Details",
+          "request": {
+            "name": "Update BusinessTrip Details",
+            "description": {
+              "content": "Endpoint to update the general details `BusinessTrip`.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "business",
+                "v2",
+                "business-trips",
+                ":businessTripId",
+                "details"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "businessTripId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) ",
+                "key": "X-Soldo-Fingerprint",
+                "value": "{{fingerprint}}"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) ",
+                "key": "X-Soldo-Fingerprint-Signature",
+                "value": "{{fingerprint_signature}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "address_read address_write card_read card_write company_read company_write contact_read contact_write employee_read employee_write expense_category_read expense_category_write expense_report_read expense_report_write expense_review_read expense_review_write group_read group_write online_ads_read online_ads_write payment_read payment_write purchase_read purchase_write refueling_read refueling_write resource_set_read resource_set_write role_read statement_read subscription_read subscription_write tag_read tag_write tax_rate_read tax_rate_write transaction_read transaction_write vehicle_read vehicle_write wallet_read wallet_write webhook_subscription_read webhook_subscription_write"
+                },
+                {
+                  "key": "redirect_uri",
+                  "value": "https://api.soldo.com/oauth/refresh"
+                },
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://api.soldo.com/oauth/authorize"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"request_timestamp\": \"<long>\",\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"destination\": \"<string>\",\n  \"from_date\": \"<string>\",\n  \"to_date\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "9138317e-28f2-4db1-a9aa-1ceb2f585a78",
+              "name": "No content as result.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "business",
+                    "v2",
+                    "business-trips",
+                    ":businessTripId",
+                    "details"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "businessTripId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "X-Soldo-Fingerprint",
+                    "value": "{{fingerprint}}"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "X-Soldo-Fingerprint-Signature",
+                    "value": "{{fingerprint_signature}}"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"request_timestamp\": 1576850500000,\n  \"name\": \"EXAMPLE BUSINESS TRIP\",\n  \"description\": \"EXAMPLE BUSINESS TRIP DESCRIPTION\",\n  \"destination\": \"monte fato\",\n  \"from_date\": \"2017-06-01T12:48:40Z\",\n  \"to_date\": \"2017-06-01T12:48:40Z\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "3cb90932-22e2-48da-beaa-6cd849848cf5",
+              "name": "Your request has missing arguments or is malformed.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "business",
+                    "v2",
+                    "business-trips",
+                    ":businessTripId",
+                    "details"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "businessTripId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "X-Soldo-Fingerprint",
+                    "value": "{{fingerprint}}"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "X-Soldo-Fingerprint-Signature",
+                    "value": "{{fingerprint_signature}}"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"request_timestamp\": 1576850500000,\n  \"name\": \"EXAMPLE BUSINESS TRIP\",\n  \"description\": \"EXAMPLE BUSINESS TRIP DESCRIPTION\",\n  \"destination\": \"monte fato\",\n  \"from_date\": \"2017-06-01T12:48:40Z\",\n  \"to_date\": \"2017-06-01T12:48:40Z\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "b9e7dd61-4bdb-4bf0-a273-608d694bb428",
+              "name": "One or more resource requested does not exist.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "business",
+                    "v2",
+                    "business-trips",
+                    ":businessTripId",
+                    "details"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "businessTripId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "X-Soldo-Fingerprint",
+                    "value": "{{fingerprint}}"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "X-Soldo-Fingerprint-Signature",
+                    "value": "{{fingerprint_signature}}"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"request_timestamp\": 1576850500000,\n  \"name\": \"EXAMPLE BUSINESS TRIP\",\n  \"description\": \"EXAMPLE BUSINESS TRIP DESCRIPTION\",\n  \"destination\": \"monte fato\",\n  \"from_date\": \"2017-06-01T12:48:40Z\",\n  \"to_date\": \"2017-06-01T12:48:40Z\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "f9e8652d-07b4-493d-9083-7b7a56e27704",
+          "name": "Update BusinessTrip Expense Allocation",
+          "request": {
+            "name": "Update BusinessTrip Expense Allocation",
+            "description": {
+              "content": "Endpoint to update allocation of expenses associated to a `BusinessTrip`.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "business",
+                "v2",
+                "business-trips",
+                ":businessTripId",
+                "expense-allocation"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "businessTripId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) ",
+                "key": "X-Soldo-Fingerprint",
+                "value": "{{fingerprint}}"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) ",
+                "key": "X-Soldo-Fingerprint-Signature",
+                "value": "{{fingerprint_signature}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "address_read address_write card_read card_write company_read company_write contact_read contact_write employee_read employee_write expense_category_read expense_category_write expense_report_read expense_report_write expense_review_read expense_review_write group_read group_write online_ads_read online_ads_write payment_read payment_write purchase_read purchase_write refueling_read refueling_write resource_set_read resource_set_write role_read statement_read subscription_read subscription_write tag_read tag_write tax_rate_read tax_rate_write transaction_read transaction_write vehicle_read vehicle_write wallet_read wallet_write webhook_subscription_read webhook_subscription_write"
+                },
+                {
+                  "key": "redirect_uri",
+                  "value": "https://api.soldo.com/oauth/refresh"
+                },
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://api.soldo.com/oauth/authorize"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"request_timestamp\": \"<long>\",\n  \"expense_allocation\": [\n    {\n      \"amount\": \"<number>\",\n      \"amount_currency\": \"<string>\",\n      \"spend_period\": \"<string>\",\n      \"expense_category_id\": \"<string>\",\n      \"description\": \"<string>\"\n    },\n    {\n      \"amount\": \"<number>\",\n      \"amount_currency\": \"<string>\",\n      \"spend_period\": \"<string>\",\n      \"expense_category_id\": \"<string>\",\n      \"description\": \"<string>\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "74d3e658-2e5b-4b1a-8ee4-773731f939bf",
+              "name": "No content as result.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "business",
+                    "v2",
+                    "business-trips",
+                    ":businessTripId",
+                    "expense-allocation"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "businessTripId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "X-Soldo-Fingerprint",
+                    "value": "{{fingerprint}}"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "X-Soldo-Fingerprint-Signature",
+                    "value": "{{fingerprint_signature}}"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"request_timestamp\": 1576850500000,\n  \"expense_allocation\": [\n    {\n      \"amount\": 10.25,\n      \"amount_currency\": \"EUR\",\n      \"spend_period\": \"BEFORE_TRIP\",\n      \"expense_category_id\": \"7bf79328-a7ae-4222-aa54-091ff7f429a7\",\n      \"description\": \"CUSTOM_EXPENSE\"\n    },\n    {\n      \"amount\": 10.25,\n      \"amount_currency\": \"EUR\",\n      \"spend_period\": \"BEFORE_TRIP\",\n      \"expense_category_id\": \"7bf79328-a7ae-4222-aa54-091ff7f429a7\",\n      \"description\": \"CUSTOM_EXPENSE\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "8e9eb5d1-7a1c-4968-bba5-e798f495542d",
+              "name": "Your request has missing arguments or is malformed.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "business",
+                    "v2",
+                    "business-trips",
+                    ":businessTripId",
+                    "expense-allocation"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "businessTripId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "X-Soldo-Fingerprint",
+                    "value": "{{fingerprint}}"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "X-Soldo-Fingerprint-Signature",
+                    "value": "{{fingerprint_signature}}"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"request_timestamp\": 1576850500000,\n  \"expense_allocation\": [\n    {\n      \"amount\": 10.25,\n      \"amount_currency\": \"EUR\",\n      \"spend_period\": \"BEFORE_TRIP\",\n      \"expense_category_id\": \"7bf79328-a7ae-4222-aa54-091ff7f429a7\",\n      \"description\": \"CUSTOM_EXPENSE\"\n    },\n    {\n      \"amount\": 10.25,\n      \"amount_currency\": \"EUR\",\n      \"spend_period\": \"BEFORE_TRIP\",\n      \"expense_category_id\": \"7bf79328-a7ae-4222-aa54-091ff7f429a7\",\n      \"description\": \"CUSTOM_EXPENSE\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "72b0d358-4987-456d-bb0f-5ccf6cb78021",
+              "name": "One or more resource requested does not exist.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "business",
+                    "v2",
+                    "business-trips",
+                    ":businessTripId",
+                    "expense-allocation"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "businessTripId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "X-Soldo-Fingerprint",
+                    "value": "{{fingerprint}}"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "X-Soldo-Fingerprint-Signature",
+                    "value": "{{fingerprint_signature}}"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"request_timestamp\": 1576850500000,\n  \"expense_allocation\": [\n    {\n      \"amount\": 10.25,\n      \"amount_currency\": \"EUR\",\n      \"spend_period\": \"BEFORE_TRIP\",\n      \"expense_category_id\": \"7bf79328-a7ae-4222-aa54-091ff7f429a7\",\n      \"description\": \"CUSTOM_EXPENSE\"\n    },\n    {\n      \"amount\": 10.25,\n      \"amount_currency\": \"EUR\",\n      \"spend_period\": \"BEFORE_TRIP\",\n      \"expense_category_id\": \"7bf79328-a7ae-4222-aa54-091ff7f429a7\",\n      \"description\": \"CUSTOM_EXPENSE\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d6d62d73-e395-4cb9-8983-f5dd22ea66db",
+          "name": "Update BusinessTrip Post Actions",
+          "request": {
+            "name": "Update BusinessTrip Post Actions",
+            "description": {
+              "content": "Endpoint to update actions to be executed after a `BusinessTrip`.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "business",
+                "v2",
+                "business-trips",
+                ":businessTripId",
+                "post-actions"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "businessTripId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "address_read address_write card_read card_write company_read company_write contact_read contact_write employee_read employee_write expense_category_read expense_category_write expense_report_read expense_report_write expense_review_read expense_review_write group_read group_write online_ads_read online_ads_write payment_read payment_write purchase_read purchase_write refueling_read refueling_write resource_set_read resource_set_write role_read statement_read subscription_read subscription_write tag_read tag_write tax_rate_read tax_rate_write transaction_read transaction_write vehicle_read vehicle_write wallet_read wallet_write webhook_subscription_read webhook_subscription_write"
+                },
+                {
+                  "key": "redirect_uri",
+                  "value": "https://api.soldo.com/oauth/refresh"
+                },
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://api.soldo.com/oauth/authorize"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"request_timestamp\": \"<long>\",\n  \"unused_funds\": \"<string>\",\n  \"card_handling\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "ea240f59-bf5d-49d5-ae50-a6fc346a5ffe",
+              "name": "No content as result.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "business",
+                    "v2",
+                    "business-trips",
+                    ":businessTripId",
+                    "post-actions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "businessTripId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"request_timestamp\": 1576850500000,\n  \"unused_funds\": \"LEAVE\",\n  \"card_handling\": \"KEEP_ACTIVE\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "176dc701-cb7b-4748-b139-0f929bededa8",
+              "name": "Your request has missing arguments or is malformed.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "business",
+                    "v2",
+                    "business-trips",
+                    ":businessTripId",
+                    "post-actions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "businessTripId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"request_timestamp\": 1576850500000,\n  \"unused_funds\": \"LEAVE\",\n  \"card_handling\": \"KEEP_ACTIVE\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "a30977b4-cd0c-49b6-96ff-35f9eb3a2d66",
+              "name": "One or more resource requested does not exist.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "business",
+                    "v2",
+                    "business-trips",
+                    ":businessTripId",
+                    "post-actions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "businessTripId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"request_timestamp\": 1576850500000,\n  \"unused_funds\": \"LEAVE\",\n  \"card_handling\": \"KEEP_ACTIVE\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "00fe4631-019f-46a0-a38d-b128b69d4052",
+          "name": "Update BusinessTrip Tags",
+          "request": {
+            "name": "Update BusinessTrip Tags",
+            "description": {
+              "content": "Endpoint to update tags associated to a `BusinessTrip`.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "business",
+                "v2",
+                "business-trips",
+                ":businessTripId",
+                "tags"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "businessTripId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "address_read address_write card_read card_write company_read company_write contact_read contact_write employee_read employee_write expense_category_read expense_category_write expense_report_read expense_report_write expense_review_read expense_review_write group_read group_write online_ads_read online_ads_write payment_read payment_write purchase_read purchase_write refueling_read refueling_write resource_set_read resource_set_write role_read statement_read subscription_read subscription_write tag_read tag_write tax_rate_read tax_rate_write transaction_read transaction_write vehicle_read vehicle_write wallet_read wallet_write webhook_subscription_read webhook_subscription_write"
+                },
+                {
+                  "key": "redirect_uri",
+                  "value": "https://api.soldo.com/oauth/refresh"
+                },
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://api.soldo.com/oauth/authorize"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"request_timestamp\": \"<long>\",\n  \"tags\": [\n    {\n      \"tag_id\": \"<string>\",\n      \"dictionary_id\": \"<string>\"\n    },\n    {\n      \"tag_id\": \"<string>\",\n      \"dictionary_id\": \"<string>\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "7ac83556-a09d-4e3d-9806-388e9d8353b9",
+              "name": "No content as result.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "business",
+                    "v2",
+                    "business-trips",
+                    ":businessTripId",
+                    "tags"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "businessTripId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"request_timestamp\": 1576850500000,\n  \"tags\": [\n    {\n      \"tag_id\": \"2d65bd5e-3fdf-4002-b166-bde7fb8863fa\",\n      \"dictionary_id\": \"2d65bd5e-3fdf-4002-b166-bde7fb8863fa\"\n    },\n    {\n      \"tag_id\": \"2d65bd5e-3fdf-4002-b166-bde7fb8863fa\",\n      \"dictionary_id\": \"2d65bd5e-3fdf-4002-b166-bde7fb8863fa\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "dbb4bc6d-80ab-462b-b066-b49f757ee20b",
+              "name": "Your request has missing arguments or is malformed.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "business",
+                    "v2",
+                    "business-trips",
+                    ":businessTripId",
+                    "tags"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "businessTripId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"request_timestamp\": 1576850500000,\n  \"tags\": [\n    {\n      \"tag_id\": \"2d65bd5e-3fdf-4002-b166-bde7fb8863fa\",\n      \"dictionary_id\": \"2d65bd5e-3fdf-4002-b166-bde7fb8863fa\"\n    },\n    {\n      \"tag_id\": \"2d65bd5e-3fdf-4002-b166-bde7fb8863fa\",\n      \"dictionary_id\": \"2d65bd5e-3fdf-4002-b166-bde7fb8863fa\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "610c0c7a-1c4d-4361-9cd3-3792c5f66af5",
+              "name": "One or more resource requested does not exist.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "business",
+                    "v2",
+                    "business-trips",
+                    ":businessTripId",
+                    "tags"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "businessTripId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"request_timestamp\": 1576850500000,\n  \"tags\": [\n    {\n      \"tag_id\": \"2d65bd5e-3fdf-4002-b166-bde7fb8863fa\",\n      \"dictionary_id\": \"2d65bd5e-3fdf-4002-b166-bde7fb8863fa\"\n    },\n    {\n      \"tag_id\": \"2d65bd5e-3fdf-4002-b166-bde7fb8863fa\",\n      \"dictionary_id\": \"2d65bd5e-3fdf-4002-b166-bde7fb8863fa\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.soldo.com",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "2e99c69c-1b8d-473e-a912-909dd5fbcdc2",
+    "name": "Soldo Business API v2.0 Accounting Classification Business Trips API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Soldo Business API v2.0 OpenAPI specification",
+      "type": "text/plain"
+    }
+  }
+}

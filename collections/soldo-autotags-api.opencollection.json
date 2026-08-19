@@ -1,0 +1,191 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Soldo Business API v2.0 Accounting Classification Autotags API",
+    "version": "5.56.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Autotags",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Search Autotags",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.soldo.com/business/v2/autotags",
+            "params": [
+              {
+                "name": "name",
+                "value": "AutotagRule",
+                "type": "query",
+                "description": "The name of the `Autotag`."
+              },
+              {
+                "name": "enabled",
+                "value": "true",
+                "type": "query",
+                "description": "It determines whether the `Autotag` rule is enabled (if a rule is not enabled, it won't be executed)."
+              },
+              {
+                "name": "ownerId",
+                "value": "XMPL1234-000001",
+                "type": "query",
+                "description": "The ID of the `User` who created the `Autotag`."
+              },
+              {
+                "name": "p",
+                "value": "3",
+                "type": "query",
+                "description": "It indicates the specific page to display (the counter starts from zero)."
+              },
+              {
+                "name": "s",
+                "value": "25",
+                "type": "query",
+                "description": "It indicates the number of items per page."
+              },
+              {
+                "name": "d",
+                "value": "DESC",
+                "type": "query",
+                "description": "It indicates how the pages are ordered."
+              },
+              {
+                "name": "props",
+                "value": "creationTime",
+                "type": "query",
+                "description": "It indicates the sorting direction applied to the above parameters. To apply a sorting on multiple parameters, set as many times the `props` parameter in the request."
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.soldo.com/oauth/authorize",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Endpoint to find `Autotags` using filtering parameters."
+        },
+        {
+          "info": {
+            "name": "Add Autotag",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.soldo.com/business/v2/autotags",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.soldo.com/oauth/authorize",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Endpoint to add a new `Autotag`."
+        },
+        {
+          "info": {
+            "name": "Get Autotag",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.soldo.com/business/v2/autotags/:autotagId",
+            "params": [
+              {
+                "name": "autotagId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.soldo.com/oauth/authorize",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Endpoint to get a specific `Autotag` by ID."
+        },
+        {
+          "info": {
+            "name": "Update Autotag",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.soldo.com/business/v2/autotags/:autotagId",
+            "params": [
+              {
+                "name": "autotagId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.soldo.com/oauth/authorize",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Endpoint to update the settings of a specific `Autotag`."
+        },
+        {
+          "info": {
+            "name": "Delete Autotag",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.soldo.com/business/v2/autotags/:autotagId",
+            "params": [
+              {
+                "name": "autotagId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.soldo.com/oauth/authorize",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Endpoint to delete a specific `Autotag`."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

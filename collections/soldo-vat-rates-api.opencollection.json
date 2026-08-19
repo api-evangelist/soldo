@@ -1,0 +1,185 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Soldo Business API v2.0 Accounting Classification VAT Rates API",
+    "version": "5.56.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "VAT Rates",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Search VAT Rates",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.soldo.com/business/v2/entities/tax-rate",
+            "params": [
+              {
+                "name": "text",
+                "value": "something",
+                "type": "query",
+                "description": "A simple text to search in the Vat rate data (name, code)."
+              },
+              {
+                "name": "enabled",
+                "value": "true",
+                "type": "query",
+                "description": "It determines if Vat rate is enabled."
+              },
+              {
+                "name": "p",
+                "value": "3",
+                "type": "query",
+                "description": "It indicates the specific page to display (the counter starts from zero)."
+              },
+              {
+                "name": "s",
+                "value": "25",
+                "type": "query",
+                "description": "It indicates the number of items per page."
+              },
+              {
+                "name": "d",
+                "value": "DESC",
+                "type": "query",
+                "description": "It indicates how the pages are ordered."
+              },
+              {
+                "name": "props",
+                "value": "creationTime",
+                "type": "query",
+                "description": "It indicates the sorting direction applied to the above parameters. To apply a sorting on multiple parameters, set as many times the `props` parameter in the request."
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.soldo.com/oauth/authorize",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Endpoint to find `VatRate` using filtering parameters."
+        },
+        {
+          "info": {
+            "name": "Add VAT Rate",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.soldo.com/business/v2/entities/tax-rate",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.soldo.com/oauth/authorize",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Endpoint to add a new `VatRate`."
+        },
+        {
+          "info": {
+            "name": "Get VAT Rate",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.soldo.com/business/v2/entities/tax-rate/:taxRateId",
+            "params": [
+              {
+                "name": "taxRateId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.soldo.com/oauth/authorize",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Endpoint to retrieve a specific `VatRate` by ID."
+        },
+        {
+          "info": {
+            "name": "Update VAT Rate",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.soldo.com/business/v2/entities/tax-rate/:taxRateId",
+            "params": [
+              {
+                "name": "taxRateId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.soldo.com/oauth/authorize",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Endpoint to update `VATRate`."
+        },
+        {
+          "info": {
+            "name": "Delete VAT Rate",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.soldo.com/business/v2/entities/tax-rate/:taxRateId",
+            "params": [
+              {
+                "name": "taxRateId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.soldo.com/oauth/authorize",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Endpoint to delete a `VatRate`."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

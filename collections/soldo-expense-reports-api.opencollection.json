@@ -1,0 +1,230 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Soldo Business API v2.0 Accounting Classification Expense Reports API",
+    "version": "5.56.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Expense Reports",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Expense Report",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.soldo.com/business/v2/expense-reports/:expenseReportId",
+            "params": [
+              {
+                "name": "expenseReportId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.soldo.com/oauth/authorize",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Endpoint to get a specific  `ExpenseReport` by ID."
+        },
+        {
+          "info": {
+            "name": "Update Expense Report",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.soldo.com/business/v2/expense-reports/:expenseReportId",
+            "params": [
+              {
+                "name": "expenseReportId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.soldo.com/oauth/authorize",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Endpoint to update a specific `ExpenseReport`."
+        },
+        {
+          "info": {
+            "name": "Delete Expense Report",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.soldo.com/business/v2/expense-reports/:expenseReportId",
+            "params": [
+              {
+                "name": "expenseReportId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.soldo.com/oauth/authorize",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Endpoint to delete a specific `ExpenseReport`."
+        },
+        {
+          "info": {
+            "name": "Download Expense Report",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.soldo.com/business/v2/expense-reports/:expenseReportId/download",
+            "params": [
+              {
+                "name": "expenseReportId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "fileType",
+                "value": "PDF",
+                "type": "query",
+                "description": "The `ExpenseReport` file type."
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.soldo.com/oauth/authorize",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Endpoint to download `ExpenseReport` by ID."
+        },
+        {
+          "info": {
+            "name": "Search Expense Reports",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.soldo.com/business/v2/expense-reports",
+            "params": [
+              {
+                "name": "number",
+                "value": "NR9912098",
+                "type": "query",
+                "description": "The `ExpenseReport` number."
+              },
+              {
+                "name": "trxOwnerId",
+                "value": "XMPL1234-000003",
+                "type": "query",
+                "description": "The ID of the `User` who made the expenses included in the `ExpenseReport`."
+              },
+              {
+                "name": "trxDateFrom",
+                "value": "2020-04-06T12:48:40Z",
+                "type": "query",
+                "description": "The beginning of the period of the search `fromDate` included (i.e. greater than or equal to) (Formats: `yyyy-MM-dd`, `yyyy-MM-ddThh:mm:ss`, `yyyy-MM-ddThh:mm:ssZ`)."
+              },
+              {
+                "name": "trxDateTo",
+                "value": "2020-04-06T12:48:40Z",
+                "type": "query",
+                "description": "The beginning of the period of the search `fromDate` included (i.e. greater than or equal to) (Formats: `yyyy-MM-dd`, `yyyy-MM-ddThh:mm:ss`, `yyyy-MM-ddThh:mm:ssZ`)."
+              },
+              {
+                "name": "status",
+                "value": "PROCESSED",
+                "type": "query",
+                "description": "The `ExpenseReport` status."
+              },
+              {
+                "name": "type",
+                "value": "EMPLOYEE",
+                "type": "query",
+                "description": "The `ExpenseReport` type."
+              },
+              {
+                "name": "toReimburse",
+                "value": "true",
+                "type": "query",
+                "description": "It determines whether only reports with or without an amount to be reimbursed should be returned."
+              },
+              {
+                "name": "exportedDate",
+                "value": "2020-04-06T12:48:40Z",
+                "type": "query",
+                "description": "The date when the `ExpenseReport` got exported\n(Formats: yyyy-MM-dd, yyyy-MM-ddThh:mm:ss, yyyy-MM-ddThh:mm:ssZ)."
+              },
+              {
+                "name": "p",
+                "value": "3",
+                "type": "query",
+                "description": "It indicates the specific page to display (the counter starts from zero)."
+              },
+              {
+                "name": "s",
+                "value": "25",
+                "type": "query",
+                "description": "It indicates the number of items per page."
+              },
+              {
+                "name": "d",
+                "value": "DESC",
+                "type": "query",
+                "description": "It indicates how the pages are ordered."
+              },
+              {
+                "name": "props",
+                "value": "creationTime",
+                "type": "query",
+                "description": "It indicates the sorting direction applied to the above parameters. To apply a sorting on multiple parameters, set as many times the `props` parameter in the request."
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.soldo.com/oauth/authorize",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Endpoint to search `ExpenseReport` using filtering parameters."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

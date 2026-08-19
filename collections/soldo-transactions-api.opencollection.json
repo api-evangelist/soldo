@@ -1,0 +1,635 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Soldo Business API v2.0 Accounting Classification Transactions API",
+    "version": "5.56.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Transactions",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create Mileage Reimbursement Transaction",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.soldo.com/business/v2/transactions/mileage-reimbursements",
+            "headers": [
+              {
+                "name": "X-Soldo-Fingerprint",
+                "value": ""
+              },
+              {
+                "name": "X-Soldo-Fingerprint-Signature",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.soldo.com/oauth/authorize",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Endpoint to create a `MileageReimbursement` `Transaction`."
+        },
+        {
+          "info": {
+            "name": "Create Out-Of-Platform Transaction",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.soldo.com/business/v2/transactions/out-of-platform-transactions",
+            "headers": [
+              {
+                "name": "X-Soldo-Fingerprint",
+                "value": ""
+              },
+              {
+                "name": "X-Soldo-Fingerprint-Signature",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.soldo.com/oauth/authorize",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Endpoint to create an Out-Of-Platform `Transaction` (not automatically tracked by Soldo)."
+        },
+        {
+          "info": {
+            "name": "Get Mileage Reimbursement Transaction",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.soldo.com/business/v2/transactions/mileage-reimbursements/:transactionId",
+            "headers": [
+              {
+                "name": "X-Soldo-Fingerprint",
+                "value": ""
+              },
+              {
+                "name": "X-Soldo-Fingerprint-Signature",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "transactionId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.soldo.com/oauth/authorize",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Endpoint to get a specific `MileageReimbursement` `Transaction`."
+        },
+        {
+          "info": {
+            "name": "Update Mileage Reimbursement Transaction",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.soldo.com/business/v2/transactions/mileage-reimbursements/:transactionId",
+            "headers": [
+              {
+                "name": "X-Soldo-Fingerprint",
+                "value": ""
+              },
+              {
+                "name": "X-Soldo-Fingerprint-Signature",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "transactionId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.soldo.com/oauth/authorize",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Endpoint to update a `MileageReimbursement` `Transaction`. The entire resource representation must be included in the request body."
+        },
+        {
+          "info": {
+            "name": "Delete Mileage Reimbursement Transaction",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.soldo.com/business/v2/transactions/mileage-reimbursements/:transactionId",
+            "headers": [
+              {
+                "name": "X-Soldo-Fingerprint",
+                "value": ""
+              },
+              {
+                "name": "X-Soldo-Fingerprint-Signature",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "transactionId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.soldo.com/oauth/authorize",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Endpoint to delete a specific `MileageReimbursement` `Transaction`."
+        },
+        {
+          "info": {
+            "name": "Get Out-Of-Platform Transaction",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.soldo.com/business/v2/transactions/out-of-platform-transactions/:transactionId",
+            "headers": [
+              {
+                "name": "X-Soldo-Fingerprint",
+                "value": ""
+              },
+              {
+                "name": "X-Soldo-Fingerprint-Signature",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "transactionId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.soldo.com/oauth/authorize",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Endpoint to get a specific Out-Of-Platform `Transaction`."
+        },
+        {
+          "info": {
+            "name": "Update Out-Of-Platform Transaction",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.soldo.com/business/v2/transactions/out-of-platform-transactions/:transactionId",
+            "headers": [
+              {
+                "name": "X-Soldo-Fingerprint",
+                "value": ""
+              },
+              {
+                "name": "X-Soldo-Fingerprint-Signature",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "transactionId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.soldo.com/oauth/authorize",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Endpoint to update an Out-Of-Platform `Transaction`. The entire resource representation must be included in the request body."
+        },
+        {
+          "info": {
+            "name": "Delete Out-Of-Platform Transaction",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.soldo.com/business/v2/transactions/out-of-platform-transactions/:transactionId",
+            "headers": [
+              {
+                "name": "X-Soldo-Fingerprint",
+                "value": ""
+              },
+              {
+                "name": "X-Soldo-Fingerprint-Signature",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "transactionId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.soldo.com/oauth/authorize",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Endpoint to delete a specific Out-Of-Platform `Transaction`."
+        },
+        {
+          "info": {
+            "name": "Add VAT Rate to Transaction ",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.soldo.com/business/v2/transactions/:transactionId/tax-rate/:taxRateId",
+            "params": [
+              {
+                "name": "transactionId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "taxRateId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.soldo.com/oauth/authorize",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Endpoint to assign a `VatRate` to a `Transaction`."
+        },
+        {
+          "info": {
+            "name": "Get Transaction",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.soldo.com/business/v2/transactions/:transactionId",
+            "headers": [
+              {
+                "name": "X-Soldo-Fingerprint",
+                "value": ""
+              },
+              {
+                "name": "X-Soldo-Fingerprint-Signature",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "transactionId",
+                "value": "7bf79328-a7ae-4222-aa54-091ff7f429a7",
+                "type": "path",
+                "description": "The `Transaction` ID."
+              },
+              {
+                "name": "showDetails",
+                "value": "false",
+                "type": "query",
+                "description": "It determines whether to show further Details of the `Transaction`."
+              },
+              {
+                "name": "showFuelDetails",
+                "value": "false",
+                "type": "query",
+                "description": "It determines whether to show further Fuel Details of the `Transaction`."
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.soldo.com/oauth/authorize",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Endpoint to get a specific `Transaction` by ID."
+        },
+        {
+          "info": {
+            "name": "Update Transaction",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.soldo.com/business/v2/transactions/:transactionId",
+            "headers": [
+              {
+                "name": "X-Soldo-Fingerprint",
+                "value": ""
+              },
+              {
+                "name": "X-Soldo-Fingerprint-Signature",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "transactionId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.soldo.com/oauth/authorize",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Endpoint to update the assignee of a specific `Transaction` by ID. This method is only available for `Company` `Card` transactions and the `trx_owner_id` must be one of the `Card` assignees."
+        },
+        {
+          "info": {
+            "name": "Search Transactions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.soldo.com/business/v2/transactions",
+            "headers": [
+              {
+                "name": "X-Soldo-Fingerprint",
+                "value": ""
+              },
+              {
+                "name": "X-Soldo-Fingerprint-Signature",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "type",
+                "value": "card",
+                "type": "query",
+                "description": "The resource `type` to be used together with id."
+              },
+              {
+                "name": "hasAttachment",
+                "value": "true",
+                "type": "query",
+                "description": "Looks whether or not a `TransactionAttachment` is present."
+              },
+              {
+                "name": "publicId",
+                "value": "7bf79328-a7ae-4222-aa54-091ff7f429a7",
+                "type": "query",
+                "description": "The ID of the `type` resource."
+              },
+              {
+                "name": "customreferenceId",
+                "value": "2d65bd5e-3fdf-4002-b166-bde7fb8863fa",
+                "type": "query",
+                "description": "The custom reference ID of the cardholder."
+              },
+              {
+                "name": "fromDate",
+                "value": "1970-01-30",
+                "type": "query",
+                "description": "The beginning of the period of the search `fromDate` included (i.e. greater than or equal to) (Formats: `yyyy-MM-dd`, `yyyy-MM-ddThh:mm:ss`, `yyyy-MM-ddThh:mm:ssZ`)."
+              },
+              {
+                "name": "toDate",
+                "value": "1970-01-30",
+                "type": "query",
+                "description": "The end of the period of the search `toDate` included (i.e. less than) (Formats: `yyyy-MM-dd`, `yyyy-MM-ddThh:mm:ss`, `yyyy-MM-ddThh:mm:ssZ`)."
+              },
+              {
+                "name": "dateType",
+                "value": "TRANSACTION",
+                "type": "query",
+                "description": "It determines the date to be considered for `fromDate` and `toDate` parameters."
+              },
+              {
+                "name": "groupId",
+                "value": "c861cc24-6663-410f-8c78-73f886fff4ef",
+                "type": "query",
+                "description": "The ID of the `Group` of the transactions."
+              },
+              {
+                "name": "category",
+                "value": "Payment",
+                "type": "query",
+                "description": "It determines the filter by category of the transaction, multiple categories can be included."
+              },
+              {
+                "name": "status",
+                "value": "Authorised",
+                "type": "query",
+                "description": "It determines the filter by status of the transaction, multiple statuses can be included."
+              },
+              {
+                "name": "paymentMethod",
+                "value": "SUBSCRIPTION",
+                "type": "query",
+                "description": "It determines the filter by payment method of the transaction, multiple payment methods can be included. `OUT_OF_PLATFORM_COMPANY` and `OUT_OF_PLATFORM_PERSONAL` are not included by default."
+              },
+              {
+                "name": "tagId",
+                "value": "6853e657-c797-4985-8d6b-5425d4e51df8",
+                "type": "query",
+                "description": "The ID of the `Tag` of the transaction."
+              },
+              {
+                "name": "metadataId",
+                "value": "express",
+                "type": "query",
+                "description": "The ID of the custom generated `Metadata` of the `Transaction`."
+              },
+              {
+                "name": "text",
+                "value": "Amazon",
+                "type": "query",
+                "description": "A simple text to search in the transaction data (merchant, merchant category, user notes, tag, list, masked pan, card name, tx amount, vehicle plate, vehicle description)."
+              },
+              {
+                "name": "expenseType",
+                "value": "TRAVEL_AND_ENTERTAINMENT",
+                "type": "query",
+                "description": "The type of the expense."
+              },
+              {
+                "name": "expenseStatus",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "expenseCategoryId",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "expenseReportId",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "exportStatus",
+                "value": "EXPORTED",
+                "type": "query",
+                "description": "The export status of the expense."
+              },
+              {
+                "name": "taxRateId",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "requiredInformation",
+                "value": "COMPLETE",
+                "type": "query",
+                "description": "To search transactions with (or without) required information. A transaction is `COMPLETE` when all details marked as mandatory in the `Reminders` section have been filled in for the transaction."
+              },
+              {
+                "name": "isSplit",
+                "value": "true",
+                "type": "query",
+                "description": "Looks whether or not a transaction is split."
+              },
+              {
+                "name": "customExportedProduct",
+                "value": "SAP",
+                "type": "query",
+                "description": "A product that exported list of `Transaction`"
+              },
+              {
+                "name": "customExported",
+                "value": "true",
+                "type": "query",
+                "description": "Looks whether or not a `TransactionCustomExport` is present."
+              },
+              {
+                "name": "p",
+                "value": "3",
+                "type": "query",
+                "description": "It indicates the specific page to display (the counter starts from zero)."
+              },
+              {
+                "name": "s",
+                "value": "25",
+                "type": "query",
+                "description": "It indicates the number of items per page."
+              },
+              {
+                "name": "d",
+                "value": "DESC",
+                "type": "query",
+                "description": "It indicates how the pages are ordered."
+              },
+              {
+                "name": "props",
+                "value": "creationTime",
+                "type": "query",
+                "description": "It indicates the sorting direction applied to the above parameters. To apply a sorting on multiple parameters, set as many times the `props` parameter in the request."
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.soldo.com/oauth/authorize",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Endpoint to find `Transactions` using filtering parameters."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

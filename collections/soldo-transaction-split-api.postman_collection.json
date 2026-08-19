@@ -1,0 +1,414 @@
+{
+  "item": [
+    {
+      "id": "2254412c-8a62-46f4-a5d9-de6dbe5797e5",
+      "name": "Transaction Split",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "0ea300fc-1703-47de-a460-7e68cf11c38e",
+          "name": "Update Transaction Split",
+          "request": {
+            "name": "Update Transaction Split",
+            "description": {
+              "content": "Endpoint to update the split of a `Transaction`.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "business",
+                "v2",
+                "transactions",
+                ":transactionId",
+                "split"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "transactionId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "address_read address_write card_read card_write company_read company_write contact_read contact_write employee_read employee_write expense_category_read expense_category_write expense_report_read expense_report_write expense_review_read expense_review_write group_read group_write online_ads_read online_ads_write payment_read payment_write purchase_read purchase_write refueling_read refueling_write resource_set_read resource_set_write role_read statement_read subscription_read subscription_write tag_read tag_write tax_rate_read tax_rate_write transaction_read transaction_write vehicle_read vehicle_write wallet_read wallet_write webhook_subscription_read webhook_subscription_write"
+                },
+                {
+                  "key": "redirect_uri",
+                  "value": "https://api.soldo.com/oauth/refresh"
+                },
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://api.soldo.com/oauth/authorize"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"split_transactions\": [\n    {\n      \"amount\": \"<number>\",\n      \"expense_type\": \"<string>\",\n      \"user_id\": \"<string>\",\n      \"expense_category_id\": \"<string>\",\n      \"tax_rate_id\": \"<string>\",\n      \"tags\": [\n        {\n          \"tag_id\": \"<string>\",\n          \"dictionary_id\": \"<string>\"\n        },\n        {\n          \"tag_id\": \"<string>\",\n          \"dictionary_id\": \"<string>\"\n        }\n      ]\n    },\n    {\n      \"amount\": \"<number>\",\n      \"expense_type\": \"<string>\",\n      \"user_id\": \"<string>\",\n      \"expense_category_id\": \"<string>\",\n      \"tax_rate_id\": \"<string>\",\n      \"tags\": [\n        {\n          \"tag_id\": \"<string>\",\n          \"dictionary_id\": \"<string>\"\n        },\n        {\n          \"tag_id\": \"<string>\",\n          \"dictionary_id\": \"<string>\"\n        }\n      ]\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "f7effef5-d1f4-4cb2-8fcb-a054b6b2844b",
+              "name": "No content as result.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "business",
+                    "v2",
+                    "transactions",
+                    ":transactionId",
+                    "split"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "transactionId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"split_transactions\": [\n    {\n      \"amount\": 10.25,\n      \"expense_type\": \"TRAVEL_AND_ENTERTAINMENT\",\n      \"user_id\": \"XMPL1234-000003\",\n      \"expense_category_id\": \"e0d9b9c2-4a13-4ad5-85a4-88882fa065bd\",\n      \"tax_rate_id\": \"c861cc24-6663-410f-8c78-73f886fff4ef\",\n      \"tags\": [\n        {\n          \"tag_id\": \"2d65bd5e-3fdf-4002-b166-bde7fb8863fa\",\n          \"dictionary_id\": \"2d65bd5e-3fdf-4002-b166-bde7fb8863fa\"\n        },\n        {\n          \"tag_id\": \"2d65bd5e-3fdf-4002-b166-bde7fb8863fa\",\n          \"dictionary_id\": \"2d65bd5e-3fdf-4002-b166-bde7fb8863fa\"\n        }\n      ]\n    },\n    {\n      \"amount\": 10.25,\n      \"expense_type\": \"TRAVEL_AND_ENTERTAINMENT\",\n      \"user_id\": \"XMPL1234-000003\",\n      \"expense_category_id\": \"e0d9b9c2-4a13-4ad5-85a4-88882fa065bd\",\n      \"tax_rate_id\": \"c861cc24-6663-410f-8c78-73f886fff4ef\",\n      \"tags\": [\n        {\n          \"tag_id\": \"2d65bd5e-3fdf-4002-b166-bde7fb8863fa\",\n          \"dictionary_id\": \"2d65bd5e-3fdf-4002-b166-bde7fb8863fa\"\n        },\n        {\n          \"tag_id\": \"2d65bd5e-3fdf-4002-b166-bde7fb8863fa\",\n          \"dictionary_id\": \"2d65bd5e-3fdf-4002-b166-bde7fb8863fa\"\n        }\n      ]\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "cad518e4-8533-4b8c-8d77-0d0a6af02c61",
+          "name": "Create Transaction Split",
+          "request": {
+            "name": "Create Transaction Split",
+            "description": {
+              "content": "Endpoint to split a `Transaction`.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "business",
+                "v2",
+                "transactions",
+                ":transactionId",
+                "split"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "transactionId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "address_read address_write card_read card_write company_read company_write contact_read contact_write employee_read employee_write expense_category_read expense_category_write expense_report_read expense_report_write expense_review_read expense_review_write group_read group_write online_ads_read online_ads_write payment_read payment_write purchase_read purchase_write refueling_read refueling_write resource_set_read resource_set_write role_read statement_read subscription_read subscription_write tag_read tag_write tax_rate_read tax_rate_write transaction_read transaction_write vehicle_read vehicle_write wallet_read wallet_write webhook_subscription_read webhook_subscription_write"
+                },
+                {
+                  "key": "redirect_uri",
+                  "value": "https://api.soldo.com/oauth/refresh"
+                },
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://api.soldo.com/oauth/authorize"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"split_transactions\": [\n    {\n      \"amount\": \"<number>\",\n      \"expense_type\": \"<string>\",\n      \"user_id\": \"<string>\",\n      \"expense_category_id\": \"<string>\",\n      \"tax_rate_id\": \"<string>\",\n      \"tags\": [\n        {\n          \"tag_id\": \"<string>\",\n          \"dictionary_id\": \"<string>\"\n        },\n        {\n          \"tag_id\": \"<string>\",\n          \"dictionary_id\": \"<string>\"\n        }\n      ]\n    },\n    {\n      \"amount\": \"<number>\",\n      \"expense_type\": \"<string>\",\n      \"user_id\": \"<string>\",\n      \"expense_category_id\": \"<string>\",\n      \"tax_rate_id\": \"<string>\",\n      \"tags\": [\n        {\n          \"tag_id\": \"<string>\",\n          \"dictionary_id\": \"<string>\"\n        },\n        {\n          \"tag_id\": \"<string>\",\n          \"dictionary_id\": \"<string>\"\n        }\n      ]\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "d25c3b58-8ec1-4999-b78d-3f55bd4eab7d",
+              "name": "No content as result.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "business",
+                    "v2",
+                    "transactions",
+                    ":transactionId",
+                    "split"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "transactionId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"split_transactions\": [\n    {\n      \"amount\": 10.25,\n      \"expense_type\": \"TRAVEL_AND_ENTERTAINMENT\",\n      \"user_id\": \"XMPL1234-000003\",\n      \"expense_category_id\": \"e0d9b9c2-4a13-4ad5-85a4-88882fa065bd\",\n      \"tax_rate_id\": \"c861cc24-6663-410f-8c78-73f886fff4ef\",\n      \"tags\": [\n        {\n          \"tag_id\": \"2d65bd5e-3fdf-4002-b166-bde7fb8863fa\",\n          \"dictionary_id\": \"2d65bd5e-3fdf-4002-b166-bde7fb8863fa\"\n        },\n        {\n          \"tag_id\": \"2d65bd5e-3fdf-4002-b166-bde7fb8863fa\",\n          \"dictionary_id\": \"2d65bd5e-3fdf-4002-b166-bde7fb8863fa\"\n        }\n      ]\n    },\n    {\n      \"amount\": 10.25,\n      \"expense_type\": \"TRAVEL_AND_ENTERTAINMENT\",\n      \"user_id\": \"XMPL1234-000003\",\n      \"expense_category_id\": \"e0d9b9c2-4a13-4ad5-85a4-88882fa065bd\",\n      \"tax_rate_id\": \"c861cc24-6663-410f-8c78-73f886fff4ef\",\n      \"tags\": [\n        {\n          \"tag_id\": \"2d65bd5e-3fdf-4002-b166-bde7fb8863fa\",\n          \"dictionary_id\": \"2d65bd5e-3fdf-4002-b166-bde7fb8863fa\"\n        },\n        {\n          \"tag_id\": \"2d65bd5e-3fdf-4002-b166-bde7fb8863fa\",\n          \"dictionary_id\": \"2d65bd5e-3fdf-4002-b166-bde7fb8863fa\"\n        }\n      ]\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b17b06b7-5b16-464f-bc70-79d05b5df1b3",
+          "name": "Delete Transaction Split",
+          "request": {
+            "name": "Delete Transaction Split",
+            "description": {
+              "content": "Endpoint to delete the split of a `Transaction`.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "business",
+                "v2",
+                "transactions",
+                ":transactionId",
+                "split"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "transactionId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "method": "DELETE",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "address_read address_write card_read card_write company_read company_write contact_read contact_write employee_read employee_write expense_category_read expense_category_write expense_report_read expense_report_write expense_review_read expense_review_write group_read group_write online_ads_read online_ads_write payment_read payment_write purchase_read purchase_write refueling_read refueling_write resource_set_read resource_set_write role_read statement_read subscription_read subscription_write tag_read tag_write tax_rate_read tax_rate_write transaction_read transaction_write vehicle_read vehicle_write wallet_read wallet_write webhook_subscription_read webhook_subscription_write"
+                },
+                {
+                  "key": "redirect_uri",
+                  "value": "https://api.soldo.com/oauth/refresh"
+                },
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://api.soldo.com/oauth/authorize"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "661dbb28-c34a-4643-8202-ec9ad921803b",
+              "name": "No content as result.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "business",
+                    "v2",
+                    "transactions",
+                    ":transactionId",
+                    "split"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "transactionId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.soldo.com",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "6df0f4b4-0945-4e9c-a61e-4ec7ea139b74",
+    "name": "Soldo Business API v2.0 Accounting Classification Transaction Split API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Soldo Business API v2.0 OpenAPI specification",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,82 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Soldo Business API v2.0 Accounting Classification Transaction Tags API",
+    "version": "5.56.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Transaction Tags",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Add Tag to Transaction",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.soldo.com/business/v2/transactions/:transactionId/tags/:tagId",
+            "params": [
+              {
+                "name": "transactionId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "tagId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.soldo.com/oauth/authorize",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Endpoint to assign a `Tag` to a `Transaction`."
+        },
+        {
+          "info": {
+            "name": "Remove Tag from Transaction",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.soldo.com/business/v2/transactions/:transactionId/tags/:tagId",
+            "params": [
+              {
+                "name": "transactionId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "tagId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.soldo.com/oauth/authorize",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Endpoint to remove a `Tag` from a `Transaction`."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

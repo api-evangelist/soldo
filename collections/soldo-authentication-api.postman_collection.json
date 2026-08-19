@@ -1,0 +1,355 @@
+{
+  "item": [
+    {
+      "id": "aff7a843-2591-4065-9004-2cd281aca39f",
+      "name": "Authentication",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "c14d15c5-847e-4e5b-ac41-67d71597a8c5",
+          "name": "Authenticate",
+          "request": {
+            "name": "Authenticate",
+            "description": {
+              "content": "Grant access to the API getting an `OAuth2Token`.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "oauth",
+                "authorize"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "disabled": false,
+                  "key": "client_id",
+                  "value": "<string>",
+                  "description": "(Required) The client ID issued while [Setting up the API](doc:api-set-up), this works as a username."
+                },
+                {
+                  "disabled": false,
+                  "key": "client_secret",
+                  "value": "<string>",
+                  "description": "(Required) The client secret issued while [Setting up the API](doc:api-set-up), this works as a password."
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "75233092-ac09-4c9e-9906-5e7af70a83cc",
+              "name": "The `OAuth2Token`.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "oauth",
+                    "authorize"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) The client ID issued while [Setting up the API](doc:api-set-up), this works as a username.",
+                        "type": "text/plain"
+                      },
+                      "key": "client_id",
+                      "value": "{{client_id}}"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) The client secret issued while [Setting up the API](doc:api-set-up), this works as a password.",
+                        "type": "text/plain"
+                      },
+                      "key": "client_secret",
+                      "value": "{{client_secret}}"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"refresh_token\": \"{{refresh_token}}\",\n  \"token_type\": \"Bearer\",\n  \"access_token\": \"{{access_token}}\",\n  \"expires_in\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fb352e5d-d59b-4813-88d9-a75955f6dafb",
+              "name": "Your request has missing arguments or is malformed.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "oauth",
+                    "authorize"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) The client ID issued while [Setting up the API](doc:api-set-up), this works as a username.",
+                        "type": "text/plain"
+                      },
+                      "key": "client_id",
+                      "value": "{{client_id}}"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) The client secret issued while [Setting up the API](doc:api-set-up), this works as a password.",
+                        "type": "text/plain"
+                      },
+                      "key": "client_secret",
+                      "value": "{{client_secret}}"
+                    }
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "6148e5e6-e75b-4287-a75a-c56f9cfc80cb",
+              "name": "The access token you are using is not granted with the necessary permissions or is expired. Check client scopes and fingerprint requirements.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "oauth",
+                    "authorize"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) The client ID issued while [Setting up the API](doc:api-set-up), this works as a username.",
+                        "type": "text/plain"
+                      },
+                      "key": "client_id",
+                      "value": "{{client_id}}"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) The client secret issued while [Setting up the API](doc:api-set-up), this works as a password.",
+                        "type": "text/plain"
+                      },
+                      "key": "client_secret",
+                      "value": "{{client_secret}}"
+                    }
+                  ]
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "8791e5d4-4357-4c5e-9e99-e744415c0cb9",
+          "name": "Get who am I",
+          "request": {
+            "name": "Get who am I",
+            "description": {
+              "content": "Endpoint to get information about the owner of the access token.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "business",
+                "v2",
+                "ping",
+                "whoami"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "address_read address_write card_read card_write company_read company_write contact_read contact_write employee_read employee_write expense_category_read expense_category_write expense_report_read expense_report_write expense_review_read expense_review_write group_read group_write online_ads_read online_ads_write payment_read payment_write purchase_read purchase_write refueling_read refueling_write resource_set_read resource_set_write role_read statement_read subscription_read subscription_write tag_read tag_write tax_rate_read tax_rate_write transaction_read transaction_write vehicle_read vehicle_write wallet_read wallet_write webhook_subscription_read webhook_subscription_write"
+                },
+                {
+                  "key": "redirect_uri",
+                  "value": "https://api.soldo.com/oauth/refresh"
+                },
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://api.soldo.com/oauth/authorize"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "d2a7363d-5684-459b-bcfa-60d1cb93ab90",
+              "name": "The returned resource is a minimal representation of a `User`.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "business",
+                    "v2",
+                    "ping",
+                    "whoami"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"company_name\": \"Example Inc.\",\n  \"scopes\": [\n    \"ALL\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.soldo.com",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "f80ca7de-2e5c-421b-87bb-aed6743e3a23",
+    "name": "Soldo Business API v2.0 Accounting Classification Authentication API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Soldo Business API v2.0 OpenAPI specification",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,282 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Soldo Business API v2.0 Accounting Classification Cards API",
+    "version": "5.56.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Cards",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Search Cards",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.soldo.com/business/v2/cards",
+            "params": [
+              {
+                "name": "type",
+                "value": "wallet",
+                "type": "query",
+                "description": "The type of a resource the `Card` is attached to."
+              },
+              {
+                "name": "id",
+                "value": "7bf79328-a7ae-4222-aa54-091ff7f429a7",
+                "type": "query",
+                "description": "The ID of the `type` resource (it's not applicable for `company` resource; it's not required for `employees`)."
+              },
+              {
+                "name": "customreferenceId",
+                "value": "123456-user-1",
+                "type": "query",
+                "description": "The custom reference ID of the `type` resource."
+              },
+              {
+                "name": "status",
+                "value": "Normal",
+                "type": "query",
+                "description": "One among the available `Card` statuses of a `Card`."
+              },
+              {
+                "name": "groupId",
+                "value": "7bf79328-a7ae-4222-aa54-091ff7f429a7",
+                "type": "query",
+                "description": "The ID of the `Group` the `Card` is related to."
+              },
+              {
+                "name": "name",
+                "value": "CardName",
+                "type": "query",
+                "description": "The name of the `Card`."
+              },
+              {
+                "name": "label",
+                "value": "CardLabel",
+                "type": "query",
+                "description": "The label of the `Card`."
+              },
+              {
+                "name": "p",
+                "value": "3",
+                "type": "query",
+                "description": "It indicates the specific page to display (the counter starts from zero)."
+              },
+              {
+                "name": "s",
+                "value": "25",
+                "type": "query",
+                "description": "It indicates the number of items per page."
+              },
+              {
+                "name": "d",
+                "value": "DESC",
+                "type": "query",
+                "description": "It indicates how the pages are ordered."
+              },
+              {
+                "name": "props",
+                "value": "creationTime",
+                "type": "query",
+                "description": "It indicates the sorting direction applied to the above parameters. To apply a sorting on multiple parameters, set as many times the `props` parameter in the request."
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.soldo.com/oauth/authorize",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Endpoint to find `Cards` using filtering parameters."
+        },
+        {
+          "info": {
+            "name": "Add Card",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.soldo.com/business/v2/cards",
+            "headers": [
+              {
+                "name": "X-Soldo-Fingerprint",
+                "value": ""
+              },
+              {
+                "name": "X-Soldo-Fingerprint-Signature",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.soldo.com/oauth/authorize",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Endpoint to add a new `Card`. The created `Card` has the same currency of the `Wallet` it belongs to."
+        },
+        {
+          "info": {
+            "name": "Get Card",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.soldo.com/business/v2/cards/:cardId",
+            "params": [
+              {
+                "name": "cardId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "showSensitiveData",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.soldo.com/oauth/authorize",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Endpoint to retrieve a specific `Card` by ID."
+        },
+        {
+          "info": {
+            "name": "Update Card",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.soldo.com/business/v2/cards/:cardId",
+            "headers": [
+              {
+                "name": "X-Soldo-Fingerprint",
+                "value": ""
+              },
+              {
+                "name": "X-Soldo-Fingerprint-Signature",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "cardId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.soldo.com/oauth/authorize",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Endpoint to add and remove assignees for company `Cards`."
+        },
+        {
+          "info": {
+            "name": "Delete Card",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.soldo.com/business/v2/cards/:cardId",
+            "params": [
+              {
+                "name": "cardId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.soldo.com/oauth/authorize",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Endpoint to delete a `Card`."
+        },
+        {
+          "info": {
+            "name": "Switch Card Wallet",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.soldo.com/business/v2/cards/:cardId/move/:newWalletId",
+            "headers": [
+              {
+                "name": "X-Soldo-Fingerprint",
+                "value": ""
+              },
+              {
+                "name": "X-Soldo-Fingerprint-Signature",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "cardId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "newWalletId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.soldo.com/oauth/authorize",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Endpoint to switch the `Card` `Wallet`."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

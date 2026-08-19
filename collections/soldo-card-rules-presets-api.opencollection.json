@@ -1,0 +1,210 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Soldo Business API v2.0 Accounting Classification Card Rules Presets API",
+    "version": "5.56.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Card Rules Presets",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Preset",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.soldo.com/business/v2/cards/presets/:presetId",
+            "params": [
+              {
+                "name": "presetId",
+                "value": "2d65bd5e-3fdf-4002-b166-bde7fb8863fa",
+                "type": "path",
+                "description": "The `CardRulePreset` ID"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.soldo.com/oauth/authorize",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Endpoint to get a `CardRulePreset` by ID."
+        },
+        {
+          "info": {
+            "name": "Delete Preset",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.soldo.com/business/v2/cards/presets/:presetId",
+            "params": [
+              {
+                "name": "presetId",
+                "value": "2d65bd5e-3fdf-4002-b166-bde7fb8863fa",
+                "type": "path",
+                "description": "The `CardRulePreset` ID."
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.soldo.com/oauth/authorize",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Endpoint to delete a `CardRulePreset` by ID."
+        },
+        {
+          "info": {
+            "name": "Search Presets",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.soldo.com/business/v2/cards/presets",
+            "params": [
+              {
+                "name": "currency",
+                "value": "EUR",
+                "type": "query",
+                "description": "the currency of the `CardRulePreset`."
+              },
+              {
+                "name": "name",
+                "value": "DefaultPreset",
+                "type": "query",
+                "description": "The name of the `CardRulePreset`."
+              },
+              {
+                "name": "p",
+                "value": "3",
+                "type": "query",
+                "description": "It indicates the specific page to display (the counter starts from zero)."
+              },
+              {
+                "name": "s",
+                "value": "25",
+                "type": "query",
+                "description": "It indicates the number of items per page."
+              },
+              {
+                "name": "d",
+                "value": "DESC",
+                "type": "query",
+                "description": "It indicates how the pages are ordered."
+              },
+              {
+                "name": "props",
+                "value": "creationTime",
+                "type": "query",
+                "description": "It indicates the sorting direction applied to the above parameters. To apply a sorting on multiple parameters, set as many times the `props` parameter in the request."
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.soldo.com/oauth/authorize",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Endpoint to find `CardRulePresets` using filtering parameters."
+        },
+        {
+          "info": {
+            "name": "Add Preset to Card",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.soldo.com/business/v2/cards/:cardId/presets/:presetId",
+            "headers": [
+              {
+                "name": "X-Soldo-Fingerprint",
+                "value": ""
+              },
+              {
+                "name": "X-Soldo-Fingerprint-Signature",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "cardId",
+                "value": "7bf79328-a7ae-4222-aa54-091ff7f429a7",
+                "type": "path",
+                "description": "The `Card` ID"
+              },
+              {
+                "name": "presetId",
+                "value": "2d65bd5e-3fdf-4002-b166-bde7fb8863fa",
+                "type": "path",
+                "description": "The `CardRulePreset` ID"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.soldo.com/oauth/authorize",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Endpoint to add a `CardRulePreset` to a `Card`."
+        },
+        {
+          "info": {
+            "name": "Remove Preset from Card",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.soldo.com/business/v2/cards/:cardId/presets/:presetId",
+            "params": [
+              {
+                "name": "cardId",
+                "value": "7bf79328-a7ae-4222-aa54-091ff7f429a7",
+                "type": "path",
+                "description": "The `Card` ID."
+              },
+              {
+                "name": "presetId",
+                "value": "2d65bd5e-3fdf-4002-b166-bde7fb8863fa",
+                "type": "path",
+                "description": "The `CardRulePreset` ID."
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.soldo.com/oauth/authorize",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Endpoint to remove a `CardRulePreset` from a `Card`."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
