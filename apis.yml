@@ -37,6 +37,17 @@ tags:
 - Company
 - Consumer
 - Fintech
+- Financial-Services
+- Spend Management
+- Expense Management
+- Business Cards
+- Prepaid Cards
+- Payments
+- Banking
+tags_raw:
+- Company
+- Consumer
+- Fintech
 - Financial Services
 - Spend Management
 - Expense Management
@@ -415,6 +426,8 @@ apis:
   humanURL: https://developer.soldo.com/
   baseURL: https://api.soldo.com/business/v2
   tags:
+  - Group
+  tags_raw:
   - Groups
   properties:
   - type: OpenAPI
@@ -435,6 +448,8 @@ apis:
   humanURL: https://developer.soldo.com/
   baseURL: https://api.soldo.com/business/v2
   tags:
+  - List
+  tags_raw:
   - Lists
   properties:
   - type: OpenAPI
@@ -475,6 +490,8 @@ apis:
   humanURL: https://developer.soldo.com/
   baseURL: https://api.soldo.com/business/v2
   tags:
+  - Order
+  tags_raw:
   - Orders
   properties:
   - type: OpenAPI
@@ -635,6 +652,8 @@ apis:
   humanURL: https://developer.soldo.com/
   baseURL: https://api.soldo.com/business/v2
   tags:
+  - Subscription
+  tags_raw:
   - Subscriptions
   properties:
   - type: OpenAPI
@@ -817,6 +836,8 @@ apis:
   humanURL: https://developer.soldo.com/
   baseURL: https://api.soldo.com/business/v2
   tags:
+  - Transaction
+  tags_raw:
   - Transactions
   properties:
   - type: OpenAPI
@@ -857,6 +878,8 @@ apis:
   humanURL: https://developer.soldo.com/
   baseURL: https://api.soldo.com/business/v2
   tags:
+  - User
+  tags_raw:
   - Users
   properties:
   - type: OpenAPI
