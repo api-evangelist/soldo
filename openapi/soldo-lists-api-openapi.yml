@@ -1,6 +1,6 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Soldo Business API v2.0 Accounting Classification Lists API
+  title: Soldo Business API v2.0 Lists API
   description: Soldo Business API v2.0 OpenAPI specification
   version: 5.56.0
 servers:
@@ -295,13 +295,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/TagDictionary'
-    Direction:
-      type: string
-      description: It indicates how the pages are ordered.
-      enum:
-      - ASC
-      - DESC
-      example: DESC
     TagDictionary:
       properties:
         id:
@@ -345,6 +338,13 @@ components:
           type: boolean
           description: It determines whether multiple tags of the `List` can be selected.
           example: false
+    Direction:
+      type: string
+      description: It indicates how the pages are ordered.
+      enum:
+      - ASC
+      - DESC
+      example: DESC
   securitySchemes:
     standardAuth:
       type: oauth2

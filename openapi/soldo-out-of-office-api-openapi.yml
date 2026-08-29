@@ -1,6 +1,6 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Soldo Business API v2.0 Accounting Classification Out of Office API
+  title: Soldo Business API v2.0 Out of Office API
   description: Soldo Business API v2.0 OpenAPI specification
   version: 5.56.0
 servers:
@@ -274,6 +274,75 @@ paths:
         - out_of_office_delegation_write
 components:
   schemas:
+    UpdateOutOfOfficeDelegation:
+      description: Update `out_of_office` Request JSON parameters.
+      properties:
+        request_timestamp:
+          type: integer
+          format: int64
+          description: The epoch timestamp in millis. This is checked in Soldo. Requests with timestamp older than 5 seconds will be rejected.
+          example: 1576850500000
+        delegate_id:
+          type: string
+          description: The ID of the person covering for the delegator.
+          example: XMPL1234-000002
+        from_date:
+          type: string
+          description: 'Defines when the out_of_office entry starts. fromDate included.(i.e. greater than or equal to) (Format: `yyyy-MM-dd`).'
+          example: '2020-04-06'
+        to_date:
+          type: string
+          description: 'Defines when the out_of_office entry ends. toDate included.(i.e. less than) (Format: `yyyy-MM-dd`).'
+          example: '2020-04-06'
+        features:
+          type: array
+          description: The features of `out_of_office`.
+          items:
+            $ref: '#/components/schemas/DelegationFeature'
+      required:
+      - delegate_id
+      - features
+      - request_timestamp
+    CreateOutOfOfficeDelegation:
+      description: Create `out_of_office` JSON parameters.
+      properties:
+        request_timestamp:
+          type: integer
+          format: int64
+          description: The epoch timestamp in millis. This is checked in Soldo. Requests with timestamp older than 5 seconds will be rejected.
+          example: 1576850500000
+        delegator_id:
+          type: string
+          description: The ID of the person assigning the `out_of_office`.
+          example: XMPL1234-000001
+        delegate_id:
+          type: string
+          description: The ID of the person covering for the delegator.
+          example: XMPL1234-000002
+        from_date:
+          type: string
+          description: 'Defines when the out_of_office entry starts. fromDate included.(i.e. greater than or equal to) (Format: `yyyy-MM-dd`).'
+          example: '2020-04-06'
+        to_date:
+          type: string
+          description: 'Defines when the out_of_office entry ends. toDate included.(i.e. less than) (Format: `yyyy-MM-dd`).'
+          example: '2020-04-06'
+        features:
+          type: array
+          description: The features of `out_of_office`.
+          items:
+            $ref: '#/components/schemas/DelegationFeature'
+      required:
+      - delegate_id
+      - delegator_id
+      - features
+      - request_timestamp
+    DelegationFeature:
+      type: string
+      enum:
+      - REQUEST_MONEY
+      - REQUEST_PURCHASE
+      - EXPENSE_REVIEW
     OutOfOfficeDelegation:
       properties:
         id:
@@ -322,41 +391,6 @@ components:
       - EXPIRED
       - SCHEDULED
       - DELETED
-    UpdateOutOfOfficeDelegation:
-      description: Update `out_of_office` Request JSON parameters.
-      properties:
-        request_timestamp:
-          type: integer
-          format: int64
-          description: The epoch timestamp in millis. This is checked in Soldo. Requests with timestamp older than 5 seconds will be rejected.
-          example: 1576850500000
-        delegate_id:
-          type: string
-          description: The ID of the person covering for the delegator.
-          example: XMPL1234-000002
-        from_date:
-          type: string
-          description: 'Defines when the out_of_office entry starts. fromDate included.(i.e. greater than or equal to) (Format: `yyyy-MM-dd`).'
-          example: '2020-04-06'
-        to_date:
-          type: string
-          description: 'Defines when the out_of_office entry ends. toDate included.(i.e. less than) (Format: `yyyy-MM-dd`).'
-          example: '2020-04-06'
-        features:
-          type: array
-          description: The features of `out_of_office`.
-          items:
-            $ref: '#/components/schemas/DelegationFeature'
-      required:
-      - delegate_id
-      - features
-      - request_timestamp
-    DelegationFeature:
-      type: string
-      enum:
-      - REQUEST_MONEY
-      - REQUEST_PURCHASE
-      - EXPENSE_REVIEW
     OutOfOfficeDelegations:
       properties:
         total:
@@ -388,40 +422,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/OutOfOfficeDelegation'
-    CreateOutOfOfficeDelegation:
-      description: Create `out_of_office` JSON parameters.
-      properties:
-        request_timestamp:
-          type: integer
-          format: int64
-          description: The epoch timestamp in millis. This is checked in Soldo. Requests with timestamp older than 5 seconds will be rejected.
-          example: 1576850500000
-        delegator_id:
-          type: string
-          description: The ID of the person assigning the `out_of_office`.
-          example: XMPL1234-000001
-        delegate_id:
-          type: string
-          description: The ID of the person covering for the delegator.
-          example: XMPL1234-000002
-        from_date:
-          type: string
-          description: 'Defines when the out_of_office entry starts. fromDate included.(i.e. greater than or equal to) (Format: `yyyy-MM-dd`).'
-          example: '2020-04-06'
-        to_date:
-          type: string
-          description: 'Defines when the out_of_office entry ends. toDate included.(i.e. less than) (Format: `yyyy-MM-dd`).'
-          example: '2020-04-06'
-        features:
-          type: array
-          description: The features of `out_of_office`.
-          items:
-            $ref: '#/components/schemas/DelegationFeature'
-      required:
-      - delegate_id
-      - delegator_id
-      - features
-      - request_timestamp
   securitySchemes:
     standardAuth:
       type: oauth2

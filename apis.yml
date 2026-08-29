@@ -1006,6 +1006,16 @@ apis:
     url: https://developer.soldo.com/docs/authentication
   - type: Webhooks
     url: asyncapi/soldo-webhooks.yml
+- aid: soldo:soldo-webhooks-api
+  name: Soldo Webhooks API
+  description: The Webhooks API from Soldo — 0 operation(s) for webhooks.
+  humanURL: https://developer.soldo.com/
+  baseURL: https://api.soldo.com/business/v2
+  tags:
+  - Webhooks
+  properties:
+  - type: OpenAPI
+    url: openapi/soldo-webhooks-api-openapi.yml
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com

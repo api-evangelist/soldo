@@ -1,6 +1,6 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Soldo Business API v2.0 Accounting Classification Transaction Split API
+  title: Soldo Business API v2.0 Transaction Split API
   description: Soldo Business API v2.0 OpenAPI specification
   version: 5.56.0
 servers:
@@ -84,32 +84,12 @@ paths:
         - transaction_write
 components:
   schemas:
-    SplitTag:
-      properties:
-        tag_id:
-          type: string
-          description: The `Tags` of the `SplitTransaction`.
-          example: 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
-        dictionary_id:
-          type: string
-          description: The `dictionaryId` of the `Tag` of the `SplitTransaction`.
-          example: 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
     ExpenseType:
       type: string
       enum:
       - COMPANY
       - PERSONAL
       - TRAVEL_AND_ENTERTAINMENT
-    CreateTransactionSplit:
-      description: Create `Transaction` split JSON parameters.
-      properties:
-        split_transactions:
-          type: array
-          items:
-            $ref: '#/components/schemas/SplitTransaction'
-          minItems: 2
-      required:
-      - split_transactions
     UpdateTransactionSplit:
       description: Update `Transaction` split JSON parameters.
       properties:
@@ -120,6 +100,26 @@ components:
           minItems: 2
       required:
       - split_transactions
+    CreateTransactionSplit:
+      description: Create `Transaction` split JSON parameters.
+      properties:
+        split_transactions:
+          type: array
+          items:
+            $ref: '#/components/schemas/SplitTransaction'
+          minItems: 2
+      required:
+      - split_transactions
+    SplitTag:
+      properties:
+        tag_id:
+          type: string
+          description: The `Tags` of the `SplitTransaction`.
+          example: 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
+        dictionary_id:
+          type: string
+          description: The `dictionaryId` of the `Tag` of the `SplitTransaction`.
+          example: 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
     SplitTransaction:
       properties:
         amount:

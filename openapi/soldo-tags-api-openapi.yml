@@ -1,6 +1,6 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Soldo Business API v2.0 Accounting Classification Tags API
+  title: Soldo Business API v2.0 Tags API
   description: Soldo Business API v2.0 OpenAPI specification
   version: 5.56.0
 servers:
@@ -347,6 +347,27 @@ paths:
         - tag_write
 components:
   schemas:
+    NewTagBulk:
+      description: New `Tag` bulk JSON parameters.
+      properties:
+        tags:
+          type: array
+          description: The list of `Tag` resources to create in bulk.
+          example:
+          - 7bf79328-a7ae-4222-aa54-091ff7f429a7
+          - 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
+          items:
+            $ref: '#/components/schemas/NewTagBulkItem'
+    TagItems:
+      properties:
+        tags:
+          type: array
+          description: The list of `Tag` resources.
+          example:
+          - 7bf79328-a7ae-4222-aa54-091ff7f429a7
+          - 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
+          items:
+            $ref: '#/components/schemas/Tag'
     UpdateTagItem:
       description: Update `Tag` bulk JSON parameters.
       properties:
@@ -358,6 +379,66 @@ components:
           - 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
           items:
             $ref: '#/components/schemas/UpdateTagBulkItem'
+    Tag:
+      properties:
+        id:
+          type: string
+          description: 'The `Tag` ID (sortable: no).'
+          example: 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
+        dictionary_id:
+          type: string
+          description: 'The `List` ID (sortable: no).'
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+        dictionary:
+          type: string
+          description: 'The name of the `List` where the `Tag` is listed (sortable: no).'
+          example: ExampleTagDictionary
+        tag:
+          type: string
+          description: 'The name of the `Tag` (sortable: yes).'
+          example: tx-label
+        description:
+          type: string
+          description: 'The description of the `Tag` (sortable: no).'
+          example: Label to mark transactions
+        visible:
+          type: boolean
+          description: 'It determines whether the `Tag` is visible in the `Transaction` detail (sortable: yes).'
+          example: true
+        code:
+          type: string
+          description: 'The code of the `Tag` (sortable: no).'
+        percentage:
+          type: number
+          format: double
+          deprecated: true
+          description: 'Percentage value: valid for TAX_RATE type only (sortable: no). Deprecated, only for backward compatibility.'
+    UpdateTagBulkItem:
+      properties:
+        id:
+          type: string
+          description: The `Tag` ID.
+          example: 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
+        tag:
+          type: string
+          description: The name of the `Tag`.
+          example: tx-label
+        description:
+          type: string
+          description: The description of the `Tag`. If needed to support special characters, provide the character encoding in the `Content-Type` header (e.g. `application/x-www-form-urlencoded ; charset=utf-8`).
+          example: Label to mark transactions
+        code:
+          type: string
+          description: The code of the `Tag`. If needed to support special characters, provide the character encoding in the `Content-Type` header (e.g. `application/x-www-form-urlencoded ; charset=utf-8`).
+          example: CODE tag
+          maxLength: 60
+        visible:
+          type: boolean
+          description: It determines whether the `Tag` is visible in the `Transaction` detail.
+          example: true
+      required:
+      - id
+      - tag
     NewTagBulkItem:
       properties:
         tag:
@@ -405,17 +486,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Tag'
-    NewTagBulk:
-      description: New `Tag` bulk JSON parameters.
-      properties:
-        tags:
-          type: array
-          description: The list of `Tag` resources to create in bulk.
-          example:
-          - 7bf79328-a7ae-4222-aa54-091ff7f429a7
-          - 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
-          items:
-            $ref: '#/components/schemas/NewTagBulkItem'
     Direction:
       type: string
       description: It indicates how the pages are ordered.
@@ -423,76 +493,6 @@ components:
       - ASC
       - DESC
       example: DESC
-    UpdateTagBulkItem:
-      properties:
-        id:
-          type: string
-          description: The `Tag` ID.
-          example: 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
-        tag:
-          type: string
-          description: The name of the `Tag`.
-          example: tx-label
-        description:
-          type: string
-          description: The description of the `Tag`. If needed to support special characters, provide the character encoding in the `Content-Type` header (e.g. `application/x-www-form-urlencoded ; charset=utf-8`).
-          example: Label to mark transactions
-        code:
-          type: string
-          description: The code of the `Tag`. If needed to support special characters, provide the character encoding in the `Content-Type` header (e.g. `application/x-www-form-urlencoded ; charset=utf-8`).
-          example: CODE tag
-          maxLength: 60
-        visible:
-          type: boolean
-          description: It determines whether the `Tag` is visible in the `Transaction` detail.
-          example: true
-      required:
-      - id
-      - tag
-    TagItems:
-      properties:
-        tags:
-          type: array
-          description: The list of `Tag` resources.
-          example:
-          - 7bf79328-a7ae-4222-aa54-091ff7f429a7
-          - 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
-          items:
-            $ref: '#/components/schemas/Tag'
-    Tag:
-      properties:
-        id:
-          type: string
-          description: 'The `Tag` ID (sortable: no).'
-          example: 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
-        dictionary_id:
-          type: string
-          description: 'The `List` ID (sortable: no).'
-          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
-        dictionary:
-          type: string
-          description: 'The name of the `List` where the `Tag` is listed (sortable: no).'
-          example: ExampleTagDictionary
-        tag:
-          type: string
-          description: 'The name of the `Tag` (sortable: yes).'
-          example: tx-label
-        description:
-          type: string
-          description: 'The description of the `Tag` (sortable: no).'
-          example: Label to mark transactions
-        visible:
-          type: boolean
-          description: 'It determines whether the `Tag` is visible in the `Transaction` detail (sortable: yes).'
-          example: true
-        code:
-          type: string
-          description: 'The code of the `Tag` (sortable: no).'
-        percentage:
-          type: number
-          format: double
-          deprecated: true
-          description: 'Percentage value: valid for TAX_RATE type only (sortable: no). Deprecated, only for backward compatibility.'
   securitySchemes:
     standardAuth:
       type: oauth2

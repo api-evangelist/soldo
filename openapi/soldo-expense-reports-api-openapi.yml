@@ -1,6 +1,6 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Soldo Business API v2.0 Accounting Classification Expense Reports API
+  title: Soldo Business API v2.0 Expense Reports API
   description: Soldo Business API v2.0 OpenAPI specification
   version: 5.56.0
 servers:
@@ -254,37 +254,6 @@ components:
       enum:
       - PROCESSED
       - CANCELLED
-    DateParam:
-      description: 'The end of the period of the search `toDate` included (i.e. less than) (Formats: `yyyy-MM-dd`, `yyyy-MM-ddThh:mm:ss`, `yyyy-MM-ddThh:mm:ssZ`).'
-      example: '1970-01-30'
-    ExpenseReportDownload:
-      properties:
-        file_url:
-          type: string
-          description: 'The  `ExpenseReport`file URL '
-    UpdateExpenseReport:
-      description: Update `ExpenseReport` Request JSON parameters.
-      properties:
-        approver_id:
-          type: string
-          description: The ID of the SuperAdmin `User` who approves/rejects the expense.
-          example: XMPL1234-000003
-        status:
-          $ref: '#/components/schemas/ExpenseReportStatusUpdate'
-          description: The status of the  `ExpenseReport`.
-          example: PROCESSED
-    ExpenseReportType:
-      type: string
-      enum:
-      - EMPLOYEE
-      - COMPANY
-    Direction:
-      type: string
-      description: It indicates how the pages are ordered.
-      enum:
-      - ASC
-      - DESC
-      example: DESC
     ExpenseReportStatus:
       type: string
       description: The `ExpenseReport` status.
@@ -292,6 +261,11 @@ components:
       - PROCESSED
       - CANCELLED
       - TO_BE_PROCESSED
+    ExpenseReportType:
+      type: string
+      enum:
+      - EMPLOYEE
+      - COMPANY
     ExpenseReportFileType:
       type: string
       description: The `ExpenseReport` file type.
@@ -306,6 +280,55 @@ components:
       - CANCELLED
       - DELETED
       - TO_BE_PROCESSED
+    UpdateExpenseReport:
+      description: Update `ExpenseReport` Request JSON parameters.
+      properties:
+        approver_id:
+          type: string
+          description: The ID of the SuperAdmin `User` who approves/rejects the expense.
+          example: XMPL1234-000003
+        status:
+          $ref: '#/components/schemas/ExpenseReportStatusUpdate'
+          description: The status of the  `ExpenseReport`.
+          example: PROCESSED
+    ExpenseReports:
+      properties:
+        total:
+          type: integer
+          format: int32
+          description: It represents the total number of available items in the list.
+          example: 168
+        pages:
+          type: integer
+          format: int32
+          description: It represents the total number of available pages.
+          example: 7
+        page_size:
+          type: integer
+          format: int32
+          description: It represents the number of items per page.
+          example: 25
+        current_page:
+          type: integer
+          format: int32
+          description: It indicates the current page (the counter starts from zero).
+          example: 0
+        results_size:
+          type: integer
+          format: int32
+          description: It indicates the size of the array results.
+          example: 25
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/ExpenseReport'
+    Direction:
+      type: string
+      description: It indicates how the pages are ordered.
+      enum:
+      - ASC
+      - DESC
+      example: DESC
     ExpenseReport:
       properties:
         reimburse_amount:
@@ -360,37 +383,14 @@ components:
         reimbursement_transaction_id:
           type: string
           description: The ID of the transaction of the `ExpenseReport`.
-    ExpenseReports:
+    ExpenseReportDownload:
       properties:
-        total:
-          type: integer
-          format: int32
-          description: It represents the total number of available items in the list.
-          example: 168
-        pages:
-          type: integer
-          format: int32
-          description: It represents the total number of available pages.
-          example: 7
-        page_size:
-          type: integer
-          format: int32
-          description: It represents the number of items per page.
-          example: 25
-        current_page:
-          type: integer
-          format: int32
-          description: It indicates the current page (the counter starts from zero).
-          example: 0
-        results_size:
-          type: integer
-          format: int32
-          description: It indicates the size of the array results.
-          example: 25
-        results:
-          type: array
-          items:
-            $ref: '#/components/schemas/ExpenseReport'
+        file_url:
+          type: string
+          description: 'The  `ExpenseReport`file URL '
+    DateParam:
+      description: 'The end of the period of the search `toDate` included (i.e. less than) (Formats: `yyyy-MM-dd`, `yyyy-MM-ddThh:mm:ss`, `yyyy-MM-ddThh:mm:ssZ`).'
+      example: '1970-01-30'
   securitySchemes:
     standardAuth:
       type: oauth2

@@ -1,6 +1,6 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Soldo Business API v2.0 Accounting Classification Transaction Expense Category API
+  title: Soldo Business API v2.0 Transaction Expense Category API
   description: Soldo Business API v2.0 OpenAPI specification
   version: 5.56.0
 servers:

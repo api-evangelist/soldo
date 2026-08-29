@@ -1,6 +1,6 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Soldo Business API v2.0 Accounting Classification Company API
+  title: Soldo Business API v2.0 Company API
   description: Soldo Business API v2.0 OpenAPI specification
   version: 5.56.0
 servers:
@@ -30,6 +30,11 @@ paths:
         - company_read
 components:
   schemas:
+    FinancialEntity:
+      type: string
+      enum:
+      - SFS-UK
+      - SFS-IRL
     Address:
       properties:
         id:
@@ -95,16 +100,6 @@ components:
           type: string
           description: The date and time when the `Address` was last updated.
           example: '2017-06-01T12:48:40Z'
-    AddressCategory:
-      type: string
-      enum:
-      - USER
-      - COMPANY
-    FinancialEntity:
-      type: string
-      enum:
-      - SFS-UK
-      - SFS-IRL
     Company:
       properties:
         name:
@@ -146,6 +141,11 @@ components:
           type: string
           description: The date and time when the `Company` was last updated.
           example: '2017-06-01T12:48:40Z'
+    AddressCategory:
+      type: string
+      enum:
+      - USER
+      - COMPANY
     ISO3166Country:
       type: string
       enum:

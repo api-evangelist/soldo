@@ -1,6 +1,6 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Soldo Business API v2.0 Accounting Classification User Roles API
+  title: Soldo Business API v2.0 User Roles API
   description: Soldo Business API v2.0 OpenAPI specification
   version: 5.56.0
 servers:
@@ -122,32 +122,6 @@ paths:
         - employee_write
 components:
   schemas:
-    UpdateUserRoleAssignment:
-      description: Remove `Role` from `User` JSON parameters.
-      properties:
-        name:
-          type: string
-          description: The name of the `Role`.
-          example: superAdmin
-        description:
-          type: string
-          description: The description of the `Role`.
-          example: The SuperAdmin role
-        scope:
-          type: string
-          description: The name of the scope.
-          example: ALL
-    AssignedUserRoles:
-      properties:
-        id:
-          type: string
-          description: The `User` ID.
-          example: XMPL1234-000001
-        roles:
-          type: array
-          description: The list of `UserRole` of the `User`.
-          items:
-            $ref: '#/components/schemas/UserRole'
     UserRole:
       properties:
         id:
@@ -165,6 +139,32 @@ components:
         scope:
           type: string
           description: The scope of the `UserRole`.
+          example: ALL
+    AssignedUserRoles:
+      properties:
+        id:
+          type: string
+          description: The `User` ID.
+          example: XMPL1234-000001
+        roles:
+          type: array
+          description: The list of `UserRole` of the `User`.
+          items:
+            $ref: '#/components/schemas/UserRole'
+    UpdateUserRoleAssignment:
+      description: Remove `Role` from `User` JSON parameters.
+      properties:
+        name:
+          type: string
+          description: The name of the `Role`.
+          example: superAdmin
+        description:
+          type: string
+          description: The description of the `Role`.
+          example: The SuperAdmin role
+        scope:
+          type: string
+          description: The name of the scope.
           example: ALL
   securitySchemes:
     standardAuth:

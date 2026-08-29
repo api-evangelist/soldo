@@ -1,6 +1,6 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Soldo Business API v2.0 Accounting Classification Transaction Metadata API
+  title: Soldo Business API v2.0 Transaction Metadata API
   description: Soldo Business API v2.0 OpenAPI specification
   version: 5.56.0
 servers:
@@ -219,6 +219,23 @@ paths:
         - transaction_read
 components:
   schemas:
+    TransactionMetadata:
+      properties:
+        id:
+          type: string
+          description: The ID related to the custom generated Metadata of the `Transaction`.
+        metadata:
+          type: object
+          additionalProperties: {}
+          description: A generic JSON.
+        creation_time:
+          type: string
+          description: 'The date and time when the metadata was created (sortable: yes).'
+          example: '2017-06-01T12:48:40Z'
+        last_update:
+          type: string
+          description: 'The date and time when the metadata was last updated (sortable: yes).'
+          example: '2017-06-01T12:48:40Z'
     TransactionMetadataList:
       properties:
         total:
@@ -250,23 +267,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/TransactionMetadata'
-    TransactionMetadata:
-      properties:
-        id:
-          type: string
-          description: The ID related to the custom generated Metadata of the `Transaction`.
-        metadata:
-          type: object
-          additionalProperties: {}
-          description: A generic JSON.
-        creation_time:
-          type: string
-          description: 'The date and time when the metadata was created (sortable: yes).'
-          example: '2017-06-01T12:48:40Z'
-        last_update:
-          type: string
-          description: 'The date and time when the metadata was last updated (sortable: yes).'
-          example: '2017-06-01T12:48:40Z'
     Direction:
       type: string
       description: It indicates how the pages are ordered.
