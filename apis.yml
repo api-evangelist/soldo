@@ -1012,6 +1012,8 @@ apis:
   humanURL: https://developer.soldo.com/
   baseURL: https://api.soldo.com/business/v2
   tags:
+  - Webhook
+  tags_raw:
   - Webhooks
   properties:
   - type: OpenAPI
