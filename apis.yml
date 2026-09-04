@@ -1065,8 +1065,9 @@ common:
   url: agentic-access/soldo-agentic-access.yml
 - type: DomainSecurity
   url: security/soldo-domain-security.yml
-- type: MCPServer
+- type: X-MCPServerCandidate
   url: mcp/soldo-mcp.yml
+  note: 'Renamed from MCPServer 2026-09-03 (roadmap#247): the manifest self-describes as status: candidate — a tool list derived from the published API contracts, not an existing server. The scorer already read the manifest and reported mcp_server correctly; the MCPServer type was crediting the artifact-type surfaces with a server that does not exist.'
 - type: Overlay
   url: overlays/soldo-business-api-v20-overlay.yaml
 - type: LLMsTxt
