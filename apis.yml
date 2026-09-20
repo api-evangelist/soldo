@@ -1024,6 +1024,8 @@ maintainers:
 - FN: APIs.json
   email: info@apis.io
 common:
+- type: RateLimits
+  url: rate-limits/soldo-rate-limits.yml
 - type: Plans
   url: plans/soldo-plans-pricing.yml
 - type: CapabilityMap

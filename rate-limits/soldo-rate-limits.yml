@@ -1,0 +1,30 @@
+# Rate limits transcribed from the provider's own documentation — see provenance. Quoted, not derived.
+generated: '2026-09-20'
+method: searched
+source: https://developer.soldo.com/docs/rate-limits
+sources:
+- https://developer.soldo.com/docs/rate-limits
+provenance:
+  tool: planning/api-economics/harvest_ratelimits.py
+  run: 20260920T133210
+  grounding: every limit_text was found verbatim in the fetched page text
+published: true
+note: Page states account-level limits of 600/min and 20/sec with 429 on exceed.
+limit_count: 2
+limits:
+- name: Per-minute request limit
+  limit_text: 600 requests per minute
+  limit: 600
+  window: minute
+  scope: account
+- name: Per-second request limit
+  limit_text: 20 requests per second
+  limit: 20
+  window: second
+  scope: account
+headers:
+- x-ratelimit-limit-minute
+- x-ratelimit-limit-second
+- x-ratelimit-remaining-minute
+- x-ratelimit-remaining-second
+exceeded_status: 429
