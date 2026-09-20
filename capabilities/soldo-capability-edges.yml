@@ -1,0 +1,58 @@
+slug: soldo
+provider: Soldo
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Banking & Capital Markets
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 4
+edges:
+- tag: Cards
+  spec_file: soldo-cards-api-openapi.yml
+  capability_id: BC-1340.60
+  capability_id_l1: BC-1340
+  capability_name: Card Issuance Management
+  confidence: 0.85
+  evidence: 'POST /business/v2/cards  card-add  Add Card; schemas: AddCardOrder, CardActivatedEvent, CardStatus,
+    CardSensitiveData, CardRenewalInfo, OrderStatus'
+  reason: The operations order/create, read, update, delete and re-assign prepaid Mastercard company cards,
+    with card order, activation, renewal and status lifecycle schemas — plainly card issuance and lifecycle
+    management. Card Issuance Management (production, dispatch, activation) is the closest fit; slight
+    residual ambiguity with card product configuration.
+- tag: User Roles
+  spec_file: soldo-user-roles-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.78
+  evidence: POST /business/v2/employees/{userId}/assignRole 'Add roles to User'; schemas UserRole, AssignedUserRoles
+  reason: Role assignment and revocation for platform users is access administration (authorisation management),
+    mapping to Identity & Access Management rather than any HR capability.
+- tag: VAT Rates
+  spec_file: soldo-vat-rates-api-openapi.yml
+  capability_id: BC-220.20
+  capability_id_l1: BC-220
+  capability_name: Indirect Tax Management
+  confidence: 0.75
+  evidence: GET /business/v2/entities/tax-rate 'Search VAT Rates'; schemas VatRate, CreateVatRate, UpdateVatRate
+  reason: Maintains the organisation's VAT rate master used to compute tax on spend, which is squarely
+    indirect tax management.
+- tag: Card Rules
+  spec_file: soldo-card-rules-api-openapi.yml
+  capability_id: BC-1340
+  capability_id_l1: BC-1340
+  capability_name: Payments & Card Management
+  confidence: 0.7
+  evidence: POST /business/v2/cards/{cardId}/rules/spendingLimits/{limitName}  card-rule-spending-limits-set  Set
+    Spending Limits Rules; GET /business/v2/cards/{cardId}/rules/merchantCategories  Get Merchant Categories
+    Rules
+  reason: These operations configure per-card authorisation controls — spending limits, permitted merchant
+    categories, country restrictions, ATM/cashpoint limits, chip-and-PIN/magstripe flags — which are card
+    authorisation/control parameters within Payments & Card Management. Ambiguous between card issuance
+    parameters and transaction authorisation control, so no L2 asserted.
