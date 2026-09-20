@@ -1,0 +1,40 @@
+# Pricing transcribed from the provider's own page — see provenance. Numbers are quoted, not derived.
+generated: '2026-09-20'
+method: searched
+source: https://www.soldo.com/en-gb/pricing/
+sources:
+- https://www.soldo.com/en-gb/pricing/
+provenance:
+  tool: planning/api-economics/harvest_pricing.py
+  run: 20260920T120546
+  grounding: every price_text was found verbatim in the fetched page text
+audience: business-product
+pricing_basis: tiered-subscription
+published: true
+note: Spend management plans; 30-day free trial on Standard and Plus. Additional financial services fees
+  (card issuance, cash withdrawals) referenced but not numerically listed. Soldo Business API listed as
+  an add-on feature without price.
+plan_count: 3
+currency: GBP
+plans:
+- name: Standard
+  price_text: £27 per month +VAT*
+  price: 27
+  currency: GBP
+  period: month
+  included_quota: 1 wallet, 3 users, 3 physical or virtual Soldo cards, Up to 20 outbound bank transfers
+    per month
+- name: Plus
+  price_text: £39 per month +VAT*
+  price: 39
+  currency: GBP
+  period: month
+  included_quota: 3 company wallets, 3 users, 3 physical or virtual Soldo cards, Up to 30 outbound bank
+    transfers per month
+- name: Unlimited
+  price_text: Price on request
+  period: none
+  included_quota: Unlimited company wallets, users, Soldo cards, outbound bank transfers
+rate_limit_statements:
+- Up to 20 outbound bank transfers per month
+- Up to 30 outbound bank transfers per month
