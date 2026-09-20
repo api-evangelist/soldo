@@ -11,7 +11,7 @@ capability_model:
   attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
     CC BY 4.0
   notice: NOTICE
-edge_count: 4
+edge_count: 6
 edges:
 - tag: Cards
   spec_file: soldo-cards-api-openapi.yml
@@ -56,3 +56,24 @@ edges:
     categories, country restrictions, ATM/cashpoint limits, chip-and-PIN/magstripe flags — which are card
     authorisation/control parameters within Payments & Card Management. Ambiguous between card issuance
     parameters and transaction authorisation control, so no L2 asserted.
+- tag: Permissions
+  spec_file: soldo-permissions-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.7
+  evidence: GET /business/v2/roles "Get Roles", schemas Role, UserRoles
+  reason: Exposes roles assigned to users, i.e. role-based access control metadata — Identity & Access
+    Management. Single read-only operation, so confidence is moderate.
+  recovered_from: sweep-20260829T005356Z-edges.json
+- tag: Wallets
+  spec_file: soldo-wallets-api-openapi.yml
+  capability_id: BC-210.10
+  capability_id_l1: BC-210
+  capability_name: Cash Management
+  confidence: 0.7
+  evidence: PUT /business/v2/wallets/internalTransfer/{fromWalletId}/{toWalletId}  wallet-internal-transfer  Make
+    Internal Transfer; schemas DepositAccountInfo, ISO4217Currency
+  reason: Wallets hold company funds and the API moves money between them and exposes deposit account
+    details — corporate cash positioning and internal funding, i.e. Cash Management.
+  recovered_from: sweep-20260829T005356Z-edges.json
