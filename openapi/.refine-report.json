@@ -104,7 +104,8 @@
     "soldo-business-api-v20-openapi-original.json: declared missing tag: Wallets",
     "soldo-business-api-v20-openapi-original.json: declared missing tag: Webhook Subscriptions",
     "soldo-business-api-v20-openapi-original.json: declared missing tag: Webhooks",
-    "soldo-business-api-v20-openapi-original.json: declared missing tag: Workflows"
+    "soldo-business-api-v20-openapi-original.json: declared missing tag: Workflows",
+    "apis.yml register: already-registered"
   ],
   "skipped": [
     "soldo-accounting-classification-api-openapi.yml: previously refined output, superseded by openapi/_original/",
@@ -152,6 +153,7 @@
     "soldo-vehicles-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "soldo-wallets-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "soldo-webhook-subscriptions-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "soldo-webhooks-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "soldo-workflows-api-openapi.yml: previously refined output, superseded by openapi/_original/"
   ]
 }

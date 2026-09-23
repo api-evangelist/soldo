@@ -201,6 +201,56 @@ paths:
         - autotag_write
 components:
   schemas:
+    Autotags:
+      properties:
+        total:
+          type: integer
+          format: int32
+          description: It represents the total number of available items in the list.
+          example: 168
+        pages:
+          type: integer
+          format: int32
+          description: It represents the total number of available pages.
+          example: 7
+        page_size:
+          type: integer
+          format: int32
+          description: It represents the number of items per page.
+          example: 25
+        current_page:
+          type: integer
+          format: int32
+          description: It indicates the current page (the counter starts from zero).
+          example: 0
+        results_size:
+          type: integer
+          format: int32
+          description: It indicates the size of the array results.
+          example: 25
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Autotag'
+    AutotagStatus:
+      type: string
+      enum:
+      - VALID
+      - NOT_VALID
+      - PARTIAL_VALID
+    AutotagCriteria:
+      properties:
+        name:
+          $ref: '#/components/schemas/AutotagCriteriaName'
+          description: The name of the criteria to be satisfied in order for the `Autotag` to be executed.
+          example: MERCHANT_CATEGORY
+        value:
+          type: array
+          description: The values of the criteria to be satisfied in order for the `Autotag` to be executed, in case of `USER`, `CARD`, `COMPANY_CARD` it's a list of IDs; in case of `MERCHANT_CATEGORY` it's one or more `MerchantCategories`; in case of `MERCHANT` it's a text string which should be included in the merchant name
+          example:
+          - Entertainment
+          items:
+            type: string
     CreateAutotag:
       description: Add `Autotag` JSON parameters.
       properties:
@@ -234,6 +284,36 @@ components:
       - criteria
       - name
       - operation
+    AutotagCriteriaName:
+      type: string
+      enum:
+      - USER
+      - CARD
+      - COMPANY_CARD
+      - MERCHANT_CATEGORY
+      - MERCHANT
+    AutotagTag:
+      properties:
+        tag_id:
+          type: string
+          description: The `Tag` ID.
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+        dictionary_id:
+          type: string
+          description: The `List` ID.
+          example: 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
+    AutotagOperation:
+      type: string
+      enum:
+      - AND
+      - OR
+    Direction:
+      type: string
+      description: It indicates how the pages are ordered.
+      enum:
+      - ASC
+      - DESC
+      example: DESC
     Autotag:
       properties:
         id:
@@ -286,37 +366,6 @@ components:
           type: string
           description: 'The date and time when the `Autotag` was last updated (sortable: no).'
           example: '2017-06-01T12:48:40Z'
-    Autotags:
-      properties:
-        total:
-          type: integer
-          format: int32
-          description: It represents the total number of available items in the list.
-          example: 168
-        pages:
-          type: integer
-          format: int32
-          description: It represents the total number of available pages.
-          example: 7
-        page_size:
-          type: integer
-          format: int32
-          description: It represents the number of items per page.
-          example: 25
-        current_page:
-          type: integer
-          format: int32
-          description: It indicates the current page (the counter starts from zero).
-          example: 0
-        results_size:
-          type: integer
-          format: int32
-          description: It indicates the size of the array results.
-          example: 25
-        results:
-          type: array
-          items:
-            $ref: '#/components/schemas/Autotag'
     UpdateAutotag:
       description: Update `Autotag` JSON parameters.
       properties:
@@ -348,55 +397,6 @@ components:
         enabled:
           type: boolean
           description: It determines whether the `Autotag` rule is enabled (if a rule is not enabled, it won't be executed).
-    AutotagOperation:
-      type: string
-      enum:
-      - AND
-      - OR
-    Direction:
-      type: string
-      description: It indicates how the pages are ordered.
-      enum:
-      - ASC
-      - DESC
-      example: DESC
-    AutotagCriteria:
-      properties:
-        name:
-          $ref: '#/components/schemas/AutotagCriteriaName'
-          description: The name of the criteria to be satisfied in order for the `Autotag` to be executed.
-          example: MERCHANT_CATEGORY
-        value:
-          type: array
-          description: The values of the criteria to be satisfied in order for the `Autotag` to be executed, in case of `USER`, `CARD`, `COMPANY_CARD` it's a list of IDs; in case of `MERCHANT_CATEGORY` it's one or more `MerchantCategories`; in case of `MERCHANT` it's a text string which should be included in the merchant name
-          example:
-          - Entertainment
-          items:
-            type: string
-    AutotagStatus:
-      type: string
-      enum:
-      - VALID
-      - NOT_VALID
-      - PARTIAL_VALID
-    AutotagTag:
-      properties:
-        tag_id:
-          type: string
-          description: The `Tag` ID.
-          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
-        dictionary_id:
-          type: string
-          description: The `List` ID.
-          example: 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
-    AutotagCriteriaName:
-      type: string
-      enum:
-      - USER
-      - CARD
-      - COMPANY_CARD
-      - MERCHANT_CATEGORY
-      - MERCHANT
   securitySchemes:
     standardAuth:
       type: oauth2

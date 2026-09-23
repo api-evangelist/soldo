@@ -219,6 +219,13 @@ paths:
         - transaction_read
 components:
   schemas:
+    Direction:
+      type: string
+      description: It indicates how the pages are ordered.
+      enum:
+      - ASC
+      - DESC
+      example: DESC
     TransactionMetadata:
       properties:
         id:
@@ -267,13 +274,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/TransactionMetadata'
-    Direction:
-      type: string
-      description: It indicates how the pages are ordered.
-      enum:
-      - ASC
-      - DESC
-      example: DESC
   securitySchemes:
     standardAuth:
       type: oauth2

@@ -127,6 +127,65 @@ components:
       - COMPANY
       - PERSONAL
       - TRAVEL_AND_ENTERTAINMENT
+    MerchantCategory:
+      type: string
+      enum:
+      - Advertising
+      - Entertainment
+      - Utilities
+      - Food_Cocktail_Bar
+      - Food_Restaurant
+      - Food_Store
+      - Food_Wine
+      - Services_Business
+      - Services_Cleaning
+      - Services_Contracted
+      - Services_Delivery
+      - Services_Educational
+      - Services_Financial
+      - Services_Gambling
+      - Services_Government
+      - Services_Health
+      - Services_Insurance
+      - Services_Legal
+      - Services_Museum
+      - Services_Organisation
+      - Services_Personal
+      - Services_Repair
+      - Services_Social
+      - Services_Stationery
+      - Services_Telecommunication
+      - Services_Veterinary
+      - Services_Warehouse
+      - Services_Wholesale
+      - Shopping_Accessories
+      - Shopping_Airline
+      - Shopping_Art
+      - Shopping_Automotive
+      - Shopping_Beauty
+      - Shopping_Books
+      - Shopping_Clothes
+      - Shopping_Digital_Goods
+      - Shopping_Direct_Marketing
+      - Shopping_Furnitures
+      - Shopping_Sport
+      - Shopping_Store
+      - Shopping_Technology
+      - Transport_Airports
+      - Transport_Charging_Station
+      - Transport_Parking
+      - Transport_Public_Transportation
+      - Transport_Road
+      - Transport_Service_Station
+      - Transport_Ships
+      - Transport_Taxi
+      - Transport_Toll_Roads
+      - Transport_Trains
+      - Travel_Airlines
+      - Travel_Agency
+      - Travel_Car_Rental
+      - Travel_Hotels
+      - Travel_Time_Shares
     ExpenseCategory:
       properties:
         id:
@@ -242,65 +301,6 @@ components:
           $ref: '#/components/schemas/ExpenseType'
           description: The type of expense this category is assigned to.
           example: company
-    MerchantCategory:
-      type: string
-      enum:
-      - Advertising
-      - Entertainment
-      - Utilities
-      - Food_Cocktail_Bar
-      - Food_Restaurant
-      - Food_Store
-      - Food_Wine
-      - Services_Business
-      - Services_Cleaning
-      - Services_Contracted
-      - Services_Delivery
-      - Services_Educational
-      - Services_Financial
-      - Services_Gambling
-      - Services_Government
-      - Services_Health
-      - Services_Insurance
-      - Services_Legal
-      - Services_Museum
-      - Services_Organisation
-      - Services_Personal
-      - Services_Repair
-      - Services_Social
-      - Services_Stationery
-      - Services_Telecommunication
-      - Services_Veterinary
-      - Services_Warehouse
-      - Services_Wholesale
-      - Shopping_Accessories
-      - Shopping_Airline
-      - Shopping_Art
-      - Shopping_Automotive
-      - Shopping_Beauty
-      - Shopping_Books
-      - Shopping_Clothes
-      - Shopping_Digital_Goods
-      - Shopping_Direct_Marketing
-      - Shopping_Furnitures
-      - Shopping_Sport
-      - Shopping_Store
-      - Shopping_Technology
-      - Transport_Airports
-      - Transport_Charging_Station
-      - Transport_Parking
-      - Transport_Public_Transportation
-      - Transport_Road
-      - Transport_Service_Station
-      - Transport_Ships
-      - Transport_Taxi
-      - Transport_Toll_Roads
-      - Transport_Trains
-      - Travel_Airlines
-      - Travel_Agency
-      - Travel_Car_Rental
-      - Travel_Hotels
-      - Travel_Time_Shares
   securitySchemes:
     standardAuth:
       type: oauth2

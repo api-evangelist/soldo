@@ -322,94 +322,37 @@ webhooks:
         fingerprint-order: id,numberPlate
 components:
   schemas:
-    VatDeductibilityPercentage:
-      type: string
-      enum:
-      - NONE
-      - '40'
-      - '80'
-      - '100'
-    FuelType:
-      type: string
-      enum:
-      - PETROL
-      - DIESEL
-      - METHANE
-      - LPG
-      - LNG
-      - ELECTRIC
-      - UNKNOWN
-    VehicleCreateEvent:
+    CreateVehicle:
+      description: Create vehicle JSON parameters.
       properties:
-        event_uuid:
+        number_plate:
           type: string
-          description: The webhook unique ID.
-          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
-        event_type:
-          $ref: '#/components/schemas/WebhookEventType'
-          default: Vehicle
-          description: The webhook event type.
-          example: Vehicle
-        event_name:
-          $ref: '#/components/schemas/WebhookEventName'
-          default: vehicle_create
-          description: The webhook event name.
-          example: vehicle_create
-        company_account_id:
+          description: The plate number of the `Vehicle`.
+          example: AA000BB
+          maxLength: 9
+        description:
           type: string
-          description: The company account ID.
-          example: XMPL1234
-        data:
-          $ref: '#/components/schemas/Vehicle'
-          description: The webhook `Vehicle` data.
-        subscription_id:
-          type: string
-          description: The webhook subscription ID used to route this event.
-          example: 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
-    WebhookEventType:
-      type: string
-      enum:
-      - BusinessTrip
-      - Card
-      - Contact
-      - ExpenseReview
-      - Group
-      - OnlineAds
-      - Order
-      - Purchase
-      - Subscription
-      - Transaction
-      - TransactionAttachment
-      - Employee
-      - Vehicle
-      - Wallet
-    VehicleDeleteEvent:
-      properties:
-        event_uuid:
-          type: string
-          description: The webhook unique ID.
-          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
-        event_type:
-          $ref: '#/components/schemas/WebhookEventType'
-          default: Vehicle
-          description: The webhook event type.
-          example: Vehicle
-        event_name:
-          $ref: '#/components/schemas/WebhookEventName'
-          default: vehicle_delete
-          description: The webhook event name.
-          example: vehicle_delete
-        company_account_id:
-          type: string
-          description: The company account ID.
-          example: XMPL1234
-        data:
-          $ref: '#/components/schemas/Vehicle'
-          description: The webhook `Vehicle` data.
-        subscription_id:
-          type: string
-          description: The webhook subscription ID used to route this event.
-          example: 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
+          description: The description of the `Vehicle`.
+          example: Employee electric vehicle
+          maxLength: 30
+          pattern: ^[^<>=]{0,30}$
+        vat_deductible:
+          $ref: '#/components/schemas/VatDeductibilityPercentage'
+          description: The VAT deductibility rate.
+          example: 40
+        fuel_type:
+          $ref: '#/components/schemas/FuelType'
+          description: The fuel type of the `Vehicle`.
+          example: PETROL
+        reimbursement_rate:
+          type: number
+          description: The rate to apply for a `MileageReimbursement`, measured in main `Wallet` currency per km.
+          example: 0.45
+      required:
+      - description
+      - fuel_type
+      - number_plate
+      - vat_deductible
     Vehicle:
       properties:
         id:
@@ -456,74 +399,7 @@ components:
           type: number
           description: 'The rate to apply for a `MileageReimbursement`, measured in main `Wallet` currency per km (sortable: no).'
           example: 0.45
-    VehicleStatus:
-      type: string
-      enum:
-      - ACTIVE
-      - ARCHIVED
-    Vehicles:
-      properties:
-        total:
-          type: integer
-          format: int32
-          description: It represents the total number of available items in the list.
-          example: 168
-        pages:
-          type: integer
-          format: int32
-          description: It represents the total number of available pages.
-          example: 7
-        page_size:
-          type: integer
-          format: int32
-          description: It represents the number of items per page.
-          example: 25
-        current_page:
-          type: integer
-          format: int32
-          description: It indicates the current page (the counter starts from zero).
-          example: 0
-        results_size:
-          type: integer
-          format: int32
-          description: It indicates the size of the array results.
-          example: 25
-        results:
-          type: array
-          items:
-            $ref: '#/components/schemas/Vehicle'
-    CreateVehicle:
-      description: Create vehicle JSON parameters.
-      properties:
-        number_plate:
-          type: string
-          description: The plate number of the `Vehicle`.
-          example: AA000BB
-          maxLength: 9
-        description:
-          type: string
-          description: The description of the `Vehicle`.
-          example: Employee electric vehicle
-          maxLength: 30
-          pattern: ^[^<>=]{0,30}$
-        vat_deductible:
-          $ref: '#/components/schemas/VatDeductibilityPercentage'
-          description: The VAT deductibility rate.
-          example: 40
-        fuel_type:
-          $ref: '#/components/schemas/FuelType'
-          description: The fuel type of the `Vehicle`.
-          example: PETROL
-        reimbursement_rate:
-          type: number
-          description: The rate to apply for a `MileageReimbursement`, measured in main `Wallet` currency per km.
-          example: 0.45
-      required:
-      - description
-      - fuel_type
-      - number_plate
-      - vat_deductible
-    VehicleUpdateEvent:
+    VehicleDeleteEvent:
       properties:
         event_uuid:
           type: string
@@ -536,9 +412,9 @@ components:
           example: Vehicle
         event_name:
           $ref: '#/components/schemas/WebhookEventName'
-          default: vehicle_update
+          default: vehicle_delete
           description: The webhook event name.
-          example: vehicle_update
+          example: vehicle_delete
         company_account_id:
           type: string
           description: The company account ID.
@@ -550,6 +426,79 @@ components:
           type: string
           description: The webhook subscription ID used to route this event.
           example: 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
+    FuelType:
+      type: string
+      enum:
+      - PETROL
+      - DIESEL
+      - METHANE
+      - LPG
+      - LNG
+      - ELECTRIC
+      - UNKNOWN
+    WebhookEventType:
+      type: string
+      enum:
+      - BusinessTrip
+      - Card
+      - Contact
+      - ExpenseReview
+      - Group
+      - OnlineAds
+      - Order
+      - Purchase
+      - Subscription
+      - Transaction
+      - TransactionAttachment
+      - Employee
+      - Vehicle
+      - Wallet
+    VatDeductibilityPercentage:
+      type: string
+      enum:
+      - NONE
+      - '40'
+      - '80'
+      - '100'
+    VehicleCreateEvent:
+      properties:
+        event_uuid:
+          type: string
+          description: The webhook unique ID.
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+        event_type:
+          $ref: '#/components/schemas/WebhookEventType'
+          default: Vehicle
+          description: The webhook event type.
+          example: Vehicle
+        event_name:
+          $ref: '#/components/schemas/WebhookEventName'
+          default: vehicle_create
+          description: The webhook event name.
+          example: vehicle_create
+        company_account_id:
+          type: string
+          description: The company account ID.
+          example: XMPL1234
+        data:
+          $ref: '#/components/schemas/Vehicle'
+          description: The webhook `Vehicle` data.
+        subscription_id:
+          type: string
+          description: The webhook subscription ID used to route this event.
+          example: 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
+    Direction:
+      type: string
+      description: It indicates how the pages are ordered.
+      enum:
+      - ASC
+      - DESC
+      example: DESC
+    VehicleStatus:
+      type: string
+      enum:
+      - ACTIVE
+      - ARCHIVED
     WebhookEventName:
       type: string
       enum:
@@ -638,13 +587,33 @@ components:
       - contact_created
       - contact_updated
       - contact_deleted
-    Direction:
-      type: string
-      description: It indicates how the pages are ordered.
-      enum:
-      - ASC
-      - DESC
-      example: DESC
+    VehicleUpdateEvent:
+      properties:
+        event_uuid:
+          type: string
+          description: The webhook unique ID.
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+        event_type:
+          $ref: '#/components/schemas/WebhookEventType'
+          default: Vehicle
+          description: The webhook event type.
+          example: Vehicle
+        event_name:
+          $ref: '#/components/schemas/WebhookEventName'
+          default: vehicle_update
+          description: The webhook event name.
+          example: vehicle_update
+        company_account_id:
+          type: string
+          description: The company account ID.
+          example: XMPL1234
+        data:
+          $ref: '#/components/schemas/Vehicle'
+          description: The webhook `Vehicle` data.
+        subscription_id:
+          type: string
+          description: The webhook subscription ID used to route this event.
+          example: 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
     UpdateVehicle:
       description: Update vehicle JSON parameters.
       properties:
@@ -675,6 +644,37 @@ components:
           type: number
           description: The rate to apply for a `MileageReimbursement`, measured in main `Wallet` currency per km.
           example: 0.45
+    Vehicles:
+      properties:
+        total:
+          type: integer
+          format: int32
+          description: It represents the total number of available items in the list.
+          example: 168
+        pages:
+          type: integer
+          format: int32
+          description: It represents the total number of available pages.
+          example: 7
+        page_size:
+          type: integer
+          format: int32
+          description: It represents the number of items per page.
+          example: 25
+        current_page:
+          type: integer
+          format: int32
+          description: It indicates the current page (the counter starts from zero).
+          example: 0
+        results_size:
+          type: integer
+          format: int32
+          description: It indicates the size of the array results.
+          example: 25
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Vehicle'
   securitySchemes:
     standardAuth:
       type: oauth2

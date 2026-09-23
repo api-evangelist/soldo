@@ -15,7 +15,7 @@ paths:
     delete:
       tags:
       - Transaction VAT Rate
-      summary: 'Remove VAT Rate from Transaction '
+      summary: Remove VAT Rate from Transaction
       description: Endpoint to remove the `Transaction`'s `VatRate`
       operationId: transaction-tax-rate-unset
       parameters:

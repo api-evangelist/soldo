@@ -618,6 +618,66 @@ webhooks:
         fingerprint-order: id, name, platform, status, paymentFrequency, cardId
 components:
   schemas:
+    SubscriptionCreatedEvent:
+      properties:
+        event_uuid:
+          type: string
+          description: The webhook unique ID.
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+        event_type:
+          $ref: '#/components/schemas/WebhookEventType'
+          default: Subscription
+          description: The webhook event type.
+          example: Subscription
+        event_name:
+          $ref: '#/components/schemas/WebhookEventName'
+          default: subscription_created
+          description: The webhook event name.
+          example: subscription_created
+        company_account_id:
+          type: string
+          description: The company account ID.
+          example: XMPL1234
+        data:
+          $ref: '#/components/schemas/Subscription'
+          description: The webhook `Subscription` data.
+        subscription_id:
+          type: string
+          description: The webhook subscription ID used to route this event.
+          example: 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
+    SubscriptionStatus:
+      type: string
+      enum:
+      - ACTIVE
+      - ASSIGNED
+      - CANCELLED
+    SubscriptionDeletedEvent:
+      properties:
+        event_uuid:
+          type: string
+          description: The webhook unique ID.
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+        event_type:
+          $ref: '#/components/schemas/WebhookEventType'
+          default: Subscription
+          description: The webhook event type.
+          example: Subscription
+        event_name:
+          $ref: '#/components/schemas/WebhookEventName'
+          default: subscription_deleted
+          description: The webhook event name.
+          example: subscription_deleted
+        company_account_id:
+          type: string
+          description: The company account ID.
+          example: XMPL1234
+        data:
+          $ref: '#/components/schemas/Subscription'
+          description: The webhook `Subscription` data.
+        subscription_id:
+          type: string
+          description: The webhook subscription ID used to route this event.
+          example: 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
     Subscription:
       properties:
         id:
@@ -681,146 +741,44 @@ components:
           type: string
           description: The date and time when the `Subscription` was last updated.
           example: '2017-06-01T12:48:40Z'
-    SubscriptionStatus:
-      type: string
-      enum:
-      - ACTIVE
-      - ASSIGNED
-      - CANCELLED
-    CreateSubscription:
-      description: Add `Subscription` JSON parameters.
+    Order:
       properties:
-        name:
+        id:
           type: string
-          description: The name of the `Subscription`.
-          example: Google Ads
-        description:
+          description: The `Order` ID.
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+        status:
+          $ref: '#/components/schemas/OrderStatus'
+          description: The status of the `Order`.
+          example: PENDING
+        creation_time:
           type: string
-          description: The description of the `Subscription`.
-          example: This is a resource set
-        platform:
-          $ref: '#/components/schemas/SubscriptionPlatform'
-          description: The platform of the `Subscription`.
-          example: GOOGLE
-        assignees:
+          description: The date and time when the `Order` was created.
+          example: '2017-06-01T12:48:40Z'
+        last_update_time:
+          type: string
+          description: The last update date of the `Order`.
+          example: '2017-06-01T12:48:40Z'
+        error_code:
+          type: string
+          description: In case is_valid is false, the error code of the `Order` is shown.
+        total_paid_amount:
+          type: number
+          description: The total amount of the `Order`.
+          example: 10.25
+        total_paid_currency:
+          $ref: '#/components/schemas/ISO4217Currency'
+          description: The currency for the total paid amount.
+          example: EUR
+        items:
           type: array
-          description: The assignees of the `Subscription`.
-          example:
-          - XMPL1234-000001
-          - XMPL1234-000002
-          - XMPL1234-000003
+          description: The products associated with the `Order`.
           items:
-            type: string
-        wallet_id:
-          type: string
-          description: The ID of the associated `Wallet`.
-          example: 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
-        payment_frequency:
-          $ref: '#/components/schemas/SubscriptionPaymentFrequency'
-          description: The payment frequency indicates how often a `Transaction` is expected to be made.
-          example: YEARLY
-      required:
-      - assignees
-      - description
-      - name
-      - payment_frequency
-      - platform
-      - wallet_id
-    RemoveAssignees:
-      description: Remove `Subscription` assignees JSON parameters.
-      properties:
-        remove_assignees:
-          type: array
-          description: List of `User` IDs to remove from assignees.
-          example:
-          - XMPL1234-000001
-          - XMPL1234-000002
-          - XMPL1234-000003
-          items:
-            type: string
-      required:
-      - remove_assignees
-    SubscriptionAssigneeAddedEvent:
-      properties:
-        event_uuid:
-          type: string
-          description: The webhook unique ID.
-          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
-        event_type:
-          $ref: '#/components/schemas/WebhookEventType'
-          default: Subscription
-          description: The webhook event type.
-          example: Subscription
-        event_name:
-          $ref: '#/components/schemas/WebhookEventName'
-          default: subscription_assignee_added
-          description: The webhook event name.
-          example: subscription_assignee_added
-        company_account_id:
-          type: string
-          description: The company account ID.
-          example: XMPL1234
-        data:
-          $ref: '#/components/schemas/Subscription'
-          description: The webhook `Subscription` data.
-        subscription_id:
-          type: string
-          description: The webhook subscription ID used to route this event.
-          example: 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
-    SubscriptionUpdatedEvent:
-      properties:
-        event_uuid:
-          type: string
-          description: The webhook unique ID.
-          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
-        event_type:
-          $ref: '#/components/schemas/WebhookEventType'
-          default: Subscription
-          description: The webhook event type.
-          example: Subscription
-        event_name:
-          $ref: '#/components/schemas/WebhookEventName'
-          default: subscription_updated
-          description: The webhook event name.
-          example: subscription_updated
-        company_account_id:
-          type: string
-          description: The company account ID.
-          example: XMPL1234
-        data:
-          $ref: '#/components/schemas/Subscription'
-          description: The webhook `Subscription` data.
-        subscription_id:
-          type: string
-          description: The webhook subscription ID used to route this event.
-          example: 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
-    SubscriptionActivatedEvent:
-      properties:
-        event_uuid:
-          type: string
-          description: The webhook unique ID.
-          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
-        event_type:
-          $ref: '#/components/schemas/WebhookEventType'
-          default: Subscription
-          description: The webhook event type.
-          example: Subscription
-        event_name:
-          $ref: '#/components/schemas/WebhookEventName'
-          default: subscription_activated
-          description: The webhook event name.
-          example: subscription_activated
-        company_account_id:
-          type: string
-          description: The company account ID.
-          example: XMPL1234
-        data:
-          $ref: '#/components/schemas/Subscription'
-          description: The webhook `Subscription` data.
-        subscription_id:
-          type: string
-          description: The webhook subscription ID used to route this event.
-          example: 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
+            $ref: '#/components/schemas/OrderItem'
+        is_valid:
+          type: boolean
+          description: It states whether the `Order` is valid.
+          example: true
     ISO4217Currency:
       type: string
       enum:
@@ -1025,103 +983,6 @@ components:
       - Employee
       - Vehicle
       - Wallet
-    UpdateSubscription:
-      description: Update `Subscription` JSON parameters.
-      properties:
-        name:
-          type: string
-          description: The name of the `Subscription`.
-          example: Google Ads
-        description:
-          type: string
-          description: The description of the `Subscription`.
-          example: Google Ads Campaign
-        wallet_id:
-          type: string
-          description: The ID of the associated `Wallet `.
-          example: 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
-        payment_frequency:
-          $ref: '#/components/schemas/SubscriptionPaymentFrequency'
-          description: The payment frequency indicates how often a `Transaction` is expected to be made.
-          example: YEARLY
-    AddAssignees:
-      description: Add `Subscription` assignees JSON parameters.
-      properties:
-        add_assignees:
-          type: array
-          description: List of new `User` IDs to add as assignees.
-          example:
-          - XMPL1234-000001
-          - XMPL1234-000002
-          - XMPL1234-000003
-          items:
-            type: string
-      required:
-      - add_assignees
-    OrderStatus:
-      type: string
-      enum:
-      - PENDING
-      - ERROR
-      - PLACED
-      - CANCELLED
-      - COMPLETED
-      - COMPLETED_WITH_CREDIT
-    Direction:
-      type: string
-      description: It indicates how the pages are ordered.
-      enum:
-      - ASC
-      - DESC
-      example: DESC
-    SubscriptionPlatform:
-      type: string
-      enum:
-      - ADOBE
-      - AMAZON
-      - APPLE
-      - ATLASSIAN
-      - FACEBOOK
-      - FIGMA
-      - GITHUB
-      - GOOGLE
-      - HUBSPOT
-      - LINKEDIN
-      - MICROSOFT
-      - NOTION
-      - OTHER
-      - PINTEREST
-      - SALESFORCE
-      - TWITTER
-      - XERO
-      - ZOOM
-    SubscriptionCreatedEvent:
-      properties:
-        event_uuid:
-          type: string
-          description: The webhook unique ID.
-          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
-        event_type:
-          $ref: '#/components/schemas/WebhookEventType'
-          default: Subscription
-          description: The webhook event type.
-          example: Subscription
-        event_name:
-          $ref: '#/components/schemas/WebhookEventName'
-          default: subscription_created
-          description: The webhook event name.
-          example: subscription_created
-        company_account_id:
-          type: string
-          description: The company account ID.
-          example: XMPL1234
-        data:
-          $ref: '#/components/schemas/Subscription'
-          description: The webhook `Subscription` data.
-        subscription_id:
-          type: string
-          description: The webhook subscription ID used to route this event.
-          example: 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
     Subscriptions:
       properties:
         total:
@@ -1153,7 +1014,7 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Subscription'
-    SubscriptionDeletedEvent:
+    SubscriptionAssigneeAddedEvent:
       properties:
         event_uuid:
           type: string
@@ -1166,9 +1027,9 @@ components:
           example: Subscription
         event_name:
           $ref: '#/components/schemas/WebhookEventName'
-          default: subscription_deleted
+          default: subscription_assignee_added
           description: The webhook event name.
-          example: subscription_deleted
+          example: subscription_assignee_added
         company_account_id:
           type: string
           description: The company account ID.
@@ -1180,92 +1041,6 @@ components:
           type: string
           description: The webhook subscription ID used to route this event.
           example: 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
-    OrderItem:
-      properties:
-        id:
-          type: string
-          description: The ID of a single item of a specific `Order`.
-          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
-        item_type:
-          type: string
-          description: The type of the ordered item.
-          example: CARD
-        category:
-          type: string
-          description: The category of the ordered item.
-    SubscriptionAssigneeRemovedEvent:
-      properties:
-        event_uuid:
-          type: string
-          description: The webhook unique ID.
-          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
-        event_type:
-          $ref: '#/components/schemas/WebhookEventType'
-          default: Subscription
-          description: The webhook event type.
-          example: Subscription
-        event_name:
-          $ref: '#/components/schemas/WebhookEventName'
-          default: subscription_assignee_removed
-          description: The webhook event name.
-          example: subscription_assignee_removed
-        company_account_id:
-          type: string
-          description: The company account ID.
-          example: XMPL1234
-        data:
-          $ref: '#/components/schemas/Subscription'
-          description: The webhook `Subscription` data.
-        subscription_id:
-          type: string
-          description: The webhook subscription ID used to route this event.
-          example: 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
-    Order:
-      properties:
-        id:
-          type: string
-          description: The `Order` ID.
-          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
-        status:
-          $ref: '#/components/schemas/OrderStatus'
-          description: The status of the `Order`.
-          example: PENDING
-        creation_time:
-          type: string
-          description: The date and time when the `Order` was created.
-          example: '2017-06-01T12:48:40Z'
-        last_update_time:
-          type: string
-          description: The last update date of the `Order`.
-          example: '2017-06-01T12:48:40Z'
-        error_code:
-          type: string
-          description: In case is_valid is false, the error code of the `Order` is shown.
-        total_paid_amount:
-          type: number
-          description: The total amount of the `Order`.
-          example: 10.25
-        total_paid_currency:
-          $ref: '#/components/schemas/ISO4217Currency'
-          description: The currency for the total paid amount.
-          example: EUR
-        items:
-          type: array
-          description: The products associated with the `Order`.
-          items:
-            $ref: '#/components/schemas/OrderItem'
-        is_valid:
-          type: boolean
-          description: It states whether the `Order` is valid.
-          example: true
-    SubscriptionPaymentFrequency:
-      type: string
-      enum:
-      - OTHER
-      - YEARLY
-      - WEEKLY
-      - QUARTERLY
-      - MONTHLY
     WebhookEventName:
       type: string
       enum:
@@ -1354,6 +1129,231 @@ components:
       - contact_created
       - contact_updated
       - contact_deleted
+    SubscriptionPlatform:
+      type: string
+      enum:
+      - ADOBE
+      - AMAZON
+      - APPLE
+      - ATLASSIAN
+      - FACEBOOK
+      - FIGMA
+      - GITHUB
+      - GOOGLE
+      - HUBSPOT
+      - LINKEDIN
+      - MICROSOFT
+      - NOTION
+      - OTHER
+      - PINTEREST
+      - SALESFORCE
+      - TWITTER
+      - XERO
+      - ZOOM
+    SubscriptionPaymentFrequency:
+      type: string
+      enum:
+      - OTHER
+      - YEARLY
+      - WEEKLY
+      - QUARTERLY
+      - MONTHLY
+    SubscriptionUpdatedEvent:
+      properties:
+        event_uuid:
+          type: string
+          description: The webhook unique ID.
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+        event_type:
+          $ref: '#/components/schemas/WebhookEventType'
+          default: Subscription
+          description: The webhook event type.
+          example: Subscription
+        event_name:
+          $ref: '#/components/schemas/WebhookEventName'
+          default: subscription_updated
+          description: The webhook event name.
+          example: subscription_updated
+        company_account_id:
+          type: string
+          description: The company account ID.
+          example: XMPL1234
+        data:
+          $ref: '#/components/schemas/Subscription'
+          description: The webhook `Subscription` data.
+        subscription_id:
+          type: string
+          description: The webhook subscription ID used to route this event.
+          example: 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
+    RemoveAssignees:
+      description: Remove `Subscription` assignees JSON parameters.
+      properties:
+        remove_assignees:
+          type: array
+          description: List of `User` IDs to remove from assignees.
+          example:
+          - XMPL1234-000001
+          - XMPL1234-000002
+          - XMPL1234-000003
+          items:
+            type: string
+      required:
+      - remove_assignees
+    UpdateSubscription:
+      description: Update `Subscription` JSON parameters.
+      properties:
+        name:
+          type: string
+          description: The name of the `Subscription`.
+          example: Google Ads
+        description:
+          type: string
+          description: The description of the `Subscription`.
+          example: Google Ads Campaign
+        wallet_id:
+          type: string
+          description: The ID of the associated `Wallet `.
+          example: 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
+        payment_frequency:
+          $ref: '#/components/schemas/SubscriptionPaymentFrequency'
+          description: The payment frequency indicates how often a `Transaction` is expected to be made.
+          example: YEARLY
+    CreateSubscription:
+      description: Add `Subscription` JSON parameters.
+      properties:
+        name:
+          type: string
+          description: The name of the `Subscription`.
+          example: Google Ads
+        description:
+          type: string
+          description: The description of the `Subscription`.
+          example: This is a resource set
+        platform:
+          $ref: '#/components/schemas/SubscriptionPlatform'
+          description: The platform of the `Subscription`.
+          example: GOOGLE
+        assignees:
+          type: array
+          description: The assignees of the `Subscription`.
+          example:
+          - XMPL1234-000001
+          - XMPL1234-000002
+          - XMPL1234-000003
+          items:
+            type: string
+        wallet_id:
+          type: string
+          description: The ID of the associated `Wallet`.
+          example: 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
+        payment_frequency:
+          $ref: '#/components/schemas/SubscriptionPaymentFrequency'
+          description: The payment frequency indicates how often a `Transaction` is expected to be made.
+          example: YEARLY
+      required:
+      - assignees
+      - description
+      - name
+      - payment_frequency
+      - platform
+      - wallet_id
+    OrderStatus:
+      type: string
+      enum:
+      - PENDING
+      - ERROR
+      - PLACED
+      - CANCELLED
+      - COMPLETED
+      - COMPLETED_WITH_CREDIT
+    AddAssignees:
+      description: Add `Subscription` assignees JSON parameters.
+      properties:
+        add_assignees:
+          type: array
+          description: List of new `User` IDs to add as assignees.
+          example:
+          - XMPL1234-000001
+          - XMPL1234-000002
+          - XMPL1234-000003
+          items:
+            type: string
+      required:
+      - add_assignees
+    SubscriptionAssigneeRemovedEvent:
+      properties:
+        event_uuid:
+          type: string
+          description: The webhook unique ID.
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+        event_type:
+          $ref: '#/components/schemas/WebhookEventType'
+          default: Subscription
+          description: The webhook event type.
+          example: Subscription
+        event_name:
+          $ref: '#/components/schemas/WebhookEventName'
+          default: subscription_assignee_removed
+          description: The webhook event name.
+          example: subscription_assignee_removed
+        company_account_id:
+          type: string
+          description: The company account ID.
+          example: XMPL1234
+        data:
+          $ref: '#/components/schemas/Subscription'
+          description: The webhook `Subscription` data.
+        subscription_id:
+          type: string
+          description: The webhook subscription ID used to route this event.
+          example: 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
+    Direction:
+      type: string
+      description: It indicates how the pages are ordered.
+      enum:
+      - ASC
+      - DESC
+      example: DESC
+    SubscriptionActivatedEvent:
+      properties:
+        event_uuid:
+          type: string
+          description: The webhook unique ID.
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+        event_type:
+          $ref: '#/components/schemas/WebhookEventType'
+          default: Subscription
+          description: The webhook event type.
+          example: Subscription
+        event_name:
+          $ref: '#/components/schemas/WebhookEventName'
+          default: subscription_activated
+          description: The webhook event name.
+          example: subscription_activated
+        company_account_id:
+          type: string
+          description: The company account ID.
+          example: XMPL1234
+        data:
+          $ref: '#/components/schemas/Subscription'
+          description: The webhook `Subscription` data.
+        subscription_id:
+          type: string
+          description: The webhook subscription ID used to route this event.
+          example: 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
+    OrderItem:
+      properties:
+        id:
+          type: string
+          description: The ID of a single item of a specific `Order`.
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+        item_type:
+          type: string
+          description: The type of the ordered item.
+          example: CARD
+        category:
+          type: string
+          description: The category of the ordered item.
   securitySchemes:
     standardAuth:
       type: oauth2

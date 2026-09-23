@@ -229,6 +229,33 @@ components:
           type: string
           description: 'The date and time when the `VATRate` was last updated (sortable: yes).'
           example: '2017-06-01T12:48:40Z'
+    CreateVatRate:
+      description: Add `VatRate` JSON parameters.
+      properties:
+        code:
+          type: string
+          description: The code of the VATRate.
+          example: code-vat-11
+        name:
+          type: string
+          description: The name of the VATRate.
+          example: Tax 11
+        description:
+          type: string
+          description: the description of the VATRate.
+          example: Number 11 of Tax code
+        percentage:
+          type: number
+          format: double
+          description: The percentage value of the VATRate.
+          example: something
+        enabled:
+          type: boolean
+          description: the VATRate is visible in the transaction detail.
+          example: true
+      required:
+      - name
+      - percentage
     UpdateVatRate:
       description: Update `VatRate` JSON parameters.
       properties:
@@ -255,6 +282,13 @@ components:
           example: true
       required:
       - percentage
+    Direction:
+      type: string
+      description: It indicates how the pages are ordered.
+      enum:
+      - ASC
+      - DESC
+      example: DESC
     VatRates:
       properties:
         total:
@@ -286,40 +320,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/VatRate'
-    Direction:
-      type: string
-      description: It indicates how the pages are ordered.
-      enum:
-      - ASC
-      - DESC
-      example: DESC
-    CreateVatRate:
-      description: Add `VatRate` JSON parameters.
-      properties:
-        code:
-          type: string
-          description: The code of the VATRate.
-          example: code-vat-11
-        name:
-          type: string
-          description: The name of the VATRate.
-          example: Tax 11
-        description:
-          type: string
-          description: the description of the VATRate.
-          example: Number 11 of Tax code
-        percentage:
-          type: number
-          format: double
-          description: The percentage value of the VATRate.
-          example: something
-        enabled:
-          type: boolean
-          description: the VATRate is visible in the transaction detail.
-          example: true
-      required:
-      - name
-      - percentage
   securitySchemes:
     standardAuth:
       type: oauth2

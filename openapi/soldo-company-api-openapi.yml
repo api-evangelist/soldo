@@ -30,11 +30,47 @@ paths:
         - company_read
 components:
   schemas:
-    FinancialEntity:
-      type: string
-      enum:
-      - SFS-UK
-      - SFS-IRL
+    Company:
+      properties:
+        name:
+          type: string
+          description: The name of the `Company`.
+          example: Example Inc.
+        icon_code:
+          type: string
+          deprecated: true
+          description: The iconCode of the `Company`.
+        vat_number:
+          type: string
+          description: The VAT number of the `Company`.
+          example: 98746784967
+        company_account_id:
+          type: string
+          description: The `Company` ID requested at the login.
+          example: XMPL1234
+        shipping_address:
+          $ref: '#/components/schemas/Address'
+          description: The default shipping `Address` of the `Company`.
+        time_zone:
+          type: string
+          description: The time zone name of the country the `Company` Soldo account is registered to (based on tz database format).
+          example: Europe/London
+        market:
+          $ref: '#/components/schemas/ISO3166Country'
+          description: The [ISO 3166-1 alpha-3](https://www.iso.org/obp/ui/#search/code/) code of the country the `Company` Soldo account is registered in.
+          example: GBR
+        financial_entity:
+          $ref: '#/components/schemas/FinancialEntity'
+          description: The Soldo entity providing financial services to the ‘Company‘ (‘SFS-UK‘ stands for Soldo Financial Services Ltd. while ‘SFS-IRL‘ stands for Soldo Financial Services Ireland DAC).
+          example: SFS-IRL
+        creation_time:
+          type: string
+          description: The date and time when the `Company` was created.
+          example: '2017-06-01T12:48:40Z'
+        last_update:
+          type: string
+          description: The date and time when the `Company` was last updated.
+          example: '2017-06-01T12:48:40Z'
     Address:
       properties:
         id:
@@ -100,52 +136,11 @@ components:
           type: string
           description: The date and time when the `Address` was last updated.
           example: '2017-06-01T12:48:40Z'
-    Company:
-      properties:
-        name:
-          type: string
-          description: The name of the `Company`.
-          example: Example Inc.
-        icon_code:
-          type: string
-          deprecated: true
-          description: The iconCode of the `Company`.
-        vat_number:
-          type: string
-          description: The VAT number of the `Company`.
-          example: 98746784967
-        company_account_id:
-          type: string
-          description: The `Company` ID requested at the login.
-          example: XMPL1234
-        shipping_address:
-          $ref: '#/components/schemas/Address'
-          description: The default shipping `Address` of the `Company`.
-        time_zone:
-          type: string
-          description: The time zone name of the country the `Company` Soldo account is registered to (based on tz database format).
-          example: Europe/London
-        market:
-          $ref: '#/components/schemas/ISO3166Country'
-          description: The [ISO 3166-1 alpha-3](https://www.iso.org/obp/ui/#search/code/) code of the country the `Company` Soldo account is registered in.
-          example: GBR
-        financial_entity:
-          $ref: '#/components/schemas/FinancialEntity'
-          description: The Soldo entity providing financial services to the ‘Company‘ (‘SFS-UK‘ stands for Soldo Financial Services Ltd. while ‘SFS-IRL‘ stands for Soldo Financial Services Ireland DAC).
-          example: SFS-IRL
-        creation_time:
-          type: string
-          description: The date and time when the `Company` was created.
-          example: '2017-06-01T12:48:40Z'
-        last_update:
-          type: string
-          description: The date and time when the `Company` was last updated.
-          example: '2017-06-01T12:48:40Z'
-    AddressCategory:
+    FinancialEntity:
       type: string
       enum:
-      - USER
-      - COMPANY
+      - SFS-UK
+      - SFS-IRL
     ISO3166Country:
       type: string
       enum:
@@ -414,6 +409,11 @@ components:
       - ZMB
       - ZRCD
       - ZWE
+    AddressCategory:
+      type: string
+      enum:
+      - USER
+      - COMPANY
   securitySchemes:
     standardAuth:
       type: oauth2

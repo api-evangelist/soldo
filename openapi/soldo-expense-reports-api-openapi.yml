@@ -16,7 +16,7 @@ paths:
       tags:
       - Expense Reports
       summary: Get Expense Report
-      description: Endpoint to get a specific  `ExpenseReport` by ID.
+      description: Endpoint to get a specific `ExpenseReport` by ID.
       operationId: expense-report-get
       parameters:
       - name: expenseReportId
@@ -249,48 +249,6 @@ paths:
         - expense_report_read
 components:
   schemas:
-    ExpenseReportStatusUpdate:
-      type: string
-      enum:
-      - PROCESSED
-      - CANCELLED
-    ExpenseReportStatus:
-      type: string
-      description: The `ExpenseReport` status.
-      enum:
-      - PROCESSED
-      - CANCELLED
-      - TO_BE_PROCESSED
-    ExpenseReportType:
-      type: string
-      enum:
-      - EMPLOYEE
-      - COMPANY
-    ExpenseReportFileType:
-      type: string
-      description: The `ExpenseReport` file type.
-      enum:
-      - PDF
-      - PDF_WITH_ATTACHMENTS
-      example: PDF
-    ExpenseReportStatusOutput:
-      type: string
-      enum:
-      - PROCESSED
-      - CANCELLED
-      - DELETED
-      - TO_BE_PROCESSED
-    UpdateExpenseReport:
-      description: Update `ExpenseReport` Request JSON parameters.
-      properties:
-        approver_id:
-          type: string
-          description: The ID of the SuperAdmin `User` who approves/rejects the expense.
-          example: XMPL1234-000003
-        status:
-          $ref: '#/components/schemas/ExpenseReportStatusUpdate'
-          description: The status of the  `ExpenseReport`.
-          example: PROCESSED
     ExpenseReports:
       properties:
         total:
@@ -322,13 +280,11 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ExpenseReport'
-    Direction:
+    ExpenseReportType:
       type: string
-      description: It indicates how the pages are ordered.
       enum:
-      - ASC
-      - DESC
-      example: DESC
+      - EMPLOYEE
+      - COMPANY
     ExpenseReport:
       properties:
         reimburse_amount:
@@ -383,14 +339,58 @@ components:
         reimbursement_transaction_id:
           type: string
           description: The ID of the transaction of the `ExpenseReport`.
+    DateParam:
+      description: 'The end of the period of the search `toDate` included (i.e. less than) (Formats: `yyyy-MM-dd`, `yyyy-MM-ddThh:mm:ss`, `yyyy-MM-ddThh:mm:ssZ`).'
+      example: '1970-01-30'
+    ExpenseReportFileType:
+      type: string
+      description: The `ExpenseReport` file type.
+      enum:
+      - PDF
+      - PDF_WITH_ATTACHMENTS
+      example: PDF
+    ExpenseReportStatus:
+      type: string
+      description: The `ExpenseReport` status.
+      enum:
+      - PROCESSED
+      - CANCELLED
+      - TO_BE_PROCESSED
+    Direction:
+      type: string
+      description: It indicates how the pages are ordered.
+      enum:
+      - ASC
+      - DESC
+      example: DESC
+    UpdateExpenseReport:
+      description: Update `ExpenseReport` Request JSON parameters.
+      properties:
+        approver_id:
+          type: string
+          description: The ID of the SuperAdmin `User` who approves/rejects the expense.
+          example: XMPL1234-000003
+        status:
+          $ref: '#/components/schemas/ExpenseReportStatusUpdate'
+          description: The status of the  `ExpenseReport`.
+          example: PROCESSED
+    ExpenseReportStatusUpdate:
+      type: string
+      enum:
+      - PROCESSED
+      - CANCELLED
+    ExpenseReportStatusOutput:
+      type: string
+      enum:
+      - PROCESSED
+      - CANCELLED
+      - DELETED
+      - TO_BE_PROCESSED
     ExpenseReportDownload:
       properties:
         file_url:
           type: string
           description: 'The  `ExpenseReport`file URL '
-    DateParam:
-      description: 'The end of the period of the search `toDate` included (i.e. less than) (Formats: `yyyy-MM-dd`, `yyyy-MM-ddThh:mm:ss`, `yyyy-MM-ddThh:mm:ssZ`).'
-      example: '1970-01-30'
   securitySchemes:
     standardAuth:
       type: oauth2

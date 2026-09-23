@@ -373,7 +373,7 @@ paths:
     post:
       tags:
       - Transactions
-      summary: 'Add VAT Rate to Transaction '
+      summary: Add VAT Rate to Transaction
       description: Endpoint to assign a `VatRate` to a `Transaction`.
       operationId: transaction-tax-rate-set
       parameters:
@@ -1712,183 +1712,33 @@ webhooks:
         fingerprint-order: id, walletId, status, transactionSign
 components:
   schemas:
-    TransactionMerchantCategory:
+    TransactionTimelineItem:
       properties:
-        description:
+        created_at:
           type: string
-          description: The merchant category description as defined in the Soldo platform.
-          example: Travel
-        mcc:
-          type: string
-          description: The official Mastercard Merchant Category Code (MCC).
-          example: 7011
-        mcc_description:
-          type: string
-          description: The official Mastercard Merchant category description.
-          example: Lodging - Hotels, Motels, Resorts - not elsewhere classified
-        code:
-          type: string
-          deprecated: true
-          description: 'The merchant category code as defined in the Soldo platform. *Deprecated*: use `description` instead.'
-          example: Lodging - Hotels, Motels, Resorts - not elsewhere classified
-        sub_category:
-          type: string
-          description: The merchant sub-category as defined in the Soldo platform.
-          example: Hotels
-    TransactionCarbonEmissionInfo:
-      properties:
-        value:
-          type: number
-          description: The amount of greenhouses gas emissions generated.
-        unit:
-          type: string
-          description: The unit of measure related to the `value` of greenhouses gas emissions generated.
-    TransactionFuelDetails:
-      description: The transaction fuel details `Refueling` resource
-      properties:
-        plate:
-          type: string
-          description: '`Vehicle`''s plate number.'
-          example: AA000BB
-        vehicle_fuel_type:
-          $ref: '#/components/schemas/FuelType'
-          description: Fuel type specified in the `Vehicle`'s configuration page.
-          example: PETROL
-        vat_deductibility_percentage:
-          type: string
-          description: The deductible VAT percentage configured for the `Vehicle`.
-          example: 40%
-        mileage:
-          type: integer
-          format: int32
-          description: The `Vehicle` mileage.
-          example: 125000
-        quantity:
-          type: number
-          description: The fuel quantity as specified in the invoice.
-          example: 80
-        unit_price:
-          type: number
-          description: The fuel unit price as specified on the transaction.
-          example: 1.41
-        tx_fuel_type:
-          $ref: '#/components/schemas/FuelType'
-          description: The fuel type as specified on the transaction.
-          example: PETROL
-        to_be_ignored:
-          type: boolean
-          description: If the transaction link status is set to ignored.
-          example: false
-        invoice_id:
-          type: integer
-          format: int64
-          description: Invoice ID.
-          example: 4421109
-        invoice_number:
-          type: string
-          description: Invoice number.
-          example: NVC112200987
-        invoice_date:
-          type: string
-          description: Invoice date.
+          description: The instant the change happened to the `Transaction` and related `Wallet`.
           example: '2017-06-01T12:48:40Z'
-        invoice_total_amount:
+        status:
+          $ref: '#/components/schemas/TransactionTimelineStatus'
+          description: What happened in that moment to the `Transaction` and to the related `Wallet`.
+          example: Settled
+        amount:
           type: number
-          description: Total amount of the linked invoice.
+          description: The amount related to the change in the currency of the `Wallet`.
           example: 10.25
-        invoice_row:
-          type: integer
-          format: int32
-          description: Row of the linked invoice.
-          example: 4
-        invoice_row_amount:
-          type: number
-          description: Amount of the transaction's row in the linked invoice.
+        balance_after:
+          $ref: '#/components/schemas/TransactionTimelineBalance'
+          description: The `Wallet` balance after the change took place.
           example: 10.25
-        supplier_vat_id:
-          type: string
-          description: Supplier VAT ID.
-          example: 98746784967
-        dri:
-          type: string
-          description: The DRI (Documento Riepilogativo) code.
-          example: DRI00099881
-        vehicle_id:
-          type: string
-          description: The `Vehicle` ID.
-          example: 6853e657-c797-4985-8d6b-5425d4e51df8
-    TransactionOwnerType:
-      type: string
-      enum:
-      - employee
-      - company
-    MileageReimbursementDetailsCreateRequest:
-      properties:
-        vehicle_id:
-          type: string
-          description: The ID of the `Vehicle` used, if registered.
-          example: 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
-        reimbursement_rate:
-          type: number
-          description: The rate to apply to the covered distance (measured in km) for the reimbursement, assuming the main `Wallet` currency. Required if `vehicle_id` is missing or if no reimbursement rate is set for the related `Vehicle`. Overridden if `vehicle_id` is set and a reimbursement rate is set for the related `Vehicle`.
-          example: 0.45
-        description:
-          type: string
-          description: The description for the trip.
-          example: 'Business trip: Rome - Florence - Turin - Milan'
-        starting_point:
-          type: string
-          description: The place where the travel started.
-          example: Rome, Metropolitan City of Rome Capital, Italy
-        arrival_point:
-          type: string
-          description: The point where the travel ended.
-          example: Milan, Metropolitan City of Milan, Italy
-        multi_stops:
-          type: array
-          description: The intermediate stops during the travel.
-          example:
-          - Florence, Metropolitan City of Florence, Italy
-          - Turin, Metropolitan City of Turin, Italy
-          items:
-            type: string
-        distance:
-          type: number
-          description: The travelled distance from the starting point to the arrival point (measured in km).
-          example: 875.4
-        round_trip:
+        balance_before:
+          $ref: '#/components/schemas/TransactionTimelineBalance'
+          description: The `Wallet` balance before the change took place.
+          example: 10.25
+        is_fee:
           type: boolean
-          description: Whether the distance has been travelled twice due to a round trip.
+          description: Indicate whether the change is a fee.
           example: true
-      required:
-      - description
-      - distance
-      - round_trip
-    Invoice:
-      properties:
-        number:
-          type: string
-          description: A unique identifier assigned to an invoice by the supplier.
-          example: INV-2023-001
-          maxLength: 50
-          pattern: ^(?![=+\-@])[^,;'"]{0,50}$
-        date:
-          type: string
-          description: 'The date the invoice was issued by the supplier. Accepted format: yyyy-MM-dd.'
-          example: '2023-01-23'
-        po_number:
-          type: string
-          description: A reference number provided by the customer's purchasing system (Purchase Order Number)
-          example: PO-2023-001
-          maxLength: 50
-          pattern: ^(?![=+\-@])[^,;'"]{0,50}$
-        supplier_vat_number:
-          type: string
-          description: The Value-Added Tax (VAT) registration number of the supplier.
-          example: 123456789
-          maxLength: 15
-          pattern: ^[a-zA-Z0-9]{0,15}$
-    CustomerCareDepositEvent:
+    InboundPaymentReversalEvent:
       properties:
         event_uuid:
           type: string
@@ -1901,9 +1751,9 @@ components:
           example: Transaction
         event_name:
           $ref: '#/components/schemas/WebhookEventName'
-          default: customer_care_deposit
+          default: inbound_payment_reversal
           description: The webhook event name.
-          example: customer_care_deposit
+          example: inbound_payment_reversal
         company_account_id:
           type: string
           description: The company account ID.
@@ -1915,17 +1765,7 @@ components:
           type: string
           description: The webhook subscription ID used to route this event.
           example: 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
-    FuelType:
-      type: string
-      enum:
-      - PETROL
-      - DIESEL
-      - METHANE
-      - LPG
-      - LNG
-      - ELECTRIC
-      - UNKNOWN
-    EditTagEvent:
+    LoadFailedEvent:
       properties:
         event_uuid:
           type: string
@@ -1938,9 +1778,9 @@ components:
           example: Transaction
         event_name:
           $ref: '#/components/schemas/WebhookEventName'
-          default: edit_tag
+          default: load_failed
           description: The webhook event name.
-          example: edit_tag
+          example: load_failed
         company_account_id:
           type: string
           description: The company account ID.
@@ -1952,49 +1792,23 @@ components:
           type: string
           description: The webhook subscription ID used to route this event.
           example: 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
-    TransactionTimelineBalance:
+    EntityIdDTO:
       properties:
-        available_amount:
-          type: number
-          description: The `Wallet` available amount in the currency of the `Wallet`.
-          example: 10.25
-        pending_amount:
-          type: number
-          description: The `Wallet` pending amount in the currency of the `Wallet`. This is also known as `blocked` amount.
-          example: 10.25
-        ledger_amount:
-          type: number
-          description: The `Wallet` ledger amount in the currency of the `Wallet`. This is a shorthand for the sum of available and pending amounts.
-          example: 10.25
-    SearchTransactionCategory:
+        id:
+          type: string
+          description: The resource ID.
+          example: 6853e657-c797-4985-8d6b-5425d4e51df8
+    TransactionTimelineStatus:
       type: string
-      description: It determines the filter by category of the transaction, multiple categories can be included.
       enum:
-      - Billing
+      - Unspecified
+      - Authorized
+      - Reversed
+      - Refunded
+      - Settled
+      - Withdraw
+      - Deposit
       - Chargeback
-      - Conversion
-      - Fee
-      - FeeReversal
-      - InboundFasterPayment
-      - InboundFasterPaymentReversal
-      - Load
-      - LoadReversal
-      - MileageReimbursement
-      - NotRecognized
-      - Payment
-      - Rebalance
-      - RecurringBilling
-      - Refund
-      - SoldoActivity
-      - SoldoCreditOperation
-      - SoldoDebitOperation
-      - Transfer
-      - Wiretransfer
-      - Withdrawal
-      - InterAccountTransferWithdrawalRecurringBilling
-      - InterAccountTransferWithdrawal
-      - InterAccountTransferDeposit
-      - InterAccountTransferDepositRecurringBilling
     TransactionPaymentMethod:
       type: string
       enum:
@@ -2007,6 +1821,173 @@ components:
       - OUT_OF_PLATFORM_PERSONAL
       - IATS
       - WIRETRANSFER
+    UpdateTransaction:
+      description: Update `Transaction` JSON parameters.
+      properties:
+        trx_owner_id:
+          type: string
+          description: The `Transaction` assignee, one of the `User` ID assigned to the `Company` `Card`.
+          example: XMPL1234-000001
+        user_notes:
+          type: string
+          description: The `Transaction` user notes.
+          example: something
+        invoice:
+          $ref: '#/components/schemas/Invoice'
+          description: The `Invoice` related to the `Transaction`.
+    InboundPaymentEvent:
+      properties:
+        event_uuid:
+          type: string
+          description: The webhook unique ID.
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+        event_type:
+          $ref: '#/components/schemas/WebhookEventType'
+          default: Transaction
+          description: The webhook event type.
+          example: Transaction
+        event_name:
+          $ref: '#/components/schemas/WebhookEventName'
+          default: inbound_payment
+          description: The webhook event name.
+          example: inbound_payment
+        company_account_id:
+          type: string
+          description: The company account ID.
+          example: XMPL1234
+        data:
+          $ref: '#/components/schemas/Transaction'
+          description: The webhook `Transaction` data.
+        subscription_id:
+          type: string
+          description: The webhook subscription ID used to route this event.
+          example: 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
+    User:
+      properties:
+        id:
+          type: string
+          description: The `User` ID.
+          example: XMPL1234-000001
+        name:
+          type: string
+          description: 'The name of the `User` (sortable: yes).'
+          example: John
+        surname:
+          type: string
+          description: 'The surname of the `User` (sortable: yes).'
+          example: Smith
+        middlename:
+          type: string
+          description: 'The middlename of the `User` (sortable: no).'
+          example: John
+        dob:
+          type: string
+          description: The Date of birth of the `User`.
+          example: '1970-10-21'
+        job_title:
+          type: string
+          description: 'The job title of the `User` (sortable: yes).'
+          example: Business Strategist
+        department:
+          type: string
+          description: 'The department of the `User` (sortable: no).'
+          example: Research & Development
+        email:
+          type: string
+          description: 'The email address of the `User` (sortable: no).'
+          example: jdoe@fake.soldo.com
+        mobile:
+          type: string
+          description: 'The mobile number of the `User` including the country code (sortable: no).'
+          example: '+44123323232'
+        mobile_prefix:
+          type: string
+          description: 'The mobile number country code (sortable: no).'
+          example: '+44'
+        custom_reference_id:
+          type: string
+          description: 'The reference of the employee in an external system (sortable: yes).'
+          example: 123456-user-1
+        status:
+          $ref: '#/components/schemas/UserStatus'
+          description: 'The status of the `User` (sortable: yes).'
+          example: ACTIVE
+        visible:
+          type: boolean
+          description: 'It determines whether the `User` is visible in the web console (sortable: yes).'
+          example: true
+        mobile_access:
+          type: boolean
+          description: 'It determines whether the `User` has mobile access (sortable: no).'
+          example: true
+        web_access:
+          type: boolean
+          description: 'It determines whether the `User` has web access (sortable: no).'
+          example: true
+        groups:
+          type: array
+          description: 'The list of `Groups` ID the `User` is member of (sortable: no).'
+          example:
+          - 7bf79328-a7ae-4222-aa54-091ff7f429a7
+          - 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
+          items:
+            type: string
+        shipping_address:
+          $ref: '#/components/schemas/Address'
+          description: The default shipping `Address` of the `User`.
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+        reports_to:
+          type: string
+          description: The ID of the `User` it reports to.
+          example: XMPL1234-000001
+        roles:
+          type: array
+          description: The list of `UserRole` of the `User`.
+          items:
+            $ref: '#/components/schemas/UserRole'
+        contact_id:
+          type: string
+          description: The ID of the `Contact` assigned to the `User`. This information can be updated from the [Add Contact](ref:contact-add) and [Update Contact](ref:contact-update) endpoints.
+          example: 135fdb6c-2e77-4fc0-a79f-2453fde75ef7
+        creation_time:
+          type: string
+          description: 'The date and time when the `User` was created (sortable: yes).'
+          example: '2017-06-01T12:48:40Z'
+        last_update:
+          type: string
+          description: 'The date and time when the `User` was last updated (sortable: yes).'
+          example: '2017-06-01T12:48:40Z'
+        work_status:
+          $ref: '#/components/schemas/WorkStatus'
+          description: The work status of the `User`.
+          example: OUT_OF_OFFICE
+    CardAuthorizationEvent:
+      properties:
+        event_uuid:
+          type: string
+          description: The webhook unique ID.
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+        event_type:
+          $ref: '#/components/schemas/WebhookEventType'
+          default: Transaction
+          description: The webhook event type.
+          example: Transaction
+        event_name:
+          $ref: '#/components/schemas/WebhookEventName'
+          default: card_authorization
+          description: The webhook event name.
+          example: card_authorization
+        company_account_id:
+          type: string
+          description: The company account ID.
+          example: XMPL1234
+        data:
+          $ref: '#/components/schemas/Transaction'
+          description: The webhook `Transaction` data.
+        subscription_id:
+          type: string
+          description: The webhook subscription ID used to route this event.
+          example: 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
     TransactionSplitInfo:
       properties:
         amount:
@@ -2044,367 +2025,7 @@ components:
         rejected_amount:
           $ref: '#/components/schemas/TransactionAmount'
           description: The `TransactionList`'s line amount rejected in policy.
-    ISO3166Country:
-      type: string
-      enum:
-      - ASC
-      - AND
-      - ARE
-      - AFG
-      - ATG
-      - AIA
-      - ALB
-      - ARM
-      - ANT
-      - AGO
-      - ATA
-      - ARG
-      - ASM
-      - AUT
-      - AUS
-      - ABW
-      - ALA
-      - AZE
-      - BIH
-      - BRB
-      - BGD
-      - BEL
-      - BFA
-      - BGR
-      - BHR
-      - BDI
-      - BEN
-      - BLM
-      - BMU
-      - BRN
-      - BOL
-      - BES
-      - BRA
-      - BHS
-      - BTN
-      - BUR
-      - BVT
-      - BWA
-      - BLR
-      - BLZ
-      - CAN
-      - CCK
-      - COD
-      - CAF
-      - COG
-      - CHE
-      - CIV
-      - COK
-      - CHL
-      - CMR
-      - CHN
-      - COL
-      - CPT
-      - CRI
-      - CSXX
-      - CUB
-      - CPV
-      - CUW
-      - CXR
-      - CYP
-      - CZE
-      - DEU
-      - DGA
-      - DJI
-      - DNK
-      - DMA
-      - DOM
-      - DZA
-      - ECU
-      - EST
-      - EGY
-      - ESH
-      - ERI
-      - ESP
-      - ETH
-      - FIN
-      - FJI
-      - FLK
-      - FSM
-      - FRO
-      - FRA
-      - FXX
-      - GAB
-      - GBR
-      - GRD
-      - GEO
-      - GUF
-      - GGY
-      - GHA
-      - GIB
-      - GRL
-      - GMB
-      - GIN
-      - GLP
-      - GNQ
-      - GRC
-      - SGS
-      - GTM
-      - GUM
-      - GNB
-      - GUY
-      - HKG
-      - HMD
-      - HND
-      - HRV
-      - HTI
-      - HUN
-      - IDN
-      - IRL
-      - ISR
-      - IMN
-      - IND
-      - IOT
-      - IRQ
-      - IRN
-      - ISL
-      - ITA
-      - JEY
-      - JAM
-      - JOR
-      - JPN
-      - KEN
-      - KGZ
-      - KHM
-      - KIR
-      - COM
-      - KNA
-      - PRK
-      - KOR
-      - KWT
-      - CYM
-      - KAZ
-      - LAO
-      - LBN
-      - LCA
-      - LIE
-      - LKA
-      - LBR
-      - LSO
-      - LTU
-      - LUX
-      - LVA
-      - LBY
-      - MAR
-      - MCO
-      - MDA
-      - MNE
-      - MAF
-      - MDG
-      - MHL
-      - MKD
-      - MLI
-      - MMR
-      - MNG
-      - MAC
-      - MNP
-      - MTQ
-      - MRT
-      - MSR
-      - MLT
-      - MUS
-      - MDV
-      - MWI
-      - MEX
-      - MYS
-      - MOZ
-      - NAM
-      - NCL
-      - NER
-      - NFK
-      - NGA
-      - NIC
-      - NLD
-      - NOR
-      - NPL
-      - NRU
-      - NTZ
-      - NIU
-      - NZL
-      - OMN
-      - PAN
-      - PER
-      - PYF
-      - PNG
-      - PHL
-      - PAK
-      - POL
-      - SPM
-      - PCN
-      - PRI
-      - PSE
-      - PRT
-      - PLW
-      - PRY
-      - QAT
-      - REU
-      - ROU
-      - ROM
-      - SRB
-      - RUS
-      - RWA
-      - SAU
-      - SLB
-      - SYC
-      - SDN
-      - SWE
-      - SGP
-      - SHN
-      - SVN
-      - SJM
-      - SVK
-      - SLE
-      - SMR
-      - SEN
-      - SOM
-      - SUR
-      - SSD
-      - STP
-      - SUN
-      - SLV
-      - SXM
-      - SYR
-      - SWZ
-      - TAA
-      - TCA
-      - TCD
-      - ATF
-      - TGO
-      - THA
-      - TJK
-      - TKL
-      - TLS
-      - TKM
-      - TUN
-      - TON
-      - TUR
-      - TTO
-      - TUV
-      - TWN
-      - TZA
-      - UKR
-      - UGA
-      - UMI
-      - USA
-      - URY
-      - UZB
-      - VAT
-      - VCT
-      - VEN
-      - VGB
-      - VIR
-      - VNM
-      - VUT
-      - WLF
-      - WSM
-      - XKX
-      - XXK
-      - QZZ
-      - YEM
-      - MYT
-      - YUCS
-      - ZAF
-      - ZMB
-      - ZRCD
-      - ZWE
-    ExportStatus:
-      type: string
-      description: The export status of the expense.
-      enum:
-      - EXPORTED
-      - NOT_EXPORTED
-      example: EXPORTED
-    UpdateMileageReimbursementTransaction:
-      description: Update `MileageReimbursement` `Transaction` JSON parameters.
-      properties:
-        request_timestamp:
-          type: integer
-          format: int64
-          description: The epoch timestamp in millis. This is checked in Soldo. Requests with timestamp older than 5 seconds will be rejected.
-          example: 1576850500000
-        date:
-          type: string
-          description: The date and time of the `Transaction`.
-          example: '2017-06-01T12:48:40Z'
-        mileage:
-          $ref: '#/components/schemas/MileageReimbursementDetailsUpdateRequest'
-          description: The details of the `MileageReimbursement`.
-      required:
-      - date
-      - mileage
-      - request_timestamp
-    LoadSource:
-      type: string
-      enum:
-      - UNSPECIFIED
-      - BANK_TRANSFER
-      - CARD
-      - SISAL_PAY
-      - FASTER_PAYMENT
-    TransactionTimelineItem:
-      properties:
-        created_at:
-          type: string
-          description: The instant the change happened to the `Transaction` and related `Wallet`.
-          example: '2017-06-01T12:48:40Z'
-        status:
-          $ref: '#/components/schemas/TransactionTimelineStatus'
-          description: What happened in that moment to the `Transaction` and to the related `Wallet`.
-          example: Settled
-        amount:
-          type: number
-          description: The amount related to the change in the currency of the `Wallet`.
-          example: 10.25
-        balance_after:
-          $ref: '#/components/schemas/TransactionTimelineBalance'
-          description: The `Wallet` balance after the change took place.
-          example: 10.25
-        balance_before:
-          $ref: '#/components/schemas/TransactionTimelineBalance'
-          description: The `Wallet` balance before the change took place.
-          example: 10.25
-        is_fee:
-          type: boolean
-          description: Indicate whether the change is a fee.
-          example: true
-    ExpenseStatus:
-      type: string
-      enum:
-      - APPROVED
-      - PARTIALLY_APPROVED
-      - DENIED
-      - TO_REVIEW
-    SearchTransactionDateType:
-      type: string
-      default: TRANSACTION
-      description: It determines the date to be considered for `fromDate` and `toDate` parameters.
-      enum:
-      - TRANSACTION
-      - SETTLEMENT
-      - UPDATE
-      - REVIEW_TIME
-      - CUSTOM_EXPORT_TIME
-      example: TRANSACTION
-    UpdateTransaction:
-      description: Update `Transaction` JSON parameters.
-      properties:
-        trx_owner_id:
-          type: string
-          description: The `Transaction` assignee, one of the `User` ID assigned to the `Company` `Card`.
-          example: XMPL1234-000001
-        user_notes:
-          type: string
-          description: The `Transaction` user notes.
-          example: something
-        invoice:
-          $ref: '#/components/schemas/Invoice'
-          description: The `Invoice` related to the `Transaction`.
-    LoadMoneyEvent:
+    BalancedTransferEvent:
       properties:
         event_uuid:
           type: string
@@ -2417,9 +2038,9 @@ components:
           example: Transaction
         event_name:
           $ref: '#/components/schemas/WebhookEventName'
-          default: load_money
+          default: balanced_transfer
           description: The webhook event name.
-          example: load_money
+          example: balanced_transfer
         company_account_id:
           type: string
           description: The company account ID.
@@ -2458,354 +2079,97 @@ components:
           type: string
           description: The webhook subscription ID used to route this event.
           example: 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
-    UnloadMoneyEvent:
-      properties:
-        event_uuid:
-          type: string
-          description: The webhook unique ID.
-          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
-        event_type:
-          $ref: '#/components/schemas/WebhookEventType'
-          default: Transaction
-          description: The webhook event type.
-          example: Transaction
-        event_name:
-          $ref: '#/components/schemas/WebhookEventName'
-          default: unload_money
-          description: The webhook event name.
-          example: unload_money
-        company_account_id:
-          type: string
-          description: The company account ID.
-          example: XMPL1234
-        data:
-          $ref: '#/components/schemas/Transaction'
-          description: The webhook `Transaction` data.
-        subscription_id:
-          type: string
-          description: The webhook subscription ID used to route this event.
-          example: 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
-    DateParam:
-      description: 'The end of the period of the search `toDate` included (i.e. less than) (Formats: `yyyy-MM-dd`, `yyyy-MM-ddThh:mm:ss`, `yyyy-MM-ddThh:mm:ssZ`).'
-      example: '1970-01-30'
-    ExpenseType:
-      type: string
-      enum:
-      - COMPANY
-      - PERSONAL
-      - TRAVEL_AND_ENTERTAINMENT
-    TransactionItemSplitInfo:
-      properties:
-        line_number:
-          type: integer
-          format: int32
-          description: The `Transaction`'s line number.
-          example: 1
-        amount:
-          $ref: '#/components/schemas/TransactionAmount'
-          description: The `TransactionList`'s line amount.
-        vat_amount:
-          $ref: '#/components/schemas/TransactionAmount'
-          description: The `TransactionList`'s line VAT amount.
-        expense_type:
-          $ref: '#/components/schemas/ExpenseType'
-          description: The type of the expense.
-          example: TRAVEL_AND_ENTERTAINMENT
-        employee:
-          $ref: '#/components/schemas/EntityIdDTO'
-          description: The `User` which the transaction line is assigned to.
-        expense_category:
-          $ref: '#/components/schemas/EntityIdDTO'
-          description: The `ExpenseCategory`.
-        tax_rate:
-          $ref: '#/components/schemas/EntityIdDTO'
-          description: The `VATRate`.
-        tags:
-          type: array
-          description: The `Tags`.
-          items:
-            $ref: '#/components/schemas/TransactionTag'
-        approved_amount:
-          $ref: '#/components/schemas/TransactionAmount'
-          description: The `TransactionList`'s line amount approved in policy.
-        rejected_amount:
-          $ref: '#/components/schemas/TransactionAmount'
-          description: The `TransactionList`'s line amount rejected in policy.
-    LoadFailedEvent:
-      properties:
-        event_uuid:
-          type: string
-          description: The webhook unique ID.
-          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
-        event_type:
-          $ref: '#/components/schemas/WebhookEventType'
-          default: Transaction
-          description: The webhook event type.
-          example: Transaction
-        event_name:
-          $ref: '#/components/schemas/WebhookEventName'
-          default: load_failed
-          description: The webhook event name.
-          example: load_failed
-        company_account_id:
-          type: string
-          description: The company account ID.
-          example: XMPL1234
-        data:
-          $ref: '#/components/schemas/Transaction'
-          description: The webhook `Transaction` data.
-        subscription_id:
-          type: string
-          description: The webhook subscription ID used to route this event.
-          example: 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
-    UserStatus:
-      type: string
-      enum:
-      - ACTIVE
-      - INACTIVE
-      - BLOCKED
-      - SUSPENDED
-      - PENDING
-      - ARCHIVED
-    MileageReimbursementTransaction:
-      properties:
-        transaction_id:
-          type: string
-          description: The ID of the `Transaction` describing the `MileageReimbursement`.
-          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
-        date:
-          type: string
-          description: The date and time of the `Transaction`.
-          example: '2017-06-01T12:48:40Z'
-        owner_id:
-          type: string
-          description: 'The ID of the `User` who made the `Transaction` (updatable: no).'
-          example: XMPL1234-000002
-        amount:
-          type: number
-          description: The amount of the `Transaction`, in the currency of the main `Wallet`.
-          example: 10.25
-        amount_currency:
-          $ref: '#/components/schemas/ISO4217Currency'
-          description: The currency [ISO 4217](https://www.six-group.com/en/products-services/financial-information/data-standards.html#scrollTo=maintenance-agency) code of the `amount`.
-          example: EUR
-        mileage:
-          $ref: '#/components/schemas/MileageReimbursementDetails'
-          description: The details of the `MileageReimbursement`.
-    WorkStatus:
-      type: string
-      enum:
-      - AVAILABLE
-      - OUT_OF_OFFICE
-    EntityIdDTO:
-      properties:
-        id:
-          type: string
-          description: The resource ID.
-          example: 6853e657-c797-4985-8d6b-5425d4e51df8
-    Source:
-      properties:
-        name:
-          type: string
-          description: The source name.
-          example: J. Doe
-        type:
-          $ref: '#/components/schemas/LoadSource'
-          description: The source type.
-          example: BANK_TRANSFER
-        destination_wallet_id:
-          type: string
-          description: ' The receiving wallet in the transaction, to which funds are being transferred.'
-          example: de29bffb-7da2-40f1-934a-241170762d3e
-        destination_wallet_name:
-          type: string
-          description: ' The receiving wallet name in the transaction, to which funds are being transferred.'
-          example: EURO VIBAN
-    OutOfPlatformTransactionPaymentMethod:
-      type: string
-      enum:
-      - OUT_OF_PLATFORM_COMPANY
-      - OUT_OF_PLATFORM_PERSONAL
-    WebhookEventName:
-      type: string
-      enum:
-      - business_trip_created
-      - business_trip_updated
-      - business_trip_deleted
-      - card_activated
-      - card_change_status
-      - card_creation
-      - card_destroyed
-      - card_lost
-      - card_replaced
-      - card_stolen
-      - card_label_updated
-      - card_assignee_updated
-      - add_resources_card
-      - add_resources_member
-      - add_resources_wallet
-      - create_group
-      - delete_group
-      - move_resources_card
-      - move_resources_member
-      - move_resources_wallet
-      - remove_resources_card
-      - remove_resources_member
-      - remove_resources_wallet
-      - update_group
-      - store_order_completed
-      - store_order_placed
-      - balanced_transfer
-      - billing
-      - card_authorization
-      - conversion
-      - customer_care_deposit
-      - customer_care_withdraw
-      - edit_tag
-      - inbound_payment
-      - inbound_payment_reversal
-      - internal_transfer
-      - joule_feed
-      - load_failed
-      - load_money
-      - recurring_billing
-      - scheduled_transfer
-      - transaction_adjustment
-      - unload_money
-      - wiretransfer
-      - upload_completed
-      - attachment_delete
-      - new_user
-      - user_status_changed
-      - user_updated
-      - wallet_created
-      - wallet_deleted
-      - vehicle_create
-      - vehicle_update
-      - vehicle_delete
-      - purchase_create
-      - purchase_update
-      - purchase_delete
-      - purchase_redeem_card
-      - created_expense_configuration
-      - disabled_expense_configuration
-      - enabled_expense_configuration
-      - updated_expense_configuration
-      - completed_transactions_import
-      - updated_transaction
-      - change_expense_type
-      - subscription_activated
-      - subscription_created
-      - subscription_updated
-      - subscription_deleted
-      - subscription_assignee_added
-      - subscription_assignee_removed
-      - online_ads_activated
-      - online_ads_created
-      - online_ads_updated
-      - online_ads_deleted
-      - online_ads_assignee_added
-      - online_ads_assignee_removed
-      - transaction_created
-      - transaction_modified
-      - transaction_deleted
-      - transaction_business_trip_linked
-      - transaction_business_trip_unlinked
-      - contact_created
-      - contact_updated
-      - contact_deleted
-    UpdateOutOfPlatformTransaction:
-      description: Update Out-Of-Platform `Transaction` JSON parameters.
-      properties:
-        request_timestamp:
-          type: integer
-          format: int64
-          description: The epoch timestamp in millis. This is checked in Soldo. Requests with timestamp older than 5 seconds will be rejected.
-          example: 1576850500000
-        date:
-          type: string
-          description: The date and time of the `Transaction`.
-          example: '2017-06-01T12:48:40Z'
-        merchant_name:
-          type: string
-          description: The name of the `Merchant` for the `Transaction`.
-          example: SHH HOTEL LONDON
-        tx_amount:
-          type: number
-          description: The amount of the `Transaction`, in the currency of the `Merchant`.
-          example: 10.25
-        tx_amount_currency:
-          $ref: '#/components/schemas/ISO4217Currency'
-          description: The currency [ISO 4217](https://www.six-group.com/en/products-services/financial-information/data-standards.html#scrollTo=maintenance-agency) code of the `tx_amount`.
-          example: EUR
-        exchange_rate:
-          type: number
-          description: The exchange rate used to convert the `tx_amount` from the currency of the `Merchant` to the currency of the main `Wallet`. If needed and not provided, a default rate is derived from `date`.
-          example: 1
-        payment_method:
-          $ref: '#/components/schemas/OutOfPlatformTransactionPaymentMethod'
-          description: The payment method of the `Transaction`.
-          example: OUT_OF_PLATFORM_PERSONAL
-      required:
-      - date
-      - merchant_name
-      - payment_method
-      - request_timestamp
-      - tx_amount
-      - tx_amount_currency
     AddressCategory:
       type: string
       enum:
       - USER
       - COMPANY
-    TransactionItemDetails:
+    TransactionMerchant:
       properties:
-        tx_country:
-          $ref: '#/components/schemas/ISO3166Country'
-          description: The [ISO 3166-1 alpha-3](https://www.iso.org/obp/ui/#search/code/) code of the country where the `Transaction` has been authorised.
-          example: GBR
-    MileageReimbursementDetailsUpdateRequest:
-      properties:
-        vehicle_id:
+        id:
           type: string
-          description: The ID of the `Vehicle` used, if registered.
+          description: The ID of the `Merchant`.
+          example: 2100846839
+        name:
+          type: string
+          description: The name of the `Merchant` (normalised).
+          example: SHH HOTEL LONDON
+        raw_name:
+          type: string
+          description: The raw name of the `Merchant`.
+          example: SHERLOCK HOLMES HOTEL  LONDON        GBR
+        code:
+          type: string
+          description: The Mastercard `Merchant` code.
+        address:
+          type: string
+          description: The `Merchant` address.
+    TransactionCategory:
+      type: string
+      enum:
+      - Billing
+      - Chargeback
+      - Conversion
+      - Fee
+      - FeeReversal
+      - InboundFasterPayment
+      - InboundFasterPaymentReversal
+      - Load
+      - LoadReversal
+      - MileageReimbursement
+      - NotRecognized
+      - P2P
+      - Payment
+      - Rebalance
+      - RecurringBilling
+      - Refund
+      - SoldoActivity
+      - SoldoCreditOperation
+      - SoldoDebitOperation
+      - Transfer
+      - Wiretransfer
+      - Withdrawal
+      - InterAccountTransferWithdrawalRecurringBilling
+      - InterAccountTransferWithdrawal
+      - InterAccountTransferDeposit
+      - InterAccountTransferDepositRecurringBilling
+    RecurringBillingEvent:
+      properties:
+        event_uuid:
+          type: string
+          description: The webhook unique ID.
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+        event_type:
+          $ref: '#/components/schemas/WebhookEventType'
+          default: Transaction
+          description: The webhook event type.
+          example: Transaction
+        event_name:
+          $ref: '#/components/schemas/WebhookEventName'
+          default: recurring_billing
+          description: The webhook event name.
+          example: recurring_billing
+        company_account_id:
+          type: string
+          description: The company account ID.
+          example: XMPL1234
+        data:
+          $ref: '#/components/schemas/Transaction'
+          description: The webhook `Transaction` data.
+        subscription_id:
+          type: string
+          description: The webhook subscription ID used to route this event.
           example: 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
-        reimbursement_rate:
+    TransactionAmount:
+      properties:
+        amount:
           type: number
-          description: The rate to apply to the covered distance (measured in km) for the reimbursement, assuming the main `Wallet` currency. Required if `vehicle_id` is missing or if no reimbursement rate is set for the related `Vehicle`. Overridden if `vehicle_id` is set and a reimbursement rate is set for the related `Vehicle`.
-          example: 0.45
-        description:
-          type: string
-          description: The description for the trip.
-          example: 'Business trip: Rome - Florence - Turin - Milan'
-        starting_point:
-          type: string
-          description: The place where the travel started.
-          example: Rome, Metropolitan City of Rome Capital, Italy
-        arrival_point:
-          type: string
-          description: The point where the travel ended.
-          example: Milan, Metropolitan City of Milan, Italy
-        multi_stops:
-          type: array
-          description: The intermediate stops during the travel.
-          example:
-          - Florence, Metropolitan City of Florence, Italy
-          - Turin, Metropolitan City of Turin, Italy
-          items:
-            type: string
-        distance:
-          type: number
-          description: The travelled distance from the starting point to the arrival point (measured in km).
-          example: 875.4
-        round_trip:
-          type: boolean
-          description: Whether the distance has been travelled twice due to a round trip.
-          example: true
-      required:
-      - description
-      - distance
-      - round_trip
+          description: The amount of the `Transaction` line.
+          example: 10.25
+        currency:
+          $ref: '#/components/schemas/ISO4217Currency'
+          description: The currency [ISO 4217](https://www.six-group.com/en/products-services/financial-information/data-standards.html#scrollTo=maintenance-agency) code of the amount.
+          example: EUR
     ExpenseCategory:
       properties:
         id:
@@ -2854,272 +2218,6 @@ components:
           type: string
           description: 'The date and time when the `ExpenseCategory` was last updated (sortable: no).'
           example: '2017-06-01T12:48:40Z'
-    MileageReimbursementDetails:
-      properties:
-        vehicle_id:
-          type: string
-          description: The ID of the `Vehicle` used, if registered.
-          example: 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
-        reimbursement_rate:
-          type: number
-          description: The rate to apply to the covered distance (measured in km) for the reimbursement, assuming the main `Wallet` currency.
-          example: 0.45
-        description:
-          type: string
-          description: The description for the trip.
-          example: 'Business trip: Rome - Florence - Turin - Milan'
-        starting_point:
-          type: string
-          description: The place where the travel started.
-          example: Rome, Metropolitan City of Rome Capital, Italy
-        arrival_point:
-          type: string
-          description: The point where the travel ended.
-          example: Milan, Metropolitan City of Milan, Italy
-        multi_stops:
-          type: array
-          description: The intermediate stops during the travel.
-          example:
-          - Florence, Metropolitan City of Florence, Italy
-          - Turin, Metropolitan City of Turin, Italy
-          items:
-            type: string
-        distance:
-          type: number
-          description: The travelled distance from the starting point to the arrival point (measured in km).
-          example: 875.4
-        round_trip:
-          type: boolean
-          description: Whether the distance has been travelled twice due to a round trip.
-          example: true
-    Transactions:
-      properties:
-        total:
-          type: integer
-          format: int32
-          description: It represents the total number of available items in the list.
-          example: 168
-        pages:
-          type: integer
-          format: int32
-          description: It represents the total number of available pages.
-          example: 7
-        page_size:
-          type: integer
-          format: int32
-          description: It represents the number of items per page.
-          example: 25
-        current_page:
-          type: integer
-          format: int32
-          description: It indicates the current page (the counter starts from zero).
-          example: 0
-        results_size:
-          type: integer
-          format: int32
-          description: It indicates the size of the array results.
-          example: 25
-        results:
-          type: array
-          items:
-            $ref: '#/components/schemas/TransactionItem'
-    InboundPaymentReversalEvent:
-      properties:
-        event_uuid:
-          type: string
-          description: The webhook unique ID.
-          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
-        event_type:
-          $ref: '#/components/schemas/WebhookEventType'
-          default: Transaction
-          description: The webhook event type.
-          example: Transaction
-        event_name:
-          $ref: '#/components/schemas/WebhookEventName'
-          default: inbound_payment_reversal
-          description: The webhook event name.
-          example: inbound_payment_reversal
-        company_account_id:
-          type: string
-          description: The company account ID.
-          example: XMPL1234
-        data:
-          $ref: '#/components/schemas/Transaction'
-          description: The webhook `Transaction` data.
-        subscription_id:
-          type: string
-          description: The webhook subscription ID used to route this event.
-          example: 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
-    RecurringBillingEvent:
-      properties:
-        event_uuid:
-          type: string
-          description: The webhook unique ID.
-          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
-        event_type:
-          $ref: '#/components/schemas/WebhookEventType'
-          default: Transaction
-          description: The webhook event type.
-          example: Transaction
-        event_name:
-          $ref: '#/components/schemas/WebhookEventName'
-          default: recurring_billing
-          description: The webhook event name.
-          example: recurring_billing
-        company_account_id:
-          type: string
-          description: The company account ID.
-          example: XMPL1234
-        data:
-          $ref: '#/components/schemas/Transaction'
-          description: The webhook `Transaction` data.
-        subscription_id:
-          type: string
-          description: The webhook subscription ID used to route this event.
-          example: 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
-    CustomerCareWithdrawEvent:
-      properties:
-        event_uuid:
-          type: string
-          description: The webhook unique ID.
-          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
-        event_type:
-          $ref: '#/components/schemas/WebhookEventType'
-          default: Transaction
-          description: The webhook event type.
-          example: Transaction
-        event_name:
-          $ref: '#/components/schemas/WebhookEventName'
-          default: customer_care_withdraw
-          description: The webhook event name.
-          example: customer_care_withdraw
-        company_account_id:
-          type: string
-          description: The company account ID.
-          example: XMPL1234
-        data:
-          $ref: '#/components/schemas/Transaction'
-          description: The webhook `Transaction` data.
-        subscription_id:
-          type: string
-          description: The webhook subscription ID used to route this event.
-          example: 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
-    InboundPaymentEvent:
-      properties:
-        event_uuid:
-          type: string
-          description: The webhook unique ID.
-          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
-        event_type:
-          $ref: '#/components/schemas/WebhookEventType'
-          default: Transaction
-          description: The webhook event type.
-          example: Transaction
-        event_name:
-          $ref: '#/components/schemas/WebhookEventName'
-          default: inbound_payment
-          description: The webhook event name.
-          example: inbound_payment
-        company_account_id:
-          type: string
-          description: The company account ID.
-          example: XMPL1234
-        data:
-          $ref: '#/components/schemas/Transaction'
-          description: The webhook `Transaction` data.
-        subscription_id:
-          type: string
-          description: The webhook subscription ID used to route this event.
-          example: 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
-    OutOfPlatformTransaction:
-      properties:
-        transaction_id:
-          type: string
-          description: The ID of the Out-Of-Platform `Transaction`.
-          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
-        date:
-          type: string
-          description: The date and time of the `Transaction`.
-          example: '2017-06-01T12:48:40Z'
-        owner_id:
-          type: string
-          description: 'The ID of the `User` who made the `Transaction` (updatable: no).'
-          example: XMPL1234-000002
-        merchant_name:
-          type: string
-          description: The name of the `Merchant` for the `Transaction`.
-          example: SHH HOTEL LONDON
-        tx_amount:
-          type: number
-          description: The amount of the `Transaction`, in the currency of the `Merchant`.
-          example: 10.25
-        tx_amount_currency:
-          $ref: '#/components/schemas/ISO4217Currency'
-          description: The currency [ISO 4217](https://www.six-group.com/en/products-services/financial-information/data-standards.html#scrollTo=maintenance-agency) code of the `tx_amount`.
-          example: EUR
-        amount:
-          type: number
-          description: The amount of the `Transaction`, in the currency of the main `Wallet`.
-          example: 10.25
-        amount_currency:
-          $ref: '#/components/schemas/ISO4217Currency'
-          description: The currency [ISO 4217](https://www.six-group.com/en/products-services/financial-information/data-standards.html#scrollTo=maintenance-agency) code of the `amount`.
-          example: EUR
-        exchange_rate:
-          type: number
-          description: The exchange rate used to convert the `tx_amount` from the currency of the `Merchant` to the currency of the main `Wallet`.
-          example: 1
-        payment_method:
-          $ref: '#/components/schemas/OutOfPlatformTransactionPaymentMethod'
-          description: The payment method of the `Transaction`.
-          example: OUT_OF_PLATFORM_PERSONAL
-    TransactionStatus:
-      type: string
-      enum:
-      - Authorised
-      - Settled
-      - Cancelled
-      - Declined
-      - DisputeFailed
-      - DisputeOpened
-      - DisputeWon
-      - Moved
-      - Unknown
-    WebhookEventType:
-      type: string
-      enum:
-      - BusinessTrip
-      - Card
-      - Contact
-      - ExpenseReview
-      - Group
-      - OnlineAds
-      - Order
-      - Purchase
-      - Subscription
-      - Transaction
-      - TransactionAttachment
-      - Employee
-      - Vehicle
-      - Wallet
-    UserRole:
-      properties:
-        id:
-          type: string
-          description: The ID of the `UserRole`.
-          example: superAdmin
-        name:
-          type: string
-          description: The name of the `UserRole`.
-          example: superAdmin
-        description:
-          type: string
-          description: The description of the `UserRole`.
-          example: The SuperAdmin role
-        scope:
-          type: string
-          description: The scope of the `UserRole`.
-          example: ALL
     TransactionBusinessTripLinkedEvent:
       properties:
         event_uuid:
@@ -3395,7 +2493,10 @@ components:
           description: The list of `SplitTransactionInfo`.
           items:
             $ref: '#/components/schemas/TransactionItemSplitInfo'
-    TransactionBusinessTripUnlinkedEvent:
+    DateParam:
+      description: 'The end of the period of the search `toDate` included (i.e. less than) (Formats: `yyyy-MM-dd`, `yyyy-MM-ddThh:mm:ss`, `yyyy-MM-ddThh:mm:ssZ`).'
+      example: '1970-01-30'
+    UnloadMoneyEvent:
       properties:
         event_uuid:
           type: string
@@ -3408,9 +2509,9 @@ components:
           example: Transaction
         event_name:
           $ref: '#/components/schemas/WebhookEventName'
-          default: transaction_business_trip_unlinked
+          default: unload_money
           description: The webhook event name.
-          example: transaction_business_trip_unlinked
+          example: unload_money
         company_account_id:
           type: string
           description: The company account ID.
@@ -3422,7 +2523,179 @@ components:
           type: string
           description: The webhook subscription ID used to route this event.
           example: 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
-    ConversionEvent:
+    CustomExport:
+      properties:
+        product:
+          type: string
+          description: A product that exported list of `Transaction`
+          example: SAP
+        export_date:
+          type: string
+          description: A date of exported `Transactions`
+          example: '2017-06-01T12:48:40Z'
+    ExpenseStatus:
+      type: string
+      enum:
+      - APPROVED
+      - PARTIALLY_APPROVED
+      - DENIED
+      - TO_REVIEW
+    OutOfPlatformTransactionPaymentMethod:
+      type: string
+      enum:
+      - OUT_OF_PLATFORM_COMPANY
+      - OUT_OF_PLATFORM_PERSONAL
+    Address:
+      properties:
+        id:
+          type: string
+          description: The `Address` ID.
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+        recipient:
+          type: string
+          description: The recipient of the `Address`
+          example: JohnSmith
+        name:
+          type: string
+          description: The actual name of the `Address`.
+          example: Foo Street 75
+        line1:
+          type: string
+          description: The `Address` street.
+          example: Bar Street 64
+        line2:
+          type: string
+          description: An optional other street.
+          example: Other street 31
+        country:
+          type: string
+          description: The country of the `Address`.
+          example: GB
+        county:
+          type: string
+          description: The county of the `Address`.
+          example: LD
+        city:
+          type: string
+          description: The city of the `Address`.
+          example: London
+        post_code:
+          type: string
+          description: The postal code of the `Address`.
+          example: '00000'
+        delivery_phone_number:
+          type: string
+          description: Delivery phone number
+          example: '+441234567890'
+        default_shipping:
+          type: boolean
+          description: True if the `Address` is the default shipping address.
+          example: false
+        type:
+          type: string
+          description: The type of the `Address`.
+          example: SHIPPING
+        category:
+          $ref: '#/components/schemas/AddressCategory'
+          description: The category of the `Address`.
+          example: COMPANY
+        user_id:
+          type: string
+          description: The `User` ID, only if category of the `Address` is `USER`.
+        creation_time:
+          type: string
+          description: The date and time when the `Address` was created.
+          example: '2017-06-01T12:48:40Z'
+        last_update:
+          type: string
+          description: The date and time when the `Address` was last updated.
+          example: '2017-06-01T12:48:40Z'
+    MileageReimbursementDetails:
+      properties:
+        vehicle_id:
+          type: string
+          description: The ID of the `Vehicle` used, if registered.
+          example: 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
+        reimbursement_rate:
+          type: number
+          description: The rate to apply to the covered distance (measured in km) for the reimbursement, assuming the main `Wallet` currency.
+          example: 0.45
+        description:
+          type: string
+          description: The description for the trip.
+          example: 'Business trip: Rome - Florence - Turin - Milan'
+        starting_point:
+          type: string
+          description: The place where the travel started.
+          example: Rome, Metropolitan City of Rome Capital, Italy
+        arrival_point:
+          type: string
+          description: The point where the travel ended.
+          example: Milan, Metropolitan City of Milan, Italy
+        multi_stops:
+          type: array
+          description: The intermediate stops during the travel.
+          example:
+          - Florence, Metropolitan City of Florence, Italy
+          - Turin, Metropolitan City of Turin, Italy
+          items:
+            type: string
+        distance:
+          type: number
+          description: The travelled distance from the starting point to the arrival point (measured in km).
+          example: 875.4
+        round_trip:
+          type: boolean
+          description: Whether the distance has been travelled twice due to a round trip.
+          example: true
+    WebhookEventType:
+      type: string
+      enum:
+      - BusinessTrip
+      - Card
+      - Contact
+      - ExpenseReview
+      - Group
+      - OnlineAds
+      - Order
+      - Purchase
+      - Subscription
+      - Transaction
+      - TransactionAttachment
+      - Employee
+      - Vehicle
+      - Wallet
+    Invoice:
+      properties:
+        number:
+          type: string
+          description: A unique identifier assigned to an invoice by the supplier.
+          example: INV-2023-001
+          maxLength: 50
+          pattern: ^(?![=+\-@])[^,;'"]{0,50}$
+        date:
+          type: string
+          description: 'The date the invoice was issued by the supplier. Accepted format: yyyy-MM-dd.'
+          example: '2023-01-23'
+        po_number:
+          type: string
+          description: A reference number provided by the customer's purchasing system (Purchase Order Number)
+          example: PO-2023-001
+          maxLength: 50
+          pattern: ^(?![=+\-@])[^,;'"]{0,50}$
+        supplier_vat_number:
+          type: string
+          description: The Value-Added Tax (VAT) registration number of the supplier.
+          example: 123456789
+          maxLength: 15
+          pattern: ^[a-zA-Z0-9]{0,15}$
+    TransactionItemDetails:
+      properties:
+        tx_country:
+          $ref: '#/components/schemas/ISO3166Country'
+          description: The [ISO 3166-1 alpha-3](https://www.iso.org/obp/ui/#search/code/) code of the country where the `Transaction` has been authorised.
+          example: GBR
+    InternalTransferEvent:
       properties:
         event_uuid:
           type: string
@@ -3435,9 +2708,9 @@ components:
           example: Transaction
         event_name:
           $ref: '#/components/schemas/WebhookEventName'
-          default: conversion
+          default: internal_transfer
           description: The webhook event name.
-          example: conversion
+          example: internal_transfer
         company_account_id:
           type: string
           description: The company account ID.
@@ -3449,6 +2722,246 @@ components:
           type: string
           description: The webhook subscription ID used to route this event.
           example: 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
+    TransactionSpendingPolicyMetadata:
+      properties:
+        approved_amount:
+          $ref: '#/components/schemas/TransactionAmount'
+          description: The `Transaction` amount approved in policy.
+        rejected_amount:
+          $ref: '#/components/schemas/TransactionAmount'
+          description: The `Transaction` amount rejected in policy.
+    TransactionMerchantCategory:
+      properties:
+        description:
+          type: string
+          description: The merchant category description as defined in the Soldo platform.
+          example: Travel
+        mcc:
+          type: string
+          description: The official Mastercard Merchant Category Code (MCC).
+          example: 7011
+        mcc_description:
+          type: string
+          description: The official Mastercard Merchant category description.
+          example: Lodging - Hotels, Motels, Resorts - not elsewhere classified
+        code:
+          type: string
+          deprecated: true
+          description: 'The merchant category code as defined in the Soldo platform. *Deprecated*: use `description` instead.'
+          example: Lodging - Hotels, Motels, Resorts - not elsewhere classified
+        sub_category:
+          type: string
+          description: The merchant sub-category as defined in the Soldo platform.
+          example: Hotels
+    BillingEvent:
+      properties:
+        event_uuid:
+          type: string
+          description: The webhook unique ID.
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+        event_type:
+          $ref: '#/components/schemas/WebhookEventType'
+          default: Transaction
+          description: The webhook event type.
+          example: Transaction
+        event_name:
+          $ref: '#/components/schemas/WebhookEventName'
+          default: billing
+          description: The webhook event name.
+          example: billing
+        company_account_id:
+          type: string
+          description: The company account ID.
+          example: XMPL1234
+        data:
+          $ref: '#/components/schemas/Transaction'
+          description: The webhook `Transaction` data.
+        subscription_id:
+          type: string
+          description: The webhook subscription ID used to route this event.
+          example: 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
+    SearchTransactionDateType:
+      type: string
+      default: TRANSACTION
+      description: It determines the date to be considered for `fromDate` and `toDate` parameters.
+      enum:
+      - TRANSACTION
+      - SETTLEMENT
+      - UPDATE
+      - REVIEW_TIME
+      - CUSTOM_EXPORT_TIME
+      example: TRANSACTION
+    UpdateMileageReimbursementTransaction:
+      description: Update `MileageReimbursement` `Transaction` JSON parameters.
+      properties:
+        request_timestamp:
+          type: integer
+          format: int64
+          description: The epoch timestamp in millis. This is checked in Soldo. Requests with timestamp older than 5 seconds will be rejected.
+          example: 1576850500000
+        date:
+          type: string
+          description: The date and time of the `Transaction`.
+          example: '2017-06-01T12:48:40Z'
+        mileage:
+          $ref: '#/components/schemas/MileageReimbursementDetailsUpdateRequest'
+          description: The details of the `MileageReimbursement`.
+      required:
+      - date
+      - mileage
+      - request_timestamp
+    ExportStatus:
+      type: string
+      description: The export status of the expense.
+      enum:
+      - EXPORTED
+      - NOT_EXPORTED
+      example: EXPORTED
+    ExpenseType:
+      type: string
+      enum:
+      - COMPANY
+      - PERSONAL
+      - TRAVEL_AND_ENTERTAINMENT
+    TransactionTag:
+      properties:
+        id:
+          type: string
+          description: The `Tag` ID.
+          example: 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
+        dictionary_id:
+          type: string
+          description: The `List` ID.
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+        dictionary:
+          type: string
+          description: The name of the `List` where the `Tag` is listed.
+          example: ExampleTagDictionary
+        tag:
+          type: string
+          description: The name of the `Tag`.
+          example: tx-label
+        code:
+          type: string
+          description: The code of the `Tag`.
+          example: CODE tag
+        visible:
+          type: boolean
+          description: It determines whether the `Tag` is visible in the `Transaction` detail.
+          example: true
+        description:
+          type: string
+          description: The description of the `Tag`.
+          example: Label to mark transactions
+    OutOfPlatformTransaction:
+      properties:
+        transaction_id:
+          type: string
+          description: The ID of the Out-Of-Platform `Transaction`.
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+        date:
+          type: string
+          description: The date and time of the `Transaction`.
+          example: '2017-06-01T12:48:40Z'
+        owner_id:
+          type: string
+          description: 'The ID of the `User` who made the `Transaction` (updatable: no).'
+          example: XMPL1234-000002
+        merchant_name:
+          type: string
+          description: The name of the `Merchant` for the `Transaction`.
+          example: SHH HOTEL LONDON
+        tx_amount:
+          type: number
+          description: The amount of the `Transaction`, in the currency of the `Merchant`.
+          example: 10.25
+        tx_amount_currency:
+          $ref: '#/components/schemas/ISO4217Currency'
+          description: The currency [ISO 4217](https://www.six-group.com/en/products-services/financial-information/data-standards.html#scrollTo=maintenance-agency) code of the `tx_amount`.
+          example: EUR
+        amount:
+          type: number
+          description: The amount of the `Transaction`, in the currency of the main `Wallet`.
+          example: 10.25
+        amount_currency:
+          $ref: '#/components/schemas/ISO4217Currency'
+          description: The currency [ISO 4217](https://www.six-group.com/en/products-services/financial-information/data-standards.html#scrollTo=maintenance-agency) code of the `amount`.
+          example: EUR
+        exchange_rate:
+          type: number
+          description: The exchange rate used to convert the `tx_amount` from the currency of the `Merchant` to the currency of the main `Wallet`.
+          example: 1
+        payment_method:
+          $ref: '#/components/schemas/OutOfPlatformTransactionPaymentMethod'
+          description: The payment method of the `Transaction`.
+          example: OUT_OF_PLATFORM_PERSONAL
+    TransactionCarbonEmissionInfo:
+      properties:
+        value:
+          type: number
+          description: The amount of greenhouses gas emissions generated.
+        unit:
+          type: string
+          description: The unit of measure related to the `value` of greenhouses gas emissions generated.
+    MerchantCategory:
+      type: string
+      enum:
+      - Advertising
+      - Entertainment
+      - Utilities
+      - Food_Cocktail_Bar
+      - Food_Restaurant
+      - Food_Store
+      - Food_Wine
+      - Services_Business
+      - Services_Cleaning
+      - Services_Contracted
+      - Services_Delivery
+      - Services_Educational
+      - Services_Financial
+      - Services_Gambling
+      - Services_Government
+      - Services_Health
+      - Services_Insurance
+      - Services_Legal
+      - Services_Museum
+      - Services_Organisation
+      - Services_Personal
+      - Services_Repair
+      - Services_Social
+      - Services_Stationery
+      - Services_Telecommunication
+      - Services_Veterinary
+      - Services_Warehouse
+      - Services_Wholesale
+      - Shopping_Accessories
+      - Shopping_Airline
+      - Shopping_Art
+      - Shopping_Automotive
+      - Shopping_Beauty
+      - Shopping_Books
+      - Shopping_Clothes
+      - Shopping_Digital_Goods
+      - Shopping_Direct_Marketing
+      - Shopping_Furnitures
+      - Shopping_Sport
+      - Shopping_Store
+      - Shopping_Technology
+      - Transport_Airports
+      - Transport_Charging_Station
+      - Transport_Parking
+      - Transport_Public_Transportation
+      - Transport_Road
+      - Transport_Service_Station
+      - Transport_Ships
+      - Transport_Taxi
+      - Transport_Toll_Roads
+      - Transport_Trains
+      - Travel_Airlines
+      - Travel_Agency
+      - Travel_Car_Rental
+      - Travel_Hotels
+      - Travel_Time_Shares
     Transaction:
       properties:
         id:
@@ -3706,226 +3219,6 @@ components:
           description: The timeline of changes affecting the `Transaction` and the related `Wallet`. For each occurrence, the `Wallet` balance is reported before and after the change.
           items:
             $ref: '#/components/schemas/TransactionTimelineItem'
-    Address:
-      properties:
-        id:
-          type: string
-          description: The `Address` ID.
-          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
-        recipient:
-          type: string
-          description: The recipient of the `Address`
-          example: JohnSmith
-        name:
-          type: string
-          description: The actual name of the `Address`.
-          example: Foo Street 75
-        line1:
-          type: string
-          description: The `Address` street.
-          example: Bar Street 64
-        line2:
-          type: string
-          description: An optional other street.
-          example: Other street 31
-        country:
-          type: string
-          description: The country of the `Address`.
-          example: GB
-        county:
-          type: string
-          description: The county of the `Address`.
-          example: LD
-        city:
-          type: string
-          description: The city of the `Address`.
-          example: London
-        post_code:
-          type: string
-          description: The postal code of the `Address`.
-          example: '00000'
-        delivery_phone_number:
-          type: string
-          description: Delivery phone number
-          example: '+441234567890'
-        default_shipping:
-          type: boolean
-          description: True if the `Address` is the default shipping address.
-          example: false
-        type:
-          type: string
-          description: The type of the `Address`.
-          example: SHIPPING
-        category:
-          $ref: '#/components/schemas/AddressCategory'
-          description: The category of the `Address`.
-          example: COMPANY
-        user_id:
-          type: string
-          description: The `User` ID, only if category of the `Address` is `USER`.
-        creation_time:
-          type: string
-          description: The date and time when the `Address` was created.
-          example: '2017-06-01T12:48:40Z'
-        last_update:
-          type: string
-          description: The date and time when the `Address` was last updated.
-          example: '2017-06-01T12:48:40Z'
-    User:
-      properties:
-        id:
-          type: string
-          description: The `User` ID.
-          example: XMPL1234-000001
-        name:
-          type: string
-          description: 'The name of the `User` (sortable: yes).'
-          example: John
-        surname:
-          type: string
-          description: 'The surname of the `User` (sortable: yes).'
-          example: Smith
-        middlename:
-          type: string
-          description: 'The middlename of the `User` (sortable: no).'
-          example: John
-        dob:
-          type: string
-          description: The Date of birth of the `User`.
-          example: '1970-10-21'
-        job_title:
-          type: string
-          description: 'The job title of the `User` (sortable: yes).'
-          example: Business Strategist
-        department:
-          type: string
-          description: 'The department of the `User` (sortable: no).'
-          example: Research & Development
-        email:
-          type: string
-          description: 'The email address of the `User` (sortable: no).'
-          example: jdoe@fake.soldo.com
-        mobile:
-          type: string
-          description: 'The mobile number of the `User` including the country code (sortable: no).'
-          example: '+44123323232'
-        mobile_prefix:
-          type: string
-          description: 'The mobile number country code (sortable: no).'
-          example: '+44'
-        custom_reference_id:
-          type: string
-          description: 'The reference of the employee in an external system (sortable: yes).'
-          example: 123456-user-1
-        status:
-          $ref: '#/components/schemas/UserStatus'
-          description: 'The status of the `User` (sortable: yes).'
-          example: ACTIVE
-        visible:
-          type: boolean
-          description: 'It determines whether the `User` is visible in the web console (sortable: yes).'
-          example: true
-        mobile_access:
-          type: boolean
-          description: 'It determines whether the `User` has mobile access (sortable: no).'
-          example: true
-        web_access:
-          type: boolean
-          description: 'It determines whether the `User` has web access (sortable: no).'
-          example: true
-        groups:
-          type: array
-          description: 'The list of `Groups` ID the `User` is member of (sortable: no).'
-          example:
-          - 7bf79328-a7ae-4222-aa54-091ff7f429a7
-          - 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
-          items:
-            type: string
-        shipping_address:
-          $ref: '#/components/schemas/Address'
-          description: The default shipping `Address` of the `User`.
-          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
-        reports_to:
-          type: string
-          description: The ID of the `User` it reports to.
-          example: XMPL1234-000001
-        roles:
-          type: array
-          description: The list of `UserRole` of the `User`.
-          items:
-            $ref: '#/components/schemas/UserRole'
-        contact_id:
-          type: string
-          description: The ID of the `Contact` assigned to the `User`. This information can be updated from the [Add Contact](ref:contact-add) and [Update Contact](ref:contact-update) endpoints.
-          example: 135fdb6c-2e77-4fc0-a79f-2453fde75ef7
-        creation_time:
-          type: string
-          description: 'The date and time when the `User` was created (sortable: yes).'
-          example: '2017-06-01T12:48:40Z'
-        last_update:
-          type: string
-          description: 'The date and time when the `User` was last updated (sortable: yes).'
-          example: '2017-06-01T12:48:40Z'
-        work_status:
-          $ref: '#/components/schemas/WorkStatus'
-          description: The work status of the `User`.
-          example: OUT_OF_OFFICE
-    TransactionSign:
-      type: string
-      enum:
-      - Negative
-      - Positive
-      - None
-    CustomExport:
-      properties:
-        product:
-          type: string
-          description: A product that exported list of `Transaction`
-          example: SAP
-        export_date:
-          type: string
-          description: A date of exported `Transactions`
-          example: '2017-06-01T12:48:40Z'
-    CardAuthorizationEvent:
-      properties:
-        event_uuid:
-          type: string
-          description: The webhook unique ID.
-          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
-        event_type:
-          $ref: '#/components/schemas/WebhookEventType'
-          default: Transaction
-          description: The webhook event type.
-          example: Transaction
-        event_name:
-          $ref: '#/components/schemas/WebhookEventName'
-          default: card_authorization
-          description: The webhook event name.
-          example: card_authorization
-        company_account_id:
-          type: string
-          description: The company account ID.
-          example: XMPL1234
-        data:
-          $ref: '#/components/schemas/Transaction'
-          description: The webhook `Transaction` data.
-        subscription_id:
-          type: string
-          description: The webhook subscription ID used to route this event.
-          example: 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
-    SearchTransactionPaymentMethod:
-      type: string
-      description: It determines the filter by payment method of the transaction, multiple payment methods can be included. `OUT_OF_PLATFORM_COMPANY` and `OUT_OF_PLATFORM_PERSONAL` are not included by default.
-      enum:
-      - USER
-      - COMPANY
-      - PURCHASE
-      - SUBSCRIPTION
-      - ONLINE_ADS
-      - OUT_OF_PLATFORM_COMPANY
-      - OUT_OF_PLATFORM_PERSONAL
-      - WIRETRANSFER
-      - IATS
     CreateOutOfPlatformTransaction:
       description: Create Out-Of-Platform `Transaction` JSON parameters.
       properties:
@@ -3970,39 +3263,118 @@ components:
       - request_timestamp
       - tx_amount
       - tx_amount_currency
-    TransactionMerchant:
+    Transactions:
       properties:
-        id:
+        total:
+          type: integer
+          format: int32
+          description: It represents the total number of available items in the list.
+          example: 168
+        pages:
+          type: integer
+          format: int32
+          description: It represents the total number of available pages.
+          example: 7
+        page_size:
+          type: integer
+          format: int32
+          description: It represents the number of items per page.
+          example: 25
+        current_page:
+          type: integer
+          format: int32
+          description: It indicates the current page (the counter starts from zero).
+          example: 0
+        results_size:
+          type: integer
+          format: int32
+          description: It indicates the size of the array results.
+          example: 25
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/TransactionItem'
+    SearchTransactionCategory:
+      type: string
+      description: It determines the filter by category of the transaction, multiple categories can be included.
+      enum:
+      - Billing
+      - Chargeback
+      - Conversion
+      - Fee
+      - FeeReversal
+      - InboundFasterPayment
+      - InboundFasterPaymentReversal
+      - Load
+      - LoadReversal
+      - MileageReimbursement
+      - NotRecognized
+      - Payment
+      - Rebalance
+      - RecurringBilling
+      - Refund
+      - SoldoActivity
+      - SoldoCreditOperation
+      - SoldoDebitOperation
+      - Transfer
+      - Wiretransfer
+      - Withdrawal
+      - InterAccountTransferWithdrawalRecurringBilling
+      - InterAccountTransferWithdrawal
+      - InterAccountTransferDeposit
+      - InterAccountTransferDepositRecurringBilling
+    WiretransferEvent:
+      properties:
+        event_uuid:
           type: string
-          description: The ID of the `Merchant`.
-          example: 2100846839
+          description: The webhook unique ID.
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+        event_type:
+          $ref: '#/components/schemas/WebhookEventType'
+          default: Transaction
+          description: The webhook event type.
+          example: Transaction
+        event_name:
+          $ref: '#/components/schemas/WebhookEventName'
+          default: wiretransfer
+          description: The webhook event name.
+          example: wiretransfer
+        company_account_id:
+          type: string
+          description: The company account ID.
+          example: XMPL1234
+        data:
+          $ref: '#/components/schemas/Transaction'
+          description: The webhook `Transaction` data.
+        subscription_id:
+          type: string
+          description: The webhook subscription ID used to route this event.
+          example: 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
+    Source:
+      properties:
         name:
           type: string
-          description: The name of the `Merchant` (normalised).
-          example: SHH HOTEL LONDON
-        raw_name:
+          description: The source name.
+          example: J. Doe
+        type:
+          $ref: '#/components/schemas/LoadSource'
+          description: The source type.
+          example: BANK_TRANSFER
+        destination_wallet_id:
           type: string
-          description: The raw name of the `Merchant`.
-          example: SHERLOCK HOLMES HOTEL  LONDON        GBR
-        code:
+          description: ' The receiving wallet in the transaction, to which funds are being transferred.'
+          example: de29bffb-7da2-40f1-934a-241170762d3e
+        destination_wallet_name:
           type: string
-          description: The Mastercard `Merchant` code.
-        address:
-          type: string
-          description: The `Merchant` address.
-    SearchTransactionResourceType:
+          description: ' The receiving wallet name in the transaction, to which funds are being transferred.'
+          example: EURO VIBAN
+    TransactionSign:
       type: string
-      description: The resource `type` to be used together with id.
       enum:
-      - company
-      - employee
-      - wallet
-      - card
-      - subscription
-      - onlineAd
-      - purchase
-      example: card
-    InternalTransferEvent:
+      - Negative
+      - Positive
+      - None
+    TransactionDeletedEvent:
       properties:
         event_uuid:
           type: string
@@ -4015,52 +3387,20 @@ components:
           example: Transaction
         event_name:
           $ref: '#/components/schemas/WebhookEventName'
-          default: internal_transfer
+          default: transaction_deleted
           description: The webhook event name.
-          example: internal_transfer
+          example: transaction_deleted
         company_account_id:
           type: string
           description: The company account ID.
           example: XMPL1234
         data:
           $ref: '#/components/schemas/Transaction'
-          description: The webhook `Transaction` data.
+          description: The webhook `Transaction` data. Only the `id` of the resource is returned.
         subscription_id:
           type: string
           description: The webhook subscription ID used to route this event.
           example: 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
-    BillingEvent:
-      properties:
-        event_uuid:
-          type: string
-          description: The webhook unique ID.
-          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
-        event_type:
-          $ref: '#/components/schemas/WebhookEventType'
-          default: Transaction
-          description: The webhook event type.
-          example: Transaction
-        event_name:
-          $ref: '#/components/schemas/WebhookEventName'
-          default: billing
-          description: The webhook event name.
-          example: billing
-        company_account_id:
-          type: string
-          description: The company account ID.
-          example: XMPL1234
-        data:
-          $ref: '#/components/schemas/Transaction'
-          description: The webhook `Transaction` data.
-        subscription_id:
-          type: string
-          description: The webhook subscription ID used to route this event.
-          example: 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
-    SearchTransactionRequiredInformation:
-      type: string
-      enum:
-      - COMPLETE
-      - NOT_COMPLETE
     CreateMileageReimbursementTransaction:
       description: Create `MileageReimbursement` `Transaction` JSON parameters.
       properties:
@@ -4085,6 +3425,70 @@ components:
       - mileage
       - owner_id
       - request_timestamp
+    ScheduledTransferEvent:
+      properties:
+        event_uuid:
+          type: string
+          description: The webhook unique ID.
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+        event_type:
+          $ref: '#/components/schemas/WebhookEventType'
+          default: Transaction
+          description: The webhook event type.
+          example: Transaction
+        event_name:
+          $ref: '#/components/schemas/WebhookEventName'
+          default: scheduled_transfer
+          description: The webhook event name.
+          example: scheduled_transfer
+        company_account_id:
+          type: string
+          description: The company account ID.
+          example: XMPL1234
+        data:
+          $ref: '#/components/schemas/Transaction'
+          description: The webhook `Transaction` data.
+        subscription_id:
+          type: string
+          description: The webhook subscription ID used to route this event.
+          example: 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
+    TransactionItemSplitInfo:
+      properties:
+        line_number:
+          type: integer
+          format: int32
+          description: The `Transaction`'s line number.
+          example: 1
+        amount:
+          $ref: '#/components/schemas/TransactionAmount'
+          description: The `TransactionList`'s line amount.
+        vat_amount:
+          $ref: '#/components/schemas/TransactionAmount'
+          description: The `TransactionList`'s line VAT amount.
+        expense_type:
+          $ref: '#/components/schemas/ExpenseType'
+          description: The type of the expense.
+          example: TRAVEL_AND_ENTERTAINMENT
+        employee:
+          $ref: '#/components/schemas/EntityIdDTO'
+          description: The `User` which the transaction line is assigned to.
+        expense_category:
+          $ref: '#/components/schemas/EntityIdDTO'
+          description: The `ExpenseCategory`.
+        tax_rate:
+          $ref: '#/components/schemas/EntityIdDTO'
+          description: The `VATRate`.
+        tags:
+          type: array
+          description: The `Tags`.
+          items:
+            $ref: '#/components/schemas/TransactionTag'
+        approved_amount:
+          $ref: '#/components/schemas/TransactionAmount'
+          description: The `TransactionList`'s line amount approved in policy.
+        rejected_amount:
+          $ref: '#/components/schemas/TransactionAmount'
+          description: The `TransactionList`'s line amount rejected in policy.
     VatRate:
       properties:
         id:
@@ -4124,76 +3528,49 @@ components:
           type: string
           description: 'The date and time when the `VATRate` was last updated (sortable: yes).'
           example: '2017-06-01T12:48:40Z'
-    TransactionAmount:
+    MileageReimbursementDetailsCreateRequest:
       properties:
-        amount:
+        vehicle_id:
+          type: string
+          description: The ID of the `Vehicle` used, if registered.
+          example: 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
+        reimbursement_rate:
           type: number
-          description: The amount of the `Transaction` line.
-          example: 10.25
-        currency:
-          $ref: '#/components/schemas/ISO4217Currency'
-          description: The currency [ISO 4217](https://www.six-group.com/en/products-services/financial-information/data-standards.html#scrollTo=maintenance-agency) code of the amount.
-          example: EUR
-    MerchantCategory:
-      type: string
-      enum:
-      - Advertising
-      - Entertainment
-      - Utilities
-      - Food_Cocktail_Bar
-      - Food_Restaurant
-      - Food_Store
-      - Food_Wine
-      - Services_Business
-      - Services_Cleaning
-      - Services_Contracted
-      - Services_Delivery
-      - Services_Educational
-      - Services_Financial
-      - Services_Gambling
-      - Services_Government
-      - Services_Health
-      - Services_Insurance
-      - Services_Legal
-      - Services_Museum
-      - Services_Organisation
-      - Services_Personal
-      - Services_Repair
-      - Services_Social
-      - Services_Stationery
-      - Services_Telecommunication
-      - Services_Veterinary
-      - Services_Warehouse
-      - Services_Wholesale
-      - Shopping_Accessories
-      - Shopping_Airline
-      - Shopping_Art
-      - Shopping_Automotive
-      - Shopping_Beauty
-      - Shopping_Books
-      - Shopping_Clothes
-      - Shopping_Digital_Goods
-      - Shopping_Direct_Marketing
-      - Shopping_Furnitures
-      - Shopping_Sport
-      - Shopping_Store
-      - Shopping_Technology
-      - Transport_Airports
-      - Transport_Charging_Station
-      - Transport_Parking
-      - Transport_Public_Transportation
-      - Transport_Road
-      - Transport_Service_Station
-      - Transport_Ships
-      - Transport_Taxi
-      - Transport_Toll_Roads
-      - Transport_Trains
-      - Travel_Airlines
-      - Travel_Agency
-      - Travel_Car_Rental
-      - Travel_Hotels
-      - Travel_Time_Shares
-    JouleFeedEvent:
+          description: The rate to apply to the covered distance (measured in km) for the reimbursement, assuming the main `Wallet` currency. Required if `vehicle_id` is missing or if no reimbursement rate is set for the related `Vehicle`. Overridden if `vehicle_id` is set and a reimbursement rate is set for the related `Vehicle`.
+          example: 0.45
+        description:
+          type: string
+          description: The description for the trip.
+          example: 'Business trip: Rome - Florence - Turin - Milan'
+        starting_point:
+          type: string
+          description: The place where the travel started.
+          example: Rome, Metropolitan City of Rome Capital, Italy
+        arrival_point:
+          type: string
+          description: The point where the travel ended.
+          example: Milan, Metropolitan City of Milan, Italy
+        multi_stops:
+          type: array
+          description: The intermediate stops during the travel.
+          example:
+          - Florence, Metropolitan City of Florence, Italy
+          - Turin, Metropolitan City of Turin, Italy
+          items:
+            type: string
+        distance:
+          type: number
+          description: The travelled distance from the starting point to the arrival point (measured in km).
+          example: 875.4
+        round_trip:
+          type: boolean
+          description: Whether the distance has been travelled twice due to a round trip.
+          example: true
+      required:
+      - description
+      - distance
+      - round_trip
+    LoadMoneyEvent:
       properties:
         event_uuid:
           type: string
@@ -4206,9 +3583,9 @@ components:
           example: Transaction
         event_name:
           $ref: '#/components/schemas/WebhookEventName'
-          default: joule_feed
+          default: load_money
           description: The webhook event name.
-          example: joule_feed
+          example: load_money
         company_account_id:
           type: string
           description: The company account ID.
@@ -4220,6 +3597,494 @@ components:
           type: string
           description: The webhook subscription ID used to route this event.
           example: 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
+    UserStatus:
+      type: string
+      enum:
+      - ACTIVE
+      - INACTIVE
+      - BLOCKED
+      - SUSPENDED
+      - PENDING
+      - ARCHIVED
+    ISO3166Country:
+      type: string
+      enum:
+      - ASC
+      - AND
+      - ARE
+      - AFG
+      - ATG
+      - AIA
+      - ALB
+      - ARM
+      - ANT
+      - AGO
+      - ATA
+      - ARG
+      - ASM
+      - AUT
+      - AUS
+      - ABW
+      - ALA
+      - AZE
+      - BIH
+      - BRB
+      - BGD
+      - BEL
+      - BFA
+      - BGR
+      - BHR
+      - BDI
+      - BEN
+      - BLM
+      - BMU
+      - BRN
+      - BOL
+      - BES
+      - BRA
+      - BHS
+      - BTN
+      - BUR
+      - BVT
+      - BWA
+      - BLR
+      - BLZ
+      - CAN
+      - CCK
+      - COD
+      - CAF
+      - COG
+      - CHE
+      - CIV
+      - COK
+      - CHL
+      - CMR
+      - CHN
+      - COL
+      - CPT
+      - CRI
+      - CSXX
+      - CUB
+      - CPV
+      - CUW
+      - CXR
+      - CYP
+      - CZE
+      - DEU
+      - DGA
+      - DJI
+      - DNK
+      - DMA
+      - DOM
+      - DZA
+      - ECU
+      - EST
+      - EGY
+      - ESH
+      - ERI
+      - ESP
+      - ETH
+      - FIN
+      - FJI
+      - FLK
+      - FSM
+      - FRO
+      - FRA
+      - FXX
+      - GAB
+      - GBR
+      - GRD
+      - GEO
+      - GUF
+      - GGY
+      - GHA
+      - GIB
+      - GRL
+      - GMB
+      - GIN
+      - GLP
+      - GNQ
+      - GRC
+      - SGS
+      - GTM
+      - GUM
+      - GNB
+      - GUY
+      - HKG
+      - HMD
+      - HND
+      - HRV
+      - HTI
+      - HUN
+      - IDN
+      - IRL
+      - ISR
+      - IMN
+      - IND
+      - IOT
+      - IRQ
+      - IRN
+      - ISL
+      - ITA
+      - JEY
+      - JAM
+      - JOR
+      - JPN
+      - KEN
+      - KGZ
+      - KHM
+      - KIR
+      - COM
+      - KNA
+      - PRK
+      - KOR
+      - KWT
+      - CYM
+      - KAZ
+      - LAO
+      - LBN
+      - LCA
+      - LIE
+      - LKA
+      - LBR
+      - LSO
+      - LTU
+      - LUX
+      - LVA
+      - LBY
+      - MAR
+      - MCO
+      - MDA
+      - MNE
+      - MAF
+      - MDG
+      - MHL
+      - MKD
+      - MLI
+      - MMR
+      - MNG
+      - MAC
+      - MNP
+      - MTQ
+      - MRT
+      - MSR
+      - MLT
+      - MUS
+      - MDV
+      - MWI
+      - MEX
+      - MYS
+      - MOZ
+      - NAM
+      - NCL
+      - NER
+      - NFK
+      - NGA
+      - NIC
+      - NLD
+      - NOR
+      - NPL
+      - NRU
+      - NTZ
+      - NIU
+      - NZL
+      - OMN
+      - PAN
+      - PER
+      - PYF
+      - PNG
+      - PHL
+      - PAK
+      - POL
+      - SPM
+      - PCN
+      - PRI
+      - PSE
+      - PRT
+      - PLW
+      - PRY
+      - QAT
+      - REU
+      - ROU
+      - ROM
+      - SRB
+      - RUS
+      - RWA
+      - SAU
+      - SLB
+      - SYC
+      - SDN
+      - SWE
+      - SGP
+      - SHN
+      - SVN
+      - SJM
+      - SVK
+      - SLE
+      - SMR
+      - SEN
+      - SOM
+      - SUR
+      - SSD
+      - STP
+      - SUN
+      - SLV
+      - SXM
+      - SYR
+      - SWZ
+      - TAA
+      - TCA
+      - TCD
+      - ATF
+      - TGO
+      - THA
+      - TJK
+      - TKL
+      - TLS
+      - TKM
+      - TUN
+      - TON
+      - TUR
+      - TTO
+      - TUV
+      - TWN
+      - TZA
+      - UKR
+      - UGA
+      - UMI
+      - USA
+      - URY
+      - UZB
+      - VAT
+      - VCT
+      - VEN
+      - VGB
+      - VIR
+      - VNM
+      - VUT
+      - WLF
+      - WSM
+      - XKX
+      - XXK
+      - QZZ
+      - YEM
+      - MYT
+      - YUCS
+      - ZAF
+      - ZMB
+      - ZRCD
+      - ZWE
+    SearchTransactionPaymentMethod:
+      type: string
+      description: It determines the filter by payment method of the transaction, multiple payment methods can be included. `OUT_OF_PLATFORM_COMPANY` and `OUT_OF_PLATFORM_PERSONAL` are not included by default.
+      enum:
+      - USER
+      - COMPANY
+      - PURCHASE
+      - SUBSCRIPTION
+      - ONLINE_ADS
+      - OUT_OF_PLATFORM_COMPANY
+      - OUT_OF_PLATFORM_PERSONAL
+      - WIRETRANSFER
+      - IATS
+    MileageReimbursementTransaction:
+      properties:
+        transaction_id:
+          type: string
+          description: The ID of the `Transaction` describing the `MileageReimbursement`.
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+        date:
+          type: string
+          description: The date and time of the `Transaction`.
+          example: '2017-06-01T12:48:40Z'
+        owner_id:
+          type: string
+          description: 'The ID of the `User` who made the `Transaction` (updatable: no).'
+          example: XMPL1234-000002
+        amount:
+          type: number
+          description: The amount of the `Transaction`, in the currency of the main `Wallet`.
+          example: 10.25
+        amount_currency:
+          $ref: '#/components/schemas/ISO4217Currency'
+          description: The currency [ISO 4217](https://www.six-group.com/en/products-services/financial-information/data-standards.html#scrollTo=maintenance-agency) code of the `amount`.
+          example: EUR
+        mileage:
+          $ref: '#/components/schemas/MileageReimbursementDetails'
+          description: The details of the `MileageReimbursement`.
+    TransactionAdjustmentEvent:
+      properties:
+        event_uuid:
+          type: string
+          description: The webhook unique ID.
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+        event_type:
+          $ref: '#/components/schemas/WebhookEventType'
+          default: Transaction
+          description: The webhook event type.
+          example: Transaction
+        event_name:
+          $ref: '#/components/schemas/WebhookEventName'
+          default: transaction_adjustment
+          description: The webhook event name.
+          example: transaction_adjustment
+        company_account_id:
+          type: string
+          description: The company account ID.
+          example: XMPL1234
+        data:
+          $ref: '#/components/schemas/Transaction'
+          description: The webhook `Transaction` data.
+        subscription_id:
+          type: string
+          description: The webhook subscription ID used to route this event.
+          example: 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
+    CustomerCareDepositEvent:
+      properties:
+        event_uuid:
+          type: string
+          description: The webhook unique ID.
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+        event_type:
+          $ref: '#/components/schemas/WebhookEventType'
+          default: Transaction
+          description: The webhook event type.
+          example: Transaction
+        event_name:
+          $ref: '#/components/schemas/WebhookEventName'
+          default: customer_care_deposit
+          description: The webhook event name.
+          example: customer_care_deposit
+        company_account_id:
+          type: string
+          description: The company account ID.
+          example: XMPL1234
+        data:
+          $ref: '#/components/schemas/Transaction'
+          description: The webhook `Transaction` data.
+        subscription_id:
+          type: string
+          description: The webhook subscription ID used to route this event.
+          example: 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
+    TransactionTimelineBalance:
+      properties:
+        available_amount:
+          type: number
+          description: The `Wallet` available amount in the currency of the `Wallet`.
+          example: 10.25
+        pending_amount:
+          type: number
+          description: The `Wallet` pending amount in the currency of the `Wallet`. This is also known as `blocked` amount.
+          example: 10.25
+        ledger_amount:
+          type: number
+          description: The `Wallet` ledger amount in the currency of the `Wallet`. This is a shorthand for the sum of available and pending amounts.
+          example: 10.25
+    ConversionEvent:
+      properties:
+        event_uuid:
+          type: string
+          description: The webhook unique ID.
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+        event_type:
+          $ref: '#/components/schemas/WebhookEventType'
+          default: Transaction
+          description: The webhook event type.
+          example: Transaction
+        event_name:
+          $ref: '#/components/schemas/WebhookEventName'
+          default: conversion
+          description: The webhook event name.
+          example: conversion
+        company_account_id:
+          type: string
+          description: The company account ID.
+          example: XMPL1234
+        data:
+          $ref: '#/components/schemas/Transaction'
+          description: The webhook `Transaction` data.
+        subscription_id:
+          type: string
+          description: The webhook subscription ID used to route this event.
+          example: 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
+    CustomerCareWithdrawEvent:
+      properties:
+        event_uuid:
+          type: string
+          description: The webhook unique ID.
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+        event_type:
+          $ref: '#/components/schemas/WebhookEventType'
+          default: Transaction
+          description: The webhook event type.
+          example: Transaction
+        event_name:
+          $ref: '#/components/schemas/WebhookEventName'
+          default: customer_care_withdraw
+          description: The webhook event name.
+          example: customer_care_withdraw
+        company_account_id:
+          type: string
+          description: The company account ID.
+          example: XMPL1234
+        data:
+          $ref: '#/components/schemas/Transaction'
+          description: The webhook `Transaction` data.
+        subscription_id:
+          type: string
+          description: The webhook subscription ID used to route this event.
+          example: 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
+    TransactionStatus:
+      type: string
+      enum:
+      - Authorised
+      - Settled
+      - Cancelled
+      - Declined
+      - DisputeFailed
+      - DisputeOpened
+      - DisputeWon
+      - Moved
+      - Unknown
+    UpdateOutOfPlatformTransaction:
+      description: Update Out-Of-Platform `Transaction` JSON parameters.
+      properties:
+        request_timestamp:
+          type: integer
+          format: int64
+          description: The epoch timestamp in millis. This is checked in Soldo. Requests with timestamp older than 5 seconds will be rejected.
+          example: 1576850500000
+        date:
+          type: string
+          description: The date and time of the `Transaction`.
+          example: '2017-06-01T12:48:40Z'
+        merchant_name:
+          type: string
+          description: The name of the `Merchant` for the `Transaction`.
+          example: SHH HOTEL LONDON
+        tx_amount:
+          type: number
+          description: The amount of the `Transaction`, in the currency of the `Merchant`.
+          example: 10.25
+        tx_amount_currency:
+          $ref: '#/components/schemas/ISO4217Currency'
+          description: The currency [ISO 4217](https://www.six-group.com/en/products-services/financial-information/data-standards.html#scrollTo=maintenance-agency) code of the `tx_amount`.
+          example: EUR
+        exchange_rate:
+          type: number
+          description: The exchange rate used to convert the `tx_amount` from the currency of the `Merchant` to the currency of the main `Wallet`. If needed and not provided, a default rate is derived from `date`.
+          example: 1
+        payment_method:
+          $ref: '#/components/schemas/OutOfPlatformTransactionPaymentMethod'
+          description: The payment method of the `Transaction`.
+          example: OUT_OF_PLATFORM_PERSONAL
+      required:
+      - date
+      - merchant_name
+      - payment_method
+      - request_timestamp
+      - tx_amount
+      - tx_amount_currency
     ISO4217Currency:
       type: string
       enum:
@@ -4407,6 +4272,308 @@ components:
       - ZAR
       - ZMW
       - ZWL
+    MileageReimbursementDetailsUpdateRequest:
+      properties:
+        vehicle_id:
+          type: string
+          description: The ID of the `Vehicle` used, if registered.
+          example: 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
+        reimbursement_rate:
+          type: number
+          description: The rate to apply to the covered distance (measured in km) for the reimbursement, assuming the main `Wallet` currency. Required if `vehicle_id` is missing or if no reimbursement rate is set for the related `Vehicle`. Overridden if `vehicle_id` is set and a reimbursement rate is set for the related `Vehicle`.
+          example: 0.45
+        description:
+          type: string
+          description: The description for the trip.
+          example: 'Business trip: Rome - Florence - Turin - Milan'
+        starting_point:
+          type: string
+          description: The place where the travel started.
+          example: Rome, Metropolitan City of Rome Capital, Italy
+        arrival_point:
+          type: string
+          description: The point where the travel ended.
+          example: Milan, Metropolitan City of Milan, Italy
+        multi_stops:
+          type: array
+          description: The intermediate stops during the travel.
+          example:
+          - Florence, Metropolitan City of Florence, Italy
+          - Turin, Metropolitan City of Turin, Italy
+          items:
+            type: string
+        distance:
+          type: number
+          description: The travelled distance from the starting point to the arrival point (measured in km).
+          example: 875.4
+        round_trip:
+          type: boolean
+          description: Whether the distance has been travelled twice due to a round trip.
+          example: true
+      required:
+      - description
+      - distance
+      - round_trip
+    FuelType:
+      type: string
+      enum:
+      - PETROL
+      - DIESEL
+      - METHANE
+      - LPG
+      - LNG
+      - ELECTRIC
+      - UNKNOWN
+    WebhookEventName:
+      type: string
+      enum:
+      - business_trip_created
+      - business_trip_updated
+      - business_trip_deleted
+      - card_activated
+      - card_change_status
+      - card_creation
+      - card_destroyed
+      - card_lost
+      - card_replaced
+      - card_stolen
+      - card_label_updated
+      - card_assignee_updated
+      - add_resources_card
+      - add_resources_member
+      - add_resources_wallet
+      - create_group
+      - delete_group
+      - move_resources_card
+      - move_resources_member
+      - move_resources_wallet
+      - remove_resources_card
+      - remove_resources_member
+      - remove_resources_wallet
+      - update_group
+      - store_order_completed
+      - store_order_placed
+      - balanced_transfer
+      - billing
+      - card_authorization
+      - conversion
+      - customer_care_deposit
+      - customer_care_withdraw
+      - edit_tag
+      - inbound_payment
+      - inbound_payment_reversal
+      - internal_transfer
+      - joule_feed
+      - load_failed
+      - load_money
+      - recurring_billing
+      - scheduled_transfer
+      - transaction_adjustment
+      - unload_money
+      - wiretransfer
+      - upload_completed
+      - attachment_delete
+      - new_user
+      - user_status_changed
+      - user_updated
+      - wallet_created
+      - wallet_deleted
+      - vehicle_create
+      - vehicle_update
+      - vehicle_delete
+      - purchase_create
+      - purchase_update
+      - purchase_delete
+      - purchase_redeem_card
+      - created_expense_configuration
+      - disabled_expense_configuration
+      - enabled_expense_configuration
+      - updated_expense_configuration
+      - completed_transactions_import
+      - updated_transaction
+      - change_expense_type
+      - subscription_activated
+      - subscription_created
+      - subscription_updated
+      - subscription_deleted
+      - subscription_assignee_added
+      - subscription_assignee_removed
+      - online_ads_activated
+      - online_ads_created
+      - online_ads_updated
+      - online_ads_deleted
+      - online_ads_assignee_added
+      - online_ads_assignee_removed
+      - transaction_created
+      - transaction_modified
+      - transaction_deleted
+      - transaction_business_trip_linked
+      - transaction_business_trip_unlinked
+      - contact_created
+      - contact_updated
+      - contact_deleted
+    SearchTransactionRequiredInformation:
+      type: string
+      enum:
+      - COMPLETE
+      - NOT_COMPLETE
+    WorkStatus:
+      type: string
+      enum:
+      - AVAILABLE
+      - OUT_OF_OFFICE
+    TransactionOwnerType:
+      type: string
+      enum:
+      - employee
+      - company
+    LoadSource:
+      type: string
+      enum:
+      - UNSPECIFIED
+      - BANK_TRANSFER
+      - CARD
+      - SISAL_PAY
+      - FASTER_PAYMENT
+    SearchTransactionResourceType:
+      type: string
+      description: The resource `type` to be used together with id.
+      enum:
+      - company
+      - employee
+      - wallet
+      - card
+      - subscription
+      - onlineAd
+      - purchase
+      example: card
+    TransactionDetails:
+      properties:
+        de022:
+          type: string
+          description: Mastercard `DE022` field.
+        de061:
+          type: string
+          description: Mastercard `DE061` field.
+        tx_country:
+          $ref: '#/components/schemas/ISO3166Country'
+          description: The [ISO 3166-1 alpha-3](https://www.iso.org/obp/ui/#search/code/) code of the country where the `Transaction` has been authorised.
+          example: GBR
+        denied_info_type:
+          type: string
+          description: The type of the denied reason of the transaction (only if the `Transaction` is `Declined`).
+        denied_info_description:
+          type: string
+          description: The description of the denied reason (only if the `Transaction` is `Declined`).
+        is_card_present:
+          type: boolean
+          description: It determines whether the card was there at the moment of the `Transaction`.
+          example: false
+        is_atm_transaction:
+          type: boolean
+          description: It determines whether the transaction is an ATM withdrawal.
+          example: false
+    TransactionFuelDetails:
+      description: The transaction fuel details `Refueling` resource
+      properties:
+        plate:
+          type: string
+          description: '`Vehicle`''s plate number.'
+          example: AA000BB
+        vehicle_fuel_type:
+          $ref: '#/components/schemas/FuelType'
+          description: Fuel type specified in the `Vehicle`'s configuration page.
+          example: PETROL
+        vat_deductibility_percentage:
+          type: string
+          description: The deductible VAT percentage configured for the `Vehicle`.
+          example: 40%
+        mileage:
+          type: integer
+          format: int32
+          description: The `Vehicle` mileage.
+          example: 125000
+        quantity:
+          type: number
+          description: The fuel quantity as specified in the invoice.
+          example: 80
+        unit_price:
+          type: number
+          description: The fuel unit price as specified on the transaction.
+          example: 1.41
+        tx_fuel_type:
+          $ref: '#/components/schemas/FuelType'
+          description: The fuel type as specified on the transaction.
+          example: PETROL
+        to_be_ignored:
+          type: boolean
+          description: If the transaction link status is set to ignored.
+          example: false
+        invoice_id:
+          type: integer
+          format: int64
+          description: Invoice ID.
+          example: 4421109
+        invoice_number:
+          type: string
+          description: Invoice number.
+          example: NVC112200987
+        invoice_date:
+          type: string
+          description: Invoice date.
+          example: '2017-06-01T12:48:40Z'
+        invoice_total_amount:
+          type: number
+          description: Total amount of the linked invoice.
+          example: 10.25
+        invoice_row:
+          type: integer
+          format: int32
+          description: Row of the linked invoice.
+          example: 4
+        invoice_row_amount:
+          type: number
+          description: Amount of the transaction's row in the linked invoice.
+          example: 10.25
+        supplier_vat_id:
+          type: string
+          description: Supplier VAT ID.
+          example: 98746784967
+        dri:
+          type: string
+          description: The DRI (Documento Riepilogativo) code.
+          example: DRI00099881
+        vehicle_id:
+          type: string
+          description: The `Vehicle` ID.
+          example: 6853e657-c797-4985-8d6b-5425d4e51df8
+    EditTagEvent:
+      properties:
+        event_uuid:
+          type: string
+          description: The webhook unique ID.
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+        event_type:
+          $ref: '#/components/schemas/WebhookEventType'
+          default: Transaction
+          description: The webhook event type.
+          example: Transaction
+        event_name:
+          $ref: '#/components/schemas/WebhookEventName'
+          default: edit_tag
+          description: The webhook event name.
+          example: edit_tag
+        company_account_id:
+          type: string
+          description: The company account ID.
+          example: XMPL1234
+        data:
+          $ref: '#/components/schemas/Transaction'
+          description: The webhook `Transaction` data.
+        subscription_id:
+          type: string
+          description: The webhook subscription ID used to route this event.
+          example: 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
     TransactionSplitInfoTag:
       properties:
         id:
@@ -4437,154 +4604,24 @@ components:
           type: string
           description: The description of the `Tag`.
           example: Label to mark transactions
-    TransactionTag:
+    UserRole:
       properties:
         id:
           type: string
-          description: The `Tag` ID.
-          example: 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
-        dictionary_id:
+          description: The ID of the `UserRole`.
+          example: superAdmin
+        name:
           type: string
-          description: The `List` ID.
-          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
-        dictionary:
-          type: string
-          description: The name of the `List` where the `Tag` is listed.
-          example: ExampleTagDictionary
-        tag:
-          type: string
-          description: The name of the `Tag`.
-          example: tx-label
-        code:
-          type: string
-          description: The code of the `Tag`.
-          example: CODE tag
-        visible:
-          type: boolean
-          description: It determines whether the `Tag` is visible in the `Transaction` detail.
-          example: true
+          description: The name of the `UserRole`.
+          example: superAdmin
         description:
           type: string
-          description: The description of the `Tag`.
-          example: Label to mark transactions
-    TransactionDeletedEvent:
-      properties:
-        event_uuid:
+          description: The description of the `UserRole`.
+          example: The SuperAdmin role
+        scope:
           type: string
-          description: The webhook unique ID.
-          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
-        event_type:
-          $ref: '#/components/schemas/WebhookEventType'
-          default: Transaction
-          description: The webhook event type.
-          example: Transaction
-        event_name:
-          $ref: '#/components/schemas/WebhookEventName'
-          default: transaction_deleted
-          description: The webhook event name.
-          example: transaction_deleted
-        company_account_id:
-          type: string
-          description: The company account ID.
-          example: XMPL1234
-        data:
-          $ref: '#/components/schemas/Transaction'
-          description: The webhook `Transaction` data. Only the `id` of the resource is returned.
-        subscription_id:
-          type: string
-          description: The webhook subscription ID used to route this event.
-          example: 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
-    TransactionAdjustmentEvent:
-      properties:
-        event_uuid:
-          type: string
-          description: The webhook unique ID.
-          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
-        event_type:
-          $ref: '#/components/schemas/WebhookEventType'
-          default: Transaction
-          description: The webhook event type.
-          example: Transaction
-        event_name:
-          $ref: '#/components/schemas/WebhookEventName'
-          default: transaction_adjustment
-          description: The webhook event name.
-          example: transaction_adjustment
-        company_account_id:
-          type: string
-          description: The company account ID.
-          example: XMPL1234
-        data:
-          $ref: '#/components/schemas/Transaction'
-          description: The webhook `Transaction` data.
-        subscription_id:
-          type: string
-          description: The webhook subscription ID used to route this event.
-          example: 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
-    TransactionSpendingPolicyMetadata:
-      properties:
-        approved_amount:
-          $ref: '#/components/schemas/TransactionAmount'
-          description: The `Transaction` amount approved in policy.
-        rejected_amount:
-          $ref: '#/components/schemas/TransactionAmount'
-          description: The `Transaction` amount rejected in policy.
-    WiretransferEvent:
-      properties:
-        event_uuid:
-          type: string
-          description: The webhook unique ID.
-          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
-        event_type:
-          $ref: '#/components/schemas/WebhookEventType'
-          default: Transaction
-          description: The webhook event type.
-          example: Transaction
-        event_name:
-          $ref: '#/components/schemas/WebhookEventName'
-          default: wiretransfer
-          description: The webhook event name.
-          example: wiretransfer
-        company_account_id:
-          type: string
-          description: The company account ID.
-          example: XMPL1234
-        data:
-          $ref: '#/components/schemas/Transaction'
-          description: The webhook `Transaction` data.
-        subscription_id:
-          type: string
-          description: The webhook subscription ID used to route this event.
-          example: 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
-    TransactionCategory:
-      type: string
-      enum:
-      - Billing
-      - Chargeback
-      - Conversion
-      - Fee
-      - FeeReversal
-      - InboundFasterPayment
-      - InboundFasterPaymentReversal
-      - Load
-      - LoadReversal
-      - MileageReimbursement
-      - NotRecognized
-      - P2P
-      - Payment
-      - Rebalance
-      - RecurringBilling
-      - Refund
-      - SoldoActivity
-      - SoldoCreditOperation
-      - SoldoDebitOperation
-      - Transfer
-      - Wiretransfer
-      - Withdrawal
-      - InterAccountTransferWithdrawalRecurringBilling
-      - InterAccountTransferWithdrawal
-      - InterAccountTransferDeposit
-      - InterAccountTransferDepositRecurringBilling
+          description: The scope of the `UserRole`.
+          example: ALL
     Direction:
       type: string
       description: It indicates how the pages are ordered.
@@ -4592,33 +4629,7 @@ components:
       - ASC
       - DESC
       example: DESC
-    TransactionDetails:
-      properties:
-        de022:
-          type: string
-          description: Mastercard `DE022` field.
-        de061:
-          type: string
-          description: Mastercard `DE061` field.
-        tx_country:
-          $ref: '#/components/schemas/ISO3166Country'
-          description: The [ISO 3166-1 alpha-3](https://www.iso.org/obp/ui/#search/code/) code of the country where the `Transaction` has been authorised.
-          example: GBR
-        denied_info_type:
-          type: string
-          description: The type of the denied reason of the transaction (only if the `Transaction` is `Declined`).
-        denied_info_description:
-          type: string
-          description: The description of the denied reason (only if the `Transaction` is `Declined`).
-        is_card_present:
-          type: boolean
-          description: It determines whether the card was there at the moment of the `Transaction`.
-          example: false
-        is_atm_transaction:
-          type: boolean
-          description: It determines whether the transaction is an ATM withdrawal.
-          example: false
-    ScheduledTransferEvent:
+    TransactionBusinessTripUnlinkedEvent:
       properties:
         event_uuid:
           type: string
@@ -4631,9 +4642,9 @@ components:
           example: Transaction
         event_name:
           $ref: '#/components/schemas/WebhookEventName'
-          default: scheduled_transfer
+          default: transaction_business_trip_unlinked
           description: The webhook event name.
-          example: scheduled_transfer
+          example: transaction_business_trip_unlinked
         company_account_id:
           type: string
           description: The company account ID.
@@ -4645,18 +4656,7 @@ components:
           type: string
           description: The webhook subscription ID used to route this event.
           example: 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
-    TransactionTimelineStatus:
-      type: string
-      enum:
-      - Unspecified
-      - Authorized
-      - Reversed
-      - Refunded
-      - Settled
-      - Withdraw
-      - Deposit
-      - Chargeback
-    BalancedTransferEvent:
+    JouleFeedEvent:
       properties:
         event_uuid:
           type: string
@@ -4669,9 +4669,9 @@ components:
           example: Transaction
         event_name:
           $ref: '#/components/schemas/WebhookEventName'
-          default: balanced_transfer
+          default: joule_feed
           description: The webhook event name.
-          example: balanced_transfer
+          example: joule_feed
         company_account_id:
           type: string
           description: The company account ID.

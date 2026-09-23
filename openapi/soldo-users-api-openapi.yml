@@ -613,180 +613,18 @@ webhooks:
         fingerprint-order: id, name, surname, status
 components:
   schemas:
-    UpdateUserAccessModes:
-      description: Update `User` access JSON parameters.
-      properties:
-        request_timestamp:
-          type: integer
-          format: int64
-          description: The epoch timestamp in millis. This is checked in Soldo. Requests with timestamp older than 5 seconds will be rejected.
-          example: 1576850500000
-        access_modes:
-          type: array
-          description: The access modes to apply to the given `User`.
-          items:
-            $ref: '#/components/schemas/UserAccessMode'
-        skip_credential_notification:
-          type: boolean
-          default: 'true'
-          description: Avoid to notify user upon credential status change driven by `access_modes` field.
-          example: true
-      required:
-      - access_modes
-      - request_timestamp
-    UserAccessMode:
-      properties:
-        channel:
-          $ref: '#/components/schemas/Channel'
-          description: The channel for which the access mode applies.
-          example: WEB
-        auth_mode:
-          $ref: '#/components/schemas/UserAuthMode'
-          description: The authentication mode required for the `User` while accessing from the given channel.
-          example: SSO
-      required:
-      - auth_mode
-      - channel
-    UpdateUserStatus:
-      description: Update `User` status JSON parameters.
-      properties:
-        status:
-          $ref: '#/components/schemas/UpdatableUserStatus'
-          description: The new `User` status.
-          example: ACTIVE
-        credentialResetMode:
-          $ref: '#/components/schemas/CredentialResetMode'
-          default: NONE
-          description: How to reset credentials of the `User` being activated.
-          example: WEB_AND_MOBILE
-      required:
-      - status
-    UserAccessModeList:
-      properties:
-        user_access_mode:
-          type: array
-          items:
-            $ref: '#/components/schemas/UserAccessMode'
-    UserStatusChangedEvent:
-      properties:
-        event_uuid:
-          type: string
-          description: The webhook unique ID.
-          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
-        event_type:
-          $ref: '#/components/schemas/WebhookEventType'
-          default: Employee
-          description: The webhook event type.
-          example: Employee
-        event_name:
-          $ref: '#/components/schemas/WebhookEventName'
-          default: user_status_changed
-          description: The webhook event name.
-          example: user_status_changed
-        company_account_id:
-          type: string
-          description: The company account ID.
-          example: XMPL1234
-        data:
-          $ref: '#/components/schemas/User'
-          description: The webhook `User` data.
-        subscription_id:
-          type: string
-          description: The webhook subscription ID used to route this event.
-          example: 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
-    UserAuthMode:
-      type: string
-      enum:
-      - SOLDO
-      - SSO
-    UpdateUser:
-      description: Update `User` JSON parameters.
-      properties:
-        job_title:
-          type: string
-          description: The job title of the `User`.
-          example: Business Strategist
-        mobile_number:
-          type: string
-          description: The mobile number of the `User` including the country code.
-          example: '+44123323232'
-        mobile_prefix:
-          type: string
-          description: The mobile number country code, it must be the same included in the `mobile_number` field
-          example: '+44'
-        email:
-          type: string
-          description: The email of the `User` it is required for web credentials.
-          example: jdoe@fake.soldo.com
-        enable_mobile_credential:
-          type: boolean
-          description: True if the `User` has the mobile access enabled.
-          example: true
-        enable_web_credential:
-          type: boolean
-          description: True if the `User` has the web access enabled.
-          example: false
-        custom_reference_id:
-          type: string
-          description: The `User` reference in an external system.
-          example: 123456-user-1
-        reports_to:
-          type: string
-          description: 'The ID of the `User` it reports to. In order to remove a previously set value, the field should be included in the payload as an empty string `"reports_to"`: `""`.'
-          example: XMPL1234-000001
-        skip_credential_notification:
-          type: boolean
-          description: Avoid to notify user upon credential status change driven by `enable_mobile_credential` or `enable_web_credential` flags.
-          example: true
-    WebhookEventType:
-      type: string
-      enum:
-      - BusinessTrip
-      - Card
-      - Contact
-      - ExpenseReview
-      - Group
-      - OnlineAds
-      - Order
-      - Purchase
-      - Subscription
-      - Transaction
-      - TransactionAttachment
-      - Employee
-      - Vehicle
-      - Wallet
-    UserRole:
-      properties:
-        id:
-          type: string
-          description: The ID of the `UserRole`.
-          example: superAdmin
-        name:
-          type: string
-          description: The name of the `UserRole`.
-          example: superAdmin
-        description:
-          type: string
-          description: The description of the `UserRole`.
-          example: The SuperAdmin role
-        scope:
-          type: string
-          description: The scope of the `UserRole`.
-          example: ALL
-    AddressCategory:
-      type: string
-      enum:
-      - USER
-      - COMPANY
-    UserStatus:
+    UpdatableUserStatus:
       type: string
       enum:
       - ACTIVE
       - INACTIVE
-      - BLOCKED
-      - SUSPENDED
-      - PENDING
-      - ARCHIVED
+    CredentialResetMode:
+      type: string
+      enum:
+      - NONE
+      - WEB
+      - MOBILE
+      - MOBILE_AND_WEB
     Address:
       properties:
         id:
@@ -852,6 +690,262 @@ components:
           type: string
           description: The date and time when the `Address` was last updated.
           example: '2017-06-01T12:48:40Z'
+    Users:
+      properties:
+        total:
+          type: integer
+          format: int32
+          description: It represents the total number of available items in the list.
+          example: 168
+        pages:
+          type: integer
+          format: int32
+          description: It represents the total number of available pages.
+          example: 7
+        page_size:
+          type: integer
+          format: int32
+          description: It represents the number of items per page.
+          example: 25
+        current_page:
+          type: integer
+          format: int32
+          description: It indicates the current page (the counter starts from zero).
+          example: 0
+        results_size:
+          type: integer
+          format: int32
+          description: It indicates the size of the array results.
+          example: 25
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/UserItem'
+    WebhookEventType:
+      type: string
+      enum:
+      - BusinessTrip
+      - Card
+      - Contact
+      - ExpenseReview
+      - Group
+      - OnlineAds
+      - Order
+      - Purchase
+      - Subscription
+      - Transaction
+      - TransactionAttachment
+      - Employee
+      - Vehicle
+      - Wallet
+    WebhookEventName:
+      type: string
+      enum:
+      - business_trip_created
+      - business_trip_updated
+      - business_trip_deleted
+      - card_activated
+      - card_change_status
+      - card_creation
+      - card_destroyed
+      - card_lost
+      - card_replaced
+      - card_stolen
+      - card_label_updated
+      - card_assignee_updated
+      - add_resources_card
+      - add_resources_member
+      - add_resources_wallet
+      - create_group
+      - delete_group
+      - move_resources_card
+      - move_resources_member
+      - move_resources_wallet
+      - remove_resources_card
+      - remove_resources_member
+      - remove_resources_wallet
+      - update_group
+      - store_order_completed
+      - store_order_placed
+      - balanced_transfer
+      - billing
+      - card_authorization
+      - conversion
+      - customer_care_deposit
+      - customer_care_withdraw
+      - edit_tag
+      - inbound_payment
+      - inbound_payment_reversal
+      - internal_transfer
+      - joule_feed
+      - load_failed
+      - load_money
+      - recurring_billing
+      - scheduled_transfer
+      - transaction_adjustment
+      - unload_money
+      - wiretransfer
+      - upload_completed
+      - attachment_delete
+      - new_user
+      - user_status_changed
+      - user_updated
+      - wallet_created
+      - wallet_deleted
+      - vehicle_create
+      - vehicle_update
+      - vehicle_delete
+      - purchase_create
+      - purchase_update
+      - purchase_delete
+      - purchase_redeem_card
+      - created_expense_configuration
+      - disabled_expense_configuration
+      - enabled_expense_configuration
+      - updated_expense_configuration
+      - completed_transactions_import
+      - updated_transaction
+      - change_expense_type
+      - subscription_activated
+      - subscription_created
+      - subscription_updated
+      - subscription_deleted
+      - subscription_assignee_added
+      - subscription_assignee_removed
+      - online_ads_activated
+      - online_ads_created
+      - online_ads_updated
+      - online_ads_deleted
+      - online_ads_assignee_added
+      - online_ads_assignee_removed
+      - transaction_created
+      - transaction_modified
+      - transaction_deleted
+      - transaction_business_trip_linked
+      - transaction_business_trip_unlinked
+      - contact_created
+      - contact_updated
+      - contact_deleted
+    UserItem:
+      properties:
+        id:
+          type: string
+          description: The `User` ID.
+          example: XMPL1234-000001
+        name:
+          type: string
+          description: 'The name of the `User` (sortable: yes).'
+          example: John
+        surname:
+          type: string
+          description: 'The surname of the `User` (sortable: yes).'
+          example: Smith
+        middlename:
+          type: string
+          description: 'The middlename of the `User` (sortable: no).'
+          example: John
+        dob:
+          type: string
+          description: The Date of birth of the `User`.
+          example: '1970-10-21'
+        job_title:
+          type: string
+          description: 'The job title of the `User` (sortable: yes).'
+          example: Business Strategist
+        department:
+          type: string
+          description: 'The department of the `User` (sortable: no).'
+          example: Research & Development
+        email:
+          type: string
+          description: 'The email address of the `User` (sortable: no).'
+          example: jdoe@fake.soldo.com
+        mobile:
+          type: string
+          description: 'The mobile number of the `User` including the country code (sortable: no).'
+          example: '+44123323232'
+        custom_reference_id:
+          type: string
+          description: 'The reference of the employee in an external system (sortable: yes).'
+          example: 123456-user-1
+        status:
+          $ref: '#/components/schemas/UserStatus'
+          description: 'The status of the `User` (sortable: yes).'
+          example: ACTIVE
+        visible:
+          type: boolean
+          description: 'It determines whether the `User` is visible in the web console (sortable: yes).'
+          example: true
+        groups:
+          type: array
+          description: 'The list of `Groups` ID the `User` is member of (sortable: no).'
+          example:
+          - 7bf79328-a7ae-4222-aa54-091ff7f429a7
+          - 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
+          items:
+            type: string
+        reports_to:
+          type: string
+          description: The ID of the `User` it reports to.
+          example: XMPL1234-000001
+        roles:
+          type: array
+          description: The list of `UserRole` of the `User`.
+          items:
+            $ref: '#/components/schemas/UserRole'
+        contact_id:
+          type: string
+          description: The ID of the `Contact` assigned to the `User`. This information can be updated from the [Add Contact](ref:contact-add) and [Update Contact](ref:contact-update) endpoints.
+          example: 135fdb6c-2e77-4fc0-a79f-2453fde75ef7
+        creation_time:
+          type: string
+          description: 'The date and time when the `User` was created (sortable: yes).'
+          example: '2017-06-01T12:48:40Z'
+        last_update:
+          type: string
+          description: 'The date and time when the `User` was last updated (sortable: yes).'
+          example: '2017-06-01T12:48:40Z'
+        work_status:
+          $ref: '#/components/schemas/WorkStatus'
+          description: The work status of the `User`.
+          example: OUT_OF_OFFICE
+    NewUserEvent:
+      properties:
+        event_uuid:
+          type: string
+          description: The webhook unique ID.
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+        event_type:
+          $ref: '#/components/schemas/WebhookEventType'
+          default: Employee
+          description: The webhook event type.
+          example: Employee
+        event_name:
+          $ref: '#/components/schemas/WebhookEventName'
+          default: new_user
+          description: The webhook event name.
+          example: new_user
+        company_account_id:
+          type: string
+          description: The company account ID.
+          example: XMPL1234
+        data:
+          $ref: '#/components/schemas/User'
+          description: The webhook `User` data.
+        subscription_id:
+          type: string
+          description: The webhook subscription ID used to route this event.
+          example: 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
+    UserAuthMode:
+      type: string
+      enum:
+      - SOLDO
+      - SSO
+    WorkStatus:
+      type: string
+      enum:
+      - AVAILABLE
+      - OUT_OF_OFFICE
     User:
       properties:
         id:
@@ -951,23 +1045,81 @@ components:
           $ref: '#/components/schemas/WorkStatus'
           description: The work status of the `User`.
           example: OUT_OF_OFFICE
-    UpdatableUserStatus:
-      type: string
-      enum:
-      - ACTIVE
-      - INACTIVE
-    WorkStatus:
-      type: string
-      enum:
-      - AVAILABLE
-      - OUT_OF_OFFICE
-    Direction:
-      type: string
-      description: It indicates how the pages are ordered.
-      enum:
-      - ASC
-      - DESC
-      example: DESC
+    UserUpdatedEvent:
+      properties:
+        event_uuid:
+          type: string
+          description: The webhook unique ID.
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+        event_type:
+          $ref: '#/components/schemas/WebhookEventType'
+          default: Employee
+          description: The webhook event type.
+          example: Employee
+        event_name:
+          $ref: '#/components/schemas/WebhookEventName'
+          default: user_updated
+          description: The webhook event name.
+          example: user_updated
+        company_account_id:
+          type: string
+          description: The company account ID.
+          example: XMPL1234
+        data:
+          $ref: '#/components/schemas/User'
+          description: The webhook `User` data.
+        subscription_id:
+          type: string
+          description: The webhook subscription ID used to route this event.
+          example: 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
+    UpdateUserAccessModes:
+      description: Update `User` access JSON parameters.
+      properties:
+        request_timestamp:
+          type: integer
+          format: int64
+          description: The epoch timestamp in millis. This is checked in Soldo. Requests with timestamp older than 5 seconds will be rejected.
+          example: 1576850500000
+        access_modes:
+          type: array
+          description: The access modes to apply to the given `User`.
+          items:
+            $ref: '#/components/schemas/UserAccessMode'
+        skip_credential_notification:
+          type: boolean
+          default: 'true'
+          description: Avoid to notify user upon credential status change driven by `access_modes` field.
+          example: true
+      required:
+      - access_modes
+      - request_timestamp
+    UserStatusChangedEvent:
+      properties:
+        event_uuid:
+          type: string
+          description: The webhook unique ID.
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+        event_type:
+          $ref: '#/components/schemas/WebhookEventType'
+          default: Employee
+          description: The webhook event type.
+          example: Employee
+        event_name:
+          $ref: '#/components/schemas/WebhookEventName'
+          default: user_status_changed
+          description: The webhook event name.
+          example: user_status_changed
+        company_account_id:
+          type: string
+          description: The company account ID.
+          example: XMPL1234
+        data:
+          $ref: '#/components/schemas/User'
+          description: The webhook `User` data.
+        subscription_id:
+          type: string
+          description: The webhook subscription ID used to route this event.
+          example: 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
     CreateUser:
       properties:
         request_timestamp:
@@ -1034,274 +1186,122 @@ components:
       - request_timestamp
       - surname
       - web_access
-    UserItem:
+    UpdateUserStatus:
+      description: Update `User` status JSON parameters.
       properties:
-        id:
-          type: string
-          description: The `User` ID.
-          example: XMPL1234-000001
-        name:
-          type: string
-          description: 'The name of the `User` (sortable: yes).'
-          example: John
-        surname:
-          type: string
-          description: 'The surname of the `User` (sortable: yes).'
-          example: Smith
-        middlename:
-          type: string
-          description: 'The middlename of the `User` (sortable: no).'
-          example: John
-        dob:
-          type: string
-          description: The Date of birth of the `User`.
-          example: '1970-10-21'
-        job_title:
-          type: string
-          description: 'The job title of the `User` (sortable: yes).'
-          example: Business Strategist
-        department:
-          type: string
-          description: 'The department of the `User` (sortable: no).'
-          example: Research & Development
-        email:
-          type: string
-          description: 'The email address of the `User` (sortable: no).'
-          example: jdoe@fake.soldo.com
-        mobile:
-          type: string
-          description: 'The mobile number of the `User` including the country code (sortable: no).'
-          example: '+44123323232'
-        custom_reference_id:
-          type: string
-          description: 'The reference of the employee in an external system (sortable: yes).'
-          example: 123456-user-1
         status:
-          $ref: '#/components/schemas/UserStatus'
-          description: 'The status of the `User` (sortable: yes).'
+          $ref: '#/components/schemas/UpdatableUserStatus'
+          description: The new `User` status.
           example: ACTIVE
-        visible:
-          type: boolean
-          description: 'It determines whether the `User` is visible in the web console (sortable: yes).'
-          example: true
-        groups:
-          type: array
-          description: 'The list of `Groups` ID the `User` is member of (sortable: no).'
-          example:
-          - 7bf79328-a7ae-4222-aa54-091ff7f429a7
-          - 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
-          items:
-            type: string
-        reports_to:
-          type: string
-          description: The ID of the `User` it reports to.
-          example: XMPL1234-000001
-        roles:
-          type: array
-          description: The list of `UserRole` of the `User`.
-          items:
-            $ref: '#/components/schemas/UserRole'
-        contact_id:
-          type: string
-          description: The ID of the `Contact` assigned to the `User`. This information can be updated from the [Add Contact](ref:contact-add) and [Update Contact](ref:contact-update) endpoints.
-          example: 135fdb6c-2e77-4fc0-a79f-2453fde75ef7
-        creation_time:
-          type: string
-          description: 'The date and time when the `User` was created (sortable: yes).'
-          example: '2017-06-01T12:48:40Z'
-        last_update:
-          type: string
-          description: 'The date and time when the `User` was last updated (sortable: yes).'
-          example: '2017-06-01T12:48:40Z'
-        work_status:
-          $ref: '#/components/schemas/WorkStatus'
-          description: The work status of the `User`.
-          example: OUT_OF_OFFICE
+        credentialResetMode:
+          $ref: '#/components/schemas/CredentialResetMode'
+          default: NONE
+          description: How to reset credentials of the `User` being activated.
+          example: WEB_AND_MOBILE
+      required:
+      - status
+    UserAccessMode:
+      properties:
+        channel:
+          $ref: '#/components/schemas/Channel'
+          description: The channel for which the access mode applies.
+          example: WEB
+        auth_mode:
+          $ref: '#/components/schemas/UserAuthMode'
+          description: The authentication mode required for the `User` while accessing from the given channel.
+          example: SSO
+      required:
+      - auth_mode
+      - channel
+    AddressCategory:
+      type: string
+      enum:
+      - USER
+      - COMPANY
     Channel:
       type: string
       enum:
       - WEB
       - MOBILE
-    WebhookEventName:
-      type: string
-      enum:
-      - business_trip_created
-      - business_trip_updated
-      - business_trip_deleted
-      - card_activated
-      - card_change_status
-      - card_creation
-      - card_destroyed
-      - card_lost
-      - card_replaced
-      - card_stolen
-      - card_label_updated
-      - card_assignee_updated
-      - add_resources_card
-      - add_resources_member
-      - add_resources_wallet
-      - create_group
-      - delete_group
-      - move_resources_card
-      - move_resources_member
-      - move_resources_wallet
-      - remove_resources_card
-      - remove_resources_member
-      - remove_resources_wallet
-      - update_group
-      - store_order_completed
-      - store_order_placed
-      - balanced_transfer
-      - billing
-      - card_authorization
-      - conversion
-      - customer_care_deposit
-      - customer_care_withdraw
-      - edit_tag
-      - inbound_payment
-      - inbound_payment_reversal
-      - internal_transfer
-      - joule_feed
-      - load_failed
-      - load_money
-      - recurring_billing
-      - scheduled_transfer
-      - transaction_adjustment
-      - unload_money
-      - wiretransfer
-      - upload_completed
-      - attachment_delete
-      - new_user
-      - user_status_changed
-      - user_updated
-      - wallet_created
-      - wallet_deleted
-      - vehicle_create
-      - vehicle_update
-      - vehicle_delete
-      - purchase_create
-      - purchase_update
-      - purchase_delete
-      - purchase_redeem_card
-      - created_expense_configuration
-      - disabled_expense_configuration
-      - enabled_expense_configuration
-      - updated_expense_configuration
-      - completed_transactions_import
-      - updated_transaction
-      - change_expense_type
-      - subscription_activated
-      - subscription_created
-      - subscription_updated
-      - subscription_deleted
-      - subscription_assignee_added
-      - subscription_assignee_removed
-      - online_ads_activated
-      - online_ads_created
-      - online_ads_updated
-      - online_ads_deleted
-      - online_ads_assignee_added
-      - online_ads_assignee_removed
-      - transaction_created
-      - transaction_modified
-      - transaction_deleted
-      - transaction_business_trip_linked
-      - transaction_business_trip_unlinked
-      - contact_created
-      - contact_updated
-      - contact_deleted
-    UserUpdatedEvent:
+    UserRole:
       properties:
-        event_uuid:
+        id:
           type: string
-          description: The webhook unique ID.
-          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
-        event_type:
-          $ref: '#/components/schemas/WebhookEventType'
-          default: Employee
-          description: The webhook event type.
-          example: Employee
-        event_name:
-          $ref: '#/components/schemas/WebhookEventName'
-          default: user_updated
-          description: The webhook event name.
-          example: user_updated
-        company_account_id:
+          description: The ID of the `UserRole`.
+          example: superAdmin
+        name:
           type: string
-          description: The company account ID.
-          example: XMPL1234
-        data:
-          $ref: '#/components/schemas/User'
-          description: The webhook `User` data.
-        subscription_id:
+          description: The name of the `UserRole`.
+          example: superAdmin
+        description:
           type: string
-          description: The webhook subscription ID used to route this event.
-          example: 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
-    CredentialResetMode:
-      type: string
-      enum:
-      - NONE
-      - WEB
-      - MOBILE
-      - MOBILE_AND_WEB
-    NewUserEvent:
+          description: The description of the `UserRole`.
+          example: The SuperAdmin role
+        scope:
+          type: string
+          description: The scope of the `UserRole`.
+          example: ALL
+    UserAccessModeList:
       properties:
-        event_uuid:
-          type: string
-          description: The webhook unique ID.
-          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
-        event_type:
-          $ref: '#/components/schemas/WebhookEventType'
-          default: Employee
-          description: The webhook event type.
-          example: Employee
-        event_name:
-          $ref: '#/components/schemas/WebhookEventName'
-          default: new_user
-          description: The webhook event name.
-          example: new_user
-        company_account_id:
-          type: string
-          description: The company account ID.
-          example: XMPL1234
-        data:
-          $ref: '#/components/schemas/User'
-          description: The webhook `User` data.
-        subscription_id:
-          type: string
-          description: The webhook subscription ID used to route this event.
-          example: 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
-    Users:
-      properties:
-        total:
-          type: integer
-          format: int32
-          description: It represents the total number of available items in the list.
-          example: 168
-        pages:
-          type: integer
-          format: int32
-          description: It represents the total number of available pages.
-          example: 7
-        page_size:
-          type: integer
-          format: int32
-          description: It represents the number of items per page.
-          example: 25
-        current_page:
-          type: integer
-          format: int32
-          description: It indicates the current page (the counter starts from zero).
-          example: 0
-        results_size:
-          type: integer
-          format: int32
-          description: It indicates the size of the array results.
-          example: 25
-        results:
+        user_access_mode:
           type: array
           items:
-            $ref: '#/components/schemas/UserItem'
+            $ref: '#/components/schemas/UserAccessMode'
+    UserStatus:
+      type: string
+      enum:
+      - ACTIVE
+      - INACTIVE
+      - BLOCKED
+      - SUSPENDED
+      - PENDING
+      - ARCHIVED
+    Direction:
+      type: string
+      description: It indicates how the pages are ordered.
+      enum:
+      - ASC
+      - DESC
+      example: DESC
+    UpdateUser:
+      description: Update `User` JSON parameters.
+      properties:
+        job_title:
+          type: string
+          description: The job title of the `User`.
+          example: Business Strategist
+        mobile_number:
+          type: string
+          description: The mobile number of the `User` including the country code.
+          example: '+44123323232'
+        mobile_prefix:
+          type: string
+          description: The mobile number country code, it must be the same included in the `mobile_number` field
+          example: '+44'
+        email:
+          type: string
+          description: The email of the `User` it is required for web credentials.
+          example: jdoe@fake.soldo.com
+        enable_mobile_credential:
+          type: boolean
+          description: True if the `User` has the mobile access enabled.
+          example: true
+        enable_web_credential:
+          type: boolean
+          description: True if the `User` has the web access enabled.
+          example: false
+        custom_reference_id:
+          type: string
+          description: The `User` reference in an external system.
+          example: 123456-user-1
+        reports_to:
+          type: string
+          description: 'The ID of the `User` it reports to. In order to remove a previously set value, the field should be included in the payload as an empty string `"reports_to"`: `""`.'
+          example: XMPL1234-000001
+        skip_credential_notification:
+          type: boolean
+          description: Avoid to notify user upon credential status change driven by `enable_mobile_credential` or `enable_web_credential` flags.
+          example: true
   securitySchemes:
     standardAuth:
       type: oauth2

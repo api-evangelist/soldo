@@ -303,40 +303,6 @@ components:
       - delegate_id
       - features
       - request_timestamp
-    CreateOutOfOfficeDelegation:
-      description: Create `out_of_office` JSON parameters.
-      properties:
-        request_timestamp:
-          type: integer
-          format: int64
-          description: The epoch timestamp in millis. This is checked in Soldo. Requests with timestamp older than 5 seconds will be rejected.
-          example: 1576850500000
-        delegator_id:
-          type: string
-          description: The ID of the person assigning the `out_of_office`.
-          example: XMPL1234-000001
-        delegate_id:
-          type: string
-          description: The ID of the person covering for the delegator.
-          example: XMPL1234-000002
-        from_date:
-          type: string
-          description: 'Defines when the out_of_office entry starts. fromDate included.(i.e. greater than or equal to) (Format: `yyyy-MM-dd`).'
-          example: '2020-04-06'
-        to_date:
-          type: string
-          description: 'Defines when the out_of_office entry ends. toDate included.(i.e. less than) (Format: `yyyy-MM-dd`).'
-          example: '2020-04-06'
-        features:
-          type: array
-          description: The features of `out_of_office`.
-          items:
-            $ref: '#/components/schemas/DelegationFeature'
-      required:
-      - delegate_id
-      - delegator_id
-      - features
-      - request_timestamp
     DelegationFeature:
       type: string
       enum:
@@ -377,6 +343,40 @@ components:
           $ref: '#/components/schemas/DelegationStatus'
           description: The work status of `out_of_office`.
           example: ACTIVE
+    CreateOutOfOfficeDelegation:
+      description: Create `out_of_office` JSON parameters.
+      properties:
+        request_timestamp:
+          type: integer
+          format: int64
+          description: The epoch timestamp in millis. This is checked in Soldo. Requests with timestamp older than 5 seconds will be rejected.
+          example: 1576850500000
+        delegator_id:
+          type: string
+          description: The ID of the person assigning the `out_of_office`.
+          example: XMPL1234-000001
+        delegate_id:
+          type: string
+          description: The ID of the person covering for the delegator.
+          example: XMPL1234-000002
+        from_date:
+          type: string
+          description: 'Defines when the out_of_office entry starts. fromDate included.(i.e. greater than or equal to) (Format: `yyyy-MM-dd`).'
+          example: '2020-04-06'
+        to_date:
+          type: string
+          description: 'Defines when the out_of_office entry ends. toDate included.(i.e. less than) (Format: `yyyy-MM-dd`).'
+          example: '2020-04-06'
+        features:
+          type: array
+          description: The features of `out_of_office`.
+          items:
+            $ref: '#/components/schemas/DelegationFeature'
+      required:
+      - delegate_id
+      - delegator_id
+      - features
+      - request_timestamp
     Direction:
       type: string
       description: It indicates how the pages are ordered.
@@ -384,13 +384,6 @@ components:
       - ASC
       - DESC
       example: DESC
-    DelegationStatus:
-      type: string
-      enum:
-      - ACTIVE
-      - EXPIRED
-      - SCHEDULED
-      - DELETED
     OutOfOfficeDelegations:
       properties:
         total:
@@ -422,6 +415,13 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/OutOfOfficeDelegation'
+    DelegationStatus:
+      type: string
+      enum:
+      - ACTIVE
+      - EXPIRED
+      - SCHEDULED
+      - DELETED
   securitySchemes:
     standardAuth:
       type: oauth2

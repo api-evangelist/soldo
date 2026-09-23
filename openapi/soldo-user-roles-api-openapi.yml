@@ -122,24 +122,6 @@ paths:
         - employee_write
 components:
   schemas:
-    UserRole:
-      properties:
-        id:
-          type: string
-          description: The ID of the `UserRole`.
-          example: superAdmin
-        name:
-          type: string
-          description: The name of the `UserRole`.
-          example: superAdmin
-        description:
-          type: string
-          description: The description of the `UserRole`.
-          example: The SuperAdmin role
-        scope:
-          type: string
-          description: The scope of the `UserRole`.
-          example: ALL
     AssignedUserRoles:
       properties:
         id:
@@ -165,6 +147,24 @@ components:
         scope:
           type: string
           description: The name of the scope.
+          example: ALL
+    UserRole:
+      properties:
+        id:
+          type: string
+          description: The ID of the `UserRole`.
+          example: superAdmin
+        name:
+          type: string
+          description: The name of the `UserRole`.
+          example: superAdmin
+        description:
+          type: string
+          description: The description of the `UserRole`.
+          example: The SuperAdmin role
+        scope:
+          type: string
+          description: The scope of the `UserRole`.
           example: ALL
   securitySchemes:
     standardAuth:

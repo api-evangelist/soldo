@@ -511,13 +511,67 @@ paths:
         - request_write
 components:
   schemas:
-    ReviewProcessReviewerType:
-      type: string
-      enum:
-      - LINE_MANAGER
-      - ROLE
-      - AUTOMATIC
-      - USER
+    CreateRequestPayload:
+      description: Base schema for create request. The actual fields depend on the `type`.
+      discriminator:
+        propertyName: type
+        mapping:
+          FUNDS: '#/components/schemas/CreateRequestFunds'
+          GOODS_OR_SERVICES: '#/components/schemas/CreateRequestGoodsOrServices'
+          TRIP: '#/components/schemas/CreateRequestTrip'
+      properties:
+        name:
+          type: string
+          description: The name of the `Request`.
+          example: Supplier name
+        requester:
+          type: string
+          description: The ID of the `User` that makes the `Request`.
+          example: XMPL1234-000001
+        amount:
+          type: number
+          description: The total amount of the `Request`.
+          example: 10.25
+        currency:
+          $ref: '#/components/schemas/ISO4217Currency'
+          description: The currency of the total amount of the `Request`.
+          example: EUR
+        note:
+          type: string
+          description: The requester's note of the `Request`.
+          example: Requester note
+        type:
+          $ref: '#/components/schemas/RequestType'
+          description: The type of the `Request`.
+          enum:
+          - FUNDS
+          - GOODS_AND_SERVICES
+          - TRIP
+          example: GOODS_OR_SERVICES
+        request_process_id:
+          type: string
+          description: The process id of the `Request`.
+          example: 135fdb6c-2e77-4fc0-a79f-2453fde75ef7
+        request_timestamp:
+          type: integer
+          format: int64
+          description: The epoch timestamp in millis. This is checked in Soldo. Requests with timestamp older than 5 seconds will be rejected.
+          example: 1576850500000
+        attachment_document_ids:
+          type: array
+          description: The requester's attachment of the `Request`.
+          example: 135fdb6c-2e77-4fc0-a79f-2453fde75ef7
+          items:
+            type: string
+          uniqueItems: true
+      required:
+      - amount
+      - currency
+      - name
+      - request_process_id
+      - request_timestamp
+      - requester
+      - type
     ISO4217Currency:
       type: string
       enum:
@@ -705,81 +759,29 @@ components:
       - ZAR
       - ZMW
       - ZWL
-    RequestItem:
-      properties:
-        id:
-          type: string
-          description: 'The `Request` ID (sortable: no).'
-          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
-        name:
-          type: string
-          description: 'The name of the `Request` (sortable: no).'
-          example: Supplier name
-        description:
-          type: string
-          description: 'The description of the `Request` (sortable: no).'
-          example: Example description
-        requester:
-          type: string
-          description: 'The ID of the `User` that makes the `Request` (sortable: no).'
-          example: XMPL1234-000001
-        status:
-          $ref: '#/components/schemas/RequestStatus'
-          description: 'The status of the `Request` (sortable: no).'
-          example: APPROVED
-        payment_method:
-          $ref: '#/components/schemas/PaymentMethod'
-          description: 'The method of payment of the `Request` (sortable: no).'
-          example: TEMPORARY_CARD
-        type:
-          $ref: '#/components/schemas/RequestType'
-          description: 'The type of the `Request` (sortable: no).'
-          example: GOODS_OR_SERVICES
-        amount:
-          type: number
-          description: 'The total amount of the `Request` (sortable: no).'
-          example: 10.25
-        currency:
-          $ref: '#/components/schemas/ISO4217Currency'
-          description: 'The currency of the total amount of the `Request` (sortable: no).'
-          example: EUR
-        creation_time:
-          type: string
-          description: 'The date and time when the `Request` was created (sortable: yes).'
-          example: '2017-06-01T12:48:40Z'
-        last_update_time:
-          type: string
-          description: 'The date and time when the `Request` was last updated (sortable: yes).'
-          example: '2017-06-01T12:48:40Z'
-    CreateRequestPayload:
-      description: Base schema for create request. The actual fields depend on the `type`.
+    ReviewProcessStepStatus:
+      type: string
+      enum:
+      - APPROVED
+      - PARTIALLY_APPROVED
+      - DECLINED
+    ApprovedRequestPayload:
+      description: Base schema for approved request. The actual fields depend on the `type`.
       discriminator:
         propertyName: type
         mapping:
-          FUNDS: '#/components/schemas/CreateRequestFunds'
-          GOODS_OR_SERVICES: '#/components/schemas/CreateRequestGoodsOrServices'
-          TRIP: '#/components/schemas/CreateRequestTrip'
+          FUNDS: '#/components/schemas/ApprovedRequestFunds'
+          GOODS_OR_SERVICES: '#/components/schemas/ApprovedRequestGoodsOrServices'
+          TRIP: '#/components/schemas/ApprovedRequestTrip'
       properties:
-        name:
-          type: string
-          description: The name of the `Request`.
-          example: Supplier name
-        requester:
-          type: string
-          description: The ID of the `User` that makes the `Request`.
-          example: XMPL1234-000001
-        amount:
-          type: number
-          description: The total amount of the `Request`.
-          example: 10.25
-        currency:
-          $ref: '#/components/schemas/ISO4217Currency'
-          description: The currency of the total amount of the `Request`.
-          example: EUR
         note:
           type: string
-          description: The requester's note of the `Request`.
+          description: The supervisor's note of the `Request`.
           example: Requester note
+        approver:
+          type: string
+          description: The requester's note of the `Request` .
+          example: XMPL1234-000001
         type:
           $ref: '#/components/schemas/RequestType'
           description: The type of the `Request`.
@@ -788,41 +790,118 @@ components:
           - GOODS_AND_SERVICES
           - TRIP
           example: GOODS_OR_SERVICES
-        request_process_id:
+        wallet_id:
           type: string
-          description: The process id of the `Request`.
-          example: 135fdb6c-2e77-4fc0-a79f-2453fde75ef7
-        request_timestamp:
-          type: integer
-          format: int64
-          description: The epoch timestamp in millis. This is checked in Soldo. Requests with timestamp older than 5 seconds will be rejected.
-          example: 1576850500000
-        attachment_document_ids:
-          type: array
-          description: The requester's attachment of the `Request`.
-          example: 135fdb6c-2e77-4fc0-a79f-2453fde75ef7
-          items:
-            type: string
-          uniqueItems: true
+          description: The ID of the `Wallet` of `Request`, the request type is `Funds` or `BusinessTrip`.
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
       required:
-      - amount
-      - currency
-      - name
-      - request_process_id
-      - request_timestamp
-      - requester
+      - approver
       - type
+      - wallet_id
     PaymentMethod:
       type: string
       enum:
       - TEMPORARY_CARD
       - BANK_TRANSFER
-    ReviewProcessStepStatus:
+    Requests:
+      properties:
+        total:
+          type: integer
+          format: int32
+          description: It represents the total number of available items in the list.
+          example: 168
+        pages:
+          type: integer
+          format: int32
+          description: It represents the total number of available pages.
+          example: 7
+        page_size:
+          type: integer
+          format: int32
+          description: It represents the number of items per page.
+          example: 25
+        current_page:
+          type: integer
+          format: int32
+          description: It indicates the current page (the counter starts from zero).
+          example: 0
+        results_size:
+          type: integer
+          format: int32
+          description: It indicates the size of the array results.
+          example: 25
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/RequestItem'
+    RequestStepInfo:
+      properties:
+        step_number:
+          type: integer
+          format: int32
+          description: The number of the step that approves/rejects the expense.
+          example: 2
+        reviewer_type:
+          $ref: '#/components/schemas/ReviewProcessReviewerType'
+          description: The type of review of the step that approves/rejects the expense.
+          example: ROLE
+        status:
+          $ref: '#/components/schemas/ReviewProcessStepStatus'
+          description: The status of the step that approves/rejects the expense.
+          example: APPROVED
+        date:
+          type: string
+          description: The timestamp of the step that approves/rejects the expense.
+          example: '2025-12-24T23:00:00Z'
+        reviewer_info:
+          type: array
+          description: The name of the step that approves/rejects the expense.
+          items:
+            $ref: '#/components/schemas/RequestApproverInfo'
+        automatic_review:
+          type: boolean
+          description: The name of the step that approves/rejects the expense.
+          example: false
+    UpdateRequestPayload:
+      description: Base schema for update request. The actual fields depend on the `type`.
+      discriminator:
+        propertyName: type
+        mapping:
+          FUNDS: '#/components/schemas/UpdateRequestFunds'
+          GOODS_OR_SERVICES: '#/components/schemas/UpdateRequestGoodsOrServices'
+          TRIP: '#/components/schemas/UpdateRequestTrip'
+      properties:
+        name:
+          type: string
+          description: The name of the `Request`.
+          example: Supplier name
+        description:
+          type: string
+          description: The description of the `Request`.
+          example: Example description
+        note:
+          type: string
+          description: The requester's note of the `Request`.
+          example: Requester note
+        type:
+          $ref: '#/components/schemas/RequestType'
+          description: The type of the `Request`.
+          example: GOODS_OR_SERVICES
+        request_timestamp:
+          type: integer
+          format: int64
+          description: The epoch timestamp in millis. This is checked in Soldo. Requests with timestamp older than 5 seconds will be rejected.
+          example: 1576850500000
+      required:
+      - request_timestamp
+      - type
+    Direction:
       type: string
+      description: It indicates how the pages are ordered.
       enum:
-      - APPROVED
-      - PARTIALLY_APPROVED
-      - DECLINED
+      - ASC
+      - DESC
+      example: DESC
     RequestPayload:
       discriminator:
         propertyName: type
@@ -895,156 +974,6 @@ components:
       - GOODS_OR_SERVICES
       - FUNDS
       - TRIP
-    RequestStatus:
-      type: string
-      enum:
-      - APPROVED
-      - DECLINED
-      - PENDING
-      - IDLE
-      - DELETED
-    RequestApproverInfo:
-      properties:
-        id:
-          type: string
-          description: The ID of the `User` who approves/rejects the expense.
-          example: XMPL1234-000003
-        name:
-          type: string
-          description: The name of the `User` who approves/rejects the expense.
-          example: JOHNDOE
-    ApprovedRequestPayload:
-      description: Base schema for approved request. The actual fields depend on the `type`.
-      discriminator:
-        propertyName: type
-        mapping:
-          FUNDS: '#/components/schemas/ApprovedRequestFunds'
-          GOODS_OR_SERVICES: '#/components/schemas/ApprovedRequestGoodsOrServices'
-          TRIP: '#/components/schemas/ApprovedRequestTrip'
-      properties:
-        note:
-          type: string
-          description: The supervisor's note of the `Request`.
-          example: Requester note
-        approver:
-          type: string
-          description: The requester's note of the `Request` .
-          example: XMPL1234-000001
-        type:
-          $ref: '#/components/schemas/RequestType'
-          description: The type of the `Request`.
-          enum:
-          - FUNDS
-          - GOODS_AND_SERVICES
-          - TRIP
-          example: GOODS_OR_SERVICES
-        wallet_id:
-          type: string
-          description: The ID of the `Wallet` of `Request`, the request type is `Funds` or `BusinessTrip`.
-          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
-      required:
-      - approver
-      - type
-      - wallet_id
-    UpdateRequestPayload:
-      description: Base schema for update request. The actual fields depend on the `type`.
-      discriminator:
-        propertyName: type
-        mapping:
-          FUNDS: '#/components/schemas/UpdateRequestFunds'
-          GOODS_OR_SERVICES: '#/components/schemas/UpdateRequestGoodsOrServices'
-          TRIP: '#/components/schemas/UpdateRequestTrip'
-      properties:
-        name:
-          type: string
-          description: The name of the `Request`.
-          example: Supplier name
-        description:
-          type: string
-          description: The description of the `Request`.
-          example: Example description
-        note:
-          type: string
-          description: The requester's note of the `Request`.
-          example: Requester note
-        type:
-          $ref: '#/components/schemas/RequestType'
-          description: The type of the `Request`.
-          example: GOODS_OR_SERVICES
-        request_timestamp:
-          type: integer
-          format: int64
-          description: The epoch timestamp in millis. This is checked in Soldo. Requests with timestamp older than 5 seconds will be rejected.
-          example: 1576850500000
-      required:
-      - request_timestamp
-      - type
-    Direction:
-      type: string
-      description: It indicates how the pages are ordered.
-      enum:
-      - ASC
-      - DESC
-      example: DESC
-    Requests:
-      properties:
-        total:
-          type: integer
-          format: int32
-          description: It represents the total number of available items in the list.
-          example: 168
-        pages:
-          type: integer
-          format: int32
-          description: It represents the total number of available pages.
-          example: 7
-        page_size:
-          type: integer
-          format: int32
-          description: It represents the number of items per page.
-          example: 25
-        current_page:
-          type: integer
-          format: int32
-          description: It indicates the current page (the counter starts from zero).
-          example: 0
-        results_size:
-          type: integer
-          format: int32
-          description: It indicates the size of the array results.
-          example: 25
-        results:
-          type: array
-          items:
-            $ref: '#/components/schemas/RequestItem'
-    RequestStepInfo:
-      properties:
-        step_number:
-          type: integer
-          format: int32
-          description: The number of the step that approves/rejects the expense.
-          example: 2
-        reviewer_type:
-          $ref: '#/components/schemas/ReviewProcessReviewerType'
-          description: The type of review of the step that approves/rejects the expense.
-          example: ROLE
-        status:
-          $ref: '#/components/schemas/ReviewProcessStepStatus'
-          description: The status of the step that approves/rejects the expense.
-          example: APPROVED
-        date:
-          type: string
-          description: The timestamp of the step that approves/rejects the expense.
-          example: '2025-12-24T23:00:00Z'
-        reviewer_info:
-          type: array
-          description: The name of the step that approves/rejects the expense.
-          items:
-            $ref: '#/components/schemas/RequestApproverInfo'
-        automatic_review:
-          type: boolean
-          description: The name of the step that approves/rejects the expense.
-          example: false
     DeclineRequest:
       properties:
         supervisor_note:
@@ -1058,6 +987,77 @@ components:
       required:
       - reviewer
       - supervisor_note
+    RequestItem:
+      properties:
+        id:
+          type: string
+          description: 'The `Request` ID (sortable: no).'
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+        name:
+          type: string
+          description: 'The name of the `Request` (sortable: no).'
+          example: Supplier name
+        description:
+          type: string
+          description: 'The description of the `Request` (sortable: no).'
+          example: Example description
+        requester:
+          type: string
+          description: 'The ID of the `User` that makes the `Request` (sortable: no).'
+          example: XMPL1234-000001
+        status:
+          $ref: '#/components/schemas/RequestStatus'
+          description: 'The status of the `Request` (sortable: no).'
+          example: APPROVED
+        payment_method:
+          $ref: '#/components/schemas/PaymentMethod'
+          description: 'The method of payment of the `Request` (sortable: no).'
+          example: TEMPORARY_CARD
+        type:
+          $ref: '#/components/schemas/RequestType'
+          description: 'The type of the `Request` (sortable: no).'
+          example: GOODS_OR_SERVICES
+        amount:
+          type: number
+          description: 'The total amount of the `Request` (sortable: no).'
+          example: 10.25
+        currency:
+          $ref: '#/components/schemas/ISO4217Currency'
+          description: 'The currency of the total amount of the `Request` (sortable: no).'
+          example: EUR
+        creation_time:
+          type: string
+          description: 'The date and time when the `Request` was created (sortable: yes).'
+          example: '2017-06-01T12:48:40Z'
+        last_update_time:
+          type: string
+          description: 'The date and time when the `Request` was last updated (sortable: yes).'
+          example: '2017-06-01T12:48:40Z'
+    RequestApproverInfo:
+      properties:
+        id:
+          type: string
+          description: The ID of the `User` who approves/rejects the expense.
+          example: XMPL1234-000003
+        name:
+          type: string
+          description: The name of the `User` who approves/rejects the expense.
+          example: JOHNDOE
+    ReviewProcessReviewerType:
+      type: string
+      enum:
+      - LINE_MANAGER
+      - ROLE
+      - AUTOMATIC
+      - USER
+    RequestStatus:
+      type: string
+      enum:
+      - APPROVED
+      - DECLINED
+      - PENDING
+      - IDLE
+      - DELETED
   securitySchemes:
     standardAuth:
       type: oauth2

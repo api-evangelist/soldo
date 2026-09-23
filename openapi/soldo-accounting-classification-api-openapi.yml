@@ -88,54 +88,6 @@ paths:
         - expense_category_read
 components:
   schemas:
-    ExpenseCategory:
-      properties:
-        id:
-          type: string
-          description: The `ExpenseCategory` ID.
-          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
-        code:
-          type: string
-          description: The code of the `ExpenseCategory`.
-          example: 123
-        name:
-          type: string
-          description: The name of the `ExpenseCategory`.
-          example: category-one
-        description:
-          type: string
-          description: A custom description of the `ExpenseCategory`.
-          example: An expense category
-        tax_rate_id:
-          type: string
-          description: The ID of the VAT rate linked to the `ExpenseCategory`.
-          example: c861cc24-6663-410f-8c78-73f886fff4ef
-        enabled:
-          type: boolean
-          description: The `ExpenseCategory` is visible in the transaction detail.
-          example: false
-        merchant_categories:
-          type: array
-          description: A list of merchant categories this `ExpenseCategory`.
-          items:
-            $ref: '#/components/schemas/MerchantCategory'
-          uniqueItems: true
-        expense_type:
-          type: string
-          description: The type of expense assigned to category.
-          example: TRAVEL_AND_ENTERTAINMENT
-        integration:
-          type: string
-          description: The `ExpenseCategory`'s correlated integration.
-          example: Netsuite
-        creation_time:
-          type: string
-          description: 'The date and time when the `ExpenseCategory` was created (sortable: no).'
-          example: '2017-06-01T12:48:40Z'
-        last_update_time:
-          type: string
-          description: 'The date and time when the `ExpenseCategory` was last updated (sortable: no).'
-          example: '2017-06-01T12:48:40Z'
     MerchantCategory:
       type: string
       enum:
@@ -195,6 +147,13 @@ components:
       - Travel_Car_Rental
       - Travel_Hotels
       - Travel_Time_Shares
+    Direction:
+      type: string
+      description: It indicates how the pages are ordered.
+      enum:
+      - ASC
+      - DESC
+      example: DESC
     ExpenseCategories:
       properties:
         total:
@@ -226,13 +185,54 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ExpenseCategory'
-    Direction:
-      type: string
-      description: It indicates how the pages are ordered.
-      enum:
-      - ASC
-      - DESC
-      example: DESC
+    ExpenseCategory:
+      properties:
+        id:
+          type: string
+          description: The `ExpenseCategory` ID.
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+        code:
+          type: string
+          description: The code of the `ExpenseCategory`.
+          example: 123
+        name:
+          type: string
+          description: The name of the `ExpenseCategory`.
+          example: category-one
+        description:
+          type: string
+          description: A custom description of the `ExpenseCategory`.
+          example: An expense category
+        tax_rate_id:
+          type: string
+          description: The ID of the VAT rate linked to the `ExpenseCategory`.
+          example: c861cc24-6663-410f-8c78-73f886fff4ef
+        enabled:
+          type: boolean
+          description: The `ExpenseCategory` is visible in the transaction detail.
+          example: false
+        merchant_categories:
+          type: array
+          description: A list of merchant categories this `ExpenseCategory`.
+          items:
+            $ref: '#/components/schemas/MerchantCategory'
+          uniqueItems: true
+        expense_type:
+          type: string
+          description: The type of expense assigned to category.
+          example: TRAVEL_AND_ENTERTAINMENT
+        integration:
+          type: string
+          description: The `ExpenseCategory`'s correlated integration.
+          example: Netsuite
+        creation_time:
+          type: string
+          description: 'The date and time when the `ExpenseCategory` was created (sortable: no).'
+          example: '2017-06-01T12:48:40Z'
+        last_update_time:
+          type: string
+          description: 'The date and time when the `ExpenseCategory` was last updated (sortable: no).'
+          example: '2017-06-01T12:48:40Z'
   securitySchemes:
     standardAuth:
       type: oauth2

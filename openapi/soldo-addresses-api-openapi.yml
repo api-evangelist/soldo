@@ -228,59 +228,6 @@ paths:
         - address_write
 components:
   schemas:
-    UpdateAddress:
-      description: Update `Address` JSON parameters.
-      properties:
-        recipient:
-          type: string
-          description: The recipient of the addressee.
-          example: JohnSmith
-        name:
-          type: string
-          description: The actual name of the `Address`.
-          example: Actual address of John
-        line1:
-          type: string
-          description: The primary street of the `Address`.
-          example: Foo street 33
-        line2:
-          type: string
-          description: The optional secondary street.
-          example: Second floor
-        country:
-          $ref: '#/components/schemas/ISO3166Country'
-          description: The country code in [ISO 3166-1 alpha-3](https://www.iso.org/obp/ui/#search/code/) standard.
-        county:
-          type: string
-          description: The county code.
-          example: '00000'
-        city:
-          type: string
-          description: The city name.
-          example: London
-        post_code:
-          type: string
-          description: The post code of the city.
-          example: '00000'
-        delivery_phone_number:
-          type: string
-          description: The delivery phone including the country code.
-          example: '+44123323232'
-        default_shipping:
-          type: boolean
-          description: It is `true` if it's the default shipping address. You cannot set this as 'false', but you can elect a new one that will replace it as default.
-          enum:
-          - 'true'
-          example: true
-        cards_to_link:
-          type: array
-          items:
-            description: The list of the `Card` ID to link to the address
-            example:
-            - 7bf79328-a7ae-4222-aa54-091ff7f429a7
-            - 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
-      required:
-      - country
     Address:
       properties:
         id:
@@ -346,65 +293,6 @@ components:
           type: string
           description: The date and time when the `Address` was last updated.
           example: '2017-06-01T12:48:40Z'
-    CreateAddress:
-      description: Create `Address` JSON parameters.
-      properties:
-        recipient:
-          type: string
-          description: The recipient of the addressee.
-          example: JohnSmith
-        name:
-          type: string
-          description: The actual name of the `Address`.
-          example: Actual address of John
-        line1:
-          type: string
-          description: The primary street of the `Address`.
-          example: Foo street 33
-        line2:
-          type: string
-          description: The optional secondary street.
-          example: Second floor
-        country:
-          $ref: '#/components/schemas/ISO3166Country'
-          description: The country code in [ISO 3166-1 alpha-3](https://www.iso.org/obp/ui/#search/code/) standard.
-        county:
-          type: string
-          description: The county code.
-          example: '00000'
-        city:
-          type: string
-          description: The city name.
-          example: London
-        post_code:
-          type: string
-          description: The post code of the city.
-          example: '00000'
-        delivery_phone_number:
-          type: string
-          description: The delivery phone including the country code.
-          example: '+44123323232'
-        default_shipping:
-          type: boolean
-          description: It is `true` if it's the default shipping address.
-          example: true
-        user_id:
-          type: string
-          description: The ID of the `User` owner of the `Address`, required only when `resource_type` is `USER`.
-          example: XMPL1234-000003
-        cards_to_link:
-          type: array
-          items:
-            description: The list of the `Card` ID to link to the address
-            example:
-            - 7bf79328-a7ae-4222-aa54-091ff7f429a7
-            - 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
-      required:
-      - city
-      - country
-      - line1
-      - name
-      - post_code
     Addresses:
       properties:
         total:
@@ -436,18 +324,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Address'
-    Direction:
-      type: string
-      description: It indicates how the pages are ordered.
-      enum:
-      - ASC
-      - DESC
-      example: DESC
-    AddressCategory:
-      type: string
-      enum:
-      - USER
-      - COMPANY
     ISO3166Country:
       type: string
       enum:
@@ -716,6 +592,130 @@ components:
       - ZMB
       - ZRCD
       - ZWE
+    CreateAddress:
+      description: Create `Address` JSON parameters.
+      properties:
+        recipient:
+          type: string
+          description: The recipient of the addressee.
+          example: JohnSmith
+        name:
+          type: string
+          description: The actual name of the `Address`.
+          example: Actual address of John
+        line1:
+          type: string
+          description: The primary street of the `Address`.
+          example: Foo street 33
+        line2:
+          type: string
+          description: The optional secondary street.
+          example: Second floor
+        country:
+          $ref: '#/components/schemas/ISO3166Country'
+          description: The country code in [ISO 3166-1 alpha-3](https://www.iso.org/obp/ui/#search/code/) standard.
+        county:
+          type: string
+          description: The county code.
+          example: '00000'
+        city:
+          type: string
+          description: The city name.
+          example: London
+        post_code:
+          type: string
+          description: The post code of the city.
+          example: '00000'
+        delivery_phone_number:
+          type: string
+          description: The delivery phone including the country code.
+          example: '+44123323232'
+        default_shipping:
+          type: boolean
+          description: It is `true` if it's the default shipping address.
+          example: true
+        user_id:
+          type: string
+          description: The ID of the `User` owner of the `Address`, required only when `resource_type` is `USER`.
+          example: XMPL1234-000003
+        cards_to_link:
+          type: array
+          items:
+            description: The list of the `Card` ID to link to the address
+            example:
+            - 7bf79328-a7ae-4222-aa54-091ff7f429a7
+            - 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
+      required:
+      - city
+      - country
+      - line1
+      - name
+      - post_code
+    Direction:
+      type: string
+      description: It indicates how the pages are ordered.
+      enum:
+      - ASC
+      - DESC
+      example: DESC
+    UpdateAddress:
+      description: Update `Address` JSON parameters.
+      properties:
+        recipient:
+          type: string
+          description: The recipient of the addressee.
+          example: JohnSmith
+        name:
+          type: string
+          description: The actual name of the `Address`.
+          example: Actual address of John
+        line1:
+          type: string
+          description: The primary street of the `Address`.
+          example: Foo street 33
+        line2:
+          type: string
+          description: The optional secondary street.
+          example: Second floor
+        country:
+          $ref: '#/components/schemas/ISO3166Country'
+          description: The country code in [ISO 3166-1 alpha-3](https://www.iso.org/obp/ui/#search/code/) standard.
+        county:
+          type: string
+          description: The county code.
+          example: '00000'
+        city:
+          type: string
+          description: The city name.
+          example: London
+        post_code:
+          type: string
+          description: The post code of the city.
+          example: '00000'
+        delivery_phone_number:
+          type: string
+          description: The delivery phone including the country code.
+          example: '+44123323232'
+        default_shipping:
+          type: boolean
+          description: It is `true` if it's the default shipping address. You cannot set this as 'false', but you can elect a new one that will replace it as default.
+          enum:
+          - 'true'
+          example: true
+        cards_to_link:
+          type: array
+          items:
+            description: The list of the `Card` ID to link to the address
+            example:
+            - 7bf79328-a7ae-4222-aa54-091ff7f429a7
+            - 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
+      required:
+      - country
+    AddressCategory:
+      type: string
+      enum:
+      - USER
+      - COMPANY
   securitySchemes:
     standardAuth:
       type: oauth2

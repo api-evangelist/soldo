@@ -257,51 +257,6 @@ paths:
         - expense_policy_read
 components:
   schemas:
-    ExpensePolicyAssignment:
-      description: Add `ExpensePolicy` assignees JSON parameters.
-      properties:
-        assignee_ids:
-          type: array
-          description: List of `User` IDs to assign to the `ExpensePolicy`.
-          example:
-          - XMPL1234-000001
-          - XMPL1234-000002
-          - XMPL1234-000003
-          items:
-            type: string
-      required:
-      - assignee_ids
-    ExpensePolicyAssignees:
-      properties:
-        total:
-          type: integer
-          format: int32
-          description: It represents the total number of available items in the list.
-          example: 168
-        pages:
-          type: integer
-          format: int32
-          description: It represents the total number of available pages.
-          example: 7
-        page_size:
-          type: integer
-          format: int32
-          description: It represents the number of items per page.
-          example: 25
-        current_page:
-          type: integer
-          format: int32
-          description: It indicates the current page (the counter starts from zero).
-          example: 0
-        results_size:
-          type: integer
-          format: int32
-          description: It indicates the size of the array results.
-          example: 25
-        results:
-          type: array
-          items:
-            $ref: '#/components/schemas/ExpensePolicyAssignee'
     ExpensePolicyAssignee:
       properties:
         assignee_id:
@@ -346,6 +301,41 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ExpensePolicy'
+    ExpensePolicyAssignment:
+      description: Add `ExpensePolicy` assignees JSON parameters.
+      properties:
+        assignee_ids:
+          type: array
+          description: List of `User` IDs to assign to the `ExpensePolicy`.
+          example:
+          - XMPL1234-000001
+          - XMPL1234-000002
+          - XMPL1234-000003
+          items:
+            type: string
+      required:
+      - assignee_ids
+    Direction:
+      type: string
+      description: It indicates how the pages are ordered.
+      enum:
+      - ASC
+      - DESC
+      example: DESC
+    ExpensePolicyUnassignment:
+      description: '`ExpensePolicy` unassignment JSON parameters.'
+      properties:
+        assignee_ids:
+          type: array
+          description: List of `User` IDs to remove from their current `ExpensePolicy`.
+          example:
+          - XMPL1234-000001
+          - XMPL1234-000002
+          - XMPL1234-000003
+          items:
+            type: string
+      required:
+      - assignee_ids
     ExpensePolicy:
       properties:
         id:
@@ -376,27 +366,37 @@ components:
           type: string
           description: The date and time when the `ExpensePolicy` was last updated.
           example: '2017-06-01T12:48:40Z'
-    Direction:
-      type: string
-      description: It indicates how the pages are ordered.
-      enum:
-      - ASC
-      - DESC
-      example: DESC
-    ExpensePolicyUnassignment:
-      description: '`ExpensePolicy` unassignment JSON parameters.'
+    ExpensePolicyAssignees:
       properties:
-        assignee_ids:
+        total:
+          type: integer
+          format: int32
+          description: It represents the total number of available items in the list.
+          example: 168
+        pages:
+          type: integer
+          format: int32
+          description: It represents the total number of available pages.
+          example: 7
+        page_size:
+          type: integer
+          format: int32
+          description: It represents the number of items per page.
+          example: 25
+        current_page:
+          type: integer
+          format: int32
+          description: It indicates the current page (the counter starts from zero).
+          example: 0
+        results_size:
+          type: integer
+          format: int32
+          description: It indicates the size of the array results.
+          example: 25
+        results:
           type: array
-          description: List of `User` IDs to remove from their current `ExpensePolicy`.
-          example:
-          - XMPL1234-000001
-          - XMPL1234-000002
-          - XMPL1234-000003
           items:
-            type: string
-      required:
-      - assignee_ids
+            $ref: '#/components/schemas/ExpensePolicyAssignee'
   securitySchemes:
     standardAuth:
       type: oauth2
