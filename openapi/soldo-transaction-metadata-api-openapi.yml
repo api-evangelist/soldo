@@ -226,23 +226,6 @@ components:
       - ASC
       - DESC
       example: DESC
-    TransactionMetadata:
-      properties:
-        id:
-          type: string
-          description: The ID related to the custom generated Metadata of the `Transaction`.
-        metadata:
-          type: object
-          additionalProperties: {}
-          description: A generic JSON.
-        creation_time:
-          type: string
-          description: 'The date and time when the metadata was created (sortable: yes).'
-          example: '2017-06-01T12:48:40Z'
-        last_update:
-          type: string
-          description: 'The date and time when the metadata was last updated (sortable: yes).'
-          example: '2017-06-01T12:48:40Z'
     TransactionMetadataList:
       properties:
         total:
@@ -274,6 +257,23 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/TransactionMetadata'
+    TransactionMetadata:
+      properties:
+        id:
+          type: string
+          description: The ID related to the custom generated Metadata of the `Transaction`.
+        metadata:
+          type: object
+          additionalProperties: {}
+          description: A generic JSON.
+        creation_time:
+          type: string
+          description: 'The date and time when the metadata was created (sortable: yes).'
+          example: '2017-06-01T12:48:40Z'
+        last_update:
+          type: string
+          description: 'The date and time when the metadata was last updated (sortable: yes).'
+          example: '2017-06-01T12:48:40Z'
   securitySchemes:
     standardAuth:
       type: oauth2

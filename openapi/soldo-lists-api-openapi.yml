@@ -264,6 +264,13 @@ paths:
         - tag_write
 components:
   schemas:
+    Direction:
+      type: string
+      description: It indicates how the pages are ordered.
+      enum:
+      - ASC
+      - DESC
+      example: DESC
     TagDictionary:
       properties:
         id:
@@ -307,13 +314,6 @@ components:
           type: boolean
           description: It determines whether multiple tags of the `List` can be selected.
           example: false
-    Direction:
-      type: string
-      description: It indicates how the pages are ordered.
-      enum:
-      - ASC
-      - DESC
-      example: DESC
     TagDictionaries:
       properties:
         total:

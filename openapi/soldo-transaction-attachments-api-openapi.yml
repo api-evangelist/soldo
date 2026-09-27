@@ -319,74 +319,6 @@ webhooks:
         fingerprint-order: attachmentId, transactionId, fileName
 components:
   schemas:
-    UrlType:
-      type: string
-      enum:
-      - DOWNLOAD_URL
-      - UPLOAD_URL
-      - UPLOAD_COMPLETED
-      - DELETE
-      - THUMBNAILS_DOWNLOAD_URL
-      - UPDATE_METADATA
-    TransactionAttachments:
-      properties:
-        attachments:
-          type: array
-          items:
-            $ref: '#/components/schemas/TransactionAttachment'
-    TransactionAttachmentCompressedFile:
-      properties:
-        file_name:
-          type: string
-          description: The file name of the compressed attachment.
-          example: invoice01_thumb.jpg
-        file_extension:
-          type: string
-          description: The file extension of the compressed attachment.
-          example: .jpg
-        file_size:
-          type: integer
-          format: int64
-          description: The file size of the compressed attachment in bytes.
-          example: 32768
-        file_url:
-          type: string
-          deprecated: true
-          description: The Base64 string of the Compressed File URL encrypted by DES in ECB mode, Pkcs7 padding scheme and using Token for key. Deprecated, use `url` instead.
-        url:
-          type: string
-          description: The fileUrl  of the compressed attachment.
-        url_type:
-          $ref: '#/components/schemas/UrlType'
-          description: The URL type (DOWNLOAD_URL to download the attachment; UPLOAD_URL to upload the attachment).
-          example: DOWNLOAD_URL
-    UploadCompletedEvent:
-      properties:
-        event_uuid:
-          type: string
-          description: The webhook unique ID.
-          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
-        event_type:
-          $ref: '#/components/schemas/WebhookEventType'
-          default: TransactionAttachment
-          description: The webhook event type.
-          example: TransactionAttachment
-        event_name:
-          $ref: '#/components/schemas/WebhookEventName'
-          default: upload_completed
-          description: The webhook event name.
-          example: upload_completed
-        company_account_id:
-          type: string
-          description: The company account ID.
-          example: XMPL1234
-        data:
-          $ref: '#/components/schemas/TransactionAttachment'
-          description: The webhook `TransactionAttachment` data.
-        subscription_id:
-          type: string
-          description: The webhook subscription ID used to route this event.
-          example: 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
     TransactionAttachment:
       properties:
         attachment_id:
@@ -471,7 +403,7 @@ components:
       - Employee
       - Vehicle
       - Wallet
-    AttachmentDeleteEvent:
+    UploadCompletedEvent:
       properties:
         event_uuid:
           type: string
@@ -484,9 +416,9 @@ components:
           example: TransactionAttachment
         event_name:
           $ref: '#/components/schemas/WebhookEventName'
-          default: attachment_delete
+          default: upload_completed
           description: The webhook event name.
-          example: attachment_delete
+          example: upload_completed
         company_account_id:
           type: string
           description: The company account ID.
@@ -498,6 +430,77 @@ components:
           type: string
           description: The webhook subscription ID used to route this event.
           example: 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
+    TransactionAttachmentCompressedFile:
+      properties:
+        file_name:
+          type: string
+          description: The file name of the compressed attachment.
+          example: invoice01_thumb.jpg
+        file_extension:
+          type: string
+          description: The file extension of the compressed attachment.
+          example: .jpg
+        file_size:
+          type: integer
+          format: int64
+          description: The file size of the compressed attachment in bytes.
+          example: 32768
+        file_url:
+          type: string
+          deprecated: true
+          description: The Base64 string of the Compressed File URL encrypted by DES in ECB mode, Pkcs7 padding scheme and using Token for key. Deprecated, use `url` instead.
+        url:
+          type: string
+          description: The fileUrl  of the compressed attachment.
+        url_type:
+          $ref: '#/components/schemas/UrlType'
+          description: The URL type (DOWNLOAD_URL to download the attachment; UPLOAD_URL to upload the attachment).
+          example: DOWNLOAD_URL
+    UploadUserChannel:
+      type: string
+      enum:
+      - WEB
+      - MOBILE
+      - BO_USER
+      - business
+      - BAPI
+      - PAPI
+      - OTHER
+    UrlType:
+      type: string
+      enum:
+      - DOWNLOAD_URL
+      - UPLOAD_URL
+      - UPLOAD_COMPLETED
+      - DELETE
+      - THUMBNAILS_DOWNLOAD_URL
+      - UPDATE_METADATA
+    UpdateTransactionAttachment:
+      description: Update `TransactionAttachment` JSON parameters.
+      properties:
+        read_only:
+          type: boolean
+          description: true if the attachment is not editable
+          example: false
+        attachment_type:
+          $ref: '#/components/schemas/TransactionAttachmentType'
+          description: The type of the attachment
+          example: INVOICE
+        metadata:
+          type: object
+          additionalProperties:
+            type: string
+          description: Generic map of custom metadata
+    TransactionAttachmentType:
+      type: string
+      enum:
+      - RECEIPT
+      - INVOICE
+      - MAIL
+      - OTHER
+      - PURCHASE_REQUEST
+      - POP_AUTH
+      - POP_SETTLEMENT
     WebhookEventName:
       type: string
       enum:
@@ -586,42 +589,39 @@ components:
       - contact_created
       - contact_updated
       - contact_deleted
-    UploadUserChannel:
-      type: string
-      enum:
-      - WEB
-      - MOBILE
-      - BO_USER
-      - business
-      - BAPI
-      - PAPI
-      - OTHER
-    UpdateTransactionAttachment:
-      description: Update `TransactionAttachment` JSON parameters.
+    AttachmentDeleteEvent:
       properties:
-        read_only:
-          type: boolean
-          description: true if the attachment is not editable
-          example: false
-        attachment_type:
-          $ref: '#/components/schemas/TransactionAttachmentType'
-          description: The type of the attachment
-          example: INVOICE
-        metadata:
-          type: object
-          additionalProperties:
-            type: string
-          description: Generic map of custom metadata
-    TransactionAttachmentType:
-      type: string
-      enum:
-      - RECEIPT
-      - INVOICE
-      - MAIL
-      - OTHER
-      - PURCHASE_REQUEST
-      - POP_AUTH
-      - POP_SETTLEMENT
+        event_uuid:
+          type: string
+          description: The webhook unique ID.
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+        event_type:
+          $ref: '#/components/schemas/WebhookEventType'
+          default: TransactionAttachment
+          description: The webhook event type.
+          example: TransactionAttachment
+        event_name:
+          $ref: '#/components/schemas/WebhookEventName'
+          default: attachment_delete
+          description: The webhook event name.
+          example: attachment_delete
+        company_account_id:
+          type: string
+          description: The company account ID.
+          example: XMPL1234
+        data:
+          $ref: '#/components/schemas/TransactionAttachment'
+          description: The webhook `TransactionAttachment` data.
+        subscription_id:
+          type: string
+          description: The webhook subscription ID used to route this event.
+          example: 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
+    TransactionAttachments:
+      properties:
+        attachments:
+          type: array
+          items:
+            $ref: '#/components/schemas/TransactionAttachment'
   securitySchemes:
     standardAuth:
       type: oauth2

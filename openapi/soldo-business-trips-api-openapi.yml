@@ -414,6 +414,19 @@ paths:
         - business_trip_write
 components:
   schemas:
+    BusinessTripStatus:
+      type: string
+      enum:
+      - SCHEDULED
+      - COMPLETED
+      - ONGOING
+      - DELETED
+      - FINISHED
+    BusinessTripExpenseSpendPeriod:
+      type: string
+      enum:
+      - BEFORE_TRIP
+      - DURING_TRIP
     BusinessTripItem:
       properties:
         id:
@@ -505,6 +518,16 @@ components:
           type: string
           description: 'The date and time when the `BusinessTrip` was last updated (sortable: yes).'
           example: '2017-06-01T12:48:40Z'
+    BusinessTripCardHandling:
+      type: string
+      enum:
+      - KEEP_ACTIVE
+      - BLOCK
+    BusinessTripMoneyTransferMode:
+      type: string
+      enum:
+      - SPLIT
+      - FULL
     BusinessTripTag:
       properties:
         tag_id:
@@ -515,70 +538,21 @@ components:
           type: string
           description: The `List` ID of the `Tag` of the `BusinessTrip`.
           example: 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
-    BusinessTripMoneyTransferMode:
+    PostAction:
+      properties:
+        unused_funds:
+          $ref: '#/components/schemas/BusinessTripUnusedFunds'
+          description: 'The action to be performed about the `BusinessTrip` unused funds (sortable: no).'
+        card_handling:
+          $ref: '#/components/schemas/BusinessTripCardHandling'
+          description: 'The status of the `Card` at the end of the `BusinessTrip` (sortable: no).'
+    BusinessTripPreAction:
       type: string
       enum:
-      - SPLIT
-      - FULL
-    BusinessTrips:
-      properties:
-        total:
-          type: integer
-          format: int32
-          description: It represents the total number of available items in the list.
-          example: 168
-        pages:
-          type: integer
-          format: int32
-          description: It represents the total number of available pages.
-          example: 7
-        page_size:
-          type: integer
-          format: int32
-          description: It represents the number of items per page.
-          example: 25
-        current_page:
-          type: integer
-          format: int32
-          description: It indicates the current page (the counter starts from zero).
-          example: 0
-        results_size:
-          type: integer
-          format: int32
-          description: It indicates the size of the array results.
-          example: 25
-        results:
-          type: array
-          items:
-            $ref: '#/components/schemas/BusinessTripItem'
-    UpdateBusinessTripDetails:
-      description: Update `BusinessTrip` JSON parameters.
-      properties:
-        request_timestamp:
-          type: integer
-          format: int64
-          description: The epoch timestamp in millis. This is checked in Soldo. Requests with timestamp older than 5 seconds will be rejected.
-          example: 1576850500000
-        name:
-          type: string
-          description: The `BusinessTrip` name.
-          example: EXAMPLE BUSINESS TRIP
-        description:
-          type: string
-          description: The `BusinessTrip` description.
-          example: EXAMPLE BUSINESS TRIP DESCRIPTION
-        destination:
-          type: string
-          description: The `BusinessTrip` destination.
-          example: monte fato
-        from_date:
-          type: string
-          description: The `BusinessTrip` start date and time.
-          example: '2017-06-01T12:48:40Z'
-        to_date:
-          type: string
-          description: The `BusinessTrip` end date and time.
-          example: '2017-06-01T12:48:40Z'
+      - CARD_ACTIVATE
+      - CARD_KEEP_BLOCKED
+      - FUNDS_TRANSFER_ON_WALLET
+      - UNLOCK_COUNTRIES_ON_CARD
     BusinessTrip:
       properties:
         id:
@@ -680,28 +654,12 @@ components:
           description: The IDs of the `Tag` and related `Dictionary` to be assigned to a `BusinessTrip`.
           items:
             $ref: '#/components/schemas/BusinessTripTag'
-    DateParam:
-      description: 'The end of the period of the search `toDate` included (i.e. less than) (Formats: `yyyy-MM-dd`, `yyyy-MM-ddThh:mm:ss`, `yyyy-MM-ddThh:mm:ssZ`).'
-      example: '1970-01-30'
-    BusinessTripPurchaseStatus:
-      type: string
-      description: The status of the `Purchase`.
-      enum:
-      - SUCCESSFUL
-      - ACTIVE
-      - ASSIGNED
-      - DELETED
-      - EXPIRED
-      - REQUEST_EXTENSION
-    BusinessTripStatus:
+    BusinessTripUnusedFunds:
       type: string
       enum:
-      - SCHEDULED
-      - COMPLETED
-      - ONGOING
-      - DELETED
-      - FINISHED
-    UpdateBusinessTripPostActions:
+      - LEAVE
+      - REMOVE
+    UpdateBusinessTripDetails:
       description: Update `BusinessTrip` JSON parameters.
       properties:
         request_timestamp:
@@ -709,12 +667,56 @@ components:
           format: int64
           description: The epoch timestamp in millis. This is checked in Soldo. Requests with timestamp older than 5 seconds will be rejected.
           example: 1576850500000
-        unused_funds:
-          $ref: '#/components/schemas/BusinessTripUnusedFunds'
-          description: 'The action to be performed about the `BusinessTrip` unused funds (sortable: no).'
-        card_handling:
-          $ref: '#/components/schemas/BusinessTripCardHandling'
-          description: 'The status of the `Card` at the end of the `BusinessTrip` (sortable: no).'
+        name:
+          type: string
+          description: The `BusinessTrip` name.
+          example: EXAMPLE BUSINESS TRIP
+        description:
+          type: string
+          description: The `BusinessTrip` description.
+          example: EXAMPLE BUSINESS TRIP DESCRIPTION
+        destination:
+          type: string
+          description: The `BusinessTrip` destination.
+          example: monte fato
+        from_date:
+          type: string
+          description: The `BusinessTrip` start date and time.
+          example: '2017-06-01T12:48:40Z'
+        to_date:
+          type: string
+          description: The `BusinessTrip` end date and time.
+          example: '2017-06-01T12:48:40Z'
+    SearchBusinessTripDateType:
+      type: string
+      description: It determines the date to be considered for `fromDate` and `toDate` parameters.
+      enum:
+      - CREATION_TIME
+      - COMPLETED_TIME
+      example: COMPLETED_TIME
+    CompleteBusinessTripTransfer:
+      description: Complete `BusinessTrip` Transfer JSON parameters.
+      properties:
+        request_timestamp:
+          type: integer
+          format: int64
+          description: The epoch timestamp in millis. This is checked in Soldo. Requests with timestamp older than 5 seconds will be rejected.
+          example: 1576850500000
+    PreAction:
+      properties:
+        requested_action:
+          type: array
+          description: 'The action to be performed about the `BusinessTrip` requestedAction (sortable: no).'
+          items:
+            $ref: '#/components/schemas/BusinessTripPreAction'
+          uniqueItems: true
+    Direction:
+      type: string
+      description: It indicates how the pages are ordered.
+      enum:
+      - ASC
+      - DESC
+      example: DESC
     CreateBusinessTrip:
       description: Create `BusinessTrip` JSON parameters.
       properties:
@@ -787,19 +789,6 @@ components:
       - traveller_card_id
       - traveller_user_id
       - wallet_id
-    UpdateBusinessTripExpenseAllocation:
-      description: Update `BusinessTrip` JSON parameters.
-      properties:
-        request_timestamp:
-          type: integer
-          format: int64
-          description: The epoch timestamp in millis. This is checked in Soldo. Requests with timestamp older than 5 seconds will be rejected.
-          example: 1576850500000
-        expense_allocation:
-          type: array
-          description: 'The `BusinessTrip` expense allocation to use. In Expense allocation: expense_category_id and description are mutually exclusive: provide expense_category_id (for an existing expense category) or description (for a custom expense), but not both.'
-          items:
-            $ref: '#/components/schemas/BusinessTripExpense'
     BusinessTripExpense:
       description: 'Expense allocation: expense_category_id and description are mutually exclusive: provide expense_category_id (for an existing expense category) or description (for a custom expense), but not both.'
       properties:
@@ -827,6 +816,19 @@ components:
       - amount
       - amount_currency
       - spend_period
+    BusinessTripPurchaseStatus:
+      type: string
+      description: The status of the `Purchase`.
+      enum:
+      - SUCCESSFUL
+      - ACTIVE
+      - ASSIGNED
+      - DELETED
+      - EXPIRED
+      - REQUEST_EXTENSION
+    DateParam:
+      description: 'The end of the period of the search `toDate` included (i.e. less than) (Formats: `yyyy-MM-dd`, `yyyy-MM-ddThh:mm:ss`, `yyyy-MM-ddThh:mm:ssZ`).'
+      example: '1970-01-30'
     ISO4217Currency:
       type: string
       enum:
@@ -1014,66 +1016,20 @@ components:
       - ZAR
       - ZMW
       - ZWL
-    CompleteBusinessTripTransfer:
-      description: Complete `BusinessTrip` Transfer JSON parameters.
+    UpdateBusinessTripPostActions:
+      description: Update `BusinessTrip` JSON parameters.
       properties:
         request_timestamp:
           type: integer
           format: int64
           description: The epoch timestamp in millis. This is checked in Soldo. Requests with timestamp older than 5 seconds will be rejected.
           example: 1576850500000
-    BusinessTripCardHandling:
-      type: string
-      enum:
-      - KEEP_ACTIVE
-      - BLOCK
-    PostAction:
-      properties:
         unused_funds:
           $ref: '#/components/schemas/BusinessTripUnusedFunds'
           description: 'The action to be performed about the `BusinessTrip` unused funds (sortable: no).'
         card_handling:
           $ref: '#/components/schemas/BusinessTripCardHandling'
           description: 'The status of the `Card` at the end of the `BusinessTrip` (sortable: no).'
-    BusinessTripExpenseSpendPeriod:
-      type: string
-      enum:
-      - BEFORE_TRIP
-      - DURING_TRIP
-    BusinessTripUnusedFunds:
-      type: string
-      enum:
-      - LEAVE
-      - REMOVE
-    PreAction:
-      properties:
-        requested_action:
-          type: array
-          description: 'The action to be performed about the `BusinessTrip` requestedAction (sortable: no).'
-          items:
-            $ref: '#/components/schemas/BusinessTripPreAction'
-          uniqueItems: true
-    SearchBusinessTripDateType:
-      type: string
-      description: It determines the date to be considered for `fromDate` and `toDate` parameters.
-      enum:
-      - CREATION_TIME
-      - COMPLETED_TIME
-      example: COMPLETED_TIME
-    Direction:
-      type: string
-      description: It indicates how the pages are ordered.
-      enum:
-      - ASC
-      - DESC
-      example: DESC
-    BusinessTripPreAction:
-      type: string
-      enum:
-      - CARD_ACTIVATE
-      - CARD_KEEP_BLOCKED
-      - FUNDS_TRANSFER_ON_WALLET
-      - UNLOCK_COUNTRIES_ON_CARD
     UpdateBusinessTripTags:
       description: Update `BusinessTrip` JSON parameters.
       properties:
@@ -1087,6 +1043,50 @@ components:
           description: The IDs of the `Tag` and related `Dictionary` to be assigned to a `BusinessTrip`.
           items:
             $ref: '#/components/schemas/BusinessTripTag'
+    BusinessTrips:
+      properties:
+        total:
+          type: integer
+          format: int32
+          description: It represents the total number of available items in the list.
+          example: 168
+        pages:
+          type: integer
+          format: int32
+          description: It represents the total number of available pages.
+          example: 7
+        page_size:
+          type: integer
+          format: int32
+          description: It represents the number of items per page.
+          example: 25
+        current_page:
+          type: integer
+          format: int32
+          description: It indicates the current page (the counter starts from zero).
+          example: 0
+        results_size:
+          type: integer
+          format: int32
+          description: It indicates the size of the array results.
+          example: 25
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/BusinessTripItem'
+    UpdateBusinessTripExpenseAllocation:
+      description: Update `BusinessTrip` JSON parameters.
+      properties:
+        request_timestamp:
+          type: integer
+          format: int64
+          description: The epoch timestamp in millis. This is checked in Soldo. Requests with timestamp older than 5 seconds will be rejected.
+          example: 1576850500000
+        expense_allocation:
+          type: array
+          description: 'The `BusinessTrip` expense allocation to use. In Expense allocation: expense_category_id and description are mutually exclusive: provide expense_category_id (for an existing expense category) or description (for a custom expense), but not both.'
+          items:
+            $ref: '#/components/schemas/BusinessTripExpense'
   securitySchemes:
     standardAuth:
       type: oauth2

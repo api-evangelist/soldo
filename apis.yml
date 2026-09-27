@@ -49,7 +49,7 @@ tags:
 - Company
 - Consumer
 - Fintech
-- Financial-Services
+- Financial Services
 - Spend Management
 - Expense Management
 - Business Cards
@@ -67,6 +67,7 @@ tags_raw:
 - Prepaid Cards
 - Payments
 - Banking
+- Financial-Services
 image: https://www.soldo.com/wp-content/uploads/2023/11/home-page-soldo-hero-small.webp
 apis:
 - aid: soldo:soldo-accounting-classification-api

@@ -88,6 +88,13 @@ paths:
         - expense_category_read
 components:
   schemas:
+    Direction:
+      type: string
+      description: It indicates how the pages are ordered.
+      enum:
+      - ASC
+      - DESC
+      example: DESC
     MerchantCategory:
       type: string
       enum:
@@ -147,13 +154,6 @@ components:
       - Travel_Car_Rental
       - Travel_Hotels
       - Travel_Time_Shares
-    Direction:
-      type: string
-      description: It indicates how the pages are ordered.
-      enum:
-      - ASC
-      - DESC
-      example: DESC
     ExpenseCategories:
       properties:
         total:
