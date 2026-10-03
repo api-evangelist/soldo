@@ -121,12 +121,41 @@ paths:
         - expense_category_write
 components:
   schemas:
-    ExpenseType:
-      type: string
-      enum:
-      - COMPANY
-      - PERSONAL
-      - TRAVEL_AND_ENTERTAINMENT
+    CreateExpenseCategory:
+      description: Add `ExpenseCategory` JSON parameters.
+      properties:
+        code:
+          type: string
+          description: The code of the `ExpenseCategory`.
+          example: 123
+        name:
+          type: string
+          description: The name of the `ExpenseCategory`.
+          example: category-one
+        description:
+          type: string
+          description: The description of the `ExpenseCategory`.
+          example: An expense category
+        tax_rate_id:
+          type: string
+          description: The ID of the VAT Rate linked to the `ExpenseCategory`.
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+        enabled:
+          type: boolean
+          description: it determines whether the `ExpenseCategory` is visible on the transaction detail.
+          example: true
+        merchant_categories:
+          type: array
+          description: A list of merchant categories this `ExpenseCategory` is auto-assigned to.
+          items:
+            $ref: '#/components/schemas/MerchantCategory'
+        expense_type:
+          $ref: '#/components/schemas/ExpenseType'
+          description: The type of expense this `ExpenseCategory` is assigned to.
+          example: company
+      required:
+      - expense_type
+      - name
     ExpenseCategory:
       properties:
         id:
@@ -207,41 +236,12 @@ components:
           $ref: '#/components/schemas/ExpenseType'
           description: The type of expense this category is assigned to.
           example: company
-    CreateExpenseCategory:
-      description: Add `ExpenseCategory` JSON parameters.
-      properties:
-        code:
-          type: string
-          description: The code of the `ExpenseCategory`.
-          example: 123
-        name:
-          type: string
-          description: The name of the `ExpenseCategory`.
-          example: category-one
-        description:
-          type: string
-          description: The description of the `ExpenseCategory`.
-          example: An expense category
-        tax_rate_id:
-          type: string
-          description: The ID of the VAT Rate linked to the `ExpenseCategory`.
-          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
-        enabled:
-          type: boolean
-          description: it determines whether the `ExpenseCategory` is visible on the transaction detail.
-          example: true
-        merchant_categories:
-          type: array
-          description: A list of merchant categories this `ExpenseCategory` is auto-assigned to.
-          items:
-            $ref: '#/components/schemas/MerchantCategory'
-        expense_type:
-          $ref: '#/components/schemas/ExpenseType'
-          description: The type of expense this `ExpenseCategory` is assigned to.
-          example: company
-      required:
-      - expense_type
-      - name
+    ExpenseType:
+      type: string
+      enum:
+      - COMPANY
+      - PERSONAL
+      - TRAVEL_AND_ENTERTAINMENT
     MerchantCategory:
       type: string
       enum:

@@ -461,23 +461,100 @@ webhooks:
         fingerprint-order: id, title, description, amount, amountCurrency
 components:
   schemas:
-    WebhookEventType:
+    PurchaseDeleteEvent:
+      properties:
+        event_uuid:
+          type: string
+          description: The webhook unique ID.
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+        event_type:
+          $ref: '#/components/schemas/WebhookEventType'
+          default: Purchase
+          description: The webhook event type.
+          example: Purchase
+        event_name:
+          $ref: '#/components/schemas/WebhookEventName'
+          default: purchase_delete
+          description: The webhook event name.
+          example: purchase_delete
+        company_account_id:
+          type: string
+          description: The company account ID.
+          example: XMPL1234
+        data:
+          $ref: '#/components/schemas/Purchase'
+          description: The webhook `Purchase` data.
+        subscription_id:
+          type: string
+          description: The webhook subscription ID used to route this event.
+          example: 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
+    OrderStatus:
       type: string
       enum:
-      - BusinessTrip
-      - Card
-      - Contact
-      - ExpenseReview
-      - Group
-      - OnlineAds
-      - Order
-      - Purchase
-      - Subscription
-      - Transaction
-      - TransactionAttachment
-      - Employee
-      - Vehicle
-      - Wallet
+      - PENDING
+      - ERROR
+      - PLACED
+      - CANCELLED
+      - COMPLETED
+      - COMPLETED_WITH_CREDIT
+    Purchases:
+      properties:
+        total:
+          type: integer
+          format: int32
+          description: It represents the total number of available items in the list.
+          example: 168
+        pages:
+          type: integer
+          format: int32
+          description: It represents the total number of available pages.
+          example: 7
+        page_size:
+          type: integer
+          format: int32
+          description: It represents the number of items per page.
+          example: 25
+        current_page:
+          type: integer
+          format: int32
+          description: It indicates the current page (the counter starts from zero).
+          example: 0
+        results_size:
+          type: integer
+          format: int32
+          description: It indicates the size of the array results.
+          example: 25
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Purchase'
+    PurchaseUpdateEvent:
+      properties:
+        event_uuid:
+          type: string
+          description: The webhook unique ID.
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+        event_type:
+          $ref: '#/components/schemas/WebhookEventType'
+          default: Purchase
+          description: The webhook event type.
+          example: Purchase
+        event_name:
+          $ref: '#/components/schemas/WebhookEventName'
+          default: purchase_update
+          description: The webhook event name.
+          example: purchase_update
+        company_account_id:
+          type: string
+          description: The company account ID.
+          example: XMPL1234
+        data:
+          $ref: '#/components/schemas/Purchase'
+          description: The webhook `Purchase` data.
+        subscription_id:
+          type: string
+          description: The webhook subscription ID used to route this event.
+          example: 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
     WebhookEventName:
       type: string
       enum:
@@ -566,204 +643,6 @@ components:
       - contact_created
       - contact_updated
       - contact_deleted
-    PurchaseCreateEvent:
-      properties:
-        event_uuid:
-          type: string
-          description: The webhook unique ID.
-          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
-        event_type:
-          $ref: '#/components/schemas/WebhookEventType'
-          default: Purchase
-          description: The webhook event type.
-          example: Purchase
-        event_name:
-          $ref: '#/components/schemas/WebhookEventName'
-          default: purchase_create
-          description: The webhook event name.
-          example: purchase_create
-        company_account_id:
-          type: string
-          description: The company account ID.
-          example: XMPL1234
-        data:
-          $ref: '#/components/schemas/Purchase'
-          description: The webhook `Purchase` data.
-        subscription_id:
-          type: string
-          description: The webhook subscription ID used to route this event.
-          example: 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
-    Purchases:
-      properties:
-        total:
-          type: integer
-          format: int32
-          description: It represents the total number of available items in the list.
-          example: 168
-        pages:
-          type: integer
-          format: int32
-          description: It represents the total number of available pages.
-          example: 7
-        page_size:
-          type: integer
-          format: int32
-          description: It represents the number of items per page.
-          example: 25
-        current_page:
-          type: integer
-          format: int32
-          description: It indicates the current page (the counter starts from zero).
-          example: 0
-        results_size:
-          type: integer
-          format: int32
-          description: It indicates the size of the array results.
-          example: 25
-        results:
-          type: array
-          items:
-            $ref: '#/components/schemas/Purchase'
-    PurchaseUpdateEvent:
-      properties:
-        event_uuid:
-          type: string
-          description: The webhook unique ID.
-          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
-        event_type:
-          $ref: '#/components/schemas/WebhookEventType'
-          default: Purchase
-          description: The webhook event type.
-          example: Purchase
-        event_name:
-          $ref: '#/components/schemas/WebhookEventName'
-          default: purchase_update
-          description: The webhook event name.
-          example: purchase_update
-        company_account_id:
-          type: string
-          description: The company account ID.
-          example: XMPL1234
-        data:
-          $ref: '#/components/schemas/Purchase'
-          description: The webhook `Purchase` data.
-        subscription_id:
-          type: string
-          description: The webhook subscription ID used to route this event.
-          example: 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
-    PurchaseRedeemCardEvent:
-      properties:
-        event_uuid:
-          type: string
-          description: The webhook unique ID.
-          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
-        event_type:
-          $ref: '#/components/schemas/WebhookEventType'
-          default: Purchase
-          description: The webhook event type.
-          example: Purchase
-        event_name:
-          $ref: '#/components/schemas/WebhookEventName'
-          default: purchase_redeem_card
-          description: The webhook event name.
-          example: purchase_redeem_card
-        company_account_id:
-          type: string
-          description: The company account ID.
-          example: XMPL1234
-        data:
-          $ref: '#/components/schemas/Purchase'
-          description: The webhook `Purchase` data.
-        subscription_id:
-          type: string
-          description: The webhook subscription ID used to route this event.
-          example: 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
-    SearchPurchaseDateType:
-      type: string
-      description: It determines the date to be considered for `fromDate` and `toDate` parameters.
-      enum:
-      - CREATION_TIME
-      - COMPLETED_TIME
-      example: COMPLETED_TIME
-    UpdatePurchase:
-      description: Update `Purchase` JSON parameters.
-      properties:
-        purchase_id:
-          type: string
-          description: The `Purchase` ID.
-          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
-        title:
-          type: string
-          description: The name of the `Purchase`
-          example: Tech book
-        assignee_id:
-          type: string
-          description: The ID of the `User` assigned to the `Purchase`.
-          example: XMPL1234-000003
-        amount:
-          type: number
-          description: The maximum spendable amount of the `Purchase`.
-          example: 10.25
-        description:
-          type: string
-          description: The description of the `Purchase`.
-          example: A purchase to approve
-        wallet_id:
-          type: string
-          description: The ID of the `Wallet` the money are taken from, the funding source of the `Purchase`.
-          example: 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
-        notes:
-          type: string
-          description: The notes of the `Purchase`.
-          example: Notes about the purchase request
-        max_tx_number:
-          type: integer
-          format: int32
-          default: '1'
-          description: The total number of `Transactions` the temporary virtual `Card` can make (default is `1`).
-          example: 3
-      required:
-      - purchase_id
-    CreatePurchase:
-      description: Create `Purchase` JSON parameters.
-      properties:
-        title:
-          type: string
-          description: The name of the `Purchase`.
-          example: Tech book
-        assignee_id:
-          type: string
-          description: The ID of the `User` assigned to the `Purchase`.
-          example: XMPL1234-000003
-        amount:
-          type: number
-          description: The maximum spendable amount of the `Purchase`.
-          example: 10.25
-        description:
-          type: string
-          description: The description of the `Purchase`.
-          example: A purchase to approve
-        wallet_id:
-          type: string
-          description: The ID of the `Wallet` the money are taken from, the funding source of the `Purchase`.
-          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
-        notes:
-          type: string
-          description: The notes of the `Purchase`.
-          example: Notes about the purchase request
-        max_tx_number:
-          type: integer
-          format: int32
-          default: '1'
-          description: The total number of `Transactions` the temporary virtual `Card` can make.
-          example: 3
-      required:
-      - amount
-      - assignee_id
-      - description
-      - max_tx_number
-      - title
-      - wallet_id
     OrderItem:
       properties:
         id:
@@ -777,53 +656,97 @@ components:
         category:
           type: string
           description: The category of the ordered item.
-    OrderStatus:
-      type: string
-      enum:
-      - PENDING
-      - ERROR
-      - PLACED
-      - CANCELLED
-      - COMPLETED
-      - COMPLETED_WITH_CREDIT
-    Order:
+    Purchase:
       properties:
         id:
           type: string
-          description: The `Order` ID.
+          description: 'The `Purchase` ID (sortable: no).'
           example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
         status:
-          $ref: '#/components/schemas/OrderStatus'
-          description: The status of the `Order`.
-          example: PENDING
+          $ref: '#/components/schemas/PurchaseStatus'
+          description: 'The status of the `Purchase` (sortable: no).'
+          example: ASSIGNED
+        title:
+          type: string
+          description: 'The name of the `Purchase` (sortable: no).'
+          example: Tech book
+        description:
+          type: string
+          description: 'The description of the `Purchase` (sortable: no).'
+          example: A purchase to approve
+        amount:
+          type: number
+          description: 'The maximum spendable amount of the `Purchase` (sortable: no).'
+          example: 10.25
+        amount_currency:
+          $ref: '#/components/schemas/ISO4217Currency'
+          description: 'The currency of the `Purchase` ([ISO 4217](https://www.six-group.com/en/products-services/financial-information/data-standards.html#scrollTo=maintenance-agency) code) (sortable: no).'
+          example: EUR
+        wallet_id:
+          type: string
+          description: 'The ID of the `Wallet` the money are taken from, the funding source of the `Purchase` (sortable: no).'
+          example: 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
+        wallet_name:
+          type: string
+          description: 'The name of the `Wallet` the money are taken from, the funding source of the `Purchase` (sortable: no).'
+          example: John Doe
+        has_attachments:
+          type: boolean
+          description: 'It determines whether the `Purchase` has one or more attachments (sortable: no).'
+          example: true
+        notes:
+          type: string
+          description: 'The notes of the `Purchase` (sortable: no).'
+          example: Notes about the purchase request
+        assignee_id:
+          type: string
+          description: 'The ID of the `User` assigned to the `Purchase` (sortable: no).'
+          example: XMPL1234-000003
+        additional_assignee_ids:
+          type: array
+          description: 'The IDs of any additional `User` assigned to the `Purchase` (sortable: no).'
+          example: XMPL1234-000003
+          items:
+            type: string
+          uniqueItems: true
+        assignee_custom_reference_id:
+          type: string
+          description: 'The custom reference of the `User` assigned to the `Purchase` (sortable: no).'
+          example: 123456-user-1
+        author_id:
+          type: string
+          description: 'The ID of the `User` that created the `Purchase` (sortable: no).'
+          example: XMPL1234-000001
+        author_custom_reference_id:
+          type: string
+          description: 'The custom reference of the `User` that created the purchase (sortable: no).'
+          example: 123456-user-2
+        expiration_date:
+          type: string
+          description: 'The date and time when the `Purchase` will expire (sortable: no).'
+          example: '2017-06-01T12:48:40Z'
+        card_id:
+          type: string
+          description: 'The ID of the `Card` assigned to the `Purchase`, only available after the redemption `Order` has been completed (sortable: no).'
+          example: 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
+        transactions:
+          type: array
+          description: 'The `Transactions` originated by the `Purchase` (sortable: no).'
+          items:
+            $ref: '#/components/schemas/PurchaseTransaction'
+        max_tx_number:
+          type: integer
+          format: int32
+          description: The max number of the `Transactions` that can be made with the `Card`.
+          example: 3
         creation_time:
           type: string
-          description: The date and time when the `Order` was created.
+          description: 'The date and time when the `Purchase` was created (sortable: yes).'
           example: '2017-06-01T12:48:40Z'
         last_update_time:
           type: string
-          description: The last update date of the `Order`.
+          description: 'The date and time when the `Purchase` was last updated (sortable: yes).'
           example: '2017-06-01T12:48:40Z'
-        error_code:
-          type: string
-          description: In case is_valid is false, the error code of the `Order` is shown.
-        total_paid_amount:
-          type: number
-          description: The total amount of the `Order`.
-          example: 10.25
-        total_paid_currency:
-          $ref: '#/components/schemas/ISO4217Currency'
-          description: The currency for the total paid amount.
-          example: EUR
-        items:
-          type: array
-          description: The products associated with the `Order`.
-          items:
-            $ref: '#/components/schemas/OrderItem'
-        is_valid:
-          type: boolean
-          description: It states whether the `Order` is valid.
-          example: true
     PurchaseStatus:
       type: string
       enum:
@@ -833,9 +756,6 @@ components:
       - DELETED
       - EXPIRED
       - REQUEST_EXTENSION
-    DateParam:
-      description: 'The end of the period of the search `toDate` included (i.e. less than) (Formats: `yyyy-MM-dd`, `yyyy-MM-ddThh:mm:ss`, `yyyy-MM-ddThh:mm:ssZ`).'
-      example: '1970-01-30'
     ISO4217Currency:
       type: string
       enum:
@@ -1023,6 +943,161 @@ components:
       - ZAR
       - ZMW
       - ZWL
+    PurchaseRedeemCardEvent:
+      properties:
+        event_uuid:
+          type: string
+          description: The webhook unique ID.
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+        event_type:
+          $ref: '#/components/schemas/WebhookEventType'
+          default: Purchase
+          description: The webhook event type.
+          example: Purchase
+        event_name:
+          $ref: '#/components/schemas/WebhookEventName'
+          default: purchase_redeem_card
+          description: The webhook event name.
+          example: purchase_redeem_card
+        company_account_id:
+          type: string
+          description: The company account ID.
+          example: XMPL1234
+        data:
+          $ref: '#/components/schemas/Purchase'
+          description: The webhook `Purchase` data.
+        subscription_id:
+          type: string
+          description: The webhook subscription ID used to route this event.
+          example: 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
+    Direction:
+      type: string
+      description: It indicates how the pages are ordered.
+      enum:
+      - ASC
+      - DESC
+      example: DESC
+    UpdatePurchase:
+      description: Update `Purchase` JSON parameters.
+      properties:
+        purchase_id:
+          type: string
+          description: The `Purchase` ID.
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+        title:
+          type: string
+          description: The name of the `Purchase`
+          example: Tech book
+        assignee_id:
+          type: string
+          description: The ID of the `User` assigned to the `Purchase`.
+          example: XMPL1234-000003
+        amount:
+          type: number
+          description: The maximum spendable amount of the `Purchase`.
+          example: 10.25
+        description:
+          type: string
+          description: The description of the `Purchase`.
+          example: A purchase to approve
+        wallet_id:
+          type: string
+          description: The ID of the `Wallet` the money are taken from, the funding source of the `Purchase`.
+          example: 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
+        notes:
+          type: string
+          description: The notes of the `Purchase`.
+          example: Notes about the purchase request
+        max_tx_number:
+          type: integer
+          format: int32
+          default: '1'
+          description: The total number of `Transactions` the temporary virtual `Card` can make (default is `1`).
+          example: 3
+      required:
+      - purchase_id
+    PurchaseCreateEvent:
+      properties:
+        event_uuid:
+          type: string
+          description: The webhook unique ID.
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+        event_type:
+          $ref: '#/components/schemas/WebhookEventType'
+          default: Purchase
+          description: The webhook event type.
+          example: Purchase
+        event_name:
+          $ref: '#/components/schemas/WebhookEventName'
+          default: purchase_create
+          description: The webhook event name.
+          example: purchase_create
+        company_account_id:
+          type: string
+          description: The company account ID.
+          example: XMPL1234
+        data:
+          $ref: '#/components/schemas/Purchase'
+          description: The webhook `Purchase` data.
+        subscription_id:
+          type: string
+          description: The webhook subscription ID used to route this event.
+          example: 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
+    Order:
+      properties:
+        id:
+          type: string
+          description: The `Order` ID.
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+        status:
+          $ref: '#/components/schemas/OrderStatus'
+          description: The status of the `Order`.
+          example: PENDING
+        creation_time:
+          type: string
+          description: The date and time when the `Order` was created.
+          example: '2017-06-01T12:48:40Z'
+        last_update_time:
+          type: string
+          description: The last update date of the `Order`.
+          example: '2017-06-01T12:48:40Z'
+        error_code:
+          type: string
+          description: In case is_valid is false, the error code of the `Order` is shown.
+        total_paid_amount:
+          type: number
+          description: The total amount of the `Order`.
+          example: 10.25
+        total_paid_currency:
+          $ref: '#/components/schemas/ISO4217Currency'
+          description: The currency for the total paid amount.
+          example: EUR
+        items:
+          type: array
+          description: The products associated with the `Order`.
+          items:
+            $ref: '#/components/schemas/OrderItem'
+        is_valid:
+          type: boolean
+          description: It states whether the `Order` is valid.
+          example: true
+    WebhookEventType:
+      type: string
+      enum:
+      - BusinessTrip
+      - Card
+      - Contact
+      - ExpenseReview
+      - Group
+      - OnlineAds
+      - Order
+      - Purchase
+      - Subscription
+      - Transaction
+      - TransactionAttachment
+      - Employee
+      - Vehicle
+      - Wallet
     PurchaseTransaction:
       properties:
         id:
@@ -1044,131 +1119,56 @@ components:
         transaction_category:
           type: string
           description: 'The category of the `Transaction` (sortable: no)'
-    PurchaseDeleteEvent:
+    DateParam:
+      description: 'The end of the period of the search `toDate` included (i.e. less than) (Formats: `yyyy-MM-dd`, `yyyy-MM-ddThh:mm:ss`, `yyyy-MM-ddThh:mm:ssZ`).'
+      example: '1970-01-30'
+    SearchPurchaseDateType:
+      type: string
+      description: It determines the date to be considered for `fromDate` and `toDate` parameters.
+      enum:
+      - CREATION_TIME
+      - COMPLETED_TIME
+      example: COMPLETED_TIME
+    CreatePurchase:
+      description: Create `Purchase` JSON parameters.
       properties:
-        event_uuid:
-          type: string
-          description: The webhook unique ID.
-          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
-        event_type:
-          $ref: '#/components/schemas/WebhookEventType'
-          default: Purchase
-          description: The webhook event type.
-          example: Purchase
-        event_name:
-          $ref: '#/components/schemas/WebhookEventName'
-          default: purchase_delete
-          description: The webhook event name.
-          example: purchase_delete
-        company_account_id:
-          type: string
-          description: The company account ID.
-          example: XMPL1234
-        data:
-          $ref: '#/components/schemas/Purchase'
-          description: The webhook `Purchase` data.
-        subscription_id:
-          type: string
-          description: The webhook subscription ID used to route this event.
-          example: 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
-    Purchase:
-      properties:
-        id:
-          type: string
-          description: 'The `Purchase` ID (sortable: no).'
-          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
-        status:
-          $ref: '#/components/schemas/PurchaseStatus'
-          description: 'The status of the `Purchase` (sortable: no).'
-          example: ASSIGNED
         title:
           type: string
-          description: 'The name of the `Purchase` (sortable: no).'
+          description: The name of the `Purchase`.
           example: Tech book
-        description:
-          type: string
-          description: 'The description of the `Purchase` (sortable: no).'
-          example: A purchase to approve
-        amount:
-          type: number
-          description: 'The maximum spendable amount of the `Purchase` (sortable: no).'
-          example: 10.25
-        amount_currency:
-          $ref: '#/components/schemas/ISO4217Currency'
-          description: 'The currency of the `Purchase` ([ISO 4217](https://www.six-group.com/en/products-services/financial-information/data-standards.html#scrollTo=maintenance-agency) code) (sortable: no).'
-          example: EUR
-        wallet_id:
-          type: string
-          description: 'The ID of the `Wallet` the money are taken from, the funding source of the `Purchase` (sortable: no).'
-          example: 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
-        wallet_name:
-          type: string
-          description: 'The name of the `Wallet` the money are taken from, the funding source of the `Purchase` (sortable: no).'
-          example: John Doe
-        has_attachments:
-          type: boolean
-          description: 'It determines whether the `Purchase` has one or more attachments (sortable: no).'
-          example: true
-        notes:
-          type: string
-          description: 'The notes of the `Purchase` (sortable: no).'
-          example: Notes about the purchase request
         assignee_id:
           type: string
-          description: 'The ID of the `User` assigned to the `Purchase` (sortable: no).'
+          description: The ID of the `User` assigned to the `Purchase`.
           example: XMPL1234-000003
-        additional_assignee_ids:
-          type: array
-          description: 'The IDs of any additional `User` assigned to the `Purchase` (sortable: no).'
-          example: XMPL1234-000003
-          items:
-            type: string
-          uniqueItems: true
-        assignee_custom_reference_id:
+        amount:
+          type: number
+          description: The maximum spendable amount of the `Purchase`.
+          example: 10.25
+        description:
           type: string
-          description: 'The custom reference of the `User` assigned to the `Purchase` (sortable: no).'
-          example: 123456-user-1
-        author_id:
+          description: The description of the `Purchase`.
+          example: A purchase to approve
+        wallet_id:
           type: string
-          description: 'The ID of the `User` that created the `Purchase` (sortable: no).'
-          example: XMPL1234-000001
-        author_custom_reference_id:
+          description: The ID of the `Wallet` the money are taken from, the funding source of the `Purchase`.
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+        notes:
           type: string
-          description: 'The custom reference of the `User` that created the purchase (sortable: no).'
-          example: 123456-user-2
-        expiration_date:
-          type: string
-          description: 'The date and time when the `Purchase` will expire (sortable: no).'
-          example: '2017-06-01T12:48:40Z'
-        card_id:
-          type: string
-          description: 'The ID of the `Card` assigned to the `Purchase`, only available after the redemption `Order` has been completed (sortable: no).'
-          example: 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
-        transactions:
-          type: array
-          description: 'The `Transactions` originated by the `Purchase` (sortable: no).'
-          items:
-            $ref: '#/components/schemas/PurchaseTransaction'
+          description: The notes of the `Purchase`.
+          example: Notes about the purchase request
         max_tx_number:
           type: integer
           format: int32
-          description: The max number of the `Transactions` that can be made with the `Card`.
+          default: '1'
+          description: The total number of `Transactions` the temporary virtual `Card` can make.
           example: 3
-        creation_time:
-          type: string
-          description: 'The date and time when the `Purchase` was created (sortable: yes).'
-          example: '2017-06-01T12:48:40Z'
-        last_update_time:
-          type: string
-          description: 'The date and time when the `Purchase` was last updated (sortable: yes).'
-          example: '2017-06-01T12:48:40Z'
-    Direction:
-      type: string
-      description: It indicates how the pages are ordered.
-      enum:
-      - ASC
-      - DESC
-      example: DESC
+      required:
+      - amount
+      - assignee_id
+      - description
+      - max_tx_number
+      - title
+      - wallet_id
   securitySchemes:
     standardAuth:
       type: oauth2

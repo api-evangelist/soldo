@@ -247,24 +247,6 @@ paths:
         fingerprint-order: type, publicId, fromDate, toDate, dateType, txCountry, txStatus, txFuelType, token
 components:
   schemas:
-    RefuelingType:
-      type: string
-      description: The resource `type` to be used together with id.
-      enum:
-      - transaction
-      - vehicle
-      - card
-      example: card
-    FuelType:
-      type: string
-      enum:
-      - PETROL
-      - DIESEL
-      - METHANE
-      - LPG
-      - LNG
-      - ELECTRIC
-      - UNKNOWN
     ISO3166Country:
       type: string
       enum:
@@ -533,6 +515,18 @@ components:
       - ZMB
       - ZRCD
       - ZWE
+    TransactionStatus:
+      type: string
+      enum:
+      - Authorised
+      - Settled
+      - Cancelled
+      - Declined
+      - DisputeFailed
+      - DisputeOpened
+      - DisputeWon
+      - Moved
+      - Unknown
     Refuelings:
       properties:
         total:
@@ -564,22 +558,53 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Refueling'
-    Direction:
+    FuelType:
       type: string
-      description: It indicates how the pages are ordered.
       enum:
-      - ASC
-      - DESC
-      example: DESC
-    TransactionDateType:
+      - PETROL
+      - DIESEL
+      - METHANE
+      - LPG
+      - LNG
+      - ELECTRIC
+      - UNKNOWN
+    TransactionSign:
       type: string
-      default: TRANSACTION
-      description: It determines the date to be considered for `fromDate` and `toDate` parameters.
       enum:
-      - TRANSACTION
-      - SETTLEMENT
-      - UPDATE
-      example: TRANSACTION
+      - Negative
+      - Positive
+      - None
+    RefuelingType:
+      type: string
+      description: The resource `type` to be used together with id.
+      enum:
+      - transaction
+      - vehicle
+      - card
+      example: card
+    UpdateRefueling:
+      description: Update `Refueling` JSON parameters.
+      properties:
+        mileage:
+          type: integer
+          format: int32
+          description: The mileage of the `Vehicle`.
+          example: 125000
+        unit_price:
+          type: number
+          description: The fuel unit price as specified on the `Transaction`.
+          example: 1.41
+        tx_fuel_type:
+          $ref: '#/components/schemas/FuelType'
+          description: The fuel type specified on the `Transaction`.
+          example: PETROL
+        quantity:
+          type: number
+          description: The fuel quantity as specified on the `Transaction`.
+          example: 80
+    DateParam:
+      description: 'The end of the period of the search `toDate` included (i.e. less than) (Formats: `yyyy-MM-dd`, `yyyy-MM-ddThh:mm:ss`, `yyyy-MM-ddThh:mm:ssZ`).'
+      example: '1970-01-30'
     Refueling:
       properties:
         public_id:
@@ -704,47 +729,22 @@ components:
           type: string
           description: Vehicle ID.
           example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
-    UpdateRefueling:
-      description: Update `Refueling` JSON parameters.
-      properties:
-        mileage:
-          type: integer
-          format: int32
-          description: The mileage of the `Vehicle`.
-          example: 125000
-        unit_price:
-          type: number
-          description: The fuel unit price as specified on the `Transaction`.
-          example: 1.41
-        tx_fuel_type:
-          $ref: '#/components/schemas/FuelType'
-          description: The fuel type specified on the `Transaction`.
-          example: PETROL
-        quantity:
-          type: number
-          description: The fuel quantity as specified on the `Transaction`.
-          example: 80
-    TransactionStatus:
+    Direction:
       type: string
+      description: It indicates how the pages are ordered.
       enum:
-      - Authorised
-      - Settled
-      - Cancelled
-      - Declined
-      - DisputeFailed
-      - DisputeOpened
-      - DisputeWon
-      - Moved
-      - Unknown
-    DateParam:
-      description: 'The end of the period of the search `toDate` included (i.e. less than) (Formats: `yyyy-MM-dd`, `yyyy-MM-ddThh:mm:ss`, `yyyy-MM-ddThh:mm:ssZ`).'
-      example: '1970-01-30'
-    TransactionSign:
+      - ASC
+      - DESC
+      example: DESC
+    TransactionDateType:
       type: string
+      default: TRANSACTION
+      description: It determines the date to be considered for `fromDate` and `toDate` parameters.
       enum:
-      - Negative
-      - Positive
-      - None
+      - TRANSACTION
+      - SETTLEMENT
+      - UPDATE
+      example: TRANSACTION
     ISO4217Currency:
       type: string
       enum:

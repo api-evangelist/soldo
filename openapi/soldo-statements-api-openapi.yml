@@ -78,6 +78,29 @@ paths:
         - statement_read
 components:
   schemas:
+    ISO4217SupportedCurrency:
+      type: string
+      description: The [ISO 4217](https://www.six-group.com/en/products-services/financial-information/data-standards.html#scrollTo=maintenance-agency) code of the currency of the `Statement` to search for.
+      enum:
+      - EUR
+      - GBP
+      - USD
+      example: EUR
+    Month:
+      type: string
+      enum:
+      - JANUARY
+      - FEBRUARY
+      - MARCH
+      - APRIL
+      - MAY
+      - JUNE
+      - JULY
+      - AUGUST
+      - SEPTEMBER
+      - OCTOBER
+      - NOVEMBER
+      - DECEMBER
     Statement:
       properties:
         year:
@@ -98,14 +121,6 @@ components:
           description: The generated `Statement` file types.
           items:
             example: PDF
-    ISO4217SupportedCurrency:
-      type: string
-      description: The [ISO 4217](https://www.six-group.com/en/products-services/financial-information/data-standards.html#scrollTo=maintenance-agency) code of the currency of the `Statement` to search for.
-      enum:
-      - EUR
-      - GBP
-      - USD
-      example: EUR
     Statements:
       properties:
         total:
@@ -117,6 +132,19 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Statement'
+    StatementFileType:
+      type: string
+      enum:
+      - PDF
+      - XLSX
+      - CSV
+    StatementDownloadUrl:
+      properties:
+        presigned_url:
+          type: string
+          format: uri
+          description: The presigned url where to download the `Statement`.
+          example: https://my-demo-bucket.s3.amazonaws.com/example.txt?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAIOSFODNN7EXAMPLE%2F20250416%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20250416T083000Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234567890
     DownloadStatement:
       description: Download `statement` JSON parameters.
       properties:
@@ -143,34 +171,6 @@ components:
       - file_type
       - month
       - year
-    Month:
-      type: string
-      enum:
-      - JANUARY
-      - FEBRUARY
-      - MARCH
-      - APRIL
-      - MAY
-      - JUNE
-      - JULY
-      - AUGUST
-      - SEPTEMBER
-      - OCTOBER
-      - NOVEMBER
-      - DECEMBER
-    StatementDownloadUrl:
-      properties:
-        presigned_url:
-          type: string
-          format: uri
-          description: The presigned url where to download the `Statement`.
-          example: https://my-demo-bucket.s3.amazonaws.com/example.txt?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAIOSFODNN7EXAMPLE%2F20250416%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20250416T083000Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234567890
-    StatementFileType:
-      type: string
-      enum:
-      - PDF
-      - XLSX
-      - CSV
   securitySchemes:
     standardAuth:
       type: oauth2

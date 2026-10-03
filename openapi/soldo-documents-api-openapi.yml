@@ -169,6 +169,71 @@ paths:
         - document_read
 components:
   schemas:
+    CompletedUploadDocument:
+      description: Parameters used to request a document upload complite.
+      properties:
+        content_type:
+          type: string
+          description: The MIME type of the `Document`.
+          example: application/pdf
+        attachment_name:
+          type: string
+          description: Attachment name of the `Document`
+          example: 1779089463912.pdf
+        attachment_type:
+          type: string
+          description: The type of file of the `Document`.
+          example: RECEIPT
+        uploaded_by:
+          type: string
+          description: The User or system that uploaded the file of the `Document`
+          example: USER
+        thumbnails_size:
+          type: string
+          description: The requested thumbnail size hint for downstream rendering of file of the `Document` .
+          example: x1
+        readonly:
+          type: boolean
+          description: Readonly flag of the `Document`
+          example: false
+        analysis_required:
+          type: boolean
+          description: It indicates whether automated content analysis should be performed on the `Document` after upload.
+          example: false
+      required:
+      - attachment_name
+      - content_type
+    DocumentItem:
+      properties:
+        id:
+          type: string
+          description: The `Document` ID.
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+        name:
+          type: string
+          description: The original file name of the `Document`.
+          example: invoice-2025-001.pdf
+        attachment_url:
+          type: string
+          description: Pre-signed URL where the `Document` content can be downloaded.
+          example: https://storage.example.com/documents/7bf79328-a7ae-4222-aa54-091ff7f429a7/content?signature=...
+        preview_url:
+          type: string
+          description: Pre-signed URL for the `Document` preview rendering.
+          example: https://storage.example.com/documents/7bf79328-a7ae-4222-aa54-091ff7f429a7/preview?signature=...
+        thumbnail_url:
+          type: string
+          description: The Pre-signed URL for the file of the `Document` thumbnail.
+          example: https://storage.example.com/documents/7bf79328-a7ae-4222-aa54-091ff7f429a7/thumbnail?signature=...
+        import_date:
+          type: string
+          format: date-time
+          description: The date and time when the `Document` was imported.
+          example: '2025-04-12T10:15:30Z'
+        attached:
+          type: boolean
+          description: It indicates whether the `Document` is already attached to one or more activities.
+          example: false
     UploadUrlDocument:
       properties:
         uploaded_by:
@@ -205,66 +270,11 @@ components:
       required:
       - content_type
       - file_extension
-    CompletedUploadDocument:
-      description: Parameters used to request a document upload complite.
-      properties:
-        content_type:
-          type: string
-          description: The MIME type of the `Document`.
-          example: application/pdf
-        attachment_name:
-          type: string
-          description: Attachment name of the `Document`
-          example: 1779089463912.pdf
-        attachment_type:
-          type: string
-          description: The type of file of the `Document`.
-          example: RECEIPT
-        uploaded_by:
-          type: string
-          description: The User or system that uploaded the file of the `Document`
-          example: USER
-        thumbnails_size:
-          type: string
-          description: The requested thumbnail size hint for downstream rendering of file of the `Document` .
-          example: x1
-        readonly:
-          type: boolean
-          description: Readonly flag of the `Document`
-          example: false
-        analysis_required:
-          type: boolean
-          description: It indicates whether automated content analysis should be performed on the `Document` after upload.
-          example: false
-      required:
-      - attachment_name
-      - content_type
-    Document:
-      properties:
-        id:
-          type: string
-          description: The `Document` ID.
-          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
-        name:
-          type: string
-          description: The original file name of the `Document`.
-          example: invoice-2025-001.pdf
-        preview_url:
-          type: string
-          description: Pre-signed URL for the `Document` preview rendering.
-          example: https://storage.example.com/documents/7bf79328-a7ae-4222-aa54-091ff7f429a7/preview?signature=...
-        thumbnail_url:
-          type: string
-          description: The Pre-signed URL for the file of the `Document` thumbnail.
-          example: https://storage.example.com/documents/7bf79328-a7ae-4222-aa54-091ff7f429a7/thumbnail?signature=...
-        creation_time:
-          type: string
-          description: The date and time when the `Document` was imported.
-          example: '2025-04-12T10:15:30Z'
-        attached:
-          type: boolean
-          description: It indicates whether the `Document` is already attached to one or more activities.
-          example: false
+    DocumentOperation:
+      type: string
+      enum:
+      - UPLOAD_URL
+      - UPLOAD_COMPLETED
     Documents:
       properties:
         total:
@@ -296,12 +306,7 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/DocumentItem'
-    DocumentOperation:
-      type: string
-      enum:
-      - UPLOAD_URL
-      - UPLOAD_COMPLETED
-    DocumentItem:
+    Document:
       properties:
         id:
           type: string
@@ -311,10 +316,6 @@ components:
           type: string
           description: The original file name of the `Document`.
           example: invoice-2025-001.pdf
-        attachment_url:
-          type: string
-          description: Pre-signed URL where the `Document` content can be downloaded.
-          example: https://storage.example.com/documents/7bf79328-a7ae-4222-aa54-091ff7f429a7/content?signature=...
         preview_url:
           type: string
           description: Pre-signed URL for the `Document` preview rendering.
@@ -323,9 +324,8 @@ components:
           type: string
           description: The Pre-signed URL for the file of the `Document` thumbnail.
           example: https://storage.example.com/documents/7bf79328-a7ae-4222-aa54-091ff7f429a7/thumbnail?signature=...
-        import_date:
+        creation_time:
           type: string
-          format: date-time
           description: The date and time when the `Document` was imported.
           example: '2025-04-12T10:15:30Z'
         attached:

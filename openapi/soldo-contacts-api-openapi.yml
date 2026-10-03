@@ -400,120 +400,11 @@ webhooks:
         fingerprint-order: id, name, userId, type, status
 components:
   schemas:
-    WebhookEventType:
+    AccountTypeRequest:
       type: string
       enum:
-      - BusinessTrip
-      - Card
-      - Contact
-      - ExpenseReview
-      - Group
-      - OnlineAds
-      - Order
-      - Purchase
-      - Subscription
-      - Transaction
-      - TransactionAttachment
-      - Employee
-      - Vehicle
-      - Wallet
-    ContactMatchStatus:
-      type: string
-      enum:
-      - UNABLE_TO_MATCH
-      - FULL_MATCH
-      - PARTIAL_MATCH
-      - NO_MATCH
-      - UNABLE_TO_VERIFY
-    CreateContactResponse:
-      properties:
-        id:
-          type: string
-          description: The `Contact` ID.
-          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
-        name:
-          type: string
-          description: The name of the `Contact`.
-          example: John Doe
-        user_id:
-          type: string
-          description: The ID of the `User` the bank details are assigned to (only available for `Contacts` of type `EMPLOYEE`).
-          example: XMPL1234-000001
-        type:
-          $ref: '#/components/schemas/ContactType'
-          description: The type of `Contact`.
-          example: SUPPLIER
-        payment_scheme:
-          type: array
-          description: The type of payment accepted by the `Contact`.
-          items:
-            $ref: '#/components/schemas/PaymentSchema'
-          uniqueItems: true
-        account_info:
-          type: array
-          description: The bank account information of the `Contact`.
-          items:
-            $ref: '#/components/schemas/AccountInfoContact'
-        bic:
-          type: string
-          description: The bic of the `User` the bank details .
-          example: XMPL1234-000001
-        country:
-          $ref: '#/components/schemas/ISO3166Country'
-          description: The [ISO 3166-1 alpha-3](https://www.iso.org/obp/ui/#search/code/) code of the country of the `Contact`.
-          example: GBR
-        status:
-          $ref: '#/components/schemas/ContactStatus'
-          description: The status of the `Contact`.
-          example: SUGGESTED
-        creation_time:
-          type: string
-          description: The date and time when the `Contact` was created.
-          example: '2017-06-01T12:48:40Z'
-        last_update_time:
-          type: string
-          description: The date and time when the `Contact` was last updated.
-          example: '2017-06-01T12:48:40Z'
-        validation:
-          $ref: '#/components/schemas/ContactSuggestion'
-          description: The validation for contact correction.
-    PaymentSchema:
-      type: string
-      enum:
-      - FPS
-      - SEPA
-      - SEPA_INSTANT
-    Contacts:
-      properties:
-        total:
-          type: integer
-          format: int32
-          description: It represents the total number of available items in the list.
-          example: 168
-        pages:
-          type: integer
-          format: int32
-          description: It represents the total number of available pages.
-          example: 7
-        page_size:
-          type: integer
-          format: int32
-          description: It represents the number of items per page.
-          example: 25
-        current_page:
-          type: integer
-          format: int32
-          description: It indicates the current page (the counter starts from zero).
-          example: 0
-        results_size:
-          type: integer
-          format: int32
-          description: It indicates the size of the array results.
-          example: 25
-        results:
-          type: array
-          items:
-            $ref: '#/components/schemas/Contact'
+      - PERSONAL
+      - BUSINESS
     WebhookEventName:
       type: string
       enum:
@@ -602,13 +493,58 @@ components:
       - contact_created
       - contact_updated
       - contact_deleted
-    ContactType:
-      type: string
-      enum:
-      - SUPPLIER
-      - CLIENT
-      - EMPLOYEE
-      - ACCOUNT
+    UpdateContactResponse:
+      properties:
+        id:
+          type: string
+          description: The `Contact` ID.
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+        name:
+          type: string
+          description: The name of the `Contact`.
+          example: John Doe
+        user_id:
+          type: string
+          description: The ID of the `User` the bank details are assigned to (only available for `Contacts` of type `EMPLOYEE`).
+          example: XMPL1234-000001
+        type:
+          $ref: '#/components/schemas/ContactType'
+          description: The type of `Contact`.
+          example: SUPPLIER
+        payment_scheme:
+          type: array
+          description: The type of payment accepted by the `Contact`.
+          items:
+            $ref: '#/components/schemas/PaymentSchema'
+          uniqueItems: true
+        account_info:
+          type: array
+          description: The bank account information of the `Contact`.
+          items:
+            $ref: '#/components/schemas/AccountInfoContact'
+        bic:
+          type: string
+          description: The bic of the `User` the bank details .
+          example: XMPL1234-000001
+        country:
+          $ref: '#/components/schemas/ISO3166Country'
+          description: The [ISO 3166-1 alpha-3](https://www.iso.org/obp/ui/#search/code/) code of the country of the `Contact`.
+          example: GBR
+        status:
+          $ref: '#/components/schemas/ContactStatus'
+          description: The status of the `Contact`.
+          example: SUGGESTED
+        creation_time:
+          type: string
+          description: The date and time when the `Contact` was created.
+          example: '2017-06-01T12:48:40Z'
+        last_update_time:
+          type: string
+          description: The date and time when the `Contact` was last updated.
+          example: '2017-06-01T12:48:40Z'
+        validation:
+          $ref: '#/components/schemas/ContactSuggestion'
+          description: The validation for contact correction.
     CreateContact:
       description: Create `Contact` JSON parameters.
       properties:
@@ -646,6 +582,68 @@ components:
       - country
       - name
       - type
+    UpdateContact:
+      description: Update `Contact` JSON parameters.
+      properties:
+        type:
+          $ref: '#/components/schemas/ContactType'
+          description: The type of the `Contact`. If type is ACCOUNT, cannot be updated
+          example: SUPPLIER
+        user_id:
+          type: string
+          description: The ID of the `User` the bank details are assigned to (only available for `Contacts` of type `EMPLOYEE`).
+          example: XMPL1234-000001
+        account_info:
+          type: array
+          description: The bank account information of the `Contact`.
+          items:
+            $ref: '#/components/schemas/AccountInfoContact'
+        status:
+          $ref: '#/components/schemas/ContactStatus'
+          description: The status of the `Contact`.
+          example: CREATED
+        name:
+          type: string
+          description: The name of the `Contact`.
+          example: John Doe
+    ContactStatus:
+      type: string
+      enum:
+      - CREATED
+      - SUGGESTED
+    PaymentSchema:
+      type: string
+      enum:
+      - FPS
+      - SEPA
+      - SEPA_INSTANT
+    ContactUpdatedEvent:
+      properties:
+        event_uuid:
+          type: string
+          description: The webhook unique ID.
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+        event_type:
+          $ref: '#/components/schemas/WebhookEventType'
+          default: Contact
+          description: The webhook event type.
+          example: Contact
+        event_name:
+          $ref: '#/components/schemas/WebhookEventName'
+          default: contact_updated
+          description: The webhook event name.
+          example: contact_updated
+        company_account_id:
+          type: string
+          description: The company account ID.
+          example: XMPL1234
+        data:
+          $ref: '#/components/schemas/Contact'
+          description: The webhook `Contact` data.
+        subscription_id:
+          type: string
+          description: The webhook subscription ID used to route this event.
+          example: 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
     AccountIdentificationType:
       type: string
       enum:
@@ -705,164 +703,6 @@ components:
           $ref: '#/components/schemas/ContactBankAccountVerificationStatus'
           description: Whether the provided `Contact` bank account details matches the actual ones.
           example: '2017-06-01T12:48:40Z'
-    UpdateContactResponse:
-      properties:
-        id:
-          type: string
-          description: The `Contact` ID.
-          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
-        name:
-          type: string
-          description: The name of the `Contact`.
-          example: John Doe
-        user_id:
-          type: string
-          description: The ID of the `User` the bank details are assigned to (only available for `Contacts` of type `EMPLOYEE`).
-          example: XMPL1234-000001
-        type:
-          $ref: '#/components/schemas/ContactType'
-          description: The type of `Contact`.
-          example: SUPPLIER
-        payment_scheme:
-          type: array
-          description: The type of payment accepted by the `Contact`.
-          items:
-            $ref: '#/components/schemas/PaymentSchema'
-          uniqueItems: true
-        account_info:
-          type: array
-          description: The bank account information of the `Contact`.
-          items:
-            $ref: '#/components/schemas/AccountInfoContact'
-        bic:
-          type: string
-          description: The bic of the `User` the bank details .
-          example: XMPL1234-000001
-        country:
-          $ref: '#/components/schemas/ISO3166Country'
-          description: The [ISO 3166-1 alpha-3](https://www.iso.org/obp/ui/#search/code/) code of the country of the `Contact`.
-          example: GBR
-        status:
-          $ref: '#/components/schemas/ContactStatus'
-          description: The status of the `Contact`.
-          example: SUGGESTED
-        creation_time:
-          type: string
-          description: The date and time when the `Contact` was created.
-          example: '2017-06-01T12:48:40Z'
-        last_update_time:
-          type: string
-          description: The date and time when the `Contact` was last updated.
-          example: '2017-06-01T12:48:40Z'
-        validation:
-          $ref: '#/components/schemas/ContactSuggestion'
-          description: The validation for contact correction.
-    ContactStatus:
-      type: string
-      enum:
-      - CREATED
-      - SUGGESTED
-    AccountInfoContact:
-      properties:
-        type:
-          $ref: '#/components/schemas/AccountIdentificationType'
-          description: The type of the bank account identification.
-          example: IBAN
-        identification:
-          type: string
-          description: The bank account identification for the specified type.
-          example: GB00ABCD00000123456789
-    AccountTypeRequest:
-      type: string
-      enum:
-      - PERSONAL
-      - BUSINESS
-    ContactCreatedEvent:
-      properties:
-        event_uuid:
-          type: string
-          description: The webhook unique ID.
-          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
-        event_type:
-          $ref: '#/components/schemas/WebhookEventType'
-          default: Contact
-          description: The webhook event type.
-          example: Contact
-        event_name:
-          $ref: '#/components/schemas/WebhookEventName'
-          default: contact_created
-          description: The webhook event name.
-          example: contact_created
-        company_account_id:
-          type: string
-          description: The company account ID.
-          example: XMPL1234
-        data:
-          $ref: '#/components/schemas/Contact'
-          description: The webhook `Contact` data.
-        subscription_id:
-          type: string
-          description: The webhook subscription ID used to route this event.
-          example: 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
-    ContactBankAccountVerificationStatus:
-      type: string
-      enum:
-      - UNABLE_TO_MATCH
-      - FULL_MATCH
-      - PARTIAL_MATCH
-      - NO_MATCH
-      - UNABLE_TO_VERIFY
-    UpdateContact:
-      description: Update `Contact` JSON parameters.
-      properties:
-        type:
-          $ref: '#/components/schemas/ContactType'
-          description: The type of the `Contact`. If type is ACCOUNT, cannot be updated
-          example: SUPPLIER
-        user_id:
-          type: string
-          description: The ID of the `User` the bank details are assigned to (only available for `Contacts` of type `EMPLOYEE`).
-          example: XMPL1234-000001
-        account_info:
-          type: array
-          description: The bank account information of the `Contact`.
-          items:
-            $ref: '#/components/schemas/AccountInfoContact'
-        status:
-          $ref: '#/components/schemas/ContactStatus'
-          description: The status of the `Contact`.
-          example: CREATED
-        name:
-          type: string
-          description: The name of the `Contact`.
-          example: John Doe
-    ContactUpdatedEvent:
-      properties:
-        event_uuid:
-          type: string
-          description: The webhook unique ID.
-          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
-        event_type:
-          $ref: '#/components/schemas/WebhookEventType'
-          default: Contact
-          description: The webhook event type.
-          example: Contact
-        event_name:
-          $ref: '#/components/schemas/WebhookEventName'
-          default: contact_updated
-          description: The webhook event name.
-          example: contact_updated
-        company_account_id:
-          type: string
-          description: The company account ID.
-          example: XMPL1234
-        data:
-          $ref: '#/components/schemas/Contact'
-          description: The webhook `Contact` data.
-        subscription_id:
-          type: string
-          description: The webhook subscription ID used to route this event.
-          example: 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
     ISO3166Country:
       type: string
       enum:
@@ -1131,6 +971,107 @@ components:
       - ZMB
       - ZRCD
       - ZWE
+    ContactType:
+      type: string
+      enum:
+      - SUPPLIER
+      - CLIENT
+      - EMPLOYEE
+      - ACCOUNT
+    ContactBankAccountVerificationStatus:
+      type: string
+      enum:
+      - UNABLE_TO_MATCH
+      - FULL_MATCH
+      - PARTIAL_MATCH
+      - NO_MATCH
+      - UNABLE_TO_VERIFY
+    CreateContactResponse:
+      properties:
+        id:
+          type: string
+          description: The `Contact` ID.
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+        name:
+          type: string
+          description: The name of the `Contact`.
+          example: John Doe
+        user_id:
+          type: string
+          description: The ID of the `User` the bank details are assigned to (only available for `Contacts` of type `EMPLOYEE`).
+          example: XMPL1234-000001
+        type:
+          $ref: '#/components/schemas/ContactType'
+          description: The type of `Contact`.
+          example: SUPPLIER
+        payment_scheme:
+          type: array
+          description: The type of payment accepted by the `Contact`.
+          items:
+            $ref: '#/components/schemas/PaymentSchema'
+          uniqueItems: true
+        account_info:
+          type: array
+          description: The bank account information of the `Contact`.
+          items:
+            $ref: '#/components/schemas/AccountInfoContact'
+        bic:
+          type: string
+          description: The bic of the `User` the bank details .
+          example: XMPL1234-000001
+        country:
+          $ref: '#/components/schemas/ISO3166Country'
+          description: The [ISO 3166-1 alpha-3](https://www.iso.org/obp/ui/#search/code/) code of the country of the `Contact`.
+          example: GBR
+        status:
+          $ref: '#/components/schemas/ContactStatus'
+          description: The status of the `Contact`.
+          example: SUGGESTED
+        creation_time:
+          type: string
+          description: The date and time when the `Contact` was created.
+          example: '2017-06-01T12:48:40Z'
+        last_update_time:
+          type: string
+          description: The date and time when the `Contact` was last updated.
+          example: '2017-06-01T12:48:40Z'
+        validation:
+          $ref: '#/components/schemas/ContactSuggestion'
+          description: The validation for contact correction.
+    ContactCreatedEvent:
+      properties:
+        event_uuid:
+          type: string
+          description: The webhook unique ID.
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+        event_type:
+          $ref: '#/components/schemas/WebhookEventType'
+          default: Contact
+          description: The webhook event type.
+          example: Contact
+        event_name:
+          $ref: '#/components/schemas/WebhookEventName'
+          default: contact_created
+          description: The webhook event name.
+          example: contact_created
+        company_account_id:
+          type: string
+          description: The company account ID.
+          example: XMPL1234
+        data:
+          $ref: '#/components/schemas/Contact'
+          description: The webhook `Contact` data.
+        subscription_id:
+          type: string
+          description: The webhook subscription ID used to route this event.
+          example: 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
+    Direction:
+      type: string
+      description: It indicates how the pages are ordered.
+      enum:
+      - ASC
+      - DESC
+      example: DESC
     ContactDeletedEvent:
       properties:
         event_uuid:
@@ -1158,6 +1099,64 @@ components:
           type: string
           description: The webhook subscription ID used to route this event.
           example: 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
+    Contacts:
+      properties:
+        total:
+          type: integer
+          format: int32
+          description: It represents the total number of available items in the list.
+          example: 168
+        pages:
+          type: integer
+          format: int32
+          description: It represents the total number of available pages.
+          example: 7
+        page_size:
+          type: integer
+          format: int32
+          description: It represents the number of items per page.
+          example: 25
+        current_page:
+          type: integer
+          format: int32
+          description: It indicates the current page (the counter starts from zero).
+          example: 0
+        results_size:
+          type: integer
+          format: int32
+          description: It indicates the size of the array results.
+          example: 25
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Contact'
+    AccountInfoContact:
+      properties:
+        type:
+          $ref: '#/components/schemas/AccountIdentificationType'
+          description: The type of the bank account identification.
+          example: IBAN
+        identification:
+          type: string
+          description: The bank account identification for the specified type.
+          example: GB00ABCD00000123456789
+    WebhookEventType:
+      type: string
+      enum:
+      - BusinessTrip
+      - Card
+      - Contact
+      - ExpenseReview
+      - Group
+      - OnlineAds
+      - Order
+      - Purchase
+      - Subscription
+      - Transaction
+      - TransactionAttachment
+      - Employee
+      - Vehicle
+      - Wallet
     ContactSuggestion:
       properties:
         field:
@@ -1176,13 +1175,14 @@ components:
           $ref: '#/components/schemas/ContactMatchStatus'
           description: Whether the provided `Contact` bank account data matches.
           example: PARTIAL_MATCH
-    Direction:
+    ContactMatchStatus:
       type: string
-      description: It indicates how the pages are ordered.
       enum:
-      - ASC
-      - DESC
-      example: DESC
+      - UNABLE_TO_MATCH
+      - FULL_MATCH
+      - PARTIAL_MATCH
+      - NO_MATCH
+      - UNABLE_TO_VERIFY
   securitySchemes:
     standardAuth:
       type: oauth2

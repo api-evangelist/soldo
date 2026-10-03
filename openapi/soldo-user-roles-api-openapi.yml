@@ -122,6 +122,17 @@ paths:
         - employee_write
 components:
   schemas:
+    AssignedUserRoles:
+      properties:
+        id:
+          type: string
+          description: The `User` ID.
+          example: XMPL1234-000001
+        roles:
+          type: array
+          description: The list of `UserRole` of the `User`.
+          items:
+            $ref: '#/components/schemas/UserRole'
     UserRole:
       properties:
         id:
@@ -140,17 +151,6 @@ components:
           type: string
           description: The scope of the `UserRole`.
           example: ALL
-    AssignedUserRoles:
-      properties:
-        id:
-          type: string
-          description: The `User` ID.
-          example: XMPL1234-000001
-        roles:
-          type: array
-          description: The list of `UserRole` of the `User`.
-          items:
-            $ref: '#/components/schemas/UserRole'
     UpdateUserRoleAssignment:
       description: Remove `Role` from `User` JSON parameters.
       properties:

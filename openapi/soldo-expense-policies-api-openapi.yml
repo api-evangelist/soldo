@@ -257,6 +257,27 @@ paths:
         - expense_policy_read
 components:
   schemas:
+    ExpensePolicyUnassignment:
+      description: '`ExpensePolicy` unassignment JSON parameters.'
+      properties:
+        assignee_ids:
+          type: array
+          description: List of `User` IDs to remove from their current `ExpensePolicy`.
+          example:
+          - XMPL1234-000001
+          - XMPL1234-000002
+          - XMPL1234-000003
+          items:
+            type: string
+      required:
+      - assignee_ids
+    ExpensePolicyStatus:
+      type: string
+      description: The list of `ExpensePolicy` statuses to search by.
+      enum:
+      - ACTIVE
+      - DELETED
+      example: ACTIVE
     ExpensePolicyAssignees:
       properties:
         total:
@@ -288,6 +309,27 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ExpensePolicyAssignee'
+    ExpensePolicyAssignment:
+      description: Add `ExpensePolicy` assignees JSON parameters.
+      properties:
+        assignee_ids:
+          type: array
+          description: List of `User` IDs to assign to the `ExpensePolicy`.
+          example:
+          - XMPL1234-000001
+          - XMPL1234-000002
+          - XMPL1234-000003
+          items:
+            type: string
+      required:
+      - assignee_ids
+    Direction:
+      type: string
+      description: It indicates how the pages are ordered.
+      enum:
+      - ASC
+      - DESC
+      example: DESC
     ExpensePolicy:
       properties:
         id:
@@ -324,13 +366,6 @@ components:
           type: string
           description: The ID one `User` assigned to the `ExpensePolicy`.
           example: XMPL1234-000001
-    ExpensePolicyStatus:
-      type: string
-      description: The list of `ExpensePolicy` statuses to search by.
-      enum:
-      - ACTIVE
-      - DELETED
-      example: ACTIVE
     ExpensePolicies:
       properties:
         total:
@@ -362,41 +397,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ExpensePolicy'
-    Direction:
-      type: string
-      description: It indicates how the pages are ordered.
-      enum:
-      - ASC
-      - DESC
-      example: DESC
-    ExpensePolicyAssignment:
-      description: Add `ExpensePolicy` assignees JSON parameters.
-      properties:
-        assignee_ids:
-          type: array
-          description: List of `User` IDs to assign to the `ExpensePolicy`.
-          example:
-          - XMPL1234-000001
-          - XMPL1234-000002
-          - XMPL1234-000003
-          items:
-            type: string
-      required:
-      - assignee_ids
-    ExpensePolicyUnassignment:
-      description: '`ExpensePolicy` unassignment JSON parameters.'
-      properties:
-        assignee_ids:
-          type: array
-          description: List of `User` IDs to remove from their current `ExpensePolicy`.
-          example:
-          - XMPL1234-000001
-          - XMPL1234-000002
-          - XMPL1234-000003
-          items:
-            type: string
-      required:
-      - assignee_ids
   securitySchemes:
     standardAuth:
       type: oauth2
