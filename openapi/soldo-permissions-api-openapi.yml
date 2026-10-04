@@ -30,17 +30,6 @@ paths:
         - role_read
 components:
   schemas:
-    UserRoles:
-      properties:
-        total:
-          type: integer
-          format: int32
-          description: It represents the total number of available items in the list.
-          example: 168
-        results:
-          type: array
-          items:
-            $ref: '#/components/schemas/Role'
     Role:
       properties:
         id:
@@ -66,6 +55,17 @@ components:
           - ALL
           items:
             type: string
+    UserRoles:
+      properties:
+        total:
+          type: integer
+          format: int32
+          description: It represents the total number of available items in the list.
+          example: 168
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Role'
   securitySchemes:
     standardAuth:
       type: oauth2

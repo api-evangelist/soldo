@@ -470,6 +470,50 @@ webhooks:
         fingerprint-order: startDate, policyUrl, enabled, transactionId
 components:
   schemas:
+    ExportExpense:
+      description: Export the Expenses JSON parameters.
+      properties:
+        transaction_ids:
+          type: array
+          description: An array of `Transaction` ID to be exported
+          example:
+          - 7bf79328-a7ae-4222-aa54-091ff7f429a7
+          - 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
+          items:
+            type: string
+        exported_by_id:
+          type: string
+          description: The ID of the `User` who exports the expense.
+          example: XMPL1234-000003
+      required:
+      - transaction_ids
+    WebhookEventType:
+      type: string
+      enum:
+      - BusinessTrip
+      - Card
+      - Contact
+      - ExpenseReview
+      - Group
+      - OnlineAds
+      - Order
+      - Purchase
+      - Subscription
+      - Transaction
+      - TransactionAttachment
+      - Employee
+      - Vehicle
+      - Wallet
+    ExpenseConfigurationActivityGroup:
+      type: string
+      enum:
+      - USER
+      - COMPANY
+      - PURCHASE
+      - SUBSCRIPTION
+      - ONLINE_ADS
+      - OUT_OF_PLATFORM_COMPANY
+      - OUT_OF_PLATFORM_PERSONAL
     ChangeExpenseTypeEvent:
       properties:
         event_uuid:
@@ -497,41 +541,6 @@ components:
           type: string
           description: The webhook subscription ID used to route this event.
           example: 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
-    UpdateExpenseStatus:
-      properties:
-        status:
-          $ref: '#/components/schemas/ExpenseStatus'
-          description: The expense status of the transaction.
-          example: APPROVED
-        status_category:
-          $ref: '#/components/schemas/ExpenseStatusCategory'
-          description: The status category of the transaction expense.
-          example: AGAINST_POLICY
-        status_reason:
-          type: string
-          description: The reason of the status.
-          example: Expense violates company's reimbursement policy
-        approver_id:
-          type: string
-          description: The ID of the SuperAdmin `User` who approves/rejects the `ExpenseReport`.
-          example: XMPL1234-000003
-      required:
-      - approver_id
-      - status
-      - status_category
-    RequestExpenseInfo:
-      properties:
-        approver_id:
-          type: string
-          description: The ID of the SuperAdmin `User` who approves/rejects the expense.
-          example: XMPL1234-000003
-        message:
-          type: string
-          description: The request info of the transaction expense review.
-          example: Request info to employee
-      required:
-      - approver_id
-      - message
     ExpenseItem:
       properties:
         user_id:
@@ -602,6 +611,56 @@ components:
           - 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
           items:
             type: string
+    ExpenseReviewConfiguration:
+      properties:
+        start_date:
+          type: string
+          description: The starting date from which the expenses can be reviewed.
+          example: '2017-06-01T12:48:40Z'
+        transaction_categories:
+          type: array
+          description: It determines the filter by category of the `Transaction`.
+          items:
+            $ref: '#/components/schemas/ExpenseTransactionCategory'
+          uniqueItems: true
+        activity_groups:
+          type: array
+          description: It determines the filter by types of `Cards` whose `Transactions` are considered as expenses to be reviewed.
+          items:
+            $ref: '#/components/schemas/ExpenseConfigurationActivityGroup'
+          uniqueItems: true
+        policy_url:
+          type: string
+          description: The url of the company spending policy
+          example: https://www.policy.pdf
+        start_date_type:
+          $ref: '#/components/schemas/ExpenseDateType'
+          description: It determines the type of date filter to be used.
+          example: SETTLEMENT
+        enabled:
+          type: boolean
+          description: Indicates `ExpenseReview` configuration is enabled.
+        locked:
+          type: boolean
+          description: Indicates `ExpenseReview` configuration is locked.
+          example: false
+        update_timestamp:
+          type: string
+          description: The date and time when the configuration was last updated.
+          example: '2017-06-01T12:48:40Z'
+    RequestExpenseInfo:
+      properties:
+        approver_id:
+          type: string
+          description: The ID of the SuperAdmin `User` who approves/rejects the expense.
+          example: XMPL1234-000003
+        message:
+          type: string
+          description: The request info of the transaction expense review.
+          example: Request info to employee
+      required:
+      - approver_id
+      - message
     WebhookEventName:
       type: string
       enum:
@@ -710,48 +769,12 @@ components:
       - from_date
       - request_timestamp
       - to_date
-    ExpenseStatusCategory:
+    ExpenseType:
       type: string
       enum:
-      - AGAINST_POLICY
-      - PERSONAL_EXPENSE
-      - OTHER
-    ExpensePaymentMethod:
-      type: string
-      description: It determines the filter by payment method of the transaction.
-      enum:
-      - USER
       - COMPANY
-      - PURCHASE
-      - SUBSCRIPTION
-      - ONLINE_ADS
-      - OUT_OF_PLATFORM_COMPANY
-      - OUT_OF_PLATFORM_PERSONAL
-    ExpenseTransactionCategory:
-      type: string
-      enum:
-      - Payment
-      - Withdrawal
-      - Refund
-      - Chargeback
-      - MileageReimbursement
-    ExportExpense:
-      description: Export the Expenses JSON parameters.
-      properties:
-        transaction_ids:
-          type: array
-          description: An array of `Transaction` ID to be exported
-          example:
-          - 7bf79328-a7ae-4222-aa54-091ff7f429a7
-          - 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
-          items:
-            type: string
-        exported_by_id:
-          type: string
-          description: The ID of the `User` who exports the expense.
-          example: XMPL1234-000003
-      required:
-      - transaction_ids
+      - PERSONAL
+      - TRAVEL_AND_ENTERTAINMENT
     CompletedTransactionsImportEvent:
       properties:
         event_uuid:
@@ -779,99 +802,11 @@ components:
           type: string
           description: The webhook subscription ID used to route this event.
           example: 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
-    UpdatedTransactionEvent:
-      properties:
-        event_uuid:
-          type: string
-          description: The webhook unique ID.
-          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
-        event_type:
-          $ref: '#/components/schemas/WebhookEventType'
-          default: ExpenseReview
-          description: The webhook event type.
-          example: ExpenseReview
-        event_name:
-          $ref: '#/components/schemas/WebhookEventName'
-          default: updated_transaction
-          description: The webhook event name.
-          example: updated_transaction
-        company_account_id:
-          type: string
-          description: The company account ID.
-          example: XMPL1234
-        data:
-          $ref: '#/components/schemas/ExpenseReview'
-          description: The webhook `ExpenseReview` data.
-        subscription_id:
-          type: string
-          description: The webhook subscription ID used to route this event.
-          example: 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
     ExpenseDateType:
       type: string
       enum:
       - TRANSACTION
       - SETTLEMENT
-    Expense:
-      properties:
-        user_id:
-          type: string
-          description: 'The ID of the `User` (sortable: no).'
-          example: XMPL1234-000001
-        user_name:
-          type: string
-          description: 'The name of the `User` (sortable: yes).'
-          example: JOHN
-        user_surname:
-          type: string
-          description: 'The surname of the `User` (sortable: yes).'
-          example: DOE
-        job_title:
-          type: string
-          description: 'The job title of the `User` (sortable: yes).'
-          example: CTO
-        to_review_transaction:
-          type: integer
-          format: int64
-          description: 'The number of the `Transaction` items in status `TO_REVIEW` (sortable: no).'
-          example: 1
-        reviewed_transaction:
-          type: integer
-          format: int64
-          description: 'The number of the `Transaction` items in status `REVIEWED` (sortable: no).'
-          example: 2
-        exported_transaction:
-          type: integer
-          format: int64
-          description: 'The number of the `Transaction` items in status `EXPORTED` (sortable: no).'
-          example: 1
-        total_transaction:
-          type: integer
-          format: int64
-          description: 'The number of `Transaction` items (sortable: no).'
-          example: 3
-    ExpenseConfigurationActivityGroup:
-      type: string
-      enum:
-      - USER
-      - COMPANY
-      - PURCHASE
-      - SUBSCRIPTION
-      - ONLINE_ADS
-      - OUT_OF_PLATFORM_COMPANY
-      - OUT_OF_PLATFORM_PERSONAL
-    UpdateExpenseType:
-      properties:
-        type:
-          $ref: '#/components/schemas/ExpenseType'
-          description: The type of the `Transaction` expense.
-          example: TRAVEL_AND_ENTERTAINMENT
-        approver_id:
-          type: string
-          description: The ID of the 'SuperAdmin' `user` who approves/rejects the `expenseReview`.
-          example: XMPL1234-000003
-      required:
-      - approver_id
-      - type
     Expenses:
       properties:
         total:
@@ -910,16 +845,119 @@ components:
       - ASC
       - DESC
       example: DESC
-    ExportExpenseReview:
+    ExpenseStatusCategory:
+      type: string
+      enum:
+      - AGAINST_POLICY
+      - PERSONAL_EXPENSE
+      - OTHER
+    ExpenseTransactionCategory:
+      type: string
+      enum:
+      - Payment
+      - Withdrawal
+      - Refund
+      - Chargeback
+      - MileageReimbursement
+    ExpenseStatus:
+      type: string
+      enum:
+      - APPROVED
+      - PARTIALLY_APPROVED
+      - DENIED
+      - TO_REVIEW
+    UpdatedTransactionEvent:
       properties:
-        expense_report_protocol_ids:
-          type: array
-          description: The protocol IDs of the `ExpenseReport`.
-          example:
-          - 7bf79328-a7ae-4222-aa54-091ff7f429a7
-          - 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
-          items:
-            type: string
+        event_uuid:
+          type: string
+          description: The webhook unique ID.
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+        event_type:
+          $ref: '#/components/schemas/WebhookEventType'
+          default: ExpenseReview
+          description: The webhook event type.
+          example: ExpenseReview
+        event_name:
+          $ref: '#/components/schemas/WebhookEventName'
+          default: updated_transaction
+          description: The webhook event name.
+          example: updated_transaction
+        company_account_id:
+          type: string
+          description: The company account ID.
+          example: XMPL1234
+        data:
+          $ref: '#/components/schemas/ExpenseReview'
+          description: The webhook `ExpenseReview` data.
+        subscription_id:
+          type: string
+          description: The webhook subscription ID used to route this event.
+          example: 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
+    Expense:
+      properties:
+        user_id:
+          type: string
+          description: 'The ID of the `User` (sortable: no).'
+          example: XMPL1234-000001
+        user_name:
+          type: string
+          description: 'The name of the `User` (sortable: yes).'
+          example: JOHN
+        user_surname:
+          type: string
+          description: 'The surname of the `User` (sortable: yes).'
+          example: DOE
+        job_title:
+          type: string
+          description: 'The job title of the `User` (sortable: yes).'
+          example: CTO
+        to_review_transaction:
+          type: integer
+          format: int64
+          description: 'The number of the `Transaction` items in status `TO_REVIEW` (sortable: no).'
+          example: 1
+        reviewed_transaction:
+          type: integer
+          format: int64
+          description: 'The number of the `Transaction` items in status `REVIEWED` (sortable: no).'
+          example: 2
+        exported_transaction:
+          type: integer
+          format: int64
+          description: 'The number of the `Transaction` items in status `EXPORTED` (sortable: no).'
+          example: 1
+        total_transaction:
+          type: integer
+          format: int64
+          description: 'The number of `Transaction` items (sortable: no).'
+          example: 3
+    DateParam:
+      description: 'The end of the period of the search `toDate` included (i.e. less than) (Formats: `yyyy-MM-dd`, `yyyy-MM-ddThh:mm:ss`, `yyyy-MM-ddThh:mm:ssZ`).'
+      example: '1970-01-30'
+    ExpensePaymentMethod:
+      type: string
+      description: It determines the filter by payment method of the transaction.
+      enum:
+      - USER
+      - COMPANY
+      - PURCHASE
+      - SUBSCRIPTION
+      - ONLINE_ADS
+      - OUT_OF_PLATFORM_COMPANY
+      - OUT_OF_PLATFORM_PERSONAL
+    UpdateExpenseType:
+      properties:
+        type:
+          $ref: '#/components/schemas/ExpenseType'
+          description: The type of the `Transaction` expense.
+          example: TRAVEL_AND_ENTERTAINMENT
+        approver_id:
+          type: string
+          description: The ID of the 'SuperAdmin' `user` who approves/rejects the `expenseReview`.
+          example: XMPL1234-000003
+      required:
+      - approver_id
+      - type
     ExpenseReview:
       properties:
         transaction_id:
@@ -959,76 +997,38 @@ components:
         expense_report_id:
           type: string
           description: The ID of the `ExpenseReport`.
-    ExpenseType:
-      type: string
-      enum:
-      - COMPANY
-      - PERSONAL
-      - TRAVEL_AND_ENTERTAINMENT
-    ExpenseReviewConfiguration:
+    UpdateExpenseStatus:
       properties:
-        start_date:
+        status:
+          $ref: '#/components/schemas/ExpenseStatus'
+          description: The expense status of the transaction.
+          example: APPROVED
+        status_category:
+          $ref: '#/components/schemas/ExpenseStatusCategory'
+          description: The status category of the transaction expense.
+          example: AGAINST_POLICY
+        status_reason:
           type: string
-          description: The starting date from which the expenses can be reviewed.
-          example: '2017-06-01T12:48:40Z'
-        transaction_categories:
+          description: The reason of the status.
+          example: Expense violates company's reimbursement policy
+        approver_id:
+          type: string
+          description: The ID of the SuperAdmin `User` who approves/rejects the `ExpenseReport`.
+          example: XMPL1234-000003
+      required:
+      - approver_id
+      - status
+      - status_category
+    ExportExpenseReview:
+      properties:
+        expense_report_protocol_ids:
           type: array
-          description: It determines the filter by category of the `Transaction`.
+          description: The protocol IDs of the `ExpenseReport`.
+          example:
+          - 7bf79328-a7ae-4222-aa54-091ff7f429a7
+          - 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
           items:
-            $ref: '#/components/schemas/ExpenseTransactionCategory'
-          uniqueItems: true
-        activity_groups:
-          type: array
-          description: It determines the filter by types of `Cards` whose `Transactions` are considered as expenses to be reviewed.
-          items:
-            $ref: '#/components/schemas/ExpenseConfigurationActivityGroup'
-          uniqueItems: true
-        policy_url:
-          type: string
-          description: The url of the company spending policy
-          example: https://www.policy.pdf
-        start_date_type:
-          $ref: '#/components/schemas/ExpenseDateType'
-          description: It determines the type of date filter to be used.
-          example: SETTLEMENT
-        enabled:
-          type: boolean
-          description: Indicates `ExpenseReview` configuration is enabled.
-        locked:
-          type: boolean
-          description: Indicates `ExpenseReview` configuration is locked.
-          example: false
-        update_timestamp:
-          type: string
-          description: The date and time when the configuration was last updated.
-          example: '2017-06-01T12:48:40Z'
-    WebhookEventType:
-      type: string
-      enum:
-      - BusinessTrip
-      - Card
-      - Contact
-      - ExpenseReview
-      - Group
-      - OnlineAds
-      - Order
-      - Purchase
-      - Subscription
-      - Transaction
-      - TransactionAttachment
-      - Employee
-      - Vehicle
-      - Wallet
-    DateParam:
-      description: 'The end of the period of the search `toDate` included (i.e. less than) (Formats: `yyyy-MM-dd`, `yyyy-MM-ddThh:mm:ss`, `yyyy-MM-ddThh:mm:ssZ`).'
-      example: '1970-01-30'
-    ExpenseStatus:
-      type: string
-      enum:
-      - APPROVED
-      - PARTIALLY_APPROVED
-      - DENIED
-      - TO_REVIEW
+            type: string
   securitySchemes:
     standardAuth:
       type: oauth2

@@ -190,6 +190,63 @@ paths:
         - tax_rate_write
 components:
   schemas:
+    VatRates:
+      properties:
+        total:
+          type: integer
+          format: int32
+          description: It represents the total number of available items in the list.
+          example: 168
+        pages:
+          type: integer
+          format: int32
+          description: It represents the total number of available pages.
+          example: 7
+        page_size:
+          type: integer
+          format: int32
+          description: It represents the number of items per page.
+          example: 25
+        current_page:
+          type: integer
+          format: int32
+          description: It indicates the current page (the counter starts from zero).
+          example: 0
+        results_size:
+          type: integer
+          format: int32
+          description: It indicates the size of the array results.
+          example: 25
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/VatRate'
+    UpdateVatRate:
+      description: Update `VatRate` JSON parameters.
+      properties:
+        code:
+          type: string
+          description: The code of the `VATRate`.
+          example: code-vat-11
+        name:
+          type: string
+          description: The name of the `VATRate`.
+          example: Tax 11
+        description:
+          type: string
+          description: the description of the `VATRate`.
+          example: something
+        percentage:
+          type: number
+          format: double
+          description: The percentage value of the `VATRate`.
+          example: 15
+        enabled:
+          type: boolean
+          description: The `VATRate` is visible in the transaction detail.
+          example: true
+      required:
+      - percentage
     VatRate:
       properties:
         id:
@@ -229,37 +286,6 @@ components:
           type: string
           description: 'The date and time when the `VATRate` was last updated (sortable: yes).'
           example: '2017-06-01T12:48:40Z'
-    VatRates:
-      properties:
-        total:
-          type: integer
-          format: int32
-          description: It represents the total number of available items in the list.
-          example: 168
-        pages:
-          type: integer
-          format: int32
-          description: It represents the total number of available pages.
-          example: 7
-        page_size:
-          type: integer
-          format: int32
-          description: It represents the number of items per page.
-          example: 25
-        current_page:
-          type: integer
-          format: int32
-          description: It indicates the current page (the counter starts from zero).
-          example: 0
-        results_size:
-          type: integer
-          format: int32
-          description: It indicates the size of the array results.
-          example: 25
-        results:
-          type: array
-          items:
-            $ref: '#/components/schemas/VatRate'
     Direction:
       type: string
       description: It indicates how the pages are ordered.
@@ -293,32 +319,6 @@ components:
           example: true
       required:
       - name
-      - percentage
-    UpdateVatRate:
-      description: Update `VatRate` JSON parameters.
-      properties:
-        code:
-          type: string
-          description: The code of the `VATRate`.
-          example: code-vat-11
-        name:
-          type: string
-          description: The name of the `VATRate`.
-          example: Tax 11
-        description:
-          type: string
-          description: the description of the `VATRate`.
-          example: something
-        percentage:
-          type: number
-          format: double
-          description: The percentage value of the `VATRate`.
-          example: 15
-        enabled:
-          type: boolean
-          description: The `VATRate` is visible in the transaction detail.
-          example: true
-      required:
       - percentage
   securitySchemes:
     standardAuth:

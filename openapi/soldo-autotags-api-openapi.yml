@@ -201,6 +201,16 @@ paths:
         - autotag_write
 components:
   schemas:
+    AutotagTag:
+      properties:
+        tag_id:
+          type: string
+          description: The `Tag` ID.
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+        dictionary_id:
+          type: string
+          description: The `List` ID.
+          example: 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
     Autotags:
       properties:
         total:
@@ -232,31 +242,11 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Autotag'
-    AutotagTag:
-      properties:
-        tag_id:
-          type: string
-          description: The `Tag` ID.
-          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
-        dictionary_id:
-          type: string
-          description: The `List` ID.
-          example: 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
-    AutotagCriteriaName:
+    AutotagOperation:
       type: string
       enum:
-      - USER
-      - CARD
-      - COMPANY_CARD
-      - MERCHANT_CATEGORY
-      - MERCHANT
-    Direction:
-      type: string
-      description: It indicates how the pages are ordered.
-      enum:
-      - ASC
-      - DESC
-      example: DESC
+      - AND
+      - OR
     UpdateAutotag:
       description: Update `Autotag` JSON parameters.
       properties:
@@ -288,63 +278,6 @@ components:
         enabled:
           type: boolean
           description: It determines whether the `Autotag` rule is enabled (if a rule is not enabled, it won't be executed).
-    CreateAutotag:
-      description: Add `Autotag` JSON parameters.
-      properties:
-        name:
-          type: string
-          description: The name of the `Autotag`.
-          example: Autotag
-        operation:
-          $ref: '#/components/schemas/AutotagOperation'
-          description: The logical operator applied to the `Criteria`.
-          example: AND
-        criteria:
-          type: array
-          description: The list of `Criteria` that need to be satisfied in order for the `Autotag` to be executed.
-          items:
-            $ref: '#/components/schemas/AutotagCriteria'
-        expense_category_id:
-          type: string
-          description: The ID of the `ExpenseCategory` of to be assigned to a `Transaction` satisfying the `Criteria`.
-          example: c861cc24-6663-410f-8c78-73f886fff4ef
-        tax_rate_id:
-          type: string
-          description: The ID of the `VATRate` to be assigned to a `Transaction` satisfying the `Criteria`.
-          example: c861cc24-6663-410f-8c78-73f886fff4ef
-        tag_ids:
-          type: array
-          description: The IDs of the `Tag` and related `List` to be assigned to a `Transaction` satisfying the `Criteria`.
-          items:
-            $ref: '#/components/schemas/AutotagTag'
-      required:
-      - criteria
-      - name
-      - operation
-    AutotagCriteria:
-      properties:
-        name:
-          $ref: '#/components/schemas/AutotagCriteriaName'
-          description: The name of the criteria to be satisfied in order for the `Autotag` to be executed.
-          example: MERCHANT_CATEGORY
-        value:
-          type: array
-          description: The values of the criteria to be satisfied in order for the `Autotag` to be executed, in case of `USER`, `CARD`, `COMPANY_CARD` it's a list of IDs; in case of `MERCHANT_CATEGORY` it's one or more `MerchantCategories`; in case of `MERCHANT` it's a text string which should be included in the merchant name
-          example:
-          - Entertainment
-          items:
-            type: string
-    AutotagOperation:
-      type: string
-      enum:
-      - AND
-      - OR
-    AutotagStatus:
-      type: string
-      enum:
-      - VALID
-      - NOT_VALID
-      - PARTIAL_VALID
     Autotag:
       properties:
         id:
@@ -397,6 +330,73 @@ components:
           type: string
           description: 'The date and time when the `Autotag` was last updated (sortable: no).'
           example: '2017-06-01T12:48:40Z'
+    CreateAutotag:
+      description: Add `Autotag` JSON parameters.
+      properties:
+        name:
+          type: string
+          description: The name of the `Autotag`.
+          example: Autotag
+        operation:
+          $ref: '#/components/schemas/AutotagOperation'
+          description: The logical operator applied to the `Criteria`.
+          example: AND
+        criteria:
+          type: array
+          description: The list of `Criteria` that need to be satisfied in order for the `Autotag` to be executed.
+          items:
+            $ref: '#/components/schemas/AutotagCriteria'
+        expense_category_id:
+          type: string
+          description: The ID of the `ExpenseCategory` of to be assigned to a `Transaction` satisfying the `Criteria`.
+          example: c861cc24-6663-410f-8c78-73f886fff4ef
+        tax_rate_id:
+          type: string
+          description: The ID of the `VATRate` to be assigned to a `Transaction` satisfying the `Criteria`.
+          example: c861cc24-6663-410f-8c78-73f886fff4ef
+        tag_ids:
+          type: array
+          description: The IDs of the `Tag` and related `List` to be assigned to a `Transaction` satisfying the `Criteria`.
+          items:
+            $ref: '#/components/schemas/AutotagTag'
+      required:
+      - criteria
+      - name
+      - operation
+    AutotagCriteria:
+      properties:
+        name:
+          $ref: '#/components/schemas/AutotagCriteriaName'
+          description: The name of the criteria to be satisfied in order for the `Autotag` to be executed.
+          example: MERCHANT_CATEGORY
+        value:
+          type: array
+          description: The values of the criteria to be satisfied in order for the `Autotag` to be executed, in case of `USER`, `CARD`, `COMPANY_CARD` it's a list of IDs; in case of `MERCHANT_CATEGORY` it's one or more `MerchantCategories`; in case of `MERCHANT` it's a text string which should be included in the merchant name
+          example:
+          - Entertainment
+          items:
+            type: string
+    Direction:
+      type: string
+      description: It indicates how the pages are ordered.
+      enum:
+      - ASC
+      - DESC
+      example: DESC
+    AutotagStatus:
+      type: string
+      enum:
+      - VALID
+      - NOT_VALID
+      - PARTIAL_VALID
+    AutotagCriteriaName:
+      type: string
+      enum:
+      - USER
+      - CARD
+      - COMPANY_CARD
+      - MERCHANT_CATEGORY
+      - MERCHANT
   securitySchemes:
     standardAuth:
       type: oauth2

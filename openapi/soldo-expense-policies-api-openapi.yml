@@ -278,6 +278,12 @@ components:
       - ACTIVE
       - DELETED
       example: ACTIVE
+    ExpensePolicyAssignee:
+      properties:
+        assignee_id:
+          type: string
+          description: The ID one `User` assigned to the `ExpensePolicy`.
+          example: XMPL1234-000001
     ExpensePolicyAssignees:
       properties:
         total:
@@ -309,63 +315,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ExpensePolicyAssignee'
-    ExpensePolicyAssignment:
-      description: Add `ExpensePolicy` assignees JSON parameters.
-      properties:
-        assignee_ids:
-          type: array
-          description: List of `User` IDs to assign to the `ExpensePolicy`.
-          example:
-          - XMPL1234-000001
-          - XMPL1234-000002
-          - XMPL1234-000003
-          items:
-            type: string
-      required:
-      - assignee_ids
-    Direction:
-      type: string
-      description: It indicates how the pages are ordered.
-      enum:
-      - ASC
-      - DESC
-      example: DESC
-    ExpensePolicy:
-      properties:
-        id:
-          type: string
-          description: The `ExpensePolicy` ID.
-          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
-        name:
-          type: string
-          description: The name of the `ExpensePolicy`.
-          example: Company Travel Policy
-        description:
-          type: string
-          description: A custom description of the `ExpensePolicy`.
-          example: A policy for company travel expenses
-        policy_url:
-          type: string
-          description: A URL pointing to the `ExpensePolicy` document.
-          example: https://www.policy.pdf
-        status:
-          $ref: '#/components/schemas/ExpensePolicyStatus'
-          description: The status of the `ExpensePolicy`.
-          example: ACTIVE
-        creation_time:
-          type: string
-          description: The date and time when the `ExpensePolicy` was created.
-          example: '2017-06-01T12:48:40Z'
-        last_update:
-          type: string
-          description: The date and time when the `ExpensePolicy` was last updated.
-          example: '2017-06-01T12:48:40Z'
-    ExpensePolicyAssignee:
-      properties:
-        assignee_id:
-          type: string
-          description: The ID one `User` assigned to the `ExpensePolicy`.
-          example: XMPL1234-000001
     ExpensePolicies:
       properties:
         total:
@@ -397,6 +346,57 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ExpensePolicy'
+    Direction:
+      type: string
+      description: It indicates how the pages are ordered.
+      enum:
+      - ASC
+      - DESC
+      example: DESC
+    ExpensePolicyAssignment:
+      description: Add `ExpensePolicy` assignees JSON parameters.
+      properties:
+        assignee_ids:
+          type: array
+          description: List of `User` IDs to assign to the `ExpensePolicy`.
+          example:
+          - XMPL1234-000001
+          - XMPL1234-000002
+          - XMPL1234-000003
+          items:
+            type: string
+      required:
+      - assignee_ids
+    ExpensePolicy:
+      properties:
+        id:
+          type: string
+          description: The `ExpensePolicy` ID.
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+        name:
+          type: string
+          description: The name of the `ExpensePolicy`.
+          example: Company Travel Policy
+        description:
+          type: string
+          description: A custom description of the `ExpensePolicy`.
+          example: A policy for company travel expenses
+        policy_url:
+          type: string
+          description: A URL pointing to the `ExpensePolicy` document.
+          example: https://www.policy.pdf
+        status:
+          $ref: '#/components/schemas/ExpensePolicyStatus'
+          description: The status of the `ExpensePolicy`.
+          example: ACTIVE
+        creation_time:
+          type: string
+          description: The date and time when the `ExpensePolicy` was created.
+          example: '2017-06-01T12:48:40Z'
+        last_update:
+          type: string
+          description: The date and time when the `ExpensePolicy` was last updated.
+          example: '2017-06-01T12:48:40Z'
   securitySchemes:
     standardAuth:
       type: oauth2

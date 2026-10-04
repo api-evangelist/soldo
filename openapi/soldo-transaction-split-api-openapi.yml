@@ -84,22 +84,6 @@ paths:
         - transaction_write
 components:
   schemas:
-    UpdateTransactionSplit:
-      description: Update `Transaction` split JSON parameters.
-      properties:
-        split_transactions:
-          type: array
-          items:
-            $ref: '#/components/schemas/SplitTransaction'
-          minItems: 2
-      required:
-      - split_transactions
-    ExpenseType:
-      type: string
-      enum:
-      - COMPANY
-      - PERSONAL
-      - TRAVEL_AND_ENTERTAINMENT
     SplitTag:
       properties:
         tag_id:
@@ -110,6 +94,16 @@ components:
           type: string
           description: The `dictionaryId` of the `Tag` of the `SplitTransaction`.
           example: 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
+    UpdateTransactionSplit:
+      description: Update `Transaction` split JSON parameters.
+      properties:
+        split_transactions:
+          type: array
+          items:
+            $ref: '#/components/schemas/SplitTransaction'
+          minItems: 2
+      required:
+      - split_transactions
     SplitTransaction:
       properties:
         amount:
@@ -139,6 +133,12 @@ components:
             $ref: '#/components/schemas/SplitTag'
       required:
       - amount
+    ExpenseType:
+      type: string
+      enum:
+      - COMPANY
+      - PERSONAL
+      - TRAVEL_AND_ENTERTAINMENT
     CreateTransactionSplit:
       description: Create `Transaction` split JSON parameters.
       properties:

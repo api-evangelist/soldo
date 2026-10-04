@@ -180,37 +180,6 @@ paths:
         - resource_set_write
 components:
   schemas:
-    ResourceSetResourceType:
-      type: string
-      enum:
-      - MAIN_WALLET
-      - COMPANY_WALLET
-      - USER
-      - COMPANY_CARD
-      - GROUP
-    UpdateResourceSet:
-      description: Update `ResourceSet` JSON parameters.
-      properties:
-        id:
-          type: string
-          description: The `ResourceSet` ID.
-          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
-        name:
-          type: string
-          description: The name of the `ResourceSet`.
-          example: Resource set 01
-        description:
-          type: string
-          description: The description of the `ResourceSet`.
-          example: This is a resource set
-        configuration:
-          type: array
-          description: The configuration of the `ResourceSet`.
-          items:
-            $ref: '#/components/schemas/Configuration'
-      required:
-      - configuration
-      - name
     ResourceSet:
       properties:
         id:
@@ -238,6 +207,44 @@ components:
           type: string
           description: The date and time when the `ResourceSet` was last updated.
           example: '2017-06-01T12:48:40Z'
+    UpdateResourceSet:
+      description: Update `ResourceSet` JSON parameters.
+      properties:
+        id:
+          type: string
+          description: The `ResourceSet` ID.
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+        name:
+          type: string
+          description: The name of the `ResourceSet`.
+          example: Resource set 01
+        description:
+          type: string
+          description: The description of the `ResourceSet`.
+          example: This is a resource set
+        configuration:
+          type: array
+          description: The configuration of the `ResourceSet`.
+          items:
+            $ref: '#/components/schemas/Configuration'
+      required:
+      - configuration
+      - name
+    ResourceSetScope:
+      type: string
+      enum:
+      - SELF
+      - LIST
+      - ALL
+      - NONE
+    ResourceSetResourceType:
+      type: string
+      enum:
+      - MAIN_WALLET
+      - COMPANY_WALLET
+      - USER
+      - COMPANY_CARD
+      - GROUP
     CreateResourceSet:
       description: Create `ResourceSet` JSON parameters.
       properties:
@@ -275,13 +282,6 @@ components:
           - 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
           items:
             type: string
-    ResourceSetScope:
-      type: string
-      enum:
-      - SELF
-      - LIST
-      - ALL
-      - NONE
   securitySchemes:
     standardAuth:
       type: oauth2

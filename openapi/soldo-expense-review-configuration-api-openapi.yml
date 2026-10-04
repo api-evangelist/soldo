@@ -247,54 +247,7 @@ webhooks:
         fingerprint-order: startDate, policyUrl, enabled, transactionId
 components:
   schemas:
-    ExpenseConfigurationActivityGroup:
-      type: string
-      enum:
-      - USER
-      - COMPANY
-      - PURCHASE
-      - SUBSCRIPTION
-      - ONLINE_ADS
-      - OUT_OF_PLATFORM_COMPANY
-      - OUT_OF_PLATFORM_PERSONAL
-    CreateExpenseReviewConfiguration:
-      description: Create conf JSON parameters.
-      properties:
-        request_timestamp:
-          type: integer
-          format: int64
-          description: The epoch timestamp in millis. This is checked in Soldo. Requests with timestamp older than 5 seconds will be rejected.
-          example: 1576850500000
-        start_date:
-          type: string
-          description: The starting date from which the expenses can be reviewed.
-          example: '2017-06-01T12:48:40Z'
-        transaction_categories:
-          type: array
-          description: It determines the filter by category of the transaction.
-          items:
-            $ref: '#/components/schemas/ExpenseTransactionCategoryInput'
-          uniqueItems: true
-        activity_groups:
-          type: array
-          description: It determines the filter by types of cards whose transactions are considered as expenses to be reviewed.
-          items:
-            $ref: '#/components/schemas/ExpenseConfigurationActivityGroup'
-          uniqueItems: true
-        policy_url:
-          type: string
-          description: The url of the company spending policy.
-          example: https://www.policy.pdf
-        start_date_type:
-          $ref: '#/components/schemas/ExpenseDateType'
-          description: It determines the filter by the type of date, multiple statuses can be included.
-          example: SETTLEMENT
-      required:
-      - activity_groups
-      - policy_url
-      - request_timestamp
-      - start_date
-    UpdatedExpenseConfigurationEvent:
+    DisabledExpenseConfigurationEvent:
       properties:
         event_uuid:
           type: string
@@ -307,90 +260,9 @@ components:
           example: ExpenseReviewConfiguration
         event_name:
           $ref: '#/components/schemas/WebhookEventName'
-          default: updated_expense_configuration
+          default: disabled_expense_configuration
           description: The webhook event name.
-          example: updated_expense_configuration
-        company_account_id:
-          type: string
-          description: The company account ID.
-          example: XMPL1234
-        data:
-          $ref: '#/components/schemas/ExpenseReviewConfiguration'
-          description: The webhook `ExpenseReview` data.
-        subscription_id:
-          type: string
-          description: The webhook subscription ID used to route this event.
-          example: 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
-    ExpenseReviewConfiguration:
-      properties:
-        start_date:
-          type: string
-          description: The starting date from which the expenses can be reviewed.
-          example: '2017-06-01T12:48:40Z'
-        transaction_categories:
-          type: array
-          description: It determines the filter by category of the `Transaction`.
-          items:
-            $ref: '#/components/schemas/ExpenseTransactionCategory'
-          uniqueItems: true
-        activity_groups:
-          type: array
-          description: It determines the filter by types of `Cards` whose `Transactions` are considered as expenses to be reviewed.
-          items:
-            $ref: '#/components/schemas/ExpenseConfigurationActivityGroup'
-          uniqueItems: true
-        policy_url:
-          type: string
-          description: The url of the company spending policy
-          example: https://www.policy.pdf
-        start_date_type:
-          $ref: '#/components/schemas/ExpenseDateType'
-          description: It determines the type of date filter to be used.
-          example: SETTLEMENT
-        enabled:
-          type: boolean
-          description: Indicates `ExpenseReview` configuration is enabled.
-        locked:
-          type: boolean
-          description: Indicates `ExpenseReview` configuration is locked.
-          example: false
-        update_timestamp:
-          type: string
-          description: The date and time when the configuration was last updated.
-          example: '2017-06-01T12:48:40Z'
-    WebhookEventType:
-      type: string
-      enum:
-      - BusinessTrip
-      - Card
-      - Contact
-      - ExpenseReview
-      - Group
-      - OnlineAds
-      - Order
-      - Purchase
-      - Subscription
-      - Transaction
-      - TransactionAttachment
-      - Employee
-      - Vehicle
-      - Wallet
-    EnabledExpenseConfigurationEvent:
-      properties:
-        event_uuid:
-          type: string
-          description: The webhook unique ID.
-          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
-        event_type:
-          $ref: '#/components/schemas/WebhookEventType'
-          default: ExpenseReviewConfiguration
-          description: The webhook event type.
-          example: ExpenseReviewConfiguration
-        event_name:
-          $ref: '#/components/schemas/WebhookEventName'
-          default: enabled_expense_configuration
-          description: The webhook event name.
-          example: enabled_expense_configuration
+          example: disabled_expense_configuration
         company_account_id:
           type: string
           description: The company account ID.
@@ -490,6 +362,205 @@ components:
       - contact_created
       - contact_updated
       - contact_deleted
+    EnabledExpenseConfigurationEvent:
+      properties:
+        event_uuid:
+          type: string
+          description: The webhook unique ID.
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+        event_type:
+          $ref: '#/components/schemas/WebhookEventType'
+          default: ExpenseReviewConfiguration
+          description: The webhook event type.
+          example: ExpenseReviewConfiguration
+        event_name:
+          $ref: '#/components/schemas/WebhookEventName'
+          default: enabled_expense_configuration
+          description: The webhook event name.
+          example: enabled_expense_configuration
+        company_account_id:
+          type: string
+          description: The company account ID.
+          example: XMPL1234
+        data:
+          $ref: '#/components/schemas/ExpenseReviewConfiguration'
+          description: The webhook `ExpenseReview` data.
+        subscription_id:
+          type: string
+          description: The webhook subscription ID used to route this event.
+          example: 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
+    ExpenseTransactionCategory:
+      type: string
+      enum:
+      - Payment
+      - Withdrawal
+      - Refund
+      - Chargeback
+      - MileageReimbursement
+    ExpenseTransactionCategoryInput:
+      type: string
+      enum:
+      - Payment
+    WebhookEventType:
+      type: string
+      enum:
+      - BusinessTrip
+      - Card
+      - Contact
+      - ExpenseReview
+      - Group
+      - OnlineAds
+      - Order
+      - Purchase
+      - Subscription
+      - Transaction
+      - TransactionAttachment
+      - Employee
+      - Vehicle
+      - Wallet
+    ExpenseConfigurationActivityGroup:
+      type: string
+      enum:
+      - USER
+      - COMPANY
+      - PURCHASE
+      - SUBSCRIPTION
+      - ONLINE_ADS
+      - OUT_OF_PLATFORM_COMPANY
+      - OUT_OF_PLATFORM_PERSONAL
+    ExpenseDateType:
+      type: string
+      enum:
+      - TRANSACTION
+      - SETTLEMENT
+    CreateExpenseReviewConfiguration:
+      description: Create conf JSON parameters.
+      properties:
+        request_timestamp:
+          type: integer
+          format: int64
+          description: The epoch timestamp in millis. This is checked in Soldo. Requests with timestamp older than 5 seconds will be rejected.
+          example: 1576850500000
+        start_date:
+          type: string
+          description: The starting date from which the expenses can be reviewed.
+          example: '2017-06-01T12:48:40Z'
+        transaction_categories:
+          type: array
+          description: It determines the filter by category of the transaction.
+          items:
+            $ref: '#/components/schemas/ExpenseTransactionCategoryInput'
+          uniqueItems: true
+        activity_groups:
+          type: array
+          description: It determines the filter by types of cards whose transactions are considered as expenses to be reviewed.
+          items:
+            $ref: '#/components/schemas/ExpenseConfigurationActivityGroup'
+          uniqueItems: true
+        policy_url:
+          type: string
+          description: The url of the company spending policy.
+          example: https://www.policy.pdf
+        start_date_type:
+          $ref: '#/components/schemas/ExpenseDateType'
+          description: It determines the filter by the type of date, multiple statuses can be included.
+          example: SETTLEMENT
+      required:
+      - activity_groups
+      - policy_url
+      - request_timestamp
+      - start_date
+    CreatedExpenseConfigurationEvent:
+      properties:
+        event_uuid:
+          type: string
+          description: The webhook unique ID.
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+        event_type:
+          $ref: '#/components/schemas/WebhookEventType'
+          default: ExpenseReviewConfiguration
+          description: The webhook event type.
+          example: ExpenseReviewConfiguration
+        event_name:
+          $ref: '#/components/schemas/WebhookEventName'
+          default: created_expense_configuration
+          description: The webhook event name.
+          example: created_expense_configuration
+        company_account_id:
+          type: string
+          description: The company account ID.
+          example: XMPL1234
+        data:
+          $ref: '#/components/schemas/ExpenseReviewConfiguration'
+          description: The webhook `ExpenseReview` data.
+        subscription_id:
+          type: string
+          description: The webhook subscription ID used to route this event.
+          example: 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
+    UpdatedExpenseConfigurationEvent:
+      properties:
+        event_uuid:
+          type: string
+          description: The webhook unique ID.
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+        event_type:
+          $ref: '#/components/schemas/WebhookEventType'
+          default: ExpenseReviewConfiguration
+          description: The webhook event type.
+          example: ExpenseReviewConfiguration
+        event_name:
+          $ref: '#/components/schemas/WebhookEventName'
+          default: updated_expense_configuration
+          description: The webhook event name.
+          example: updated_expense_configuration
+        company_account_id:
+          type: string
+          description: The company account ID.
+          example: XMPL1234
+        data:
+          $ref: '#/components/schemas/ExpenseReviewConfiguration'
+          description: The webhook `ExpenseReview` data.
+        subscription_id:
+          type: string
+          description: The webhook subscription ID used to route this event.
+          example: 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
+    ExpenseReviewConfiguration:
+      properties:
+        start_date:
+          type: string
+          description: The starting date from which the expenses can be reviewed.
+          example: '2017-06-01T12:48:40Z'
+        transaction_categories:
+          type: array
+          description: It determines the filter by category of the `Transaction`.
+          items:
+            $ref: '#/components/schemas/ExpenseTransactionCategory'
+          uniqueItems: true
+        activity_groups:
+          type: array
+          description: It determines the filter by types of `Cards` whose `Transactions` are considered as expenses to be reviewed.
+          items:
+            $ref: '#/components/schemas/ExpenseConfigurationActivityGroup'
+          uniqueItems: true
+        policy_url:
+          type: string
+          description: The url of the company spending policy
+          example: https://www.policy.pdf
+        start_date_type:
+          $ref: '#/components/schemas/ExpenseDateType'
+          description: It determines the type of date filter to be used.
+          example: SETTLEMENT
+        enabled:
+          type: boolean
+          description: Indicates `ExpenseReview` configuration is enabled.
+        locked:
+          type: boolean
+          description: Indicates `ExpenseReview` configuration is locked.
+          example: false
+        update_timestamp:
+          type: string
+          description: The date and time when the configuration was last updated.
+          example: '2017-06-01T12:48:40Z'
     UpdateExpenseReviewConfiguration:
       description: Update Conf JSON parameters.
       properties:
@@ -522,77 +593,6 @@ components:
           example: false
       required:
       - request_timestamp
-    ExpenseTransactionCategory:
-      type: string
-      enum:
-      - Payment
-      - Withdrawal
-      - Refund
-      - Chargeback
-      - MileageReimbursement
-    DisabledExpenseConfigurationEvent:
-      properties:
-        event_uuid:
-          type: string
-          description: The webhook unique ID.
-          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
-        event_type:
-          $ref: '#/components/schemas/WebhookEventType'
-          default: ExpenseReviewConfiguration
-          description: The webhook event type.
-          example: ExpenseReviewConfiguration
-        event_name:
-          $ref: '#/components/schemas/WebhookEventName'
-          default: disabled_expense_configuration
-          description: The webhook event name.
-          example: disabled_expense_configuration
-        company_account_id:
-          type: string
-          description: The company account ID.
-          example: XMPL1234
-        data:
-          $ref: '#/components/schemas/ExpenseReviewConfiguration'
-          description: The webhook `ExpenseReview` data.
-        subscription_id:
-          type: string
-          description: The webhook subscription ID used to route this event.
-          example: 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
-    CreatedExpenseConfigurationEvent:
-      properties:
-        event_uuid:
-          type: string
-          description: The webhook unique ID.
-          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
-        event_type:
-          $ref: '#/components/schemas/WebhookEventType'
-          default: ExpenseReviewConfiguration
-          description: The webhook event type.
-          example: ExpenseReviewConfiguration
-        event_name:
-          $ref: '#/components/schemas/WebhookEventName'
-          default: created_expense_configuration
-          description: The webhook event name.
-          example: created_expense_configuration
-        company_account_id:
-          type: string
-          description: The company account ID.
-          example: XMPL1234
-        data:
-          $ref: '#/components/schemas/ExpenseReviewConfiguration'
-          description: The webhook `ExpenseReview` data.
-        subscription_id:
-          type: string
-          description: The webhook subscription ID used to route this event.
-          example: 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
-    ExpenseTransactionCategoryInput:
-      type: string
-      enum:
-      - Payment
-    ExpenseDateType:
-      type: string
-      enum:
-      - TRANSACTION
-      - SETTLEMENT
   securitySchemes:
     standardAuth:
       type: oauth2
