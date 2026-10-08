@@ -56,6 +56,7 @@ tags:
 - Prepaid Cards
 - Payments
 - Banking
+- Webhook
 tags_raw:
 - Company
 - Consumer
@@ -68,6 +69,7 @@ tags_raw:
 - Payments
 - Banking
 - Financial-Services
+- Webhook
 image: https://www.soldo.com/wp-content/uploads/2023/11/home-page-soldo-hero-small.webp
 apis:
 - aid: soldo:soldo-accounting-classification-api
