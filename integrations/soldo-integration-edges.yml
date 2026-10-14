@@ -1,5 +1,5 @@
 generated: '2026-10-12'
-method: none
+method: searched
 source:
 - https://zapier.com/apps/soldo/integrations
 - https://n8n.io/integrations/soldo/
@@ -9,8 +9,26 @@ checked:
 - https://composio.dev/toolkits/soldo
 - https://monid.ai/tools/soldo
 - https://n8n.io/integrations/soldo/
+- https://www.openbanking.org.uk/regulated-providers/soldo-financial-services-ltd/
 - https://zapier.com/apps/soldo/integrations
 summary: null
 marketplace_apps: []
-edges: []
+edges:
+- partner_name: UK Open Banking
+  partner: null
+  type: contract
+  channel: regulator-register
+  relationship: standard-participant
+  direction: partner-built
+  evidence: https://www.openbanking.org.uk/regulated-providers/soldo-financial-services-ltd/
+  contract_reference:
+    register: UK Open Banking regulated providers (OBL directory)
+    spec_file: null
+    role: Third Party Providers
+    registered_name: Soldo Financial Services Ltd
+    register_id: https://register.fca.org.uk/s/firm?id=001b000000piYLhAAM
+    matched_domain: soldo.com
+    api_families: null
+    detected_by: sweep-standard-registers.py
+    detected: '2026-10-14'
 templates: []
