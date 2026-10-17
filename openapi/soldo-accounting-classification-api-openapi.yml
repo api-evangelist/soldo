@@ -178,6 +178,13 @@ components:
       - Travel_Car_Rental
       - Travel_Hotels
       - Travel_Time_Shares
+    Direction:
+      type: string
+      description: It indicates how the pages are ordered.
+      enum:
+      - ASC
+      - DESC
+      example: DESC
     ExpenseCategory:
       properties:
         id:
@@ -226,13 +233,6 @@ components:
           type: string
           description: 'The date and time when the `ExpenseCategory` was last updated (sortable: no).'
           example: '2017-06-01T12:48:40Z'
-    Direction:
-      type: string
-      description: It indicates how the pages are ordered.
-      enum:
-      - ASC
-      - DESC
-      example: DESC
   securitySchemes:
     standardAuth:
       type: oauth2

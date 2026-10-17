@@ -122,6 +122,32 @@ paths:
         - employee_write
 components:
   schemas:
+    AssignedUserRoles:
+      properties:
+        id:
+          type: string
+          description: The `User` ID.
+          example: XMPL1234-000001
+        roles:
+          type: array
+          description: The list of `UserRole` of the `User`.
+          items:
+            $ref: '#/components/schemas/UserRole'
+    UpdateUserRoleAssignment:
+      description: Remove `Role` from `User` JSON parameters.
+      properties:
+        name:
+          type: string
+          description: The name of the `Role`.
+          example: superAdmin
+        description:
+          type: string
+          description: The description of the `Role`.
+          example: The SuperAdmin role
+        scope:
+          type: string
+          description: The name of the scope.
+          example: ALL
     UserRole:
       properties:
         id:
@@ -140,32 +166,6 @@ components:
           type: string
           description: The scope of the `UserRole`.
           example: ALL
-    UpdateUserRoleAssignment:
-      description: Remove `Role` from `User` JSON parameters.
-      properties:
-        name:
-          type: string
-          description: The name of the `Role`.
-          example: superAdmin
-        description:
-          type: string
-          description: The description of the `Role`.
-          example: The SuperAdmin role
-        scope:
-          type: string
-          description: The name of the scope.
-          example: ALL
-    AssignedUserRoles:
-      properties:
-        id:
-          type: string
-          description: The `User` ID.
-          example: XMPL1234-000001
-        roles:
-          type: array
-          description: The list of `UserRole` of the `User`.
-          items:
-            $ref: '#/components/schemas/UserRole'
   securitySchemes:
     standardAuth:
       type: oauth2

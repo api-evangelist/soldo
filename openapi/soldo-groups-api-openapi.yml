@@ -791,29 +791,209 @@ webhooks:
         fingerprint-order: id, name, type, customReferenceId
 components:
   schemas:
-    WebhookEventType:
+    Groups:
+      properties:
+        total:
+          type: integer
+          format: int32
+          description: It represents the total number of available items in the list.
+          example: 168
+        pages:
+          type: integer
+          format: int32
+          description: It represents the total number of available pages.
+          example: 7
+        page_size:
+          type: integer
+          format: int32
+          description: It represents the number of items per page.
+          example: 25
+        current_page:
+          type: integer
+          format: int32
+          description: It indicates the current page (the counter starts from zero).
+          example: 0
+        results_size:
+          type: integer
+          format: int32
+          description: It indicates the size of the array results.
+          example: 25
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Group'
+    MoveResourcesWalletEvent:
+      properties:
+        event_uuid:
+          type: string
+          description: The webhook unique ID.
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+        event_type:
+          $ref: '#/components/schemas/WebhookEventType'
+          default: Team
+          description: The webhook event type.
+          example: Team
+        event_name:
+          $ref: '#/components/schemas/WebhookEventName'
+          default: move_resources_wallet
+          description: The webhook event name.
+          example: move_resources_wallet
+        company_account_id:
+          type: string
+          description: The company account ID.
+          example: XMPL1234
+        data:
+          $ref: '#/components/schemas/Group'
+          description: The webhook `Group` data.
+        subscription_id:
+          type: string
+          description: The webhook subscription ID used to route this event.
+          example: 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
+    AddResourcesCardEvent:
+      properties:
+        event_uuid:
+          type: string
+          description: The webhook unique ID.
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+        event_type:
+          $ref: '#/components/schemas/WebhookEventType'
+          default: Team
+          description: The webhook event type.
+          example: Team
+        event_name:
+          $ref: '#/components/schemas/WebhookEventName'
+          default: add_resources_card
+          description: The webhook event name.
+          example: add_resources_card
+        company_account_id:
+          type: string
+          description: The company account ID.
+          example: XMPL1234
+        data:
+          $ref: '#/components/schemas/Group'
+          description: The webhook `Group` data.
+        subscription_id:
+          type: string
+          description: The webhook subscription ID used to route this event.
+          example: 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
+    RemoveResourcesMemberEvent:
+      properties:
+        event_uuid:
+          type: string
+          description: The webhook unique ID.
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+        event_type:
+          $ref: '#/components/schemas/WebhookEventType'
+          default: Team
+          description: The webhook event type.
+          example: Team
+        event_name:
+          $ref: '#/components/schemas/WebhookEventName'
+          default: remove_resources_member
+          description: The webhook event name.
+          example: remove_resources_member
+        company_account_id:
+          type: string
+          description: The company account ID.
+          example: XMPL1234
+        data:
+          $ref: '#/components/schemas/Group'
+          description: The webhook `Group` data.
+        subscription_id:
+          type: string
+          description: The webhook subscription ID used to route this event.
+          example: 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
+    GroupResource:
+      description: Delete Resource `Group` JSON parameters.
+      properties:
+        id:
+          type: string
+          description: The ID of either `User`, `Wallet` or `Card` `Group`resource.
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+        type:
+          $ref: '#/components/schemas/GroupResourceType'
+          description: The type of `Group`resource.
+          example: USER
+    CreateGroup:
+      description: Create `Group` JSON parameters.
+      properties:
+        name:
+          type: string
+          description: The name of the `Group`.
+          example: HR
+        custom_reference_id:
+          type: string
+          description: The `Group` reference in an external system.
+          example: hr-division-0001
+        note:
+          type: string
+          description: Any notes about the `Group`.
+          example: division
+        type:
+          $ref: '#/components/schemas/GroupType'
+          description: The `Group`'s type.
+          example: DIVISION
+    Group:
+      properties:
+        id:
+          type: string
+          description: 'The `Group` ID (sortable: yes).'
+          example: 1bf79328-a7ae-4222-aa54-091ff7f429a7
+        name:
+          type: string
+          description: 'The name of the `Group` (sortable: yes).'
+          example: HR
+        custom_reference_id:
+          type: string
+          description: The `Group` reference in an external system.
+          example: hr-division-0001
+        type:
+          $ref: '#/components/schemas/GroupType'
+          description: 'The `Group` type (sortable: no).'
+          example: DIVISION
+        note:
+          type: string
+          description: 'Any notes about the `Group` (sortable: no).'
+          example: division
+        members:
+          type: array
+          description: 'A list of `User` IDs belonging to the `Group` (sortable: no).'
+          example:
+          - 5bf79328-a7ae-4222-aa54-091ff7f429a7
+          items:
+            type: string
+        wallets:
+          type: array
+          description: 'A list of `Wallet` IDs related to the `Group` (sortable: no).'
+          example:
+          - 4bf79328-a7ae-4222-aa54-091ff7f429a7
+          items:
+            type: string
+        cards:
+          type: array
+          description: 'A list of `Card` IDs related to the `Group` (sortable: no).'
+          example:
+          - 3bf79328-a7ae-4222-aa54-091ff7f429a7
+          items:
+            type: string
+        creation_time:
+          type: string
+          description: 'The date and time when the `Group` was created (sortable: yes).'
+          example: '2017-06-01T12:48:40Z'
+        last_update:
+          type: string
+          description: 'The date and time when the `Group` was last updated (sortable: yes).'
+          example: '2017-06-30T12:48:40Z'
+    GroupType:
       type: string
       enum:
-      - BusinessTrip
-      - Card
-      - Contact
-      - ExpenseReview
-      - Group
-      - OnlineAds
-      - Order
-      - Purchase
-      - Subscription
-      - Transaction
-      - TransactionAttachment
-      - Employee
-      - Vehicle
-      - Wallet
-    GroupResourceType:
-      type: string
-      enum:
-      - USER
-      - WALLET
-      - CARD
+      - TEAM
+      - PROJECT
+      - DEPARTMENT
+      - DIVISION
+      - SQUAD
+      - UNIT
+      - PRODUCTION
     MoveResourcesMemberEvent:
       properties:
         event_uuid:
@@ -841,7 +1021,7 @@ components:
           type: string
           description: The webhook subscription ID used to route this event.
           example: 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
-    AddResourcesWalletEvent:
+    RemoveResourcesCardEvent:
       properties:
         event_uuid:
           type: string
@@ -854,9 +1034,96 @@ components:
           example: Team
         event_name:
           $ref: '#/components/schemas/WebhookEventName'
-          default: add_resources_wallet
+          default: remove_resources_card
           description: The webhook event name.
-          example: add_resources_wallet
+          example: remove_resources_card
+        company_account_id:
+          type: string
+          description: The company account ID.
+          example: XMPL1234
+        data:
+          $ref: '#/components/schemas/Group'
+          description: The webhook `Group` data.
+        subscription_id:
+          type: string
+          description: The webhook subscription ID used to route this event.
+          example: 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
+    GroupResourceType:
+      type: string
+      enum:
+      - USER
+      - WALLET
+      - CARD
+    MoveResourcesCardEvent:
+      properties:
+        event_uuid:
+          type: string
+          description: The webhook unique ID.
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+        event_type:
+          $ref: '#/components/schemas/WebhookEventType'
+          default: Team
+          description: The webhook event type.
+          example: Team
+        event_name:
+          $ref: '#/components/schemas/WebhookEventName'
+          default: move_resources_card
+          description: The webhook event name.
+          example: move_resources_card
+        company_account_id:
+          type: string
+          description: The company account ID.
+          example: XMPL1234
+        data:
+          $ref: '#/components/schemas/Group'
+          description: The webhook `Group` data.
+        subscription_id:
+          type: string
+          description: The webhook subscription ID used to route this event.
+          example: 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
+    AddResourcesMemberEvent:
+      properties:
+        event_uuid:
+          type: string
+          description: The webhook unique ID.
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+        event_type:
+          $ref: '#/components/schemas/WebhookEventType'
+          default: Team
+          description: The webhook event type.
+          example: Team
+        event_name:
+          $ref: '#/components/schemas/WebhookEventName'
+          default: add_resources_member
+          description: The webhook event name.
+          example: add_resources_member
+        company_account_id:
+          type: string
+          description: The company account ID.
+          example: XMPL1234
+        data:
+          $ref: '#/components/schemas/Group'
+          description: The webhook `Group` data.
+        subscription_id:
+          type: string
+          description: The webhook subscription ID used to route this event.
+          example: 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
+    RemoveResourcesWalletEvent:
+      properties:
+        event_uuid:
+          type: string
+          description: The webhook unique ID.
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+        event_type:
+          $ref: '#/components/schemas/WebhookEventType'
+          default: Team
+          description: The webhook event type.
+          example: Team
+        event_name:
+          $ref: '#/components/schemas/WebhookEventName'
+          default: remove_resources_wallet
+          description: The webhook event name.
+          example: remove_resources_wallet
         company_account_id:
           type: string
           description: The company account ID.
@@ -895,7 +1162,7 @@ components:
           type: string
           description: The webhook subscription ID used to route this event.
           example: 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
-    MoveResourcesWalletEvent:
+    AddResourcesWalletEvent:
       properties:
         event_uuid:
           type: string
@@ -908,9 +1175,9 @@ components:
           example: Team
         event_name:
           $ref: '#/components/schemas/WebhookEventName'
-          default: move_resources_wallet
+          default: add_resources_wallet
           description: The webhook event name.
-          example: move_resources_wallet
+          example: add_resources_wallet
         company_account_id:
           type: string
           description: The company account ID.
@@ -1037,78 +1304,6 @@ components:
           type: string
           description: The webhook subscription ID used to route this event.
           example: 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
-    GroupResource:
-      description: Delete Resource `Group` JSON parameters.
-      properties:
-        id:
-          type: string
-          description: The ID of either `User`, `Wallet` or `Card` `Group`resource.
-          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
-        type:
-          $ref: '#/components/schemas/GroupResourceType'
-          description: The type of `Group`resource.
-          example: USER
-    GroupType:
-      type: string
-      enum:
-      - TEAM
-      - PROJECT
-      - DEPARTMENT
-      - DIVISION
-      - SQUAD
-      - UNIT
-      - PRODUCTION
-    Group:
-      properties:
-        id:
-          type: string
-          description: 'The `Group` ID (sortable: yes).'
-          example: 1bf79328-a7ae-4222-aa54-091ff7f429a7
-        name:
-          type: string
-          description: 'The name of the `Group` (sortable: yes).'
-          example: HR
-        custom_reference_id:
-          type: string
-          description: The `Group` reference in an external system.
-          example: hr-division-0001
-        type:
-          $ref: '#/components/schemas/GroupType'
-          description: 'The `Group` type (sortable: no).'
-          example: DIVISION
-        note:
-          type: string
-          description: 'Any notes about the `Group` (sortable: no).'
-          example: division
-        members:
-          type: array
-          description: 'A list of `User` IDs belonging to the `Group` (sortable: no).'
-          example:
-          - 5bf79328-a7ae-4222-aa54-091ff7f429a7
-          items:
-            type: string
-        wallets:
-          type: array
-          description: 'A list of `Wallet` IDs related to the `Group` (sortable: no).'
-          example:
-          - 4bf79328-a7ae-4222-aa54-091ff7f429a7
-          items:
-            type: string
-        cards:
-          type: array
-          description: 'A list of `Card` IDs related to the `Group` (sortable: no).'
-          example:
-          - 3bf79328-a7ae-4222-aa54-091ff7f429a7
-          items:
-            type: string
-        creation_time:
-          type: string
-          description: 'The date and time when the `Group` was created (sortable: yes).'
-          example: '2017-06-01T12:48:40Z'
-        last_update:
-          type: string
-          description: 'The date and time when the `Group` was last updated (sortable: yes).'
-          example: '2017-06-30T12:48:40Z'
     Direction:
       type: string
       description: It indicates how the pages are ordered.
@@ -1135,6 +1330,23 @@ components:
           $ref: '#/components/schemas/GroupType'
           description: The `Group`'s type.
           example: DIVISION
+    WebhookEventType:
+      type: string
+      enum:
+      - BusinessTrip
+      - Card
+      - Contact
+      - ExpenseReview
+      - Group
+      - OnlineAds
+      - Order
+      - Purchase
+      - Subscription
+      - Transaction
+      - TransactionAttachment
+      - Employee
+      - Vehicle
+      - Wallet
     DeleteGroupEvent:
       properties:
         event_uuid:
@@ -1162,218 +1374,6 @@ components:
           type: string
           description: The webhook subscription ID used to route this event.
           example: 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
-    AddResourcesCardEvent:
-      properties:
-        event_uuid:
-          type: string
-          description: The webhook unique ID.
-          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
-        event_type:
-          $ref: '#/components/schemas/WebhookEventType'
-          default: Team
-          description: The webhook event type.
-          example: Team
-        event_name:
-          $ref: '#/components/schemas/WebhookEventName'
-          default: add_resources_card
-          description: The webhook event name.
-          example: add_resources_card
-        company_account_id:
-          type: string
-          description: The company account ID.
-          example: XMPL1234
-        data:
-          $ref: '#/components/schemas/Group'
-          description: The webhook `Group` data.
-        subscription_id:
-          type: string
-          description: The webhook subscription ID used to route this event.
-          example: 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
-    RemoveResourcesMemberEvent:
-      properties:
-        event_uuid:
-          type: string
-          description: The webhook unique ID.
-          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
-        event_type:
-          $ref: '#/components/schemas/WebhookEventType'
-          default: Team
-          description: The webhook event type.
-          example: Team
-        event_name:
-          $ref: '#/components/schemas/WebhookEventName'
-          default: remove_resources_member
-          description: The webhook event name.
-          example: remove_resources_member
-        company_account_id:
-          type: string
-          description: The company account ID.
-          example: XMPL1234
-        data:
-          $ref: '#/components/schemas/Group'
-          description: The webhook `Group` data.
-        subscription_id:
-          type: string
-          description: The webhook subscription ID used to route this event.
-          example: 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
-    MoveResourcesCardEvent:
-      properties:
-        event_uuid:
-          type: string
-          description: The webhook unique ID.
-          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
-        event_type:
-          $ref: '#/components/schemas/WebhookEventType'
-          default: Team
-          description: The webhook event type.
-          example: Team
-        event_name:
-          $ref: '#/components/schemas/WebhookEventName'
-          default: move_resources_card
-          description: The webhook event name.
-          example: move_resources_card
-        company_account_id:
-          type: string
-          description: The company account ID.
-          example: XMPL1234
-        data:
-          $ref: '#/components/schemas/Group'
-          description: The webhook `Group` data.
-        subscription_id:
-          type: string
-          description: The webhook subscription ID used to route this event.
-          example: 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
-    Groups:
-      properties:
-        total:
-          type: integer
-          format: int32
-          description: It represents the total number of available items in the list.
-          example: 168
-        pages:
-          type: integer
-          format: int32
-          description: It represents the total number of available pages.
-          example: 7
-        page_size:
-          type: integer
-          format: int32
-          description: It represents the number of items per page.
-          example: 25
-        current_page:
-          type: integer
-          format: int32
-          description: It indicates the current page (the counter starts from zero).
-          example: 0
-        results_size:
-          type: integer
-          format: int32
-          description: It indicates the size of the array results.
-          example: 25
-        results:
-          type: array
-          items:
-            $ref: '#/components/schemas/Group'
-    AddResourcesMemberEvent:
-      properties:
-        event_uuid:
-          type: string
-          description: The webhook unique ID.
-          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
-        event_type:
-          $ref: '#/components/schemas/WebhookEventType'
-          default: Team
-          description: The webhook event type.
-          example: Team
-        event_name:
-          $ref: '#/components/schemas/WebhookEventName'
-          default: add_resources_member
-          description: The webhook event name.
-          example: add_resources_member
-        company_account_id:
-          type: string
-          description: The company account ID.
-          example: XMPL1234
-        data:
-          $ref: '#/components/schemas/Group'
-          description: The webhook `Group` data.
-        subscription_id:
-          type: string
-          description: The webhook subscription ID used to route this event.
-          example: 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
-    RemoveResourcesWalletEvent:
-      properties:
-        event_uuid:
-          type: string
-          description: The webhook unique ID.
-          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
-        event_type:
-          $ref: '#/components/schemas/WebhookEventType'
-          default: Team
-          description: The webhook event type.
-          example: Team
-        event_name:
-          $ref: '#/components/schemas/WebhookEventName'
-          default: remove_resources_wallet
-          description: The webhook event name.
-          example: remove_resources_wallet
-        company_account_id:
-          type: string
-          description: The company account ID.
-          example: XMPL1234
-        data:
-          $ref: '#/components/schemas/Group'
-          description: The webhook `Group` data.
-        subscription_id:
-          type: string
-          description: The webhook subscription ID used to route this event.
-          example: 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
-    RemoveResourcesCardEvent:
-      properties:
-        event_uuid:
-          type: string
-          description: The webhook unique ID.
-          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
-        event_type:
-          $ref: '#/components/schemas/WebhookEventType'
-          default: Team
-          description: The webhook event type.
-          example: Team
-        event_name:
-          $ref: '#/components/schemas/WebhookEventName'
-          default: remove_resources_card
-          description: The webhook event name.
-          example: remove_resources_card
-        company_account_id:
-          type: string
-          description: The company account ID.
-          example: XMPL1234
-        data:
-          $ref: '#/components/schemas/Group'
-          description: The webhook `Group` data.
-        subscription_id:
-          type: string
-          description: The webhook subscription ID used to route this event.
-          example: 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
-    CreateGroup:
-      description: Create `Group` JSON parameters.
-      properties:
-        name:
-          type: string
-          description: The name of the `Group`.
-          example: HR
-        custom_reference_id:
-          type: string
-          description: The `Group` reference in an external system.
-          example: hr-division-0001
-        note:
-          type: string
-          description: Any notes about the `Group`.
-          example: division
-        type:
-          $ref: '#/components/schemas/GroupType'
-          description: The `Group`'s type.
-          example: DIVISION
   securitySchemes:
     standardAuth:
       type: oauth2

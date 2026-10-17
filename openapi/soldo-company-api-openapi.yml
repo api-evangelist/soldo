@@ -30,6 +30,11 @@ paths:
         - company_read
 components:
   schemas:
+    AddressCategory:
+      type: string
+      enum:
+      - USER
+      - COMPANY
     Address:
       properties:
         id:
@@ -95,11 +100,6 @@ components:
           type: string
           description: The date and time when the `Address` was last updated.
           example: '2017-06-01T12:48:40Z'
-    AddressCategory:
-      type: string
-      enum:
-      - USER
-      - COMPANY
     Company:
       properties:
         name:

@@ -163,88 +163,6 @@ paths:
         - transaction_read
 components:
   schemas:
-    DateParam:
-      description: 'The end of the period of the search `toDate` included (i.e. less than) (Formats: `yyyy-MM-dd`, `yyyy-MM-ddThh:mm:ss`, `yyyy-MM-ddThh:mm:ssZ`).'
-      example: '1970-01-30'
-    TransactionCustomExportBulk:
-      description: Get `TransactionCustomExport` JSON parameters.
-      properties:
-        transaction_ids:
-          type: array
-          description: The list of `Transaction` ID, max item 1000
-          example:
-          - 7bf79328-a7ae-4222-aa54-091ff7f429a7
-          - 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
-          items:
-            type: string
-      required:
-      - transaction_ids
-    TransactionCustomExported:
-      properties:
-        id:
-          type: string
-          description: The `TransactionCustomExport` ID
-          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
-        transaction_id:
-          type: string
-          description: The `Transaction` ID.
-          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
-        product:
-          type: string
-          description: A product that exported list of `Transaction`
-          example: SAP
-        export_timestamp:
-          type: string
-          description: The date and time when the `Transaction` was exported.
-          example: '2017-06-01T12:48:40Z'
-        status:
-          $ref: '#/components/schemas/CustomExportTransactionStatus'
-          description: The result of the `TransactionCustomExport` of `Transaction`
-          example: SUCCESS
-    TransactionCustomExport:
-      properties:
-        id:
-          type: string
-          description: The `TransactionCustomExport` ID
-          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
-        transaction_id:
-          type: string
-          description: 'The `Transaction` ID (sortable: yes).'
-          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
-        product:
-          type: string
-          description: A product that exported list of `Transaction`
-          example: SAP
-        export_timestamp:
-          type: string
-          description: The date and time when the `Transaction` was exported.
-          example: '2017-06-01T12:48:40Z'
-    TransactionCustomExportRemove:
-      properties:
-        id:
-          type: string
-          description: The `TransactionCustomExport` ID
-          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
-        transaction_id:
-          type: string
-          description: The `Transaction` ID
-          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
-        status:
-          $ref: '#/components/schemas/CustomExportTransactionStatus'
-          description: The result of the `TransactionCustomExport` of `Transaction`
-          example: SUCCESS
-    ExportedCustomTransaction:
-      properties:
-        exported_transactions:
-          type: array
-          items:
-            $ref: '#/components/schemas/TransactionCustomExported'
-    RetrieveCustomExportTransaction:
-      properties:
-        result:
-          type: array
-          items:
-            $ref: '#/components/schemas/TransactionCustomExportRetrieve'
     RemoveTransactionCustomExportBulk:
       properties:
         result:
@@ -269,6 +187,39 @@ components:
           type: string
           description: The date and time when the `Transaction` was exported.
           example: '2017-06-01T12:48:40Z'
+    CustomExportTransactionStatus:
+      type: string
+      enum:
+      - SUCCESS
+      - FAILED
+    TransactionCustomExport:
+      properties:
+        id:
+          type: string
+          description: The `TransactionCustomExport` ID
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+        transaction_id:
+          type: string
+          description: 'The `Transaction` ID (sortable: yes).'
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+        product:
+          type: string
+          description: A product that exported list of `Transaction`
+          example: SAP
+        export_timestamp:
+          type: string
+          description: The date and time when the `Transaction` was exported.
+          example: '2017-06-01T12:48:40Z'
+    DateParam:
+      description: 'The end of the period of the search `toDate` included (i.e. less than) (Formats: `yyyy-MM-dd`, `yyyy-MM-ddThh:mm:ss`, `yyyy-MM-ddThh:mm:ssZ`).'
+      example: '1970-01-30'
+    Direction:
+      type: string
+      description: It indicates how the pages are ordered.
+      enum:
+      - ASC
+      - DESC
+      example: DESC
     RemoveTransactionCustomExport:
       description: Remove `TransactionCustomExport` JSON parameters.
       properties:
@@ -281,35 +232,20 @@ components:
             type: string
       required:
       - ids
-    CustomExportTransactionStatus:
-      type: string
-      enum:
-      - SUCCESS
-      - FAILED
-    Direction:
-      type: string
-      description: It indicates how the pages are ordered.
-      enum:
-      - ASC
-      - DESC
-      example: DESC
-    CreateTransactionCustomExport:
-      description: Add `TransactionCustomExport` JSON parameters.
+    TransactionCustomExportRemove:
       properties:
-        transaction_ids:
-          type: array
-          description: A list of `Transaction` Ids
-          example:
-          - 4bf79328-a7ae-4222-aa54-091ff7f429a7
-          items:
-            type: string
-        product:
+        id:
           type: string
-          description: A product that exported list of `Transaction`
-          example: SAP
-      required:
-      - product
-      - transaction_ids
+          description: The `TransactionCustomExport` ID
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+        transaction_id:
+          type: string
+          description: The `Transaction` ID
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+        status:
+          $ref: '#/components/schemas/CustomExportTransactionStatus'
+          description: The result of the `TransactionCustomExport` of `Transaction`
+          example: SUCCESS
     TransactionCustomExports:
       properties:
         total:
@@ -341,6 +277,70 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/TransactionCustomExport'
+    RetrieveCustomExportTransaction:
+      properties:
+        result:
+          type: array
+          items:
+            $ref: '#/components/schemas/TransactionCustomExportRetrieve'
+    TransactionCustomExportBulk:
+      description: Get `TransactionCustomExport` JSON parameters.
+      properties:
+        transaction_ids:
+          type: array
+          description: The list of `Transaction` ID, max item 1000
+          example:
+          - 7bf79328-a7ae-4222-aa54-091ff7f429a7
+          - 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
+          items:
+            type: string
+      required:
+      - transaction_ids
+    CreateTransactionCustomExport:
+      description: Add `TransactionCustomExport` JSON parameters.
+      properties:
+        transaction_ids:
+          type: array
+          description: A list of `Transaction` Ids
+          example:
+          - 4bf79328-a7ae-4222-aa54-091ff7f429a7
+          items:
+            type: string
+        product:
+          type: string
+          description: A product that exported list of `Transaction`
+          example: SAP
+      required:
+      - product
+      - transaction_ids
+    ExportedCustomTransaction:
+      properties:
+        exported_transactions:
+          type: array
+          items:
+            $ref: '#/components/schemas/TransactionCustomExported'
+    TransactionCustomExported:
+      properties:
+        id:
+          type: string
+          description: The `TransactionCustomExport` ID
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+        transaction_id:
+          type: string
+          description: The `Transaction` ID.
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+        product:
+          type: string
+          description: A product that exported list of `Transaction`
+          example: SAP
+        export_timestamp:
+          type: string
+          description: The date and time when the `Transaction` was exported.
+          example: '2017-06-01T12:48:40Z'
+        status:
+          $ref: '#/components/schemas/CustomExportTransactionStatus'
+          description: The result of the `TransactionCustomExport` of `Transaction`
+          example: SUCCESS
   securitySchemes:
     standardAuth:
       type: oauth2

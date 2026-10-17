@@ -709,60 +709,78 @@ webhooks:
         fingerprint-order: id, name, status, walletId
 components:
   schemas:
-    CardActivatedEvent:
+    Order:
       properties:
-        event_uuid:
+        id:
           type: string
-          description: The webhook unique ID.
+          description: The `Order` ID.
           example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
-        event_type:
-          $ref: '#/components/schemas/WebhookEventType'
-          default: Card
-          description: The webhook event type.
-          example: Card
-        event_name:
-          $ref: '#/components/schemas/WebhookEventName'
-          default: card_activated
-          description: The webhook event name.
-          example: card_activated
-        company_account_id:
+        status:
+          $ref: '#/components/schemas/OrderStatus'
+          description: The status of the `Order`.
+          example: PENDING
+        creation_time:
           type: string
-          description: The company account ID.
-          example: XMPL1234
-        data:
-          $ref: '#/components/schemas/Card'
-          description: The webhook `Card` data.
-        subscription_id:
+          description: The date and time when the `Order` was created.
+          example: '2017-06-01T12:48:40Z'
+        last_update_time:
           type: string
-          description: The webhook subscription ID used to route this event.
-          example: 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
-    CardChangeStatusEvent:
+          description: The last update date of the `Order`.
+          example: '2017-06-01T12:48:40Z'
+        error_code:
+          type: string
+          description: In case is_valid is false, the error code of the `Order` is shown.
+        total_paid_amount:
+          type: number
+          description: The total amount of the `Order`.
+          example: 10.25
+        total_paid_currency:
+          $ref: '#/components/schemas/ISO4217Currency'
+          description: The currency for the total paid amount.
+          example: EUR
+        items:
+          type: array
+          description: The products associated with the `Order`.
+          items:
+            $ref: '#/components/schemas/OrderItem'
+        is_valid:
+          type: boolean
+          description: It states whether the `Order` is valid.
+          example: true
+    UpdateCard:
+      description: Update `Card` JSON parameters.
       properties:
-        event_uuid:
+        label:
           type: string
-          description: The webhook unique ID.
+          description: The new label of the `Card` (max 60 characters).
+          example: CardLabel
+          maxLength: 60
+        vehicle_id:
+          type: string
+          description: The `Vehicle` ID to be assigned to the `Card` - only valid for PLASTIC or FUEL cards (To remove a `Vehicle` set the value to an empty string).
           example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
-        event_type:
-          $ref: '#/components/schemas/WebhookEventType'
-          default: Card
-          description: The webhook event type.
-          example: Card
-        event_name:
-          $ref: '#/components/schemas/WebhookEventName'
-          default: card_change_status
-          description: The webhook event name.
-          example: card_change_status
-        company_account_id:
+        shipping_address_id:
           type: string
-          description: The company account ID.
-          example: XMPL1234
-        data:
-          $ref: '#/components/schemas/Card'
-          description: The webhook `Card` data.
-        subscription_id:
-          type: string
-          description: The webhook subscription ID used to route this event.
-          example: 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
+          description: The shipping `Address` ID to be assigned to the `Card` .
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+        addCardAssignees:
+          type: array
+          description: The assignees to be added for the `Card`.
+          example:
+          - XMPL1234-000001
+          - XMPL1234-000002
+          - XMPL1234-000003
+          items:
+            type: string
+        removeCardAssignees:
+          type: array
+          description: The assignees to be remove for the `Card`.
+          example:
+          - XMPL1234-000001
+          - XMPL1234-000002
+          - XMPL1234-000003
+          items:
+            type: string
     AddCardOrder:
       description: Add `Card` JSON parameters.
       properties:
@@ -822,69 +840,144 @@ components:
       - owner_type
       - request_timestamp
       - type
-    WebhookEventType:
+    OrderItem:
+      properties:
+        id:
+          type: string
+          description: The ID of a single item of a specific `Order`.
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+        item_type:
+          type: string
+          description: The type of the ordered item.
+          example: CARD
+        category:
+          type: string
+          description: The category of the ordered item.
+    CardActivatedEvent:
+      properties:
+        event_uuid:
+          type: string
+          description: The webhook unique ID.
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+        event_type:
+          $ref: '#/components/schemas/WebhookEventType'
+          default: Card
+          description: The webhook event type.
+          example: Card
+        event_name:
+          $ref: '#/components/schemas/WebhookEventName'
+          default: card_activated
+          description: The webhook event name.
+          example: card_activated
+        company_account_id:
+          type: string
+          description: The company account ID.
+          example: XMPL1234
+        data:
+          $ref: '#/components/schemas/Card'
+          description: The webhook `Card` data.
+        subscription_id:
+          type: string
+          description: The webhook subscription ID used to route this event.
+          example: 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
+    OrderStatus:
       type: string
       enum:
-      - BusinessTrip
-      - Card
-      - Contact
-      - ExpenseReview
-      - Group
-      - OnlineAds
-      - Order
-      - Purchase
-      - Subscription
-      - Transaction
-      - TransactionAttachment
-      - Employee
-      - Vehicle
-      - Wallet
-    CardType:
+      - PENDING
+      - ERROR
+      - PLACED
+      - CANCELLED
+      - COMPLETED
+      - COMPLETED_WITH_CREDIT
+    CardRenewalInfo:
+      properties:
+        expiring_soon:
+          type: boolean
+          description: Whether the `Card` is approaching its expiration date.
+          example: true
+        renewed_card_ready_for_activation:
+          type: boolean
+          description: Whether the renewed `Card` is ready to be activated.
+          example: true
+    AddCardType:
       type: string
       enum:
       - PLASTIC
       - VIRTUAL
       - FUEL
       - GOOGLE_CARD
-    CardOwnerType:
+      - PLASTIC_CHARGE
+      - VIRTUAL_CHARGE
+    CardPaymentMethod:
+      type: string
+      enum:
+      - SUBSCRIPTION
+      - ONLINE_ADS
+      - PURCHASE
+    Cards:
+      properties:
+        total:
+          type: integer
+          format: int32
+          description: It represents the total number of available items in the list.
+          example: 168
+        pages:
+          type: integer
+          format: int32
+          description: It represents the total number of available pages.
+          example: 7
+        page_size:
+          type: integer
+          format: int32
+          description: It represents the number of items per page.
+          example: 25
+        current_page:
+          type: integer
+          format: int32
+          description: It indicates the current page (the counter starts from zero).
+          example: 0
+        results_size:
+          type: integer
+          format: int32
+          description: It indicates the size of the array results.
+          example: 25
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Card'
+    AddOrderCardOwnerType:
       type: string
       enum:
       - company
       - employee
-    UpdateCard:
-      description: Update `Card` JSON parameters.
+      - expensecentre
+    CardCreationEvent:
       properties:
-        label:
+        event_uuid:
           type: string
-          description: The new label of the `Card` (max 60 characters).
-          example: CardLabel
-          maxLength: 60
-        vehicle_id:
-          type: string
-          description: The `Vehicle` ID to be assigned to the `Card` - only valid for PLASTIC or FUEL cards (To remove a `Vehicle` set the value to an empty string).
+          description: The webhook unique ID.
           example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
-        shipping_address_id:
+        event_type:
+          $ref: '#/components/schemas/WebhookEventType'
+          default: Card
+          description: The webhook event type.
+          example: Card
+        event_name:
+          $ref: '#/components/schemas/WebhookEventName'
+          default: card_creation
+          description: The webhook event name.
+          example: card_creation
+        company_account_id:
           type: string
-          description: The shipping `Address` ID to be assigned to the `Card` .
-          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
-        addCardAssignees:
-          type: array
-          description: The assignees to be added for the `Card`.
-          example:
-          - XMPL1234-000001
-          - XMPL1234-000002
-          - XMPL1234-000003
-          items:
-            type: string
-        removeCardAssignees:
-          type: array
-          description: The assignees to be remove for the `Card`.
-          example:
-          - XMPL1234-000001
-          - XMPL1234-000002
-          - XMPL1234-000003
-          items:
-            type: string
+          description: The company account ID.
+          example: XMPL1234
+        data:
+          $ref: '#/components/schemas/Card'
+          description: The webhook `Card` data.
+        subscription_id:
+          type: string
+          description: The webhook subscription ID used to route this event.
+          example: 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
     CardReplacedEvent:
       properties:
         event_uuid:
@@ -912,19 +1005,7 @@ components:
           type: string
           description: The webhook subscription ID used to route this event.
           example: 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
-    CardStatus:
-      type: string
-      enum:
-      - Normal
-      - Do not honor
-      - Lost card
-      - Stolen card
-      - Expired card
-      - Restricted card
-      - Security Violation
-      - Cardholder to contact the issuer
-      - Card Destroyed
-    CardAssigneeUpdatedEvent:
+    CardDestroyedEvent:
       properties:
         event_uuid:
           type: string
@@ -937,9 +1018,9 @@ components:
           example: Card
         event_name:
           $ref: '#/components/schemas/WebhookEventName'
-          default: card_assignee_updated
+          default: card_destroyed
           description: The webhook event name.
-          example: card_assignee_updated
+          example: card_destroyed
         company_account_id:
           type: string
           description: The company account ID.
@@ -951,12 +1032,38 @@ components:
           type: string
           description: The webhook subscription ID used to route this event.
           example: 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
-    CardPaymentMethod:
+    CardLabelUpdatedEvent:
+      properties:
+        event_uuid:
+          type: string
+          description: The webhook unique ID.
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+        event_type:
+          $ref: '#/components/schemas/WebhookEventType'
+          default: Card
+          description: The webhook event type.
+          example: Card
+        event_name:
+          $ref: '#/components/schemas/WebhookEventName'
+          default: card_label_updated
+          description: The webhook event name.
+          example: card_label_updated
+        company_account_id:
+          type: string
+          description: The company account ID.
+          example: XMPL1234
+        data:
+          $ref: '#/components/schemas/Card'
+          description: The webhook `Card` data.
+        subscription_id:
+          type: string
+          description: The webhook subscription ID used to route this event.
+          example: 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
+    CardOwnerType:
       type: string
       enum:
-      - SUBSCRIPTION
-      - ONLINE_ADS
-      - PURCHASE
+      - company
+      - employee
     WebhookEventName:
       type: string
       enum:
@@ -1045,72 +1152,67 @@ components:
       - contact_created
       - contact_updated
       - contact_deleted
-    AddCardType:
+    CardType:
       type: string
       enum:
       - PLASTIC
       - VIRTUAL
       - FUEL
       - GOOGLE_CARD
-      - PLASTIC_CHARGE
-      - VIRTUAL_CHARGE
-    Direction:
-      type: string
-      description: It indicates how the pages are ordered.
-      enum:
-      - ASC
-      - DESC
-      example: DESC
-    OrderStatus:
-      type: string
-      enum:
-      - PENDING
-      - ERROR
-      - PLACED
-      - CANCELLED
-      - COMPLETED
-      - COMPLETED_WITH_CREDIT
-    CardRenewalInfo:
+    CardAssigneeUpdatedEvent:
       properties:
-        expiring_soon:
-          type: boolean
-          description: Whether the `Card` is approaching its expiration date.
-          example: true
-        renewed_card_ready_for_activation:
-          type: boolean
-          description: Whether the renewed `Card` is ready to be activated.
-          example: true
-    Cards:
+        event_uuid:
+          type: string
+          description: The webhook unique ID.
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+        event_type:
+          $ref: '#/components/schemas/WebhookEventType'
+          default: Card
+          description: The webhook event type.
+          example: Card
+        event_name:
+          $ref: '#/components/schemas/WebhookEventName'
+          default: card_assignee_updated
+          description: The webhook event name.
+          example: card_assignee_updated
+        company_account_id:
+          type: string
+          description: The company account ID.
+          example: XMPL1234
+        data:
+          $ref: '#/components/schemas/Card'
+          description: The webhook `Card` data.
+        subscription_id:
+          type: string
+          description: The webhook subscription ID used to route this event.
+          example: 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
+    CardLostEvent:
       properties:
-        total:
-          type: integer
-          format: int32
-          description: It represents the total number of available items in the list.
-          example: 168
-        pages:
-          type: integer
-          format: int32
-          description: It represents the total number of available pages.
-          example: 7
-        page_size:
-          type: integer
-          format: int32
-          description: It represents the number of items per page.
-          example: 25
-        current_page:
-          type: integer
-          format: int32
-          description: It indicates the current page (the counter starts from zero).
-          example: 0
-        results_size:
-          type: integer
-          format: int32
-          description: It indicates the size of the array results.
-          example: 25
-        results:
-          type: array
-          items:
-            $ref: '#/components/schemas/Card'
+        event_uuid:
+          type: string
+          description: The webhook unique ID.
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+        event_type:
+          $ref: '#/components/schemas/WebhookEventType'
+          default: Card
+          description: The webhook event type.
+          example: Card
+        event_name:
+          $ref: '#/components/schemas/WebhookEventName'
+          default: card_lost
+          description: The webhook event name.
+          example: card_lost
+        company_account_id:
+          type: string
+          description: The company account ID.
+          example: XMPL1234
+        data:
+          $ref: '#/components/schemas/Card'
+          description: The webhook `Card` data.
+        subscription_id:
+          type: string
+          description: The webhook subscription ID used to route this event.
+          example: 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
     ISO4217Currency:
       type: string
       enum:
@@ -1298,6 +1400,118 @@ components:
       - ZAR
       - ZMW
       - ZWL
+    CardChangeStatusEvent:
+      properties:
+        event_uuid:
+          type: string
+          description: The webhook unique ID.
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+        event_type:
+          $ref: '#/components/schemas/WebhookEventType'
+          default: Card
+          description: The webhook event type.
+          example: Card
+        event_name:
+          $ref: '#/components/schemas/WebhookEventName'
+          default: card_change_status
+          description: The webhook event name.
+          example: card_change_status
+        company_account_id:
+          type: string
+          description: The company account ID.
+          example: XMPL1234
+        data:
+          $ref: '#/components/schemas/Card'
+          description: The webhook `Card` data.
+        subscription_id:
+          type: string
+          description: The webhook subscription ID used to route this event.
+          example: 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
+    CardStatus:
+      type: string
+      enum:
+      - Normal
+      - Do not honor
+      - Lost card
+      - Stolen card
+      - Expired card
+      - Restricted card
+      - Security Violation
+      - Cardholder to contact the issuer
+      - Card Destroyed
+    CardAttachedResourceType:
+      type: string
+      description: The type of a resource the `Card` is attached to.
+      enum:
+      - wallet
+      - company
+      - employee
+      - onlineAd
+      - subscription
+      - purchase
+      example: wallet
+    CardSensitiveData:
+      properties:
+        encrypted_full_pan:
+          type: string
+          description: The encrypted PAN of the card.
+        encrypted_cvv:
+          type: string
+          description: The encrypted cvv of the card.
+        encrypted_pin:
+          type: string
+          description: The encrypted pin of the card (only valid for PLASTIC or FUEL card type).
+    CardStolenEvent:
+      properties:
+        event_uuid:
+          type: string
+          description: The webhook unique ID.
+          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
+        event_type:
+          $ref: '#/components/schemas/WebhookEventType'
+          default: Card
+          description: The webhook event type.
+          example: Card
+        event_name:
+          $ref: '#/components/schemas/WebhookEventName'
+          default: card_stolen
+          description: The webhook event name.
+          example: card_stolen
+        company_account_id:
+          type: string
+          description: The company account ID.
+          example: XMPL1234
+        data:
+          $ref: '#/components/schemas/Card'
+          description: The webhook `Card` data.
+        subscription_id:
+          type: string
+          description: The webhook subscription ID used to route this event.
+          example: 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
+    Direction:
+      type: string
+      description: It indicates how the pages are ordered.
+      enum:
+      - ASC
+      - DESC
+      example: DESC
+    WebhookEventType:
+      type: string
+      enum:
+      - BusinessTrip
+      - Card
+      - Contact
+      - ExpenseReview
+      - Group
+      - OnlineAds
+      - Order
+      - Purchase
+      - Subscription
+      - Transaction
+      - TransactionAttachment
+      - Employee
+      - Vehicle
+      - Wallet
     Card:
       properties:
         id:
@@ -1416,152 +1630,6 @@ components:
         renewal_info:
           $ref: '#/components/schemas/CardRenewalInfo'
           description: Renewal details for the `Card`. Present only when a renewal process has been initiated for the `Card`, `null` otherwise.
-    CardLabelUpdatedEvent:
-      properties:
-        event_uuid:
-          type: string
-          description: The webhook unique ID.
-          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
-        event_type:
-          $ref: '#/components/schemas/WebhookEventType'
-          default: Card
-          description: The webhook event type.
-          example: Card
-        event_name:
-          $ref: '#/components/schemas/WebhookEventName'
-          default: card_label_updated
-          description: The webhook event name.
-          example: card_label_updated
-        company_account_id:
-          type: string
-          description: The company account ID.
-          example: XMPL1234
-        data:
-          $ref: '#/components/schemas/Card'
-          description: The webhook `Card` data.
-        subscription_id:
-          type: string
-          description: The webhook subscription ID used to route this event.
-          example: 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
-    CardCreationEvent:
-      properties:
-        event_uuid:
-          type: string
-          description: The webhook unique ID.
-          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
-        event_type:
-          $ref: '#/components/schemas/WebhookEventType'
-          default: Card
-          description: The webhook event type.
-          example: Card
-        event_name:
-          $ref: '#/components/schemas/WebhookEventName'
-          default: card_creation
-          description: The webhook event name.
-          example: card_creation
-        company_account_id:
-          type: string
-          description: The company account ID.
-          example: XMPL1234
-        data:
-          $ref: '#/components/schemas/Card'
-          description: The webhook `Card` data.
-        subscription_id:
-          type: string
-          description: The webhook subscription ID used to route this event.
-          example: 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
-    CardStolenEvent:
-      properties:
-        event_uuid:
-          type: string
-          description: The webhook unique ID.
-          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
-        event_type:
-          $ref: '#/components/schemas/WebhookEventType'
-          default: Card
-          description: The webhook event type.
-          example: Card
-        event_name:
-          $ref: '#/components/schemas/WebhookEventName'
-          default: card_stolen
-          description: The webhook event name.
-          example: card_stolen
-        company_account_id:
-          type: string
-          description: The company account ID.
-          example: XMPL1234
-        data:
-          $ref: '#/components/schemas/Card'
-          description: The webhook `Card` data.
-        subscription_id:
-          type: string
-          description: The webhook subscription ID used to route this event.
-          example: 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
-    CardDestroyedEvent:
-      properties:
-        event_uuid:
-          type: string
-          description: The webhook unique ID.
-          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
-        event_type:
-          $ref: '#/components/schemas/WebhookEventType'
-          default: Card
-          description: The webhook event type.
-          example: Card
-        event_name:
-          $ref: '#/components/schemas/WebhookEventName'
-          default: card_destroyed
-          description: The webhook event name.
-          example: card_destroyed
-        company_account_id:
-          type: string
-          description: The company account ID.
-          example: XMPL1234
-        data:
-          $ref: '#/components/schemas/Card'
-          description: The webhook `Card` data.
-        subscription_id:
-          type: string
-          description: The webhook subscription ID used to route this event.
-          example: 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
-    CardAttachedResourceType:
-      type: string
-      description: The type of a resource the `Card` is attached to.
-      enum:
-      - wallet
-      - company
-      - employee
-      - onlineAd
-      - subscription
-      - purchase
-      example: wallet
-    CardLostEvent:
-      properties:
-        event_uuid:
-          type: string
-          description: The webhook unique ID.
-          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
-        event_type:
-          $ref: '#/components/schemas/WebhookEventType'
-          default: Card
-          description: The webhook event type.
-          example: Card
-        event_name:
-          $ref: '#/components/schemas/WebhookEventName'
-          default: card_lost
-          description: The webhook event name.
-          example: card_lost
-        company_account_id:
-          type: string
-          description: The company account ID.
-          example: XMPL1234
-        data:
-          $ref: '#/components/schemas/Card'
-          description: The webhook `Card` data.
-        subscription_id:
-          type: string
-          description: The webhook subscription ID used to route this event.
-          example: 2d65bd5e-3fdf-4002-b166-bde7fb8863fa
     ISO4217SupportedCurrency:
       type: string
       description: The [ISO 4217](https://www.six-group.com/en/products-services/financial-information/data-standards.html#scrollTo=maintenance-agency) code of the currency of the `Statement` to search for.
@@ -1570,74 +1638,6 @@ components:
       - GBP
       - USD
       example: EUR
-    AddOrderCardOwnerType:
-      type: string
-      enum:
-      - company
-      - employee
-      - expensecentre
-    CardSensitiveData:
-      properties:
-        encrypted_full_pan:
-          type: string
-          description: The encrypted PAN of the card.
-        encrypted_cvv:
-          type: string
-          description: The encrypted cvv of the card.
-        encrypted_pin:
-          type: string
-          description: The encrypted pin of the card (only valid for PLASTIC or FUEL card type).
-    OrderItem:
-      properties:
-        id:
-          type: string
-          description: The ID of a single item of a specific `Order`.
-          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
-        item_type:
-          type: string
-          description: The type of the ordered item.
-          example: CARD
-        category:
-          type: string
-          description: The category of the ordered item.
-    Order:
-      properties:
-        id:
-          type: string
-          description: The `Order` ID.
-          example: 7bf79328-a7ae-4222-aa54-091ff7f429a7
-        status:
-          $ref: '#/components/schemas/OrderStatus'
-          description: The status of the `Order`.
-          example: PENDING
-        creation_time:
-          type: string
-          description: The date and time when the `Order` was created.
-          example: '2017-06-01T12:48:40Z'
-        last_update_time:
-          type: string
-          description: The last update date of the `Order`.
-          example: '2017-06-01T12:48:40Z'
-        error_code:
-          type: string
-          description: In case is_valid is false, the error code of the `Order` is shown.
-        total_paid_amount:
-          type: number
-          description: The total amount of the `Order`.
-          example: 10.25
-        total_paid_currency:
-          $ref: '#/components/schemas/ISO4217Currency'
-          description: The currency for the total paid amount.
-          example: EUR
-        items:
-          type: array
-          description: The products associated with the `Order`.
-          items:
-            $ref: '#/components/schemas/OrderItem'
-        is_valid:
-          type: boolean
-          description: It states whether the `Order` is valid.
-          example: true
   securitySchemes:
     standardAuth:
       type: oauth2
